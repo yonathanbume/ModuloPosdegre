@@ -1,0 +1,39 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Enrollment.Templates.StudentSection.SectionPartialGradesReportTemplate
+
+<input type="hidden" name="SectionId" value="@Model.SectionId" />
+<input type="hidden" name="StudentId" value="@Model.Students[0].StudentId" />
+
+<table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+    <thead>
+        <tr>
+            <th>ESTUDIANTE</th>
+            @for (int i = 0; i < Model.Evaluations.Count; i++)
+            {
+                <th class="text-center">
+                    E@(i+1) (@Model.Evaluations[i].Percentage%)<br />
+                </th>
+            }
+            <th class="text-center">NOTA FINAL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td>@student.FullName</td>
+                @foreach (var evaluation in Model.Evaluations)
+                {
+                    if (student.Grades.Any(y => y.EvaluationId == evaluation.EvaluationId))
+                    {
+                        <td>@student.Grades.Where(x => x.EvaluationId == evaluation.EvaluationId).Select(x => x.Value).FirstOrDefault()</td>
+                    }
+                    else
+                    {
+                        <td>-</td>
+                    }
+                }
+                <td class="text-center font-weight-bold">@(student.Status == ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN ? "Retirado" : student.Status == ConstantHelpers.STUDENT_SECTION_STATES.IN_PROCESS? "En Proceso" : student.FinalGrade.ToString())</td>
+            </tr>
+        }
+    </tbody>
+</table>

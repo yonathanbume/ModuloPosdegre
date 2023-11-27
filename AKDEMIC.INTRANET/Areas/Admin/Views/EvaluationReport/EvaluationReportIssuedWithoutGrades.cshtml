@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Actas Emitidas";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Buscador de Actas", Action="Search", Controller = "EvaluatioNReport", Area="Admin"  },
+    new BreadcrumbViewData { Name = "Actas Emitidas Sin Notas"},
+    };
+}
+
+
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/evaluationreport/evaluationreportissuedwithoutgrades.js" asp-append-version="true"></script>
+}
+

@@ -1,0 +1,36 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.AcademicSummaryViewModels.StudentInfoViewModel
+
+<div class="m-portlet m-portlet--responsive-mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Informaci&oacute;n del Estudiante
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <div class="row">
+            <div class="col-xl-4 col-md-12">
+                <label><b>Estudiante: </b></label>
+                <label>@Model.FullName</label>
+            </div>
+            <div class="col-xl-4 col-md-6 col-sm-12">
+                <label><b>C&oacute;digo: </b></label>
+                <label>@Model.UserName</label>
+            </div>
+            <div class="col-xl-4 col-md-6 col-sm-12">
+                <label><b>Dni: </b></label>
+                <label>@Model.Dni</label>
+            </div>
+        </div>
+    </div>
+</div> 

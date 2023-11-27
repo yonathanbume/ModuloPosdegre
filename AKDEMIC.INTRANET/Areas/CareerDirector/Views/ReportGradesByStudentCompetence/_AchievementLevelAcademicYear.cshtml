@@ -1,0 +1,62 @@
+﻿@model List<AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.GradeReportByCompetences.DataReport2>
+@{
+    Layout = null;
+}
+<div class="dt-buttons btn-group"> <button id="btn-excel" class="btn btn-success buttons-excel buttons-html5 btn-excel" tabindex="0" aria-controls="tbl-data" type="button" autocomplete="off"><span>Excel</span></button> <button id="btn-pdf" class="btn btn-primary buttons-pdf buttons-html5 btn-pdf btn" tabindex="0" aria-controls="tbl-data" type="button"><span>PDF</span></button> </div>
+<br />
+<table class="table table-striped table-bordered" id="datatable-a">
+    <thead>
+        <tr>
+            <th style="text-align:center; background: lightgray;" align="center"><b>Competencia</b></th>
+            <th style="text-align:center; background: lightgray;" align="center" colspan="2"><b>Deficiente</b></th>
+            <th style="text-align:center; background: lightgray;" align="center" colspan="2"><b>Regular</b></th>
+            <th style="text-align:center; background: lightgray;" align="center" colspan="2"><b>Bueno</b></th>
+            <th style="text-align:center; background: lightgray;" align="center" colspan="2"><b>Excelente</b></th>
+            <th style="text-align:center; background: lightgray;" align="center" colspan="2"><b>TOTAL</b></th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr style="text-align:center;">
+            <td style="text-align: center;">&nbsp;</td>
+            <td style="text-align: center;">N°</td>
+            <td style="text-align: center;">%</td>
+            <td style="text-align: center;">N°</td>
+            <td style="text-align: center;">%</td>
+            <td style="text-align: center;">N°</td>
+            <td style="text-align: center;">%</td>
+            <td style="text-align: center;">N°</td>
+            <td style="text-align: center;">%</td>
+            <td style="text-align: center;">N°</td>
+            <td style="text-align: center;">%</td>
+        </tr>
+
+        @foreach (var i in Model)
+        {
+            <tr style="text-align:center;">
+                <td style="text-align: center;">@i.CompetenceName</td>
+                <td style="text-align: center;"><a href="javascript:void(0);" data-competenceId="@i.CompetenceId" data-typeavg="@i.RangeLevels.Where(x => x.Name == "Deficiente").FirstOrDefault().Type" class="competence-details" style="color: cornflowerblue;text-decoration: underline;">@i.RangeLevels.Where(x => x.Name == "Deficiente").FirstOrDefault().Total</a></td>
+                <td style="text-align: center;">@(i.RangeLevels.Sum(x => x.Total) > 0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Deficiente").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100), 2) : 0)</td>
+
+
+                <td style="text-align: center;"><a href="javascript:void(0);" data-competenceId="@i.CompetenceId" data-typeavg="@i.RangeLevels.Where(x => x.Name == "Regular").FirstOrDefault().Type" class="competence-details" style="color: cornflowerblue;text-decoration: underline;">@i.RangeLevels.Where(x => x.Name == "Regular").FirstOrDefault().Total</a></td>
+                <td style="text-align: center;">@(i.RangeLevels.Sum(x => x.Total) >0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Regular").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100),2) : 0)</td>
+
+
+                <td style="text-align: center;"><a href="javascript:void(0);" data-competenceId="@i.CompetenceId" data-typeavg="@i.RangeLevels.Where(x => x.Name == "Bueno").FirstOrDefault().Type" class="competence-details" style="color: cornflowerblue;text-decoration: underline;">@i.RangeLevels.Where(x => x.Name == "Bueno").FirstOrDefault().Total</a></td>
+                <td style="text-align: center;">@(i.RangeLevels.Sum(x => x.Total) > 0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Bueno").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100),2) : 0)</td>
+
+
+                <td style="text-align: center;"><a href="javascript:void(0);" data-competenceId="@i.CompetenceId" data-typeavg="@i.RangeLevels.Where(x => x.Name == "Excelente").FirstOrDefault().Type" class="competence-details" style="color: cornflowerblue;text-decoration: underline;">@i.RangeLevels.Where(x => x.Name == "Excelente").FirstOrDefault().Total</a></td>
+                <td style="text-align: center;">@(i.RangeLevels.Sum(x => x.Total) > 0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Excelente").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100),2): 0)</td>
+                <td style="text-align: center;">@i.RangeLevels.Sum(x => x.Total)</td>
+                <td style="text-align: center;">100%</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,34 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.GradeViewModels
+@model IEnumerable<GradeViewModel>
+
+@foreach (var item in Model)
+{
+    <tr class="grades">
+        <td colspan="2">@item.Evaluation.Name</td>
+        <td colspan="2" style="text-align:center;" data-value="@(item.Evaluation.Percentage)">@(item.Evaluation.Percentage + " %")</td>
+        @if (item.Attended)
+        {
+            @if (item.Approved)
+            {
+                <td class="grade-value" colspan="2" style="text-align: center;">@item.Value</td>
+            }
+            else
+            {
+                <td class="grade-value" colspan="2" style="color: red; text-align: center;">@item.Value <i class="la la-info-circle" rel="m-tooltip" title="Desaprobado" data-placement="right" data-trigger="hover" data-original-title="Desaprobado"></i></td>
+            }
+        }
+        else
+        {
+            @if (item.IsDefaultValue)
+            {
+
+                <td class="grade-value" colspan="2" style="text-align: center;"> @item.Value <i class="la la-info-circle" rel="m-tooltip" title="Aún no calificado" data-placement="right" data-trigger="hover" data-original-title="Aún no calificado"></i></td>
+            }
+            else
+            {
+                <td class="grade-value" colspan="2" style="color: red; text-align: center;">NR <i class="la la-info-circle" rel="m-tooltip" title="No rendido" data-placement="right" data-trigger="hover" data-original-title="No rendido"></i></td>
+            }
+        }
+
+    </tr>
+}

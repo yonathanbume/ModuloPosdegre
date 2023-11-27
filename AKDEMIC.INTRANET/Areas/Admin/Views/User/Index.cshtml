@@ -1,0 +1,60 @@
+﻿
+@{
+	ViewBag.Title = "Gestión de Usuarios";
+    ViewBag.SubTitle = "Listado de Usuarios";
+	ViewBag.Breadcrumbs = new[] {
+	    new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por Nombre o DNI..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group col-xl-7">
+                                <label>Roles</label>
+                                <select class="m-select2" id="select_roles" multiple></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <a asp-action="Add" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo Usuario</span>
+                            </span>
+                        </a>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered users-datatable"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+	<script src="~/js/areas/admin/user/index.js" asp-append-version="true"></script>
+}

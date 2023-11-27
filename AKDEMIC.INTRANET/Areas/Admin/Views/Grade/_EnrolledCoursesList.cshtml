@@ -1,0 +1,13 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.GradeViewModels
+@model IEnumerable<EnrolledCourseViewModel>
+@{
+    int counter = 0;
+}
+
+@foreach (var item in Model)
+{
+    <div class="course-container m--margin-bottom-75 table-responsive" data-index="@counter">
+        @await Html.PartialAsync("_CourseTable", item)
+    </div>
+    counter++;
+}

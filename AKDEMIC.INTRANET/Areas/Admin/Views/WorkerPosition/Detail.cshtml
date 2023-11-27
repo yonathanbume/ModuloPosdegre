@@ -1,0 +1,105 @@
+﻿
+@model AKDEMIC.INTRANET.Areas.Admin.Models.WorkerPositionViewModels.WorkerPositionViewModel;
+
+@{
+    ViewBag.Title = "Cargo";
+    ViewBag.SubTitle = "Detalle Cargo";
+
+    ViewBag.BackUrl = Url.Action("Index", "WorkerPosition");
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Detalle", Area = "Admin", Controller = "WorkerPosition", Action = "Index"},
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        @*@await Html.PartialAsync("_UserManageData")*@
+                        <a asp-action="Edit" asp-controller="WorkerPosition" class="m-portlet__nav-link btn btn-primary m-btn m-btn--icon m--margin-left-10">
+                            <i class="la la-edit"></i>&nbsp;Editar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-form m-form--state m-form--fit">
+            <div class="m-portlet__body">
+                <input hidden asp-for="Id" />
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label asp-for="Description" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Description" class="form-control m-input" required pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" />
+                        </div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Age" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Age" class="form-control m-input" type="text" required pattern="^[\w\-\.\_]+$" required maxlength="2" />
+                        </div>
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Document" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Document" class="form-control m-input" required pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" />
+                        </div>
+                        <span asp-validation-for="Document" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Category" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Category" class="form-control m-input" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+                        </div>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Dedication" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Dedication" class="form-control m-input" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+                        </div>
+                        <span asp-validation-for="Dedication" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="AcademicDegree" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="AcademicDegree" class="form-control m-input" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+                        </div>
+                        <span asp-validation-for="AcademicDegree" class="text-danger"></span>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="JobTitle" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="JobTitle" class="form-control m-input" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+                        </div>
+                        <span asp-validation-for="JobTitle" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

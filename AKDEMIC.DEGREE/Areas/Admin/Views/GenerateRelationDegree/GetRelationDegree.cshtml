@@ -1,0 +1,87 @@
+﻿@using AKDEMIC.REPOSITORY.Repositories.Degree.Templates;
+
+@model ListDegreeRelationTemplate
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>    
+    <title>Relación</title>
+</head>
+<body>
+    <div style="text-align:center;">
+        <p style="font-family: Arial;
+    font-size: 17px;
+    letter-spacing: -0.8px;
+    word-spacing: 0.8px;
+    color: #000000;
+    font-weight: 700;
+    font-variant: normal;
+    text-transform: uppercase;
+    font-size:25px;">
+            RELACIÓN DE GRADOS, TÍTULOS Y DIPLOMAS APROBADOS<br />
+            EN CONSEJO UNIVERSITARIO SESIÓN EXTRAORDINARIA<br />
+            @( (Model.EndDate == Model.StartDate) ? Model.StartDate : "DESDE: " + Model.StartDate + "          HASTA: " + Model.EndDate)
+        </p>
+    </div>
+    @if (Model.LstRelations.Any(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE))
+    {
+        <div style="display:block">
+            <h4><b>TITULO PROFESIONAL</b></h4>
+        </div>
+        <br />
+        foreach (var item in Model.LstRelations.Where(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE).GroupBy(x => new { x.Career }).ToList())
+        {
+
+            <b>@(item.Key.Career)</b>
+            <br />
+            @*foreach (var item2 in Model.LstRelations.Where(x => x.GradeType == "T" && x.Career == item.Key.Career))
+                {
+                   <p>@(item2.FullName)</p>
+                }*@
+            for (int i = 0; i < Model.LstRelations.Where(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE && x.Career == item.Key.Career).Count(); i++)
+            {
+                <p>@(i + 1 + ") " + Model.LstRelations.Where(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE && x.Career == item.Key.Career).ToList()[i].FullName)</p>
+            }
+        }
+
+        <br />
+        <br />
+    }
+
+    @if (Model.LstRelations.Any(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR))
+    {
+        <div style="display:block">
+            <h4><b>BACHILLER</b></h4>
+        </div>
+        <br />
+        foreach (var item in Model.LstRelations.Where(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR).GroupBy(x => new { x.Career }).ToList())
+        {
+
+            <b>@(item.Key.Career)</b>
+            <br />
+            @*foreach (var item2 in Model.LstRelations.Where(x => x.GradeType == "T" && x.Career == item.Key.Career))
+                {
+                   <p>@(item2.FullName)</p>
+                }*@
+            for (int i = 0; i < Model.LstRelations.Where(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR && x.Career == item.Key.Career).Count(); i++)
+            {
+                <p>@(i +1 + ") " + Model.LstRelations.Where(x => x.GradeType == ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR && x.Career == item.Key.Career).ToList()[i].FullName)</p>
+            }
+        }
+
+
+    }
+
+    @if (Model.LstRelations.Count == 0)
+    {
+        <div style="display:block">
+            <b>No se encontraron datos para el rango de fechas</b>
+        </div>
+
+    }
+
+</body>
+</html>

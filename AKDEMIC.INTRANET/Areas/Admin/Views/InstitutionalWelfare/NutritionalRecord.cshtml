@@ -1,0 +1,2515 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.InstitutionalWelfareViewModels;
+@model NutritionalRecordViewModel
+
+@{
+    ViewData["Title"] = "Cita";
+    ViewData["SubTitle"] = "Historial Nutricional";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Bienestar institucional" , Url = Url.Action("Index","InstitutionalWelfare")} ,
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+    ViewData["BackUrl"] = Url.Action("Index", "InstitutionalWelfare", new { area = "Admin" });
+}
+@section Styles {
+
+    <link href="~/css/themes/@GeneralHelpers.GetTheme()/nutritionalview.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="m-portlet">
+    <div class="m-portlet__body">
+
+        <div class="m-portlet m-portlet--tabs m-portlet--primary m-portlet--head-solid-bg">
+            <div class="m-portlet__head" style="padding:inherit;">
+                <div class="m-portlet__head-tools">
+                    <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary" role="tablist">
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active show" data-toggle="tab" href="#m_tabs_12_1" role="tab" aria-selected="false">
+                                <i class="la la-file-text-o"></i> Ficha Nutricional Actual
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_12_2" role="tab" aria-selected="true">
+                                <i class="la la-clipboard"></i> Historial de fichas nutricionales
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="m_tabs_12_1" role="tabpanel">
+                        <form id="nutritional-form" method="post">
+                            <input name="Id" id="Id" type="hidden" value="@Model.Id" />
+                            <input name="MedicalAppointmentId" id="MedicalAppointmentId" type="hidden" value="@Model.MedicalAppointmentId" />
+                            <div class="m-form__section m-form__section--first">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">1. Datos Personales</h3>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="FullName">Nombres y Apellidos</label>
+                                            <input asp-for="FullName" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-5">
+                                            <label for="CareerName">Escuela Profesional</label>
+                                            <input asp-for="CareerName" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-1">
+                                            <label for="CurrentYearAcademy">Ciclo</label>
+                                            <input asp-for="CurrentYearAcademy" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-1">
+                                            <label for="Age">Edad</label>
+                                            <input asp-for="Age" class="form-control m-input" disabled>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="m-form__section m-form__section--first">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">2. Datos Antropométricos</h3>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="CurrentWeight">Peso actual(Kg)</label>
+                                            <input asp-for="CurrentWeight" type="number" step="any" class="form-control m-input amt">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="MediumArmCircumference">Circunferencia medida de brazo</label>
+                                            <input asp-for="MediumArmCircumference" class="form-control m-input" type="number" step="any">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="UsualWeight">Peso Usual(Kg)</label>
+                                            <input asp-for="UsualWeight" class="form-control m-input" type="number" step="any" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="WaistCircumference">Circunferencia de cintura</label>
+                                            <input asp-for="WaistCircumference" class="form-control m-input" type="number" step="any" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="Size">Talla(Cm)</label>
+                                            <input asp-for="Size" type="number" step="any" class="form-control m-input amt" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="HipCircumference">Circunferencia de cadera</label>
+                                            <input asp-for="HipCircumference" class="form-control m-input" type="number" step="any" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="BodyFatPercentage">%Grasa Corporal (bioimpedancia)</label>
+                                            <input asp-for="BodyFatPercentage" class="form-control m-input" type="number" step="any" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="IMC">IMC</label>
+                                            <input asp-for="IMC" class="form-control m-input" type="number" step="any" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-form__section m-form__section--first">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">3. Antecedentes</h3>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="DiabetesAntecedent">Diabetes</label>
+                                            <input asp-for="DiabetesAntecedent" class="form-control m-input" placeholder="Antecedentes por diabetes" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="TriglyceriesAntecedent">Triglicéridos</label>
+                                            <input asp-for="TriglyceriesAntecedent" class="form-control m-input" placeholder="Antecedentes por triglicéridos" disabled>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="ThyroidAntecedent">Tiroides</label>
+                                            <input asp-for="ThyroidAntecedent" class="form-control m-input" placeholder="Antecedentes por tiroides">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="HypertensionAntecedent">Hipertensión</label>
+                                            <input asp-for="HypertensionAntecedent" class="form-control m-input" placeholder="Antecedentes por hipertensión">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="OtherAntecedent">Otros</label>
+                                            <input asp-for="OtherAntecedent" class="form-control m-input" placeholder="Otros antecedentes" disabled>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-form__section m-form__section--first">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">4. Actividad Física</h3>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="PhysicalActivity">Actividad Física</label>
+                                            <select asp-for="PhysicalActivity" class="form-control">
+                                                @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.NUTRITIONAL_RECORD.PHYSICAL_ACTIVITY.ACTIVITY)
+                                                {
+                                                    <option value="@((bool)item.Key)">@(item.Value)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="TypePhysicalActivity">Tipo</label>
+                                            <input asp-for="TypePhysicalActivity" class="form-control m-input" placeholder="Tipo de actividad física" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="FrequencyPhysicalActivity">Frecuencia</label>
+                                            <input asp-for="FrequencyPhysicalActivity" class="form-control m-input" placeholder="Frecuencia de la actividad física" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="DurationPhysicalActivity">Duración</label>
+                                            <input asp-for="DurationPhysicalActivity" class="form-control m-input" placeholder="Duración aproximada de la actividad física" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="TimeStartedPhysicalActivity">¿Cuándo inició?</label>
+                                            <input asp-for="TimeStartedPhysicalActivity" class="form-control m-input" placeholder="Inicio de la actividad física" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-form__section m-form__section--first">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">5. Alimentación</h3>
+                                </div>
+
+                                <div class="form-group col-12" style="overflow-x:auto;">
+                                    <table class="custom-table" style="border-color: #e3892a;">
+                                        <thead>
+                                            <tr style="text-align:center;">
+                                                <th style="width:200px;">ALIMENTO</th>
+                                                <th style="width:50px;">SI</th>
+                                                <th style="width:50px;">NO</th>
+                                                <th class="thmodifiqued">OCASIONALMENTE</th>
+                                                <th style="width:150px;">ALIMENTO</th>
+                                                <th style="width:50px;">SI</th>
+                                                <th style="width:50px;">NO</th>
+                                                <th class="thmodifiqued">OCASIONALMENTE</th>
+                                                <th style="width:150px;">ALIMENTO</th>
+                                                <th style="width:50px;">SI</th>
+                                                <th style="width:50px;">NO</th>
+                                                <th class="thmodifiqued">OCASIONALMENTE</th>
+                                                <th style="width:150px;">ALIMENTO</th>
+                                                <th style="width:50px;">SI</th>
+                                                <th style="width:50px;">NO</th>
+                                                <th class="thmodifiqued">OCASIONALMENTE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td  class ="header-style" colspan="4">GENERAL</td>
+                                                <td>Lechuga</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Lettuce" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Lettuce" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Lettuce" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Pizza</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pizza" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pizza" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pizza" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td class ="header-style" colspan="4">AZÚCAR</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Leche Entera</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholeMilk" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholeMilk" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholeMilk" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Col</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cabbage" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cabbage" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cabbage" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Quinua</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Quinoa" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Quinoa" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Quinoa" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Azúcar Refinada</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="RefinedSugar" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="RefinedSugar" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="RefinedSugar" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Leche Descremada</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SkimMilk" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SkimMilk" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SkimMilk" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Betarraga</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Beetraga" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Beetraga" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Beetraga" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Trigo</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Wheat" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Wheat" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Wheat" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Edulcorante</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Sweetener" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Sweetener" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Sweetener" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Yogur Entero</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholeYogurt" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholeYogurt" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholeYogurt" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Zapallo</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pumpkin" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pumpkin" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pumpkin" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Cañihua</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cañihua" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cañihua" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cañihua" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Mermeladas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Jam" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Jam" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Jam" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Yogur Descremado</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SkimYogurt" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SkimYogurt" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SkimYogurt" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Tomate</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tomato" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tomato" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tomato" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td class ="header-style" colspan="4">GALLETAS</td>
+                                                <td>Miel</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Honey" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Honey" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                    </label>
+                                                        <input asp-for="Honey" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Queso Fresco</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="FreshCheese" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="FreshCheese" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="FreshCheese" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Zanahoria</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Carrot" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Carrot" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Carrot" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Tipo de Agua</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WaterCookie" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WaterCookie" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WaterCookie" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+
+                                                <td>Chancaca</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chancaca" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chancaca" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chancaca" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>Queso Pasteurizado</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PasteurizedCheese" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PasteurizedCheese" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PasteurizedCheese" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td class ="header-style" colspan="4">FRUTAS</td>
+
+
+                                                <td>Dulces</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SweetCookie" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SweetCookie" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SweetCookie" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Dulce de leche</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Caramel" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Caramel" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Caramel" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Huevo</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Egg" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Egg" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Egg" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Plátano</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Banana" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Banana" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Banana" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Saladas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SaltyCookie" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SaltyCookie" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SaltyCookie" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Jaleas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Jelly" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Jelly" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Jelly" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Carne de res</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Beef" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Beef" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Beef" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Ciruela</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Plum" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Plum" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Plum" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Dulces con Relleno</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SweetFillingCookie" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SweetFillingCookie" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SweetFillingCookie" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+
+                                                <td class ="header-style" colspan="4">GRASAS</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Carne de Pollo</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChickenMeat" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChickenMeat" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChickenMeat" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Damasco</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Damascus" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Damascus" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Damascus" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td class ="header-style" colspan="4">PASTELES Y POSTRES</td>
+
+                                                <td>Aceita Vegetal</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="VegatableOil" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="VegatableOil" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="VegatableOil" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Carne de Ovino</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SheepMeat" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SheepMeat" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SheepMeat" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Durazno</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Peach" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Peach" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Peach" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Torta de Naranja</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OrangeCake" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OrangeCake" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OrangeCake" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Aceite de Oliva</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OliveOil" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OliveOil" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OliveOil" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pescado</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Fish" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Fish" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Fish" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Fresas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Strawberry" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Strawberry" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Strawberry" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Torta de Chocolate</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChocolateCake" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChocolateCake" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChocolateCake" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Manteca</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Butter" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Butter" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Butter" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mariscos</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SeaFood" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SeaFood" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="SeaFood" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Uva</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Grape" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Grape" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Grape" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Torta Decorada</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DecoratedCake" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DecoratedCake" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DecoratedCake" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Margarina</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Margarine" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Margarine" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Margarine" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Salchicha</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Sausage" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Sausage" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Sausage" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Higo</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Fig" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Fig" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Fig" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Torta Tres Leches</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ThreeMilkCake" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ThreeMilkCake" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ThreeMilkCake" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Crema de Leche</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="MilkCream" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="MilkCream" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="MilkCream" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jamón</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Ham" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Ham" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Ham" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Kiwi</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Kiwi" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Kiwi" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Kiwi" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Pionono</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pionono" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pionono" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pionono" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td class ="header-style" colspan="4">ADEREZOS</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Queso de chancho</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PorkCheese" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PorkCheese" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PorkCheese" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Mandarina</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tangerine" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tangerine" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tangerine" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Huarwero</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Huarwero" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Huarwero" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Huarwero" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Mayonesa</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Mayonnaise" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Mayonnaise" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Mayonnaise" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Hígado</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Liver" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Liver" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Liver" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Naranja</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Orange" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Orange" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Orange" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Mil Hojas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Strudel" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Strudel" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Strudel" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Mostaza</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Mustard" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Mustard" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Mustard" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lengua</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tongue" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tongue" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tongue" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Pera</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pear" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pear" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pear" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Arroz con Leche</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="RicePudding" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="RicePudding" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="RicePudding" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Ketchup</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Ketchup" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Ketchup" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Ketchup" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mondongo</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tripe" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tripe" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Tripe" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Sandia</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Watermelon" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Watermelon" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Watermelon" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Mazamorra de Sobre</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="MazamorraEnvelope" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="MazamorraEnvelope" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="MazamorraEnvelope" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Otros</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OtherSeasoning" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OtherSeasoning" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="OtherSeasoning" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class ="header-style" colspan="4">VEGETALES</td>
+                                                <td>Palta</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Avocado" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Avocado" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Avocado" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Pudín</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pudding" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pudding" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pudding" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td class ="header-style" colspan="4">BEBIDAS</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Arvejas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pea" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pea" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pea" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                                <td>Coco</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Coconut" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Coconut" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Coconut" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Helados</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="IceCream" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="IceCream" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="IceCream" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Gaseosa</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Soda" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Soda" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Soda" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>Vainita</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Vainite" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Vainite" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Vainite" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Frutos Secos</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Nuts" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Nuts" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Nuts" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td class ="header-style" colspan="4">LEGUMBRES</td>
+
+                                                <td>Gaseosa Light</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="LightSoda" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="LightSoda" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="LightSoda" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Acelga</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chard" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chard" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chard" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td class ="header-style" colspan="4">CEREALES</td>
+
+                                                <td>Frejoles</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Bean" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Bean" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Bean" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Jugos Común</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Juice" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Juice" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Juice" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ají</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChiliPepper" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChiliPepper" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="ChiliPepper" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Pan de Torata</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="TorataBread" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="TorataBread" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="TorataBread" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Pallares</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pallar" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pallar" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Pallar" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Jugos Light</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="LightJuice" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="LightJuice" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="LightJuice" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Apio</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Celery" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Celery" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Celery" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Pan Corona</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="CrownBread" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="CrownBread" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="CrownBread" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Lentejas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Lentil" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Lentil" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Lentil" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Agua pura</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PureWater" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PureWater" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="PureWater" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Berenjena</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Aubergine" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Aubergine" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Aubergine" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Pan Francés</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="FrenchBread" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="FrenchBread" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="FrenchBread" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Arvejas Secas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DriedPeas" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DriedPeas" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DriedPeas" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Infusiones</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Infusion" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Infusion" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Infusion" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brocoli</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Broccoli" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Broccoli" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Broccoli" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Pan Integral</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholemealBread" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholemealBread" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WholemealBread" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Habas Secas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DriedBeans" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DriedBeans" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="DriedBeans" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Té</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Te" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Te" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Te" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cebolla</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Onion" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Onion" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Onion" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Arroz</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Rice" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Rice" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Rice" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Garbanzos</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chickpea" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chickpea" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Chickpea" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+
+                                                <td>Café</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Coffee" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Coffee" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Coffee" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Coliflor</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cauliflower" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cauliflower" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Cauliflower" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Arroz blanco</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WhiteRice" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WhiteRice" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="WhiteRice" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Choclo</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Corn" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Corn" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Corn" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Arroz Integral</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="IntegralRice" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="IntegralRice" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="IntegralRice" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Espinacas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Spinach" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Spinach" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Spinach" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>Pastas</td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Paste" type="radio" value="1" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Paste" type="radio" value="2" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="m-radio m-radio--state-success" style="padding-left: 17px;padding-bottom: 4px;">
+                                                        <input asp-for="Paste" type="radio" value="3" disabled>
+                                                        <span></span>
+                                                    </label>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                            <div class="m-form__section m-form__section--first">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">6. Cantidad de comidas</h3>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <label for="QuantityFood">Cantidad de comidas por día</label>
+                                            <input asp-for="QuantityFood" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="IfCollation">Colaciones</label>
+                                            <select asp-for="IfCollation" class="form-control" disabled>
+                                                @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.NUTRITIONAL_RECORD.COLATIONS.OPTIONS)
+                                                {
+                                                    <option value="@((bool)item.Key)">@(item.Value)</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label for="NumberCollation">¿Cuantas?</label>
+                                            <input asp-for="NumberCollation" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="DescriptionCollation">¿Qué?</label>
+                                            <input asp-for="DescriptionCollation" class="form-control m-input" placeholder="Descripción de las comidas" disabled>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <div class="tab-pane " id="m_tabs_12_2" role="tabpanel">
+                        <div class="m-datatable"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/institutionalwelfare/historicalnutritional.js"></script>
+    <script src="~/js/areas/admin/institutionalwelfare/index_nutritional.js"></script>
+
+}

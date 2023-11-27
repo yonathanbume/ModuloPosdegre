@@ -1,0 +1,468 @@
+﻿@using AKDEMIC.INTRANET.ViewModels.UserProcedureViewModels
+@model UserProcedureDetailViewModel
+@{
+    ViewBag.Tittle = $"Detalle del Trámite - " + '"' + $"{Model.ProcedureViewModel.Name}" + '"';
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de Trámites de Usuarios", Controller = "UserProcedure", Action = "Index"},
+};
+}
+
+@section Styles {
+    <link href="~/css/views/userprocedure/detail.css" rel="stylesheet" />
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Tittle
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-tabs m-tabs-line m-tabs-line--right" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#user-procedure-tab-1" role="tab">
+                            <i class="flaticon-list-3"></i> Trámite
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#user-procedure-tab-2" role="tab">
+                            <i class="flaticon-squares-4"></i> Hoja de Ruta
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body" style="padding-top:0;">
+            <div class="col-12 d-flex justify-content-end">
+
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="user-procedure-tab-1" role="tabpanel">
+                    <input id="Id" name="Id" type="hidden" value="@Model.Id">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            @if (Model.UserId != null)
+                            {
+                                <div class="col-lg-6 m-form__group-sub">
+                                    <label asp-for="UserViewModel.FullNameCode">Solicitante</label>
+                                    <div class="row">
+                                        <div class="col-lg-11">
+                                            <input name="UserViewModel.FullName" type="text" class="form-control m-input" placeholder="Nombre del Solicitante" value="@Model.UserViewModel.FullName" disabled readonly>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <button type="button" class="btn btn-primary btn-sm m-btn m-btn--icon" data-toggle="modal" data-target="#detailModal"><i class="la la-eye"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 m-form__group-sub">
+                                    @if (Model.HasPicture)
+                                    {
+                                        <label>Fotografía</label>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <button type="button" class="btn btn-primary btn-sm m-btn m-btn--icon" data-toggle="modal" data-target="#pictureModal"><i class="la la-picture-o"></i></button>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="col-lg-2 d-flex justify-content-end">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-4 m-form__group-sub">
+                                    <label asp-for="DNI">DNI del Solicitante</label>
+                                    <input name="DNI" type="text" class="form-control m-input" placeholder="DNI del Solicitante" value="@Model.DNI" disabled readonly>
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6 m-form__group-sub">
+                                <label asp-for="ProcedureViewModel.Name">Trámite</label>
+                                <input name="ProcedureViewModel.Name" type="text" class="form-control m-input" placeholder="Nombre del Trámite" value="@Model.GeneratedId - @Model.ProcedureViewModel.Name" disabled readonly>
+                            </div>
+                            <div class="col-lg-6 m-form__group-sub">
+                                @if (Model.Status == 9)
+                                {
+                                    <label asp-for="Status">Estado</label>
+                                    <select asp-for="Status" class="form-control m-input m-select2 status-select2" disabled>
+                                        <option value="@Model.Status"> @AKDEMIC.CORE.Helpers.ConstantHelpers.USER_PROCEDURES.STATUS.VALUES[Model.Status]</option>
+                                        @*@foreach (var item in AKDEMIC.CORE.Helpers.ConstantHelpers.USER_PROCEDURES.STATUS.VALUES)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }*@
+                                    </select>
+                                }
+                                else
+                                {
+                                    <label asp-for="Status">Estado</label>
+                                    <select asp-for="Status" class="form-control m-input m-select2 status-select2" disabled>
+                                        <option value="@Model.Status"> @AKDEMIC.CORE.Helpers.ConstantHelpers.USER_PROCEDURES.STATUS.VALUES[Model.Status]</option>
+                                        @*@foreach (var item in AKDEMIC.CORE.Helpers.ConstantHelpers.USER_PROCEDURES.STATUS.VALUES)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }*@
+                                    </select>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6 m-form__group-sub">
+                                <label asp-for="Comment">Sustento</label>
+                                <textarea name="Comment" class="form-control m-input disable-resize" placeholder="Sustento del Trámite" rows="5" disabled readonly>@(Model.Comment != null ? Model.Comment : "---")</textarea>
+                            </div>
+                            <div class="col-lg-4 m-form__group-sub">
+                                <label asp-for="DependencyId">Dependencia Actual</label>
+                                <input name="DependencyId" type="text" class="form-control m-input" placeholder="Dependencia Actual" value="@(Model.DependencyId != null ? Model.DependencyViewModel.Name : "---")" disabled readonly>
+                            </div>
+                        </div>
+
+                        @if (Model.HasReceipt)
+                        {
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-6">
+                                    <label class="form-control-label">Recibo de Pago</label>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-10 pr-0">
+                                            @if (Model.PaymentViewModel != null)
+                                            {
+                                                <input type="text" class="form-control m-input" value="@Model.PaymentViewModel.PayDateTime - @Model.PaymentViewModel.OperationCodeB - @Model.PaymentViewModel.Total" disabled readonly />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" class="form-control m-input" value="" disabled readonly />
+                                            }
+
+                                        </div>
+                                        <div class="col-md-2 text-center pl-0">
+                                            <a href="#" class="btn btn-primary btn-sm m-btn m-btn--icon m--margin-left-5 btn-receipt" title="Ver Recibo de Pago" data-toggle="modal" data-target="#receipt-modal">
+                                                <i class="la la-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="table-responsive" style="margin-top:20px;">
+                            <table class="table table-striped w-auto" id="data-table"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="user-procedure-tab-2" role="tabpanel">
+                    <div class="m-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="m-section">
+                                    <h3 class="m-section__heading">Dependencias del Trámite</h3>
+                                    <span class="m-section__sub">Orden de dependencias sugerido</span>
+                                    <div class="m--space-30"></div>
+                                    <div class="m-section__content">
+                                        <div id="procedure-dependency-datatable-get" class="m-datatable"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="m-section">
+                                    <h3 class="m-section__heading">Historial de derivaciones</h3>
+                                    <span class="m-section__sub">Flujo actual de derivaciones</span>
+                                    <div class="m--space-30"></div>
+                                    <div class="m-section__content">
+                                        <div class="m-scrollable m-scroller ps ps--active-y" data-scrollable="true" style="height: 100px; overflow: hidden;">
+                                            <div id="user-procedure-derivation-content"></div>
+                                        </div>
+                                    </div>
+                                    @*<div class="m--space-30"></div>
+                                        <div class="m-section__content">
+                                            <div class="m-scrollable m-scroller ps ps--active-y" data-scrollable="true" style="height: 100px; overflow: hidden;">
+                                                <div id="user-procedure-finish-content"></div>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@await Html.PartialAsync("Detail/_UserProcedureDerivationModalDocumentFiles", new UserProcedureDerivationViewModel())
+@await Html.PartialAsync("Detail/_UserProcedureDerivationModalObservation", new UserProcedureDerivationViewModel())
+
+<div id="user-procedure-finish-modal-document-files" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Archivos adjuntos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="user-procedure-finish-modal-document-files-datatable-document-files" class="table table-striped table-bordered"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="user-procedure-finish-modal-observation" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Observación
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-scrollable m-scroller ps" data-scrollbar-shown="true" data-scrollable="true" data-height="200" style="height: 200px; overflow: hidden;">
+                    <div id="user-procedure-finish-modal-observation-content"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pictureModal" tabindex="-1" role="dialog" aria-labelledby="pictureModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Foto de Portada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-12 m-form__group-sub text-center">
+                        <img src="@(string.IsNullOrEmpty(Model.UrlImage) ? "/images/demo/user.png" :  $"/imagenes/{Model.UrlImage}")" style="width:300px; height:300px;" class="m--img-centered" alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Datos Personales del Solicitante</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-6 m-form__group-sub">
+                        <label asp-for="UserViewModel.FullName">Nombre Completo</label>
+                        <input asp-for="UserViewModel.FullName" type="text" class="form-control m-input" disabled readonly>
+                    </div>
+                    <div class="col-lg-6 m-form__group-sub">
+                        <label asp-for="UserViewModel.Phone">Teléfono</label>
+                        <input asp-for="UserViewModel.Phone" type="text" class="form-control m-input" disabled readonly>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-6 m-form__group-sub">
+                        <label asp-for="UserViewModel.Email">Correo</label>
+                        <input asp-for="UserViewModel.Email" type="text" class="form-control m-input" disabled readonly>
+                    </div>
+                    <div class="col-lg-6 m-form__group-sub">
+                        <label asp-for="UserViewModel.Dni">Dni</label>
+                        <input asp-for="UserViewModel.Dni" type="text" class="form-control m-input" disabled readonly>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4 m-form__group-sub">
+                        <label asp-for="UserViewModel.Username">Código</label>
+                        <input asp-for="UserViewModel.Username" type="text" class="form-control m-input" disabled readonly>
+                    </div>
+                    @if (Model.UserViewModel.Type == 1)
+                    {
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label asp-for="UserViewModel.Career">Escuela Profesional</label>
+                            <input asp-for="UserViewModel.Career" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                    }
+                    else if (Model.UserViewModel.Type == 2)
+                    {
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label asp-for="UserViewModel.DepartmentAcademic">Departamento académico</label>
+                            <input asp-for="UserViewModel.DepartmentAcademic" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                    }
+                    else if (Model.UserViewModel.Type == 3)
+                    {
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label asp-for="UserViewModel.Dependency">Dependencia Actual</label>
+                            <input asp-for="UserViewModel.Dependency" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                    }
+                    else
+                    {
+
+                    }
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="receipt-modal" role="dialog" aria-labelledby="receiptModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="receipt-modal-label">
+                    Agregar Recibo de Pago
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="create-receipt-form" class="m-form m-form--state m-form--fit m-form--label-align-right" asp-action="ValidateReceipt" asp-controller="UserProcedure">
+                <div class="modal-body tab-content m-portlet__body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="add_reference_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="add_form_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label asp-for="PaymentViewModel.PayDateTime">Fecha</label>
+                            <div class="input-group">
+                                <input asp-for="PaymentViewModel.PayDateTime" class="form-control m-input date-picker" disabled />
+                                <div class="input-group-append"><span class="input-group-text"><i class="la la-calendar"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label asp-for="PaymentViewModel.OperationCodeB">Secuencia</label>
+                            <div class="input-group">
+                                <input asp-for="PaymentViewModel.OperationCodeB" class="form-control m-input" disabled />
+                                <div class="input-group-append"><span class="input-group-text"><i class="la la-sort-numeric-asc"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label asp-for="PaymentViewModel.Total">Monto</label>
+                            <div class="input-group">
+                                <input asp-for="PaymentViewModel.Total" class="form-control m-input" type="number" disabled />
+                                <div class="input-group-append"><span class="input-group-text"><i class="la la-money"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalle del estado del trámite</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="status-user-procedure-modal-form" class="m-form m-form--label-align-right m-form--state" asp-action="StatusUserProcedure" asp-area="Dependency" asp-controller="UserProcedureDerivation" method="post">
+                <div class="modal-body">
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-12">
+                            <label class="required-form-label">Observaci&oacute;n</label>
+                            <textarea name="Observation" class="form-control m-input disable-resize" placeholder="Observación de la finalización del trámite" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row finish">
+                        <div class="col-lg-12 m-form__group-sub">
+                            <label asp-for="UserProcedureDerivationViewModel.DocumentFiles">Documentos</label>
+                            <div class="custom-file">
+                                <input name="DocumentFiles" type="file" class="custom-file-input" placeholder="Documentos" accept="application/*" multiple onchange="InitApp.file.status.documentFiles(this, event)">
+                                <label class="custom-file-label" for="SignatureFile">Seleccione archivos</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input name="Status" type="hidden">
+                    <input name="UserProcedureId" type="hidden">
+                    <div class="form-group m-form__group row finish">
+                        <div class="col-lg-12 m-form__group-sub">
+                            <table id="status-user-procedure-modal-derive-form-datatable-document-files" class="table table-striped table-bordered"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btn-finish" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var id = '@Model.Id';
+        var procedureId = '@Model.ProcedureId';
+    </script>
+    <script src="~/js/modules/file.js"></script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/modules/select.js"></script>
+    <script src="~/js/modules/unit.js"></script>
+    <script src="~/js/views/userprocedure/detailUserProcedure.js"></script>
+}

@@ -1,0 +1,68 @@
+﻿<div id="class_need_reschedule_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-modal-label">
+                    Solicitud de Reprogramación de Clase
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="class_need_reschedule_modal_form" class="m-form m-form--label-align-right m-form--state" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="ClassId" />
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="StartDate" class="required-form-label">Fecha</label>
+                            <div class="input-group">
+                                <input name="Date" type="text" class="form-control m-input start-date-datepicker" readonly required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="StartTime" class="required-form-label">Inicio</label>
+                            <div class="input-group">
+                                <input name="StartTime" type="text" class="form-control m-input start-time-timepicker" readonly required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="EndTime" class="required-form-label">Fin</label>
+                            <div class="input-group">
+                                <input name="EndTime" type="text" class="form-control m-input end-time-timepicker" readonly required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label name="Justification" class="required-form-label">Justificación</label>
+                        <textarea name="Justification" class="form-control m-input disable-resize justification" maxlength="600" rows="6" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button name="Submit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Enviar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

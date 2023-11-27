@@ -1,0 +1,194 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.ReportTeacherViewModels
+@model TeacherDetailViewModel
+
+@{
+    ViewData["Title"] = "Detalle de asistencia por curso";
+    ViewData["SubTitle"] = "Detalle por estudiante";
+
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Reporte de Docentes" ,Area="Admin",Controller="ReportTeacher", Action="Index" },
+new BreadcrumbViewData { Name = "Detalles de Cursos" }
+};
+
+    ViewData["BackUrl"] = Url.Action("Index", "ReportTeacher", new { Area = "Admin" });
+}
+
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/areas/teacher/classschedule/index.css" type="text/css" rel="stylesheet" asp-append-version="true" />
+}
+<div class="m-content">
+    <input asp-for="TeacherId" type="hidden" />
+    <input asp-for="TermId" type="hidden" />
+
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información de los cursos asignados al docente
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button type="button" id="show_schedule" class="btn btn-primary btn-sm m-btn m-btn--custom">Ver Horario</button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Usuario: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Username</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Docente: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.Teacher</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Departamento Acad&eacute;mico: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.AcademicDepartment</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Curso: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <select class="m-select2" id="course_select2"></select>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Secci&oacute;n:</b></label>
+                </div>
+                <div class="col-sm-3">
+                    <select class="m-select2" id="section_select2"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="la la-info-circle"></i>
+                            Asistencia
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Calificaciones
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    @*    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN))
+                    {*@
+                    @*    <div class="row col-12 d-flex justify-content-end pr-0">
+                    <button id="clean_grades" data-id="0" class="btn btn-primary btn-sm m-btn m-btn m-btn--icon">
+                    <span>
+                    <i class="la la-edit"></i>
+                    <span>Limpiar asistencias</span>
+                    </span>
+                    </button>
+                    </div>
+                    *@
+                    <div class="row col-12 d-flex justify-content-end pr-0">
+                        <button id="clean_classes" class="btn btn-primary btn-sm m-btn m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-edit"></i>
+                                <span>Limpiar asistencias</span>
+                            </span>
+                        </button>
+                    </div>
+                    @*}*@
+                    <table class="table table-striped table-bordered" id="assistance-table"></table>
+                </div>
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div id="grades_partial"></div>
+
+                    <table class="table table-striped table-bordered" id="grades-table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal_calendar">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel">
+                    Horario del Docente
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-calendar__container" id="schedule">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_clean_classes" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Limpiar asistencias</h5>
+            </div>
+            <form method="post" id="form_clean_classes">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-6">
+                            <label>Fec. Inicio</label>
+                            <input name="StartDate" class="form-control" type="text" />
+                        </div>
+                        <div class="form-group m-form__group col-6">
+                            <label>Fec. Fin</label>
+                            <input name="EndDate" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group m-form__group col-12">
+                            <label>Sub Grupo</label>
+                            <select name="SectionGroupId"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label>Clases dictadas</label>
+                        <select name="ClassesId" class="form-control m-input m-bootstrap-select m_selectpicker" multiple></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-add" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Limpiar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/areas/admin/report_teacher/detail.js" asp-append-version="true"></script>
+}

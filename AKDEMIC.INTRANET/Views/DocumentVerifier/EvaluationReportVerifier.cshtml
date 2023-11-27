@@ -1,0 +1,76 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.DocumentVerifierViewModels.EvaluationReportViewModel
+@{
+    ViewData["Title"] = "Detalle del Acta";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"] }};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="form-group row mt-">
+                <div class="form-group m-form__group col-lg-12">
+                    <span class="mb-4">El documento <strong>@Model.RelationalId</strong> es autèntico. Para conformidad mostramos los detalles del documento.</span>
+                </div>
+            </div>
+            <div class="form-group row mt-">
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="RelationalId"></label>
+                    <input asp-for="RelationalId" class="form-control m-input letters" readonly />
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="Type"></label>
+                    <input asp-for="Type" class="form-control m-input letters" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="Faculty"></label>
+                    <input asp-for="Faculty" class="form-control m-input letters" readonly />
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="Career"></label>
+                    <input asp-for="Career" class="form-control m-input letters" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="Teacher"></label>
+                    <input asp-for="Teacher" class="form-control m-input letters" readonly />
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="Credits"></label>
+                    <input asp-for="Credits" class="form-control m-input letters" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="Term"></label>
+                    <input asp-for="Term" class="form-control m-input letters" readonly />
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="Section"></label>
+                    <input asp-for="Section" class="form-control m-input letters" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="GeneratedDate"></label>
+                    <input asp-for="GeneratedDate" class="form-control m-input letters" readonly />
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label asp-for="ReceptionDate"></label>
+                    <input asp-for="ReceptionDate" class="form-control m-input letters" readonly />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

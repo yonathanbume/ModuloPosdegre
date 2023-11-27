@@ -1,0 +1,107 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.ClassScheduleViewModels
+@model AKDEMIC.INTRANET.Areas.Student.Models.ClassScheduleViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Horario de la Semana";
+    ViewData["SubTitle"] = "Horario de la Semana";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewData["Title"], Controller = null, Action = null}
+};
+}
+
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/areas/student/classschedule/index.css" type="text/css" rel="stylesheet" asp-append-version="true"/>
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-calendar__container">
+
+            </div>
+            <div class="col-sm-12 col-md-10 offset-md-1">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-detail" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="modal-title">
+                    Detalle de Clase
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-12">
+                            <label class="form-control-label">Curso</label>
+                            <input id="DetailCourse" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Secci&oacute;n</label>
+                            <input id="DetailSection" class="form-control m-input" disabled />
+                        </div>
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Fecha</label>
+                            <input id="DetailDate" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Empieza</label>
+                            <input id="DetailStart" class="form-control m-input" disabled />
+                        </div>
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Termina</label>
+                            <input id="DetailEnd" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Sal&oacute;n</label>
+                            <input id="DetailClassroom" class="form-control m-input" disabled />
+                        </div>
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Tipo</label>
+                            <input id="DetailType" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-12">
+                            <label class="form-control-label">Profesor(es)</label>
+                            <textarea id="DetailTeachers" class="form-control m-input" disabled></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/areas/student/weekclassschedule/index.js"></script>
+}

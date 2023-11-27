@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Cargo";
+    ViewBag.SubTitle = "Agregar Cargo";
+
+    ViewBag.BackUrl = Url.Action("Index", "WorkerPosition");
+    ViewBag.Breadcrumbs = new[] {
+        new BreadcrumbViewData { Name = "Agregar", Area = "Admin", Controller = "WorkerPosition", Action = "Index"},
+        new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form method="POST" id="add-form" asp-area="Admin" asp-action="AddPost" asp-controller="WorkerPosition" enctype="multipart/form-data" class="m-form m-form--state m-form--fit">
+            <div class="m-portlet__body">
+                @await Html.PartialAsync("_WorkerPositionForm")
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                        <i class="la la-save"></i>&nbsp;Crear
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/workerposition/add.js"></script>
+}

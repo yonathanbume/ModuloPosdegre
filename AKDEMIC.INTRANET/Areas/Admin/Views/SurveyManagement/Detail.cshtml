@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Detalle";
+    var SurveyUserId = ViewBag.SurveyUserId;
+    var SurveyId = ViewBag.SurveyId; 
+    var FullName = ViewBag.FullName;
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Gestión de Encuestas", Controller = "SurveyManagement", Action = "Index", Area = "Admin"},
+new BreadcrumbViewData { Name = "Respuestas", Controller="SurveyManagement", Url="/admin/gestion-encuestas/respuestas/"+SurveyId},
+new BreadcrumbViewData { Name = "Detalle", Controller=null, Action=null },
+};
+}
+
+<input id="SurveyUserId" type="hidden" value="@SurveyUserId" />
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @FullName
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <form id="form-survey" class="m-form">
+                <div id="questions">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/css/views/survey/respondSurvey.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/areas/admin/surveymanagement/detail.js"></script>
+}

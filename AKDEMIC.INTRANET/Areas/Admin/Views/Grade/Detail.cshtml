@@ -1,0 +1,93 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.GradeViewModels.DetailViewModel
+@{
+    ViewData["Title"] = "Calificaciones por estudiante";
+    ViewData["SubTitle"] = "Listado de Calificaciones";
+    ViewData["SubTitle1"] = "Información del Estudiante";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Calificaciones", Controller = "Grade", Action = "Index", Area = "Admin" },
+new BreadcrumbViewData { Name = "Detalle"},
+};
+    ViewData["BackUrl"] = Url.Action("Index", "Grade", new { area = "Admin" });
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle1"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <label>Periodo: &emsp;</label>
+                <select id="select-term" asp-for="ActiveTerm" asp-items="Model.Terms" class="selectpicker"></select>
+            </div>
+        </div>
+        <input asp-for="Id" id="student" hidden/>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Estudiante: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.FullName</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>C&oacute;digo: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.UserName</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Carrera: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Career</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Nivel: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label id="lblAcademicYear">-</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>N° de Cursos: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label id="lblSectionCount">-</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Total de Cr&eacute;ditos: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label id="lblCreditSum">-</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div id="enrolled-courses-container">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/grade/detail.js"></script>
+}

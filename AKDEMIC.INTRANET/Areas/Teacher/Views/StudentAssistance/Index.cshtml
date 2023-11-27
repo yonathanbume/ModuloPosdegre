@@ -1,0 +1,41 @@
+﻿@*@model AKDEMIC.INTRANET.Areas.Teacher.Models.StudentAssistanceViewModels.IndexViewModel*@
+@model List<AKDEMIC.INTRANET.Areas.Teacher.Models.StudentAssistanceViewModels.SectionViewModel>
+@{
+    ViewData["Title"] = $"Registro de Asistencia";
+    //ViewData["SubTitle"] = $"Lista para Sección {Model.Class.Section.Code} | Clase del Día {Model.Class.Date} ({Model.Class.StartTime} - {Model.Class.EndTime})";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"], Controller = null, Action = null}
+};
+}
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <select class="form-control m-select2" id="section_select">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Id">@($"{item.Course.Code} - {item.Code}")</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <div id="main_container"></div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/areas/teacher/studentassistance/index.js" asp-append-version="true"></script>
+}

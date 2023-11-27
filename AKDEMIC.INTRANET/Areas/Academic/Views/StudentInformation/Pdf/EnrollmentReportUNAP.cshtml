@@ -1,0 +1,401 @@
+﻿@using AKDEMIC.REPOSITORY.Repositories.Enrollment.Templates.StudentSection
+@model EnrollmentReportTemplate
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 12px;
+        }
+
+        table.mainTable {
+            width: 100%;
+            margin: auto;
+        }
+
+        .boldWord {
+            font-weight: bold;
+        }
+
+        .firstChildTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .firstChildTable tr:first-child, .firstChildTable tr:first-child > td {
+                text-align: center;
+                border: 1px solid black;
+                /*height: 28px;*/
+            }
+
+        .cited-text {
+            text-align: left;
+            font-size: 11px;
+            padding: 5px
+        }
+
+
+
+        .watermark {
+            /*height: 450px;
+            width: 600px;*/
+            position: relative;
+            overflow: hidden;
+        }
+
+            .watermark .watermark-text {
+                position: absolute;
+                top: 200px;
+                left: 80px;
+                color: #DEDEDE;
+                font-size: 45px;
+                pointer-events: none;
+                -webkit-transform: rotate(-25deg);
+                -moz-transform: rotate(-25deg);
+            }
+
+        .watermark-off .watermark-text {
+            display: none;
+        }
+
+        .report-header {
+            margin-bottom: 5px;
+            min-height: 60px;
+        }
+
+            .report-header .logo-container {
+                position: absolute;
+            }
+
+                .report-header .logo-container img {
+                    top: 0;
+                    left: 0;
+                    height: 60px;
+                    width: 60px
+                }
+
+            .report-header .title-container {
+                font-weight: bold;
+                padding-top: 5mm;
+                margin-left: 65px;
+            }
+
+                .report-header .title-container label {
+                    display: block;
+                }
+
+                .report-header .title-container .title {
+                    font-size: 14px;
+                }
+
+                .report-header .title-container label {
+                    font-size: 11px;
+                }
+    </style>
+</head>
+<body class="@(Model.IsConfirmed ? "watermark-off" : "watermark")">
+    <div class="report-header">
+        <div class="logo-container" style="">
+            <img src="@Model.Image" />
+        </div>
+
+        <div class="title-container" style="text-align:center;font-size:17px;">
+            <label class="title2">@GeneralHelpers.GetInstitutionName().ToUpper()</label>
+            <label class="title2">@Model.HeaderText</label>
+        </div>
+    </div>
+    <br />
+    @*@if (!Model.IsConfirmed)
+        {
+            <p class="watermark-text">Ficha de Matr&iacute;cula por Confirmar</p>
+
+        }*@
+
+    <div class="cited-text" style="">
+        <strong>FACULTAD:</strong> &nbsp; @Model.FacultyName.ToUpper()
+        <div class="" style="float:right;font-size:17px;">
+            <strong>FICHA DE MATR&Iacute;CULA</strong><br />
+            <strong>
+                N° de Matr&iacute;cula: @Model.StudentCode
+            </strong>
+        </div>
+        <br />
+        <strong>ESCUELA PROFESIONAL:</strong>&nbsp; @Model.SchoolName.ToUpper() (PLAN: @Model.Curriculum.ToUpper())
+        <br />
+        <strong>
+            DURACI&Oacute;N DE ESTUDIOS:
+        </strong>&nbsp;  @Model.MaxAcademicYear Semestres Acad&eacute;micos
+        @if (Model.IsPronabec)
+        {
+            <span>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <strong>
+                    PERIODO DE INICIO DE ESTUDIOS:
+                </strong>&nbsp; @Model.AdmissionTerm
+            </span>
+        }
+        <br />
+        <strong>
+            APELLIDOS Y NOMBRES:
+        </strong>&nbsp;  @Model.StudentName
+        <br />
+        <strong>
+            PERIODO ACADEMICO:
+        </strong>&nbsp;  @Model.Semester.ToUpper() &emsp; <strong>
+            SISTEMA CURRICULAR:
+        </strong> &nbsp;
+        FLEXIBLE&emsp; <strong>
+            CONDICION:
+        </strong> &nbsp;
+        @Model.StudentCondition.ToUpper()
+        <br />
+        <strong>
+            NIVEL / SEMESTRE DE ESTUDIOS:
+        </strong>&nbsp;  @Model.CurrentSemester.ToUpper() &emsp; <strong>
+            GRUPO:
+        </strong>
+        &nbsp;@Model.Group
+        <br />
+    </div>
+
+    <table class="firstChildTable">
+        <tr>
+            <td> N° </td>
+            <td style="width: 100px"> SEMESTRE </td>
+            <td colspan="3"> CURSO </td>
+            <td style="width: 80px"> GRUPO </td>
+            <td> MODALIDAD </td>
+            <td style="width: 80px"> CRED </td>
+            <td> DOCENTE </td>
+            <td style="width: 80px"> AULA </td>
+        </tr>
+        @{var count = 1; }
+        @foreach (var item in Model.Courses)
+        {
+            <tr>
+                <td style="border-left:1px solid black">&emsp;@count</td>
+                <td>&emsp;@item.AcademicYearText</td>
+                <td colspan="3">&emsp;@item.CourseName</td>
+                <td>&emsp;@item.Section</td>
+                <td>&emsp;@item.Modality</td>
+                <td style="border-right:1px solid black; width: 20px">&emsp;@item.Credits</td>
+                <td>&emsp;</td>
+                <td style="border-right:1px solid black">&emsp;</td>
+            </tr>
+            count++;
+        }
+
+        @if (count <= 5)
+        {
+            while (count <= 5)
+            {
+                <tr>
+                    <td style="border-left:1px solid black">&emsp;</td>
+                    <td>&emsp;</td>
+                    <td colspan="3">&emsp;</td>
+                    <td>&emsp;</td>
+                    <td>&emsp;</td>
+                    <td style="border-right:1px solid black; width: 20px">&emsp;</td>
+                    <td>&emsp;</td>
+                    <td style="border-right:1px solid black">&emsp;</td>
+                </tr>
+                count++;
+            }
+        }
+
+        <tr style="color:transparent;">
+            <td style="border-left:1px solid black">|</td>
+            <td>|</td>
+            @*<td>|</td>*@
+            <td colspan="3">_____________________________________ </td>
+            <td>|</td>
+            <td>|</td>
+            <td style="border-right:1px solid black">|</td>
+            <td>|</td>
+            <td style="border-right:1px solid black">|</td>
+        </tr>
+
+        <tr style="border:1px solid black; height:110px">
+            <td style="border:1px solid black;vertical-align:top;padding:5px;font-size:10px;" colspan="6">
+                <strong>OBSERVACIONES:</strong>
+                @if (Model.IsPronabec)
+                {
+                    <span> ======== V&Aacute;LIDO SOLO PARA POSTULACI&Oacute;N A BECAS PRONABEC ========</span>
+                }
+            </td>
+            <td style="border:1px solid black; border-right: none; vertical-align:top;padding:5px;font-size:10px;" colspan="1">
+                <strong>TOTAL DE CR&Eacute;DITOS: </strong>
+            </td>
+            <td style="vertical-align:top;padding:5px;font-size:11px;" colspan="1">
+                <strong> @((Model.Courses.Sum(x => Convert.ToDecimal(x.Credits))).ToString("0.0")) </strong>
+            </td>
+            <td style="border:1px solid black;" colspan="2"></td>
+        </tr>
+        <tr style="border:1px solid black; height:140px">
+            <td style="border:1px solid black;vertical-align:bottom;text-align:center" colspan="4">
+                <hr style="width:90%">
+                <strong>ESTUDIANTE</strong>
+            </td>
+            <td style="border:1px solid black;vertical-align:bottom;text-align:center" colspan="4">
+                <hr style="width:90%">
+                <strong>COORDINADOR ACAD&Eacute;MICO</strong>
+            </td>
+            <td style="border:1px solid black;vertical-align:bottom;text-align:left;padding:5px" colspan="2">
+                FECHA DE MATRICULA: @Model.EnrollmentDate
+                @*<br />
+                    CONTRASEÑA DE CTI:*@
+            </td>
+        </tr>
+        <tr style="border:1px solid black;">
+            <td style="border:1px solid black;" colspan="10">
+                Fecha: @Model.PrintingDate - Hora: @Model.PrintingHour
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    @*<hr style="border-style: dashed" />*@
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    @*<div class="report-header">
+            <div class="logo-container" style="">
+                <img src="@Model.Image" />
+            </div>
+
+            <div class="title-container">
+                <label class="title2">@GeneralHelpers.GetInstitutionName().ToUpper()</label>
+                <label class="title2">OFICINA GENERAL DE MATR&Iacute;CULA, REGISTRO Y ESTAD&Iacute;STICA</label>
+            </div>
+        </div>
+        <br />
+        @if (!Model.IsConfirmed)
+        {
+            <p class="watermark-text">Ficha de Matr&iacute;cula por Confirmar</p>
+
+        }
+
+        <div class="cited-text" style="">
+            FACULTAD: @Model.FacultyName.ToUpper()
+            <div class="" style="float:right;font-size:17px;">
+                <strong>FICHA DE MATR&Iacute;CULA</strong><br />
+                <strong>
+                    N° de Matr&iacute;cula: @Model.StudentCode
+                </strong>
+            </div>
+            <br />
+            ESCUELA PROFESIONAL: @Model.SchoolName.ToUpper() (PLAN: @Model.Curriculum.ToUpper())
+            <br />
+            APELLIDOS Y NOMBRES: @Model.StudentName
+            <br />
+            PERIODO ACADEMICO: @Model.Semester.ToUpper() @@*&emsp;SISTEMA CURRICULAR: FLEXIBLE@@ @@*&emsp;CONDICION: @Model.StudentCondition.ToUpper()@@
+            <br />
+            NIVEL / SEMESTRE DE ESTUDIOS: @Model.CurrentSemester.ToUpper()
+            <br />
+        </div>
+
+        @*
+        <table class="firstChildTable">
+            <tr>
+                <td> N° </td>
+                <td style="width: 100px"> SEMESTRE </td>
+                <td colspan="3"> CURSO </td>
+                <td style="width: 80px"> GRUPO </td>
+                <td> MODALIDAD </td>
+                <td style="width: 80px"> CRED </td>
+                <td> DOCENTE </td>
+                <td style="width: 80px"> AULA </td>
+            </tr>
+            @{count = 1; }
+            @foreach (var item in Model.RegisterCourseTerms)
+            {
+                <tr>
+                    <td style="border-left:1px solid black">&emsp;@count</td>
+                    <td>&emsp;@item.Cicle</td>
+                    <td colspan="3">&emsp;@item.CourseName</td>
+                    <td>&emsp;@item.Section</td>
+                    <td>&emsp;@item.Modality</td>
+                    <td style="border-right:1px solid black; width: 20px">&emsp;@item.Credits</td>
+                    <td>&emsp;</td>
+                    <td style="border-right:1px solid black">&emsp;</td>
+                </tr>
+                count++;
+            }
+
+            @if (count <= 5)
+            {
+                while (count <= 5)
+                {
+                    <tr>
+                        <td style="border-left:1px solid black">&emsp;</td>
+                        <td>&emsp;</td>
+                        <td colspan="3">&emsp;</td>
+                        <td>&emsp;</td>
+                        <td>&emsp;</td>
+                        <td style="border-right:1px solid black; width: 20px">&emsp;</td>
+                        <td>&emsp;</td>
+                        <td style="border-right:1px solid black">&emsp;</td>
+                    </tr>
+                    count++;
+                }
+            }
+
+        <tr style="color:transparent;">
+            <td style="border-left:1px solid black">|</td>
+            <td>|</td>
+            @@*
+            <td>|</td>@@
+            <td colspan="3">_____________________________________ </td>
+            <td>|</td>
+            <td>|</td>
+            <td style="border-right:1px solid black">|</td>
+            <td>|</td>
+            <td style="border-right:1px solid black">|</td>
+        </tr>
+
+            <tr style="border:1px solid black; height:110px">
+                <td style="border:1px solid black;vertical-align:top;padding:5px" colspan="5">
+                    <strong>OBSERVACIONES: </strong>
+                </td>
+                <td style="border:1px solid black; border-right: none; vertical-align:top;padding:5px" colspan="2">
+                    <strong>TOTAL DE CR&Eacute;DITOS: </strong>
+                </td>
+                <td style="vertical-align:top;padding:5px" colspan="1">
+                    <strong> @Model.RegisterCourseTerms.Sum(x => x.Credits) </strong>
+                </td>
+                <td style="border:1px solid black;" colspan="2"></td>
+            </tr>
+            <tr style="border:1px solid black; height:140px">
+                <td style="border:1px solid black;vertical-align:bottom;text-align:center" colspan="4">
+                    <hr style="width:90%">
+                    <strong>ESTUDIANTE</strong>
+                </td>
+                <td style="border:1px solid black;vertical-align:bottom;text-align:center" colspan="4">
+                    <hr style="width:90%">
+                    <strong>COORDINADOR ACAD&Eacute;MICO</strong>
+                </td>
+                <td style="border:1px solid black;vertical-align:bottom;text-align:left;padding:5px" colspan="2">
+                    FECHA DE MATRICULA: @Model.RegisterDate
+                    @@*{<br />
+                    CONTRASEÑA DE CTI:@@
+                </td>
+            </tr>
+            <tr style="border:1px solid black;">
+                <td style="border:1px solid black;" colspan="10">
+                    Fecha: @Model.PrintingDate - Hora: @Model.PrintingHour hrs.
+                </td>
+            </tr>
+        </table>
+    *@
+</body>
+</html>

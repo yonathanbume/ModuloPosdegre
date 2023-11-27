@@ -1,0 +1,643 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.MedicalRecordViewModels.MedicalRecordViewModel
+@{
+    ViewData["Title"] = "Ficha Médica";
+    Layout = "~/Views/Shared/Templates/Inscription/_Layout.cshtml";
+}
+
+@section Styles {
+    @*<link href="~/css/areas/postulant/inscription/index.css" rel="stylesheet" />*@
+    <style>
+        .m-grid.m-grid--hor:not(.m-grid--desktop):not(.m-grid--desktop-and-tablet):not(.m-grid--tablet):not(.m-grid--tablet-and-mobile):not(.m-grid--mobile) > .m-grid__item.m-grid__item--fluid, .m-grid.m-grid--hor:not(.m-grid--desktop):not(.m-grid--desktop-and-tablet):not(.m-grid--tablet):not(.m-grid--tablet-and-mobile):not(.m-grid--mobile) > .m-grid__item.m-grid__item--fluid-general {
+            background-color: #2D3670 !important;
+        }
+    </style>
+}
+<div class="mx-auto m--margin-top-30" style="width: 75%;">
+    <div class="m-portlet">
+        <div class="m-portlet__head" style="text-align:center;">
+            <div class="m-portlet__head-caption mx-auto">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h1 id="portlet-title" class="m-portlet__head-text text-primary">
+                        FICHA MÉDICA
+                    </h1>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <a class="m-portlet__nav-link m-portlet__nav-link--icon">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <form id="medical-record-form" class="m-form m-form--state">
+            <input type="hidden" asp-for="StudentId" />
+            <div class="m-portlet__body">
+
+                <div class="col-xl-10 offset-xl-1">
+                    <div class="m-form__section m-form__section--first">
+                        <div class="m-form__heading">
+                            <h5 class="m-form__heading-title">
+                                Datos Generales
+                            </h5>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Escuela Profesional</label>
+                                <input asp-for="Career" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">DNI</label>
+                                <input asp-for="Dni" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Código de matrícula</label>
+                                <input asp-for="UserName" class="form-control m-input" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Apellidos y Nombres</label>
+                                <input asp-for="FullName" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-md-2 m-form__group-sub">
+                                <label class="form-control-label">Edad</label>
+                                <input asp-for="Age" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-md-3 m-form__group-sub">
+                                <label class="form-control-label">Sexo</label>
+                                <input asp-for="Sex" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-md-3 m-form__group-sub">
+                                <label class="form-control-label">Celular</label>
+                                <input asp-for="Phone" class="form-control m-input" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-12 m-form__group-sub">
+                                <label class="form-control-label">Religion</label>
+                                <input asp-for="Religion" class="form-control m-input" />
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-3 m-form__group-sub">
+                                <label class="form-control-label">Alergia a medicamentos</label>
+                                <select asp-for="HasDrugAllergy" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_BOOLEAN.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            @if (Model.HasDrugAllergy)
+                            {
+                                <div class="col-md-9 m-form__group-sub">
+                                    <label class="form-control-label">Especificar a qué</label>
+                                    <input asp-for="DrugAllergyDescription" class="form-control m-input" required />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-9 m-form__group-sub">
+                                    <label class="form-control-label">Especificar a qué</label>
+                                    <input asp-for="DrugAllergyDescription" class="form-control m-input" disabled required />
+                                </div>
+                            }
+
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">¿Conoces tu tipo de sangre?</label>
+                                <select asp-for="BloodTypeKnowledge" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_BOOLEAN.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            @if (Model.BloodTypeKnowledge)
+                            {
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label class="form-control-label">¿Cuál es su grupo sanguíneo?</label>
+                                    <select asp-for="BloodType" class="form-control m-input" required>
+                                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.BLOOD_TYPE.TYPE_1.VALUES)
+                                        {
+                                            <option value="@(type.Key)">@(type.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label class="form-control-label">¿Factor Rh?</label>
+                                    <select asp-for="RhFactor" class="form-control m-input" required>
+                                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_2.VALUES)
+                                        {
+                                            <option value="@(type.Key)">@(type.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label class="form-control-label">¿Cuál es su grupo sanguíneo?</label>
+                                    <select asp-for="BloodType" class="form-control m-input" disabled required>
+                                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.BLOOD_TYPE.TYPE_1.VALUES)
+                                        {
+                                            <option value="@(type.Key)">@(type.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label class="form-control-label">¿Factor Rh?</label>
+                                    <select asp-for="RhFactor" class="form-control m-input" disabled required>
+                                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_2.VALUES)
+                                        {
+                                            <option value="@(type.Key)">@(type.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="m-form__seperator m-form__seperator--dashed"></div>
+                    <div class="m-form__section">
+                        <div class="m-form__heading">
+                            <h5 class="m-form__heading-title">
+                                Antecedentes Personales
+                            </h5>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Hábitos nocivos ¿Fuma?</label>
+                                <select asp-for="Smoke" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Hábitos nocivos ¿Toma licor?</label>
+                                <select asp-for="Liqueur" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Transfuciones Sanguíneas</label>
+                                <select asp-for="BloodTransfusions" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Enfermedades infecto-contagiosas</label>
+                                <select asp-for="InfectiousDiseases" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Vacunas completas</label>
+                                <select asp-for="CompleteVaccinations" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Enfermedades crónicas</label>
+                                <select asp-for="ChronicDiseases" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Discapacidad</label>
+                                <select asp-for="Disability" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Accidentes</label>
+                                <select asp-for="Accidents" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Intoxicaciones</label>
+                                <select asp-for="Intoxications" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Cirugia/hospitalización</label>
+                                <select asp-for="SurgeryOrHospitalization" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Toma medicamentos</label>
+                                <select asp-for="TakeMedication" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Problemas psicológicos</label>
+                                <select asp-for="PsychologicalProblems" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-12 m-form__group-sub">
+                                <label class="form-control-label">¿Usted padece de alguna enfermedad, estado problema de salud que no figura aquí, y que deberiamos conocer?</label>
+                                <input asp-for="OtherDiseaseDescription" class="form-control m-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__seperator m-form__seperator--dashed"></div>
+                    <div class="m-form__section">
+                        <div class="m-form__heading m-form__section--first">
+                            <h5 class="m-form__heading-title">
+                                Antecedentes familiares
+                            </h5>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Diabetes</label>
+                                <select asp-for="Diabetes" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Obesidad</label>
+                                <select asp-for="Obesity" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Cardiovascular</label>
+                                <select asp-for="Cardiovascular" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Alergia</label>
+                                <select asp-for="Allergy" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Infecciones</label>
+                                <select asp-for="Infections" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Cáncer</label>
+                                <select asp-for="Cancer" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Problemas psicológicos</label>
+                                <select asp-for="HomePsychologicalProblems" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Alcohol, drogas y otros</label>
+                                <select asp-for="AlcoholOrDrugs" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Violencia intrafamiliar</label>
+                                <select asp-for="DomesticViolence" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-12 m-form__group-sub">
+                                <label class="form-control-label">¿Alguno de tus familiares padece de alguna enfermedad, estado o problema de salud que no figura aquí y que deberiamos conocer?</label>
+                                <input asp-for="HomeOtherDiseaseDescription" class="form-control m-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__seperator m-form__seperator--dashed"></div>
+                    <div class="m-form__section">
+                        <div class="m-form__heading">
+                            <h5 class="m-form__heading-title">
+                                Escala de autoevaluación para la depresión de Zung (SDS)
+                                <i data-toggle="m-tooltip" data-width="auto" data-html="true" class="m-form__heading-help-icon flaticon-info" title="" data-original-title="<strong>Por favor lea cada enunciado y decida con que frecuencia el enunciado describe en que usted se ha sentido en los últimos días, para cada enunciado seleccione una alternativa</strong>"></i>
+                            </h5>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Me siento decaido y triste</label>
+                                <select asp-for="SadEmotionalLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Por las mañanas es cuando me siento mejor</label>
+                                <select asp-for="FeelMorningLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Siento ganas de llorar o irrumpo en llanto</label>
+                                <select asp-for="CryEmotionalLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Tengo problemas para dormir por la noche</label>
+                                <select asp-for="NightDreamProblemLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Como la misma cantidad siempre</label>
+                                <select asp-for="SameEmotionLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Todavía disfruto el sexo</label>
+                                <select asp-for="SexEnjoyLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">He notado que he perdido peso</label>
+                                <select asp-for="WeightKnowledgeLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Tengo problemas de estreñimiento</label>
+                                <select asp-for="ConstipationProblemLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Mi corazón late más rápido de lo normal</label>
+                                <select asp-for="HeartProblemLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Me canso sin razón alguna </label>
+                                <select asp-for="TirednessLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Mi mente esta tan clara como siempre</label>
+                                <select asp-for="ClearMindLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Hago las cosas con la misma facilidad de antes</label>
+                                <select asp-for="RythmChangeLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Me siento agitado y no puedo estar quieto </label>
+                                <select asp-for="AgitatedLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Tengo esperanza en el futuro</label>
+                                <select asp-for="HopefulLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Estoy más irritable de lo normal</label>
+                                <select asp-for="IrritationLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Me es fácil tomar decisiones </label>
+                                <select asp-for="VelocityDecisionLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Siento que soy útil y me necesitan</label>
+                                <select asp-for="UsefulLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Me satisface mi vida actual</label>
+                                <select asp-for="SatisfactionLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Creo que los demás estarían mejor si yo muriera</label>
+                                <select asp-for="SuicideLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 m-form__group-sub">
+                                <label class="form-control-label">Todavía disfruto de las cosas que disfrutaba antes</label>
+                                <select asp-for="EnjoymentLevel" class="form-control m-input" required>
+                                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                                    {
+                                        <option value="@(type.Key)">@(type.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="m-portlet__foot m-portlet__foot--fit m--align-center">
+                    <div class="m-form__actions">
+                        <button class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                            <span>
+                                <i class="la la-save"></i>
+                                &nbsp;&nbsp;
+                                <span>Guardar e imprimir</span>
+                            </span>
+                        </button>
+                        <a id="btn-go-to" class="btn btn-primary m-btn m-btn--custom m-btn--icon" href="/" style="display:none;">
+                            <span>
+                                <i class="la la-long-arrow-right"></i>
+                                &nbsp;&nbsp;
+                                <span>Ir a Intranet</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/views/medicalrecord/index.js"></script>
+}

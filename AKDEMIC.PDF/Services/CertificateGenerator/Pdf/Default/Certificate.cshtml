@@ -1,0 +1,397 @@
+﻿@model AKDEMIC.PDF.Services.CertificateGenerator.Models.CertificateModel
+@using AKDEMIC.CORE.Helpers;
+@using AKDEMIC.CORE.Extensions;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>@ConstantHelpers.RECORDS.VALUES[Model.RecordType]</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .header {
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+            .header .header-univ-logo img {
+                height: 100px !important;
+            }
+
+            .header .university-title {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-header-text {
+                font-size: 20px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+                font-weight: bold !important;
+            }
+
+            .header .university-subheader-text {
+                font-size: 15px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+        .document-title {
+            font-size: 30px !important;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+            text-decoration: underline;
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
+        }
+
+        .document-date {
+            padding-left: 80px !important;
+            padding-right: 80px !important;
+            text-align: right !important;
+            font-size: 16px !important;
+        }
+
+        .document-body {
+            font-size: 16px;
+            padding-left: 80px !important;
+            padding-right: 80px !important;
+        }
+
+        .justify-content {
+            /*      text-align: justify !important;
+                            text-justify: inter-word;*/
+        }
+
+        .tfooter {
+            font-size: 16px !important;
+        }
+
+
+
+        .footer {
+            font-size: 15px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th>
+                    <table class="header">
+                        @if (Model.University.HeaderType == 1)
+                        {
+                            <tr>
+                                <th width="15%">
+                                    <div class="header-univ-logo">
+                                        <img src="@Model.University.LogoImgPath" />
+                                    </div>
+                                </th>
+                                <th>
+                                    <div>
+                                        <p class="university-title">@GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                                        <p class="university-header-text">@Model.University.HeaderText</p>
+                                        @if (!string.IsNullOrEmpty(Model.University.SubHeaderText))
+                                        {
+                                            <p class="university-subheader-text">@Model.University.SubHeaderText</p>
+                                        }
+                                    </div>
+                                </th>
+                                <th width="15%">
+
+                                </th>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <th colspan="3">
+                                    <div class="header-univ-logo">
+                                        <img src="@Model.University.LogoImgPath" />
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">
+                                    <div>
+                                        <p class="university-title">@GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                                        <p class="university-header-text">@Model.University.HeaderText</p>
+                                        @if (!string.IsNullOrEmpty(Model.University.SubHeaderText))
+                                        {
+                                            <p class="university-subheader-text">@Model.University.SubHeaderText</p>
+                                        }
+                                    </div>
+                                </th>
+                            </tr>
+                        }
+
+                    </table>
+                    <table>
+                        <tr>
+                            <th style="border-bottom:2px solid black"></th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th height="20px">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="document-title">
+                    @if (Model.DocumentFormat != null && !string.IsNullOrEmpty(Model.DocumentFormat.CustomTitle))
+                    {
+                        @Html.Raw(Model.DocumentFormat.CustomTitle)
+                    }
+                    else
+                    {
+                        @ConstantHelpers.RECORDS.VALUES[Model.RecordType]
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="document-body">
+                    @if (Model.DocumentFormat != null && !string.IsNullOrEmpty(Model.DocumentFormat.CustomContent))
+                    {
+                        @Html.Raw(Model.DocumentFormat.CustomContent)
+                    }
+                    else
+                    {
+                        <p class="bold">
+                            LA @Model.University.Office.ToUpper() DE LA @GeneralHelpers.GetInstitutionName().ToUpper(), QUE SUSCRIBE.
+                        </p>
+                        <p>
+                            Hace constar:
+                        </p>
+
+                        <div class="justify-content">
+
+                            @switch (Model.RecordType)
+                            {
+                                case ConstantHelpers.RECORDS.EGRESS:
+                                    <p>
+                                        Que, <strong>@Model.Student.FullName, </strong> con C&oacute;digo de Matrícula N° <strong>@Model.Student.UserName,</strong> de la Facultad de <strong>@Model.Student.Faculty, </strong> Escuela Profesional de <strong>@Model.Student.Career, egresó</strong>
+                                        en el <strong>AÑO ACADÉMICO @Model.Student.GraduationTerm?.Name, en el <strong>@(Model.Student.GraduationTerm?.Number == 1 ? "PRIMER SEMESTRE" : Model.Student.GraduationTerm?.Number == 2 ? "SEGUNDO SEMESTRE" : "")</strong></strong> con fecha: <strong>@Model.Student.GraduationTerm?.EndDate.ToDateFormat() </strong>, obteniendo <strong>Créditos Aprobados Totales : @Model.Student.ApprovedCredits.</strong>
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.REGULARSTUDIES:
+                                    <p>
+                                        Que, @(Model.Student.Sex == ConstantHelpers.SEX.MALE ? "el Sr." : "la Srta.") <strong>@Model.Student.UserName, </strong> con C&oacute;digo de Matr&iacute;cula N° <strong>@Model.Student.UserName</strong> de la Facultad de <strong>@Model.Student.Faculty, </strong> Escuela Profesional de <strong>@Model.Student.Career</strong>, es estudiante y registra su matr&iacute;cula
+                                        en el AÑO ACADEMICO <strong>@Model.Student.RecordTerm?.Year,</strong> cursando el <strong>@(Model.Student.RecordTerm?.Number == 1 ? "PRIMER SEMESTRE" : Model.Student.RecordTerm?.Number == 2 ? "SEGUNDO SEMESTRE" : "")</strong> del Sistema Curricular flexible por competencias.@*, siendo su condici&oacute;n como estudiante @Model.StudentCondition*@
+                                    </p>
+                                    <p>
+                                        Asi consta en los documentos oficiales que obran en esta Oficina, a los que me remito, en caso necesario.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.ENROLLMENT:
+                                    <p>
+                                        Que, <strong>@Model.Student.FullName, </strong> con C&oacute;digo de Matrícula Nº <strong>@Model.Student.UserName,</strong> de la Facultad de <strong>@Model.Student.Faculty, </strong> Escuela Profesional de <b>@Model.Student.Career, </b>desarroll&oacute; sus estudios y <b>registr&oacute; matr&iacute;cula</b>
+                                        en el AÑO ACADEMICO <strong>@Model.Student.RecordTerm?.Year</strong>, en el <strong>@(Model.Student.RecordTerm?.Number == 1 ? "PRIMER SEMESTRE" : Model.Student.RecordTerm?.Number == 2 ? "SEGUNDO SEMESTRE" : "")</strong>, con fecha: <strong>@Model.Student.RecordTerm?.EnrollmentStartDate.ToDateFormat() </strong>
+                                    </p>
+                                    <p>
+                                        As&iacute; consta en los documentos oficiales que obran en esta Oficina, a los que me remito, en caso necesario.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.NODEBT:
+                                    <p>
+                                        Que, <strong>@Model.Student.FullName, </strong> con C&oacute;digo de Matrícula Nº <strong>@Model.Student.UserName,</strong> de la Facultad de <strong>@Model.Student.Faculty, </strong> Escuela Profesional de <strong>@Model.Student.Career, no tiene adeudo</strong>
+                                        alguno con la Universidad a la fecha.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.UPPERTHIRD:
+                                    <p>
+                                        Que, el(la) estudiante <strong>@Model.Student.FullName</strong>, de la Facultad de @Model.Student.Faculty - Escuela Académico Profesional de @Model.Student.Career, con Código de Matrícula Nº <strong>@Model.Student.UserName</strong>,
+                                        se encuentra ubicada dentro del Tercio Superior, en el @(Model.Student.RecordTerm?.MeritOrder)º puesto de @Model.Student.RecordTerm?.TotalMeritOrder que ocupan el Tercio Superior del @Model.Student.RecordTerm?.AcademicYear ciclo en el semestre académico @(Model.Student.RecordTerm?.Name),
+                                        con promedio semestral de @Model.Student.RecordTerm?.WeightedAverageGrade como consta en el archivo correspondiente.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.UPPERFIFTH:
+                                    <p>
+                                        Que, el(la) estudiante <strong>@Model.Student.FullName</strong>, de la Facultad de @Model.Student.Faculty - Escuela Académico Profesional de @Model.Student.Career, con Código de Matrícula Nº <strong>@Model.Student.UserName</strong>,
+                                        se encuentra ubicada dentro del Quinto Superior, en el @(Model.Student.RecordTerm?.MeritOrder)º puesto de @Model.Student.RecordTerm?.TotalMeritOrder que ocupan el Quinto Superior del @Model.Student.RecordTerm?.AcademicYear ciclo en el semestre académico @(Model.Student.RecordTerm?.Name),
+                                        con promedio semestral de @Model.Student.RecordTerm?.WeightedAverageGrade como consta en el archivo correspondiente.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.PROOFONINCOME:
+                                    <p>
+                                        Que, @(Model.Student.Sex == ConstantHelpers.SEX.MALE ? "el Sr." : "la Srta.") <strong>@Model.Student.FullName</strong>, con C&oacute;digo de Matr&iacute;cula N° <strong>@Model.Student.UserName,</strong> de la Facultad de <strong>@Model.Student.Faculty, </strong> Escuela Profesional de <strong>@Model.Student.Career</strong>, INGRES&Oacute; en el año <b>@Model.Student.AdmissionTerm?.Year,</b>
+                                        por la modalidad de <strong>@Model.Student.Postulant?.Modality</strong> con <strong>@Model.Student.Postulant?.Score puntos</strong> ocupando el <strong>@Model.Student.Postulant?.Place lugar</strong> de un total de <strong>@Model.Student.Postulant?.TotalStudents</strong> ingresantes.
+                                    </p>
+                                    <p>
+                                        Asi consta en los documentos oficiales que obran en esta Oficina, a los que me remito, en caso necesario.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.FIRST_ENROLLMENT:
+                                    <p>
+                                        Que, <strong>@Model.Student.FullName</strong>, de la Facultad
+                                        de <strong>@Model.Student.Faculty</strong> - Escuela Profesional de <strong>@Model.Student.Career</strong>, con Código de
+                                        Matrícula Nº <strong>@Model.Student.UserName</strong>, registra primera matrícula en el semestre académico
+                                        @Model.Student.FirstEnrollment.Name (matriculándose en @Model.Student.FirstEnrollment.EnrolledCourses asignaturas del I Ciclo
+                                        con @Model.Student.FirstEnrollment.EnrolledCredits créditos), como consta en los archivos correspondientes.
+                                    </p>
+
+                                    break;
+                                case ConstantHelpers.RECORDS.TENTH_HIGHER:
+                                    <p>
+                                        Que, el(la) estudiante <strong>@Model.Student.FullName</strong>, de la Facultad de @Model.Student.Faculty - Escuela Académico Profesional de @Model.Student.Career, con Código de Matrícula Nº <strong>@Model.Student.UserName</strong>,
+                                        se encuentra ubicada dentro del Décimo Superior, en el @(Model.Student.RecordTerm?.MeritOrder)º puesto de @Model.Student.RecordTerm?.TotalMeritOrder que ocupan el Décimo Superior del @Model.Student.RecordTerm?.AcademicYear ciclo en el semestre académico @(Model.Student.RecordTerm?.Name),
+                                        con promedio semestral de @Model.Student.RecordTerm?.WeightedAverageGrade como consta en el archivo correspondiente.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.UPPER_MIDDLE:
+                                    <p>
+                                        Que, el(la) estudiante <strong>@Model.Student.FullName</strong>, de la Facultad de @Model.Student.Faculty - Escuela Académico Profesional de @Model.Student.Career, con Código de Matrícula Nº <strong>@Model.Student.UserName</strong>,
+                                        se encuentra ubicada dentro de la Media Superior, en el @(Model.Student.RecordTerm.MeritOrder)º puesto de @Model.Student.RecordTerm.TotalMeritOrder que ocupan la Media Superior Superior del @Model.Student.RecordTerm.AcademicYear ciclo en el semestre académico @(Model.Student.RecordTerm.Name),
+                                        con promedio semestral de @Model.Student.RecordTerm.WeightedAverageGrade como consta en el archivo correspondiente.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.NOT_BE_PENALIZED:
+                                    <p>
+                                        Que, Don(ña) <strong>@Model.Student.FullName</strong> con DNI N° <strong>@Model.Student.Document</strong> con código de matrícula N° <strong>@Model.Student.UserName</strong>, de la Escuela Profesional de <strong>@Model.Student.Career</strong>
+                                        de la Facultad de <strong>@Model.Student.Faculty</strong>, quien hasta la fecha está cursando el Ciclo @Model.Student.AcademicYear.
+                                    </p>
+                                    <p>
+                                        El estudiante no ha sido sancionado en la Universidad por razones académicas. Según
+                                        consta en los archivos de la Unidad de Registros Académicos a las cuales me remito.
+                                    </p>
+                                    break;
+                                case ConstantHelpers.RECORDS.STUDYRECORD:
+                                    <p>
+                                        Que, @(Model.Student.Sex == ConstantHelpers.SEX.MALE ? "el Sr." : "la Srta.") <b>@Model.Student.FullName, </b> con C&oacute;digo de Matr&iacute;cula N° <b>@Model.Student.UserName,</b> de la Facultad de <b>@Model.Student.Faculty, </b> Escuela Profesional de <b>@Model.Student.Career, </b> se encuentra matriculado(a)
+                                        en el <b>Periodo Académico @Model.CurrentTerm?.Name </b> según obran en los archivos de la Facultad.
+                                    </p>
+
+                                    <p>
+                                        Asi consta en los documentos oficiales que obran en esta Oficina, a los que me remito, en caso necesario.
+                                    </p>
+                                    break;
+                            }
+
+                            <p>
+                                Se expide la presente Constancia, a solicitud de la interesada para los fines que estime conveniente.
+                            </p>
+
+                        </div>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="document-date">
+                        @ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], @DateTime.UtcNow.ToDefaultTimeZone().Day de @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.ToDefaultTimeZone().Month] de @DateTime.UtcNow.ToDefaultTimeZone().Year
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot class="tfooter">
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td width="30%">
+                            </td>
+                            <td width="40%" style="text-align:center !important;">
+                                @if (!string.IsNullOrEmpty(Model.University.SignatuareImgBase64))
+                                {
+                                    <img style="width:230px !important;" src="@Model.University.SignatuareImgBase64" />
+                                }
+                                else
+                                {
+                                    <div style="height:80px !important;"></div>
+                                }
+                            </td>
+                            <td width="30%">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%">
+                            </td>
+                            <td width="40%" style="border-top:2px solid black; text-align:center;">
+                                @Model.University.AcademicRecordSigned <br />
+                                @Model.University.BossPositionRecordSigning
+                            </td>
+                            <td width="30%">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left:80px !important; padding-right:80px !important;" colspan="7">
+                    <table style="width:100% !important">
+                        <tr>
+                            <td>
+                                <img style="width:100px; height:100px !important;" src="@Model.ImageQRBase64" />
+                            </td>
+                            <td style="text-align:right;">
+                                @if (!string.IsNullOrEmpty(Model.GeneratedBy))
+                                {
+                                    @Html.Raw("Usuario:") @Model.GeneratedBy
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <table class="footer">
+        <tr>
+            <td style="padding-bottom:10px !important;">
+                @(string.IsNullOrEmpty(Model.UserProcedureCode) ? "-" : Model.UserProcedureCode)
+            </td>
+            <td style="text-align:right;">
+                @if (!string.IsNullOrEmpty(Model.Payment.SerialNumber))
+                {
+                    @Html.Raw("RECIBO N°") @Model.Payment.SerialNumber
+                }
+            </td>
+        </tr>
+        <tr style="border-top:2px solid black;">
+            <td width="70%">
+            </td>
+            <td style="text-align:right; font-size:12px !important; padding-top:3px !important;">
+                @Model.University.Address <br />
+                Cel : @Model.University.PhoneNumber<br />
+                <a href="@Model.University.WebSite">@Model.University.WebSite</a>
+            </td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

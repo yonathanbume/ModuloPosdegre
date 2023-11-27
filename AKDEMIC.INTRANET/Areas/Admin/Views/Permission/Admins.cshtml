@@ -1,0 +1,149 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.PermissionViewModels.AdminViewModels
+@{
+    ViewBag.Title = "Administradores";
+    ViewBag.SubTitle = "Listado de Administradores";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button class="btn btn-primary m-btn m-btn--icon btn-add" data-toggle="modal" data-target="#create_modal">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo Administrador</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable" id="ajax_data"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="create_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nuevo Administrador
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="create-form" method="post">
+                @*asp-area="Admin" asp-controller="Permission" asp-action="NewAdmin"*@
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label for="cTeacherId">Usuario :</label>
+                            <select id="cTeacherId" name="TeacherId" class="form-control m-input"></select>
+                        </div>
+
+                        <div class="form-group m-form__group col-lg-12">
+                            <label for="cTeacherId">Sistemas :</label>
+                            @foreach (var item in Model.ListSystems.ToList())
+                            {
+
+                                <div class="m-checkbox-list">
+                                    <label class="m-checkbox">
+                                        <input name="ListChecked[]" id="@($"chbx-{item.Key}")" class="form-control" type="checkbox" value="@item.Key" /><label>@item.Value</label>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Administrador
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" method="post">
+                @*asp-area="Admin" asp-controller="Permission" asp-action="NewAdmin"*@
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" name="TeacherId" id="cTeacherId"/>
+                        @*<div class="form-group m-form__group col-lg-12" hidden>
+                            <label for="cTeacherId">Docente :</label>
+                            <select id="cTeacherId" name="TeacherId" class="form-control m-input"></select>
+                        </div>*@
+
+                        <div class="form-group m-form__group col-lg-12">
+                            <label for="cTeacherId">Sistemas :</label>
+                            @foreach (var item in Model.ListSystems.ToList())
+                            {
+
+                                <div class="m-checkbox-list">
+                                    <label class="m-checkbox">
+                                        <input name="ListChecked[]" id="@($"chbx-{item.Key}")" class="form-control" type="checkbox" value="@item.Key" /><label>@item.Value</label>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/jquery-ajax-unobtrusive.min.js"></script>
+    <script src="~/js/areas/admin/permission/admins.js"></script>
+}
+
+

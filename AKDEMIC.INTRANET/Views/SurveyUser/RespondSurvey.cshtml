@@ -1,0 +1,50 @@
+﻿@using AKDEMIC.INTRANET.ViewModels.SurveyViewModels
+@model RespondSurveyViewModel
+@{
+    ViewData["Title"] = "Responder";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de Encuestas", Controller = "SurveyUser", Action = "Index"},
+new BreadcrumbViewData { Name = "Responder Encuesta", Controller = null, Action = null}
+};
+    var sended = Convert.ToBoolean(ViewBag.Sended);
+    var SurveyUserId = ViewBag.SurveyUserId;
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Encuesta
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row p-3 bg-light">
+                <strong>Competencias específicas del perfil a evaluar</strong>
+            </div>
+            <form id="survey-form" asp-area="" asp-controller="SurveyUser" asp-action="SendAnswers">
+                <input type="hidden" name="SurveyUserId" id="SurveyUserId" value="@SurveyUserId">
+                <div id="questions"></div>
+                <div class="row">
+                    @if (!sended)
+                    {
+                        <button id="btnSend" class="btn btn-sm btn-primary m-btn m-btn--air btn-send" type="submit">Enviar</button>
+                        <span>&emsp;</span>
+                        <button id="btnCancel" class="btn btn-sm btn-secondary m-btn m-btn--air btn-cancel" type="reset">Cancelar</button>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/css/views/survey/respondSurvey.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/views/survey/respondSurvey.js" asp-append-version="true"></script>
+}

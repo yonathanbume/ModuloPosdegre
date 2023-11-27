@@ -1,0 +1,48 @@
+﻿<div class="modal fade" id="modal_user_image_modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Adjuntar Foto
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="container_modal_user">
+                    <div class="form-group m-form__group row m-form__group--first align-items-center" style="margin:10px;">
+
+                        <div class="col-lg-6">
+                            <div class="row mt-4">
+                                <div class="m-form__group-sub col-lg-12 upload-demo-wrap">
+                                    <div id="upload-offi" style="padding-bottom:30px;text-align:center">
+                                        <img id="current-img-offi" style="width: 300px; height:300px;max-width: 100%;" src="/images/demo/user.png" />
+                                        <p style="font-weight:bold; margin-top:10px; text-align:center">Resolución de la imagen recomendada: <span style="color:#8b0404;">aprox 300px x 300px</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 align-self-center">
+                            <div class="preview" style="overflow: hidden; border:2px solid"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="m--margin-top-60"></div>
+
+                    <div class="form-group m-form__group row text-center">
+                        <div class="m-form__group-sub col-md-12 col-lg-12 col-xs-12">
+                            <button id="btn_save_cropper" class="btn btn-primary m-btn m-btn--icon">
+                                <span>
+                                    <i class="la la-save"></i>
+                                    <span>Recortar y Guardar</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,218 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.EvaluationReportViewModels.ActaScoresViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+</head>
+<body>
+    <br />
+    <div style="position:absolute; text-align:center; padding:20px 20px;">
+        @*<img src="@Model.Img" />*@
+    </div>
+    <div class="unk-header center" style="font-size:18px;">
+        <h1 class="negrita">@GeneralHelpers.GetInstitutionName().ToUpper()</h1>
+        <h2 class="negrita">VICE RECTORADO ACADÉMICO</h2>
+        <h2 class="negrita">OFICINA DE REGISTRO Y ARCHIVO ACADÉMICO</h2>
+    </div>
+    <div style="float: right;">
+        @*<img style="width:150px !important; padding-right:30px;" src="data:image/png;base64, @Model.FinalQR" />*@
+        <img style="width:140px !important; height:25px !important; padding-right:30px;" src="@Model.FinalQR" />
+
+    </div>
+    <br />
+
+    <table border="0" style="border: none; margin: 0;">
+        <tbody>
+            <tr>
+                <td class="td-header">
+                    &emsp;
+                </td>
+                <td style="width:90px; border:0px !important;" class="td-header">
+                    <span class="detail-header" style="font-size: 10px !important; font-weight: bold;"> Nº DE REG.:</span>
+                </td>
+                <td style="border:0px !important;" class="td-header">
+                    <span style="font-size: 10px !important; font-weight: bold;">@Model.Number </span>
+                </td>
+                <td class="td-header" style="width:30px !important;">
+                    &emsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h3 style="display: inline"> REGISTRO DE EVALUACIÓN: @(ConstantHelpers.Intranet.EvaluationReportType.NAMES.ContainsKey(Model.Type) ? ConstantHelpers.Intranet.EvaluationReportType.NAMES[Model.Type].ToUpper() : "-")  </h3>
+                </td>
+                <td style="border:0px !important;" class="td-header">
+                    <span style="font-size: 10px !important; font-weight: bold;"> Nº DE ACTA:</span>
+                </td>
+                <td style="border:0px !important;" class="td-header">
+                    <span style="font-size: 10px !important; font-weight: bold;">@Model.Number </span>
+                </td>
+                <td class="td-header" style="width:30px !important;">
+                    &emsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h3 style="display: inline"> FACULTAD: @Model.BasicInformation.Faculty</h3>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> HORAS TEORICAS:</span>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header">@(Model.BasicInformation.TheoreticalHours.HasValue ? Model.BasicInformation.TheoreticalHours : 0)</span>
+                </td>
+                <td class="td-header" style="width:30px !important;">
+                    &emsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h3 style="display: inline"> ESCUELA PROFESIONAL: @Model.BasicInformation.Career </h3>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> HORAS PRÁCTICAS: </span>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header">@(Model.BasicInformation.PracticalHours.HasValue ? Model.BasicInformation.PracticalHours : 0)</span>
+                </td>
+                <td class="td-header" style="width:30px !important;">
+                    &emsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h3 style="display: inline"> COMPONENTE CURRICULAR: @Model.BasicInformation.Course</h3>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> HORAS EFECTIVAS:</span>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header">@(Model.BasicInformation.EffectiveHours.HasValue ? Model.BasicInformation.EffectiveHours : 0)</span>
+                </td>
+                <td class="td-header" style="width:30px !important;">
+                    &emsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h3 style="display: inline">DOCENTE: @Model.BasicInformation.Teacher </h3>
+                </td>
+                <td class="td-header" colspan="3">
+                    <span class="detail-header"> FECHA: @(Model.LastGradeRegistration is null ? "-" : Model.LastGradeRegistration.ToLocalDateFormat())</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h3 style="display: inline">CRÉDITOS: @Model.BasicInformation.Credits</h3>
+                </td>
+                <td class="td-header" colspan="3">
+                    <span class="detail-header"> HORA : @(Model.LastGradeRegistration is null ? "-" : Model.LastGradeRegistration.ToDefaultTimeZone()?.ToString("hh:mm:ss tt").ToUpper())</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h3 style="display: inline">
+                        AÑO ACADÉMICO: @Model.BasicInformation.Term &emsp; CICLO: @(!string.IsNullOrEmpty(Model.BasicInformation.Cycle) ? ConstantHelpers.ACADEMIC_YEAR.TEXT[Convert.ToInt32(Model.BasicInformation.Cycle)].ToUpper() : "-")  &emsp;
+
+                        @if (Model.Type != ConstantHelpers.Intranet.EvaluationReportType.EXTRAORDINARY_EVALUATION)
+                        {
+                            @(Model.BasicInformation.Section.Contains("GRUPO")?Model.BasicInformation.Section : $"GRUPO {Model.BasicInformation.Section}");
+                            <span>&emsp;</span>
+                        }
+                        Usuario : @Model.BasicInformation.User.ToLower()
+                    </h3>
+                </td>
+                <td class="td-header" colspan="3">
+                    <span class="detail-header"> F.I.: @DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt").ToUpper()</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (Model.Type == ConstantHelpers.Intranet.EvaluationReportType.EXTRAORDINARY_EVALUATION)
+    {
+        <table style="margin-top:720px !important;">
+            <thead>
+                <tr>
+                    <th class="bold center">DOCENTES</th>
+                    <th class="bold center">CARGO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="thd" style="border-right:0px !important;">@Model.BasicInformation.Teacher</th>
+                    <th class="thd">Presidente</th>
+                </tr>
+                @foreach (var item in Model.BasicInformation.Committee)
+                {
+                    <tr>
+                        <th class="thd">@item</th>
+                        <th class="thd">Comit&eacute;</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+    }
+
+    @{ 
+        var style = Model.Type == ConstantHelpers.Intranet.EvaluationReportType.EXTRAORDINARY_EVALUATION ? "" : "margin-top:820px !important;";
+    }
+    <table style="@style">
+        <tbody>
+            <tr style="height:45px; vertical-align:top;">
+                <th style="width:50%;" colspan="10"><span style="float:left; font-size:10px;">Evidencia de Conocimiento</span></th>
+            </tr>
+            <tr style="height:45px; vertical-align:top;">
+                <th style="width:50%;" colspan="10"><span style="float:left; font-size:10px;">Evidencia de Desempeño</span></th>
+            </tr>
+            <tr style="height:45px; vertical-align:top;">
+                <th style="width:50%; " colspan="4"><span style="float:left; font-size:10px;">Evidencia de Producto</span></th>
+                <th style="border:0px !important; font-size:18px;" colspan="6"><span style="margin-top:2px; margin-left:2px;">@ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], @DateTime.UtcNow.ToDefaultTimeZone().Day de  @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.ToDefaultTimeZone().Month].ToLower() de @DateTime.UtcNow.ToDefaultTimeZone().Year</span></th>
+            </tr>
+            <tr>
+                <th style="text-align:center; font-weight:bold; border:0px !important; height:50px !important;">&emsp;</th>
+            </tr>
+            <tr>
+                <th style="border:0px !important; border-top:1px solid rgba(0, 0, 0, 0.55) !important; text-align:center; color:rgba(0, 0, 0, 0.55) !important;">Coordinador Académico<br />Firma y Sello</th>
+                <th style="border:0px !important;">&emsp;</th>
+                <th style="border:0px !important;">&emsp;</th>
+                <th style="border:0px !important;">&emsp;</th>
+                <th style="border:0px !important;">&emsp;</th>
+                <th style="border:0px !important;">&emsp;</th>
+            </tr>
+            <tr>
+                <th style="text-align:center; font-weight:bold; border-bottom:0px !important">Fecha de Recepción</th>
+                <th style="text-align:center; font-weight:bold; border:0px !important">&emsp;</th>
+                <th width="15%" style="text-align:center; border:0px !important; border-top:1px solid rgba(0, 0, 0, 0.55) !important; color:rgba(0, 0, 0, 0.55) !important;">Director de Escuela<br />Firma y Sello</th>
+                <th style="text-align:center; font-weight:bold; border:0px !important">&emsp;</th>
+                <th width="15%" style="text-align:center; border:0px !important; border-top:1px solid rgba(0, 0, 0, 0.55) !important; color:rgba(0, 0, 0, 0.55) !important">Docente del Curso<br />Firma y Sello</th>
+                <th style="text-align:center; font-weight:bold; border:0px !important">&emsp;</th>
+                <th width="15%" style="text-align:center; border:0px !important; border-top:1px solid rgba(0, 0, 0, 0.55) !important;">&emsp;</th>
+                <th style="text-align:center; font-weight:bold; border:0px !important">&emsp;</th>
+                <th width="15%" style="text-align:center; border:0px !important; border-top:1px solid rgba(0, 0, 0, 0.55) !important;">&emsp;</th>
+                <th style="text-align:center; font-weight:bold; border:0px !important">&emsp;</th>
+
+            </tr>
+            <tr>
+                <th style="font-weight:bold; text-align:center; border-top:0px !important;">@(string.IsNullOrEmpty(Model.BasicInformation.ReceptionDate)?"-" : Model.BasicInformation.ReceptionDate)</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+                <th style="font-weight:bold; text-align:center; border:0px !important;">&emsp;</th>
+            </tr>
+        </tbody>
+    </table>
+
+
+</body>
+</html>

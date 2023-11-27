@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Cronograma Académico";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Cronograma" }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Cronograma Académico
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-section">
+                <div class="m-section__content">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="m-portlet m-portlet--skin-dark m-portlet--bordered-semi m--bg-primary">
+                                <div class="m-portlet__body text-center py-4">
+                                    <h2 class="m-0 m--font-transform-u">calendario</h2>
+                                    <div class="m-separator m-separator--light my-3"></div>
+                                    <div id="academic-calendar-date-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="table-responsive">
+                                <div id="academic-calendar-date-content-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/views/academiccalendardate/index.js"></script>
+}

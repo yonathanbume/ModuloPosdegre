@@ -1,0 +1,132 @@
+﻿@using AKDEMIC.INTRANET.Areas.CareerDirector.Models.StudentInformation
+@model StudentViewModel
+
+@{
+    ViewData["Title"] = "Situación Académica";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Estudiantes", Controller = "StudentInformation", Action = "Index", Area = "CareerDirector" },
+new BreadcrumbViewData { Name = "Información" }
+};
+}
+
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/areas/academic/studentinformation/information.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de estudiantes
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item" style="width:400px">
+                        <select type="text" class="form-control m-select2" id="search">
+                            <option></option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-3 col-info">
+            <div class="row">
+                <div class="col-4 col-lg-12">
+                    <div class="m-portlet">
+                        <div class="m-portlet__body m-portlet__body-profile">
+                            <div class="student-profile-section text-center">
+                                <img src="@(string.IsNullOrEmpty(Model.Picture) ? "/images/demo/user.png" : Model.Picture)" class="m--img-rounded m--img-centered" alt="" id="student-picture" />
+
+                                <label class="fullname" id="student-fullname">
+                                    @Model.FullName
+                                </label>
+
+                                <label class="title">Código:</label>
+
+                                <label class="code" id="student-code">@Model.Code</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-lg-12">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        DATOS GENERALES
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+
+                            <div class="student-info-block">
+                                <label class="title">Escuela:</label>
+                                <label class="description" id="student-career">@Model.Career</label>
+                            </div>
+
+                            <div class="student-info-block">
+                                <label class="title">Modalidad de Ingreso:</label>
+                                <label class="description">@Model.Modality</label>
+                            </div>
+
+                            <div class="student-info-block">
+                                <label class="title">Semestre Actual:</label>
+                                <label class="description">@Model.CurrentTerm</label>
+                            </div>
+
+                            <div class="student-info-block">
+                                <label class="title">DNI:</label>
+                                <label class="description" id="student-dni">@Model.Dni</label>
+                            </div>
+
+                            <div class="student-info-block">
+                                <label class="title">Orden de Mérito:</label>
+                                <label class="description">@(Model.MeritOrder <= 0 ? "-" : Model.MeritOrder.ToString("D3"))</label>
+                            </div>
+
+                            <div class="student-info-block">
+                                <label class="title">Semestre ingreso:</label>
+                                <label class="description">@Model.AdmissionTerm</label>
+                            </div>
+
+                            <div class="student-info-block">
+                                <label class="title">Semestre egreso:</label>
+                                <label class="description">@Model.GraduationTerm</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-options">
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="CurriculumId" type="hidden" />
+            <input asp-for="AcademicProgramId" type="hidden" />
+            <div class="m-portlet" id="option-block">
+                @await Html.PartialAsync("_Options", Model)
+            </div>
+
+            <div class="m-portlet m--hide" id="information-block">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/areas/careerdirector/studentinformation/search.js"></script>
+    <script src="~/js/areas/careerdirector/studentinformation/information.js"></script>
+}
+

@@ -1,0 +1,402 @@
+﻿@using AKDEMIC.CORE.Extensions;
+@using Microsoft.AspNetCore.Hosting;
+
+@inject IWebHostEnvironment _webHostEnvironment
+
+@model AKDEMIC.PDF.Services.CertificateMeritOrderGenerator.Models.CertificateMeritOrderModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>CONSTANCIA DE ORDEN DE MÉRITO</title>
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .footer-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-univ-logo {
+            float: left;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+
+        .header {
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+            .header .university-title {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-title2 {
+                font-size: 20px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+                font-weight: bold !important;
+            }
+
+            .header .university-title3 {
+                font-size: 15px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .resolution-title {
+                font-size: 15px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .office-title {
+                font-weight: normal !important;
+                font-size: 14px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                font-size: 45px !important;
+                margin: 0px !important;
+                text-decoration: underline !important;
+                font-weight: bold !important;
+                padding: 0px !important;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+        .header-extra-info {
+            margin-top: 20px !important;
+            text-align: left !important;
+        }
+
+            .header-extra-info p {
+                font-size: 16px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+        .header-extra-second {
+            margin-top: 70px !important;
+            text-align: right !important;
+        }
+
+            .header-extra-second p {
+                font-size: 16px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+
+        .table-general-detail {
+            width: 100%;
+            text-align: left;
+            font-weight: normal;
+            font-size: 15px !important;
+        }
+
+            .table-general-detail td {
+                padding: 0px !important;
+                padding-top: 6px !important;
+                padding-bottom: 0px !important;
+                margin: 0px !important;
+            }
+
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            padding-bottom: 5px !important;
+            font-size: 14px !important;
+            font-weight: bold;
+            border-bottom: 1px solid;
+        }
+
+        .bordered-detail {
+            font-size: 14px !important;
+            height: 20px !important;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 11px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+
+        .blue {
+            color: #000080 !important;
+        }
+
+        .red {
+            color: red !important;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th>
+                    <table style="width:100% !important;">
+                        <tr>
+                            <th colspan="3" style="text-align:right !important;">
+                                @(string.IsNullOrEmpty(Model.UserProcedureCode)?"-":Model.UserProcedureCode)
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="15%">
+                                <div class="header-univ-logo">
+                                    <img src="@Model.LogoImg" />
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header">
+                                    <p class="university-title">@AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                                    <p class="university-title2">@Model.HeaderText</p>
+                                    @if (!string.IsNullOrEmpty(Model.SubHeaderText))
+                                    {
+                                        <p class="university-title3">@Model.SubHeaderText</p>
+                                    }
+
+                                    <p class="office-title">
+                                        @(Model.University.Address) - Teléf-@(Model.University.PhoneNumber)
+                                    </p>
+                                    <p class="office-title">
+                                        Ciudad Universitaria
+                                    </p>
+                                </div>
+                            </th>
+                            <th width="15%">
+
+                            </th>
+                        </tr>
+                    </table>
+                    <table style="width:100% !important;">
+                        <tr>
+                            <th style="border-bottom:2px solid #000080;"></th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th height="20px">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <th>
+                    <div class="header">
+                        <p class="header-title">
+                            Constancia de Orden de Mérito
+                        </p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <td style="font-size:24px !important; padding-left:80px !important; padding-right:80px !important;">
+
+                    @if (string.IsNullOrEmpty(Model.HmltContent))
+                    {
+                        <p style="font-weight:bold;">
+                            LA DIRECCIÓN DE LA OFICINA DE ASUNTOS ACADÉMICOS DE LA @AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName().ToUpper() - @AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.Locations[AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value].ToUpper(), QUE SUSCRIBE;
+                        </p>
+                        <p>
+                            Hace constar:
+                        </p>
+                        <p>
+                            Que, el estudiante <strong>@Model.FullName</strong>, de la Facultad de @Model.Faculty - Escuela Académico Profesional de @Model.Career, con Código de Matrícula Nº <strong>@Model.UserName</strong>,
+                            ha ocupado el @(Model.MeritOrder)º Puesto del Orden de Mérito de @Model.TotalMeritOrder estudiantes matriculados en el Semestre Académico @(Model.Term),
+                            con promedio ponderado general de @Model.WeightedAverageGrade como consta en los archivos correspondientes.
+                        </p>
+                        <p>
+                            Se expide la presente Constancia, a solicitud de la interesada para los fines
+                            que estime conveniente.
+                        </p>
+                    }
+                    else
+                    {
+                        @Html.Raw(Model.HmltContent)
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left:80px !important; padding-right:80px !important; text-align:right; font-size:24px;">
+                    <br />
+                    <br />
+                    @AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.Locations[AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value], @AKDEMIC.CORE.Helpers.ConstantHelpers.WEEKDAY.ENUM_TO_STRING(DateTime.UtcNow.ToDefaultTimeZone().DayOfWeek) @DateTime.UtcNow.ToDefaultTimeZone().Day del @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.ToDefaultTimeZone().Month] de @DateTime.UtcNow.ToDefaultTimeZone().Year
+                </td>
+            </tr>
+
+            <tr>
+                <td height="200px"></td>
+            </tr>
+
+            @if (AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value == AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.UNSM)
+            {
+                <tr>
+                    <td style="padding-left:80px !important; padding-right:80px !important;" colspan="7">
+                        <table width="100%">
+                            <tr>
+                                <td style="width:25%">
+                                    <img style="width:100px" src="@Model.QrCode" />
+                                </td>
+                                <td style="text-align:center; width:50%">
+                                    <img style="width:240px" src="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"images/unsm/firma.png"))" />
+                                </td>
+                                <td style="width:25%">
+                                    &emsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <table style="width:100% !important">
+                            <tr>
+                                <td width="30%">
+                                </td>
+                                <td width="40%" style="border-top:2px solid black; text-align:center;">
+                                    Director Oficina de Asuntos Académicos
+                                </td>
+                                <td width="30%">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left:80px !important; padding-right:80px !important;" colspan="7">
+                        <img style="width:100px !important" src="@Model.QrCode" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

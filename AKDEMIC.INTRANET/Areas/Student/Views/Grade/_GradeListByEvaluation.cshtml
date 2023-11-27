@@ -1,0 +1,40 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.GradeViewModels
+@model StudentSectionViewModel
+
+@foreach (var evaluation in Model.Section.Evaluations)
+{
+    <tr class="grades">
+        <td colspan="2" data-toggle="m-tooltip" title data-html="true" data-original-title="<p>Descripción</p><p>@evaluation.Description</p>">&emsp;&emsp;@evaluation.FormattedName</td>
+        <td colspan="2" style="text-align:center;" data-value="@(evaluation.Percentage)">@(evaluation.Percentage + " %")</td>
+        @if (evaluation.Grade.HasGrade)
+        {
+            @if (evaluation.Grade.Attended)
+            {
+                @if (evaluation.Grade.Approved)
+                {
+                    <td class="grade-value" colspan="2" style="text-align: center;">@evaluation.Grade.Value</td>
+                }
+                else
+                {
+                    <td class="grade-value" colspan="2" style="color: red; text-align: center;">@evaluation.Grade.Value <i class="la la-info-circle" rel="m-tooltip" title="Desaprobado" data-placement="right" data-trigger="hover" data-original-title="Desaprobado"></i></td>
+                }
+            }
+            else
+            {
+                <td class="grade-value" colspan="2" style="color: red; text-align: center;">NR <i class="la la-info-circle" rel="m-tooltip" title="No rendido" data-placement="right" data-trigger="hover" data-original-title="No rendido"></i></td>
+            }
+
+        }
+        else
+        {
+            @if(Model.Status == ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN)
+            {
+                <td colspan="2" style="text-align:center;color:blue">Retirado</td>
+            }else
+            {
+                <td colspan="2" style="text-align:center;">-</td>
+            }
+        }
+
+    </tr>
+}

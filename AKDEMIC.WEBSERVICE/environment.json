@@ -1,0 +1,19 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "services": {
+    "pide": {
+      "credentials": {
+        "dni": 47666313,
+        "password": 47666313,
+        "ruc": 20147796634
+      }
+    }
+  }
+}

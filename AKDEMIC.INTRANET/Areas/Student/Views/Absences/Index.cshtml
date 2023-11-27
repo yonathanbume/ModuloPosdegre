@@ -1,0 +1,182 @@
+﻿@model AKDEMIC.INTRANET.Areas.Student.Models.AbsencesViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Inasistencias";
+    ViewData["SubTitle"] = "Listado de Inasistencias";
+    ViewData["SubTitle1"] = "Información del Estudiante";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"], Controller = null, Action = null}
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle1"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <label>Periodo: &emsp;</label>
+                <select id="select-term" asp-for="ActiveTerm" asp-items="@(new SelectList(Model.Terms, "Id", "Name"))" class="selectpicker"></select>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Estudiante: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Student.FullName</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>C&oacute;digo: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.Student.UserName</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Escuela: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Student.Career.Name</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>M&aacute;x. % de Faltas:</b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@(100 - Model.AttendanceMinPercentage) %</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+
+            <div class="m-portlet__head-tools">
+                <a class="btn btn-secondary m-btn btn-sm m-btn--icon" asp-action="Index" asp-controller="AbsenceJustification" asp-route-area="Student">Justificaci&oacute;n de inasistencias</a>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-datatable-absences">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="absences-detail-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="absences-detail-label">
+                    Detalle de Inasistencias
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                    <div class="row align-items-center form-group m-form__group">
+                        <div class="col-sm-auto m-form__label">Estado: </div>
+                        <div class="col-sm-3 m-form__control">
+                            <select id="assistance-filter" class="m-input m-select2">
+                                <option value="-1">Todos</option>
+                                @foreach (var item in ConstantHelpers.ASSISTANCE_STATES.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                            <input id="SectionId" hidden />
+                        </div>
+                    </div>
+                </div>
+                <table id="absences-detail-datatable" class="table table-hover table-striped table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-modal-label">
+                    Solicitud de justificación de inasistencia
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="create-form" class="m-form m-form--state" asp-controller="AbsenceJustification" asp-action="Create" asp-area="Student" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="create-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="create-form-alert-txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    @*<div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label class="form-control-label">Curso</label>
+                            <select class="form-control select2-courses" required></select>
+                        </div>
+                    </div>*@
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label for="ClassStudentId" class="form-control-label">Clase</label>
+                            <select id="ClassStudentId" name="ClassStudentId" class="form-control select2-classes m-select2" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label for="Justification" class="form-control-label">Justificaci&oacute;n</label>
+                            <textarea id="Justification" name="Justification" class="form-control" required maxlength="200"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label for="File" class="form-control-label">Archivo de apoyo (opcional)</label>
+                            <div class="custom-file">
+                                <input id="File" name="File" class="form-control m-input custom-file-input" placeholder="Archivo de apoyo" accept="image/*,application/pdf" type="file" />
+                                <label class="custom-file-label selected" for="File">Selecciona un Archivo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnCreate" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/student/absences/index.js" asp-append-version="true"></script>
+}
+

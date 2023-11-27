@@ -1,0 +1,566 @@
+﻿@using AKDEMIC.DEGREE.Areas.Admin.Models.RegistryPatternViewModels;
+@model RegistryPatternViewModel
+@{
+    ViewBag.Title = "Detalle del padrón de registro";
+    ViewBag.SubTitle = "Detalle del padrón de registro";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Lista de trámites" , Url = Url.Action("Index","RegistryPattern") },
+new BreadcrumbViewData { Name = (string)ViewBag.Title}
+};
+    ViewData["BackUrl"] = Url.Action("Index", "RegistryPattern", new { area = "Admin" });
+}
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <button id="btn-more-info" class="btn btn-sm btn-primary">Mas información</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <form id="update-form">
+                <input asp-for="Id" type="hidden">
+                <input asp-for="StudentId" type="hidden" />
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="UniversityCode">Código de la universidad:</label>
+                        <input asp-for="UniversityCode" class="form-control m-input" placeholder="Código de la universidad,institución o escuela" autocomplete="off" required disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="BussinesSocialReason">Razón social de la universidad:</label>
+                        <input asp-for="BussinesSocialReason" class="form-control m-input" placeholder="Razón social de la universidad , institución o escuela" autocomplete="off" maxlength="500">
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="RegistrationDate">Fecha de matrícula:</label>
+                        <input asp-for="RegistrationDate" class="form-control m-input" placeholder="Fecha de matrícula" disabled>
+                    </div>
+                    @*<div class="col-md-4 m-form__group-sub">
+                <label for="graduationTermId">Fecha de egreso:</label>
+                <select id="graduationTermId" class="form-control m-input" disabled></select>
+            </div>*@
+                    @if (Model.MethodTypeRegistration)
+                    {
+                        <div class="col-md-6 m-form__group-sub">
+                            <label asp-for="GraduationDate">Fecha de egreso:</label>
+                            <input asp-for="GraduationDate" class="form-control m-input" placeholder="Fecha de egreso">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6 m-form__group-sub">
+                            <label asp-for="GraduationDate">Fecha de egreso:</label>
+                            <input asp-for="GraduationDate" class="form-control m-input" placeholder="Fecha de egreso" disabled>
+                        </div>
+                    }
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="FacultyName">Facultad:</label>
+                        <input asp-for="FacultyName" class="form-control m-input" placeholder="Nombre de la facultad" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="CareerName">Escuela Profesional:</label>
+                        <input asp-for="CareerName" class="form-control m-input" placeholder="Nombre de la carrera" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="AcademicProgramId">Programa Acad&eacute;mico:</label>
+                        <select asp-for="AcademicProgramId" class="form-control m-input m-select2">
+                        </select>
+                    </div>
+
+                    @*<div class="col-md-3 m-form__group-sub">
+                <label asp-for="PostGraduateSchool">Escuela de Postgrado:</label>
+                <input asp-for="PostGraduateSchool" class="form-control m-input" placeholder="Nombre de la escuela de postgrado" autocomplete="off" maxlength="500">
+            </div>*@
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="PaternalSurname">Apellido Paterno:</label>
+                        <input asp-for="PaternalSurname" class="form-control m-input" placeholder="Apellido Paterno completo" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="MaternalSurname">Apellido Materno:</label>
+                        <input asp-for="MaternalSurname" class="form-control m-input" placeholder="Apellido Materno completo" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="StudentName">Nombres:</label>
+                        <input asp-for="StudentName" class="form-control m-input" placeholder="Nombres completos" disabled>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="Sex">Sexo:</label>
+                        <input asp-for="Sex" class="form-control m-input" placeholder="Sexo" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DocumentType">Tipo de documento:</label>
+                        <select asp-for="DocumentType" class="form-control m-input" disabled>
+                            @foreach (var item in ConstantHelpers.DOCUMENT_TYPES.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DNI">Numero de documento:</label>
+                        <input asp-for="DNI" class="form-control m-input" placeholder="Número de documento de identidad" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="BachelorOrigin">Procedencia del bachiller:</label>
+                        <input asp-for="BachelorOrigin" class="form-control m-input" placeholder="Procedencia de bachiller" autocomplete="off" maxlength="500">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="AcademicDegree">Grado académico o título profesional:</label>
+                        <input asp-for="AcademicDegree" class="form-control m-input" placeholder="Grado académico o título profesional" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="AcademicDegreeDenomination">Denominación del grado o título:</label>
+                        <input asp-for="AcademicDegreeDenomination" class="form-control m-input" placeholder="Denominación del grado o título" autocomplete="off" maxlength="500" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="Specialty">Especialidad:</label>
+                        <input asp-for="Specialty" class="form-control m-input" placeholder="Especialidad del grado o título" autocomplete="off" maxlength="500">
+                    </div>
+                    @if (Model.MethodTypeRegistration)
+                    {
+                        <div class="col-md-4 m-form__group-sub">
+                            <label asp-for="ResearchWork">Nombre del trabajo de investigación:</label>
+                            <input asp-for="ResearchWork" class="form-control m-input" placeholder="Nombre del trabajo de investigación / tesis / trabajos de autosuficiencia" autocomplete="off" maxlength="500">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4 m-form__group-sub">
+                            <label asp-for="ResearchWork">Nombre del trabajo de investigación:</label>
+                            <input asp-for="ResearchWork" class="form-control m-input" placeholder="Nombre del trabajo de investigación / tesis / trabajos de autosuficiencia" disabled autocomplete="off" maxlength="500">
+                        </div>
+                    }
+
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="Credits">Créditos:</label>
+                        <input asp-for="Credits" type="number" class="form-control m-input" placeholder="Números de créditos" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="ResearchWorkURL">URL del trabajo de investigación:</label>
+                        <input asp-for="ResearchWorkURL" class="form-control m-input" placeholder="URL del trabajo de investigación/tesis/trabajo de suficiencia personal" autocomplete="off" maxlength="500">
+                    </div>
+
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="IsOriginal">Originalidad de la investigación:</label>
+                        <select asp-for="IsOriginal" class="form-control m-input">
+                            @foreach (var item in AKDEMIC.DEGREE.Helpers.ConstantHelpers.CONDITIONAL_ANSWER.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DegreeProgram">Programa de estudios:</label>
+                        <select asp-for="DegreeProgram" class="form-control m-input">
+                            @foreach (var item in ConstantHelpers.PROGRAM_STUDIES.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="SineaceAcreditation">¿El programa de estudios se encuentra acreditado ante SINEACE?:</label>
+                        <select asp-for="SineaceAcreditation" class="form-control m-input">
+                            @foreach (var item in AKDEMIC.DEGREE.Helpers.ConstantHelpers.CONDITIONAL_ANSWER.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="SineaceAcreditationStartDate">Fecha de inicio de la acreditación del programa académico:</label>
+                        <input asp-for="SineaceAcreditationStartDate" class="form-control m-input" placeholder="Fecha de inicio de la acreditación del programa académico" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="SineaceAcreditationEndDate">Fecha de fin de la acreditación del programa académico:</label>
+                        <input asp-for="SineaceAcreditationEndDate" class="form-control m-input" placeholder="Fecha de fin de la acreditación del programa académico" autocomplete="off">
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="SineaceAcreditationDegreeModalityStartDate">Fecha de inicio de la modalidad de titulación del programa académico:</label>
+                        <input asp-for="SineaceAcreditationDegreeModalityStartDate" class="form-control m-input" placeholder="Fecha de inicio de la acreditación del programa académico" autocomplete="off">
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="SineaceAcreditationDegreeModalityEndDate">Fecha de fin de la modalidad de titulación del programa académico:</label>
+                        <input asp-for="SineaceAcreditationDegreeModalityEndDate" class="form-control m-input" placeholder="Fecha de fin de la modalidad de titulación del programa académico" autocomplete="off">
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="PedagogicalTitleOrigin">Procedencia del título pedagógico:</label>
+                        <input asp-for="PedagogicalTitleOrigin" class="form-control m-input" placeholder="Procedencia del título pedagógico" autocomplete="off" maxlength="500">
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="ObtainingDegreeModality">Modalidad de obtención del grado o título:</label>
+                        <select asp-for="ObtainingDegreeModality" class="form-control m-input">
+                            @foreach (var item in ConstantHelpers.DEGREE_OBTENTION_MOD.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="StudyModality">Modalidad de estudios:</label>
+                        <select asp-for="StudyModality" class="form-control m-input">
+                            @foreach (var item in ConstantHelpers.STUDY_MODALITY.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="GradeAbbreviation">Abreviatura grado/título:</label>
+                        <input asp-for="GradeAbbreviation" class="form-control m-input" placeholder="B:Bachiller - T:Título profesional - M:Maestro - D:Doctor - S:Título de segunda especialidad profesional" disabled>
+                    </div>
+
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="ComplianceRevalidationCriteria">Cumplimiento de los criterios de revalidación:</label>
+                        <select asp-for="ComplianceRevalidationCriteria" class="form-control m-input">
+                            @foreach (var item in AKDEMIC.DEGREE.Helpers.ConstantHelpers.CONDITIONAL_ANSWER.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="OriginDegreeCountry">País de procedencia del grado o título revalidado:</label>
+                        <input asp-for="OriginDegreeCountry" class="form-control m-input" placeholder="País de procedencia del grado o título revalidado" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="OriginDegreeUniversity">Universidad de procedencia del grado o título revalidado:</label>
+                        <input asp-for="OriginDegreeUniversity" class="form-control m-input" placeholder="Universidad de procedencia del grado o título revalidado" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="GradDenomination">Denominación del grado o título revalidado:</label>
+                        <input asp-for="GradDenomination" class="form-control m-input" placeholder="Denominación del grado o título revalidado" autocomplete="off">
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="ResolutionNumber">Número de resolución:</label>
+                        <input asp-for="ResolutionNumber" class="form-control m-input" placeholder="Número de resolución con formato : XXXXX-AAAA-R-UNA" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="ResolutionDateByUniversityCouncil">Fecha de resolución de consejo  universitario:</label>
+                        <input asp-for="ResolutionDateByUniversityCouncil" class="form-control m-input" placeholder="Fecha de resolución de consejo  universitario" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="OriginDiplomatDate">Fecha del diploma original:</label>
+                        <input asp-for="OriginDiplomatDate" class="form-control m-input" placeholder="Fecha del diploma original" autocomplete="off">
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="ProcessDegreeDate">Fecha en el que que solicita el trámite de graduación o titulación:</label>
+                        <input asp-for="ProcessDegreeDate" class="form-control m-input" placeholder="Número de resolución con formato : XXXXX-AAAA-R-UNA" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DegreeSustentationDate">Fecha de sustentación y/o aprobación del grado o título otorgado:</label>
+                        <input asp-for="DegreeSustentationDate" class="form-control m-input" placeholder="Fecha de resolución de consejo  universitario" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="SustainabilityMode">Modalidad de sustentación de tesis:</label>
+                        <select asp-for="ComplianceRevalidationCriteria" class="form-control m-input">
+                            @foreach (var item in AKDEMIC.DEGREE.Helpers.ConstantHelpers.THESIS_SUPPORT_MODALITY.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DuplicateDiplomatDate">Fecha del diploma duplicado:</label>
+                        <input asp-for="DuplicateDiplomatDate" class="form-control m-input" placeholder="Fecha del diploma duplicado" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DiplomatNumber">Número diploma:</label>
+                        <input asp-for="DiplomatNumber" class="form-control m-input" placeholder="Número diploma" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="EmissionTypeOfDiplomat">Tipo de emisión del diploma:</label>
+                        <select asp-for="EmissionTypeOfDiplomat" class="form-control m-input">
+                            @foreach (var item in ConstantHelpers.EMISION_TYPE_OF_DIPLOMAT.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="BookCode">Libro:</label>
+                        <input asp-for="BookCode" type="text" class="form-control m-input" placeholder="Código del libro del grado o título" autocomplete="off">
+                    </div>
+                    @*<div class="col-md-3 m-form__group-sub">
+                <label asp-for="BookTitle">Libro Título:</label>
+                <input asp-for="BookTitle" type="text" class="form-control m-input" placeholder="Título libro" autocomplete="off">
+            </div>*@
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="FolioCode">Folio:</label>
+                        <input asp-for="FolioCode" class="form-control m-input" placeholder="Código del folio del grado o título" type="number" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="RegistryNumber">Registro:</label>
+                        <input asp-for="RegistryNumber" class="form-control m-input" placeholder="Número de registro del grado o título" autocomplete="off">
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="ManagingDirector">Rector / director:</label>
+                        <input asp-for="ManagingDirector" class="form-control m-input" placeholder="Consignar el cargo del rector o director que firma el diploma" autocomplete="off" value="Rector" disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="ManagingDirectorFullName">Nombres y Apellidos:</label>
+                        <input asp-for="ManagingDirectorFullName" class="form-control m-input" placeholder="Consignar el mombre completo del rector o director general" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="GeneralSecretary">Secretario General:</label>
+                        <input asp-for="GeneralSecretary" class="form-control m-input" placeholder="Consignar el cargo del secretario general que firma el diploma" autocomplete="off" value="Secretario General" disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="GeneralSecretaryFullName">Nombres y Apellidos:</label>
+                        <input asp-for="GeneralSecretaryFullName" class="form-control m-input" placeholder="Consignar el mombre completo del secretario general" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="AcademicResponsible">Decano/Director de Postgrado/Respnsable Académico:</label>
+                        <input asp-for="AcademicResponsible" class="form-control m-input" placeholder="Consignar el cargo del decano , director de postgrado o responsable académico" autocomplete="off" disabled>
+
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="AcademicResponsibleFullName">Nombres y Apellidos:</label>
+                        <input asp-for="AcademicResponsibleFullName" class="form-control m-input" placeholder="Consignar el mombre completo del decano" autocomplete="off" maxlength="500" disabled>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="OriginPreRequisiteDegreeCountry">Procedencia del país del pre-requisito realizado en el extranjero:</label>
+                        <input asp-for="OriginPreRequisiteDegreeCountry" class="form-control m-input" placeholder="País de origen donde se obtuvo el grado o título" autocomplete="off" maxlength="500">
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label for="OriginPreRequisiteDegreeUniversityId">Procedencia de la universidad del pre-requisito realizado en el extranjero:</label>
+                        <select class="form-control m-input" id="OriginPreRequisiteDegreeUniversityId"> </select>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="OriginPreRequisiteDegreeDenomination">Denominación del grado del pre-requisito realizado en el extranjero:</label>
+                        <input asp-for="OriginPreRequisiteDegreeDenomination" class="form-control m-input" placeholder="Denominación del grado académico o título profesional" autocomplete="off" maxlength="500">
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="OfficeNumber">Oficio:</label>
+                        <input asp-for="OfficeNumber" class="form-control m-input" placeholder="Consignar el número de oficio con que se envía la documentación" autocomplete="off" maxlength="100" disabled>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DateEnrollmentProgram">Fecha del matrícula del programa:</label>
+                        <input asp-for="DateEnrollmentProgram" class="form-control m-input" placeholder="Fecha del matrícula del programa" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="StartDateEnrollmentProgram">Fecha de inicio del programa:</label>
+                        <input asp-for="StartDateEnrollmentProgram" class="form-control m-input" placeholder="Fecha de inicio del programa" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="EndDateEnrollmentProgram">Fecha de término del programa:</label>
+                        <input asp-for="EndDateEnrollmentProgram" class="form-control m-input" placeholder="Fecha de término del programa" autocomplete="off">
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row">
+                    @*<div class="col-md-6 m-form__group-sub">
+                <label asp-for="Relation">Relación:</label>
+                <input asp-for="Relation" class="form-control m-input" placeholder="Relación" autocomplete="off">
+            </div>*@
+                    <div class="col-md-12 m-form__group-sub">
+                        <label asp-for="SpecialtyMention">Especialidad o menci&oacute;n:</label>
+                        <input asp-for="SpecialtyMention" class="form-control m-input" placeholder="Especialidad o mención" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="UniversityCouncilType">Tipo de consejo universitario:</label>
+                        <select asp-for="UniversityCouncilType" class="form-control m-input">
+                            @foreach (var item in ConstantHelpers.UNIVERSITY_COUNCIL_TYPE.STATUS.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="UniversityCouncilDate">Fecha consejo universitario:</label>
+                        <input asp-for="UniversityCouncilDate" class="form-control m-input" placeholder="Fecha consejo universitario" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="FacultyCouncilDate">Fecha consejo de facultad:</label>
+                        <input asp-for="FacultyCouncilDate" class="form-control m-input" placeholder="Fecha consejo de facultad" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="Initial">Sigla:</label>
+                        <input asp-for="Initial" class="form-control m-input" placeholder="Sigla" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="Correlative">Correlativo:</label>
+                        <input asp-for="Correlative" class="form-control m-input" placeholder="Correlativo" autocomplete="off">
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="Year">A&ntilde;o:</label>
+                        <input asp-for="Year" class="form-control m-input" placeholder="Año" autocomplete="off">
+                    </div>
+                </div>
+
+
+
+                <div style="text-align: right;">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div id="modal-info" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Información adicional
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="more-info-form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Estudiante:</label>
+                            <input name="fullname" type="text" class="form-control m-input" value="@(Model.StudentName + " " + Model.PaternalSurname + " " + Model.MaternalSurname)" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Código:</label>
+                            <input name="code" type="text" class="form-control m-input" value="@(Model.UserName)" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Teléfono:</label>
+                            <input name="phone" type="text" class="form-control m-input" value="@(Model.Phone)" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Correo 1:</label>
+                            <input name="email" type="text" class="form-control m-input" value="@(Model.Email1)" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Correo 2:</label>
+                            <input name="email" type="text" class="form-control m-input" value="@(Model.Email2)" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var ForeignUniversityOriginId = '@Model.ForeignUniversityOriginId';
+        var GraduationTermId = '@Model.GraduationTermId';
+        var AcademicProgramId = '@Model.AcademicProgramId';
+        var CareerId = '@Model.CareerId';
+    </script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/registrypattern/create.js"></script>
+}

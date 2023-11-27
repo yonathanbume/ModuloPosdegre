@@ -1,0 +1,1471 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.StudentInformationViewModels.IndexViewModel;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <table style="width:100%">
+        <tr>
+            <td valign="top">
+                <div style="text-align:left; font-size:16px;">
+                    <b></b>
+                </div>
+            </td>
+            <td style="text-align:right" valign="top">
+                <div style="text-align:right; font-size:16px;">
+                    <b>Dirección de Bienestar Universitario</b>
+                    <br />
+                    <b>Unidad de Salud y Asistencia Social</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align:center; font-family:Arial; font-size:20px;">
+        <b><u>FICHA SOCIOECONÓMICA DEL ESTUDIANTE</u></b>
+    </div>
+    <br />
+    <table style="width:100%; font-family:Arial;">
+        <tr>
+            <td valign="top">
+                <div style="text-align:left; font-size:16px;">
+                    ESCUELA PROFESIONAL: @(string.IsNullOrEmpty(Model.Career) ? "--" : Model.Career.ToUpper())
+                </div>
+            </td>
+            <td style="text-align:right" valign="top">
+                <div style="text-align:right; font-size:16px;">
+                    CÓDIGO N°: @Model.UserName.ToUpper()&nbsp;CICLO: @Model.CurrentAcademicYear.ToString()
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <div style="font-size:16px; font-family:Arial;">
+        <b>1. DATOS GENERALES DEL ESTUDIANTE:</b>
+    </div>
+    <div style="font-size:16px; font-family:Arial; margin-left:10px;">
+        <b>1.1 IDENTIFICACIÓN</b>
+    </div>
+    <div style="font-size:16px; font-family:Arial; margin-left:10px;">
+        CORREO ELECTRÓNICO:  @Model.Email.ToUpper()
+    </div>
+    <div>
+        <table style="width:100%;  border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>APELLIDOS Y NOMBRES</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>DNI</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>SEXO</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>FECHA DE NACIMIENTO</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>EDAD</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>ESTADO CIVIL</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>LUGAR DE NACIMIENTO</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @Model.Name.ToUpper()
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @Model.DNI
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(Model.Sex == ConstantHelpers.SEX.FEMALE ? "F" : "M")
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @Model.BirthDate
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @Model.Age
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @ConstantHelpers.CIVIL_STATUS.VALUES[Model.CivilStatus].ToUpper()
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    DEPARTAMENTO : @(string.IsNullOrEmpty(Model.PlaceOriginDepartmentDescription) ? "--": Model.PlaceOriginDepartmentDescription.ToUpper())<br />
+                    PROVINCIA: @(string.IsNullOrEmpty(Model.PlaceOriginProvinceDescription) ? "--": Model.PlaceOriginProvinceDescription.ToUpper())<br />
+                    DISTRITO: @(string.IsNullOrEmpty(Model.PlaceOriginDistrictDescription) ? "--": Model.PlaceOriginDistrictDescription.ToUpper())
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="font-size:16px; font-family:Arial; margin-left:10px;">
+        <b>1.2 DIRECCIÓN DOMICILIARIA</b>
+    </div>
+    <div>
+        <table style="width:100%;  border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>DOMICILIO</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>DPTO/PROV/DIST</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>CELULAR</b>
+                </td>
+
+            </tr>
+            <tr>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @Model.CurrentAddress
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    DEPARTAMENTO : @(string.IsNullOrEmpty(Model.CurrentDepartmentDescription) ? "--" : Model.CurrentDepartmentDescription.ToUpper()) <br />
+                    PROVINCIA: @(string.IsNullOrEmpty(Model.CurrentProvinceDescription) ? "--" : Model.CurrentProvinceDescription.ToUpper())<br />
+                    DISTRITO: @(string.IsNullOrEmpty(Model.CurrentDistrictDescription) ? "--" : Model.CurrentDistrictDescription.ToUpper()) 
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @Model.CurrentPhoneNumber
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="font-size:16px; font-family:Arial; margin-left:10px;">
+        <b>1.3 EN CASO DE EMERGENCIA COMUNICAR A:</b>
+    </div>
+    <div>
+        <table style="width:100%;  border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>APELLIDOS Y NOMBRES </b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>DOMICILIO</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>CELULAR</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>CORREO ELECTRÓNICO</b>
+                </td>
+
+            </tr>
+            <tr>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(String.IsNullOrEmpty(Model.FullNameExternalPerson)? "--": Model.FullNameExternalPerson )
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(String.IsNullOrEmpty(Model.AddressExternalPerson)? "--" : Model.AddressExternalPerson)
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(String.IsNullOrEmpty(Model.PhoneExternalPerson)?"--":Model.PhoneExternalPerson)
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(String.IsNullOrEmpty(Model.EmailExternalPerson)?"--":Model.EmailExternalPerson)
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="font-size:16px; font-family:Arial;">
+        <b>2. ANTECEDENTES ACADÉMICOS:</b>
+    </div>
+    <div>
+        <table style="width:100%; font-family:Arial;">
+            <tr>
+                <td valign="top">
+                    <div style="text-align:left; font-size:16px;">
+                        NOMBRE DE LA I.E DE PROCEDENCIA: @(string.IsNullOrEmpty(Model.OriginSchool) ? "" : Model.OriginSchool.ToUpper()) 
+                    </div>
+                </td>
+                <td style="text-align:right" valign="top">
+                    <div style="text-align:right; font-size:16px;">
+                        LUGAR:  @(string.IsNullOrEmpty(Model.OriginSchoolPlace) ? "" : Model.OriginSchoolPlace.ToUpper()) 
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="width:100%">
+        <div style="width:48%; display:inline-block; float:left;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>TIPO DE INSTITUCIÓN EDUCATIVA</b>
+                    </td>
+                </tr>
+                <tr>
+                    @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_TYPE_SCHOOL.TYPE_SCHOOL)
+                    {
+                        <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            <b> @item.Value.ToUpper()</b>
+                        </td>
+                    }
+
+                </tr>
+                <tr>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        @(Model.SchoolType == Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_TYPE_SCHOOL.STATE_SCHOOL) ? "✖" : "--")
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        @(Model.SchoolType == Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_TYPE_SCHOOL.PRIVATE_SCHOOL) ? "✖" : "--")
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+        <div style="width:42%; display:inline-block; float:right;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>PREPARACIÓN UNIVERSITARIA</b>
+                    </td>
+                </tr>
+
+                @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_UNIVERSITY_PREPARATION.UNIVERSITY_PREPARATION)
+                {
+                    <tr>
+                        <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            @item.Value
+                        </td>
+                        <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            @(Model.SchoolType == Convert.ToByte(item.Key) ? "✖" : "--")
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div style="font-size:16px; font-family:Arial;">
+        <b>3. ASPECTO ECONÓMICO:</b>
+    </div>
+    <div style="font-size:16px; font-family:Arial; margin-left:10px;">
+        <b>3.1 DE LA FAMILIA (padres,hermanos e hijos):</b>
+    </div>
+    <div>
+        <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+            <tr>
+                <td colspan="9" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    <b>COMPOSICIÓN FAMILIAR</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    N°
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Apellidos y Nombres
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Edad
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Parentesco
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Estado Civil
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Grado de <br />instrucción
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Ocupación
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Centro Laboral<br /> y/o Estudios
+                </td>
+                <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                    Residencia<br /> actual
+                </td>
+            </tr>
+
+            @if (Model.ListStudentFamilyOnlyRead.Count > 0)
+            {
+                for (int i = 0; i < Model.ListStudentFamilyOnlyRead.Count; i++)
+                {
+                    <tr>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @(i + 1)
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @(Model.ListStudentFamilyOnlyRead[i].Name + " " + Model.ListStudentFamilyOnlyRead[i].PaternalName + " " + Model.ListStudentFamilyOnlyRead[i].MaternalName)
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @( DateTime.UtcNow.Year - Model.ListStudentFamilyOnlyRead[i].Birthday.Year)
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @( ConstantHelpers.STUDENT_FAMILY.RELATIONSHIPS.TYPE[Model.ListStudentFamilyOnlyRead[i].RelationshipInt])
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @( ConstantHelpers.CIVIL_STATUS.VALUES[Model.ListStudentFamilyOnlyRead[i].CivilStatusInt])
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @( ConstantHelpers.STUDENT_FAMILY.CERTIFICATES.TYPE[Model.ListStudentFamilyOnlyRead[i].DegreeInstructionInt])
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @( Model.ListStudentFamilyOnlyRead[i].Occupation)
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @( Model.ListStudentFamilyOnlyRead[i].WorkCenter)
+                        </td>
+                        <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                            @( Model.ListStudentFamilyOnlyRead[i].Location)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {               
+                <tr>
+                   @for (int i = 1; i <= 9; i++)
+                   {
+                   <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                       --
+                   </td>
+                   }
+               </tr>
+
+            }
+
+
+        </table>
+    </div>
+
+
+    <br />
+    <div style="width:100%">
+        <div style="width:35%; display:inline-block; float:left;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>QUIEN SOSTIENE EL HOGAR</b>
+                    </td>
+                </tr>
+
+                @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_PRINCIPAL_PERSON.PRINCIPAL_PERSON)
+                {
+                    <tr>
+                        <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            @item.Value
+                        </td>
+                        <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            @(Model.PrincipalPerson == item.Key ? "✖" : "--")
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div style="width:60%; display:inline-block; float:right;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="5" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>OCUPACIÓN DE QUIEN SOSTIENE EL HOGAR DEL PADRE - TUTOR</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>A.DEPENDIENTE</b>
+                    </td>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>B.INDEPENDIENTE</b>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" align="center" style="font-size:12px;font-family:Arial;border: 1px solid black;">
+                        <b>SECTOR</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Publico
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DSectorFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_SECTOR.PUBLIC ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Comercio formal
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.ISectorFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_SECTOR.FORMAL_TRADE ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Privado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DSectorFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_SECTOR.PRIVATE ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Comercio ambulatorio
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.ISectorFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_SECTOR.AMBULATORY_TRADE ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" align="center" style="font-size:12px;font-family:Arial;border: 1px solid black;">
+                        <b>CONDICIÓN LABORAL</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Nombrado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DWorkConditionFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_WORK_CONDITION.APPOINTED ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Por Servicios
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.IWorkConditionFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_WORK_CONDITION.BY_SERVICES ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Contratado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DWorkConditionFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_WORK_CONDITION.HIRED ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Otro
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.IWorkConditionFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_WORK_CONDITION.OTHERS ? "✖" : "--")
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Especifique actividad:<br />
+                        @(String.IsNullOrEmpty(Model.DEspecificActivityFatherTutor) ? "--" : Model.DEspecificActivityFatherTutor )
+                    </td>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Especifique actividad:<br />
+                        @(String.IsNullOrEmpty(Model.IEspecificActivityFatherTutor) ? "--" : Model.IEspecificActivityFatherTutor)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>C.DESOCUPADO</b>
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DBusyFatherTutor == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_BUSY.YES ? "✖" : "--")
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br /><br /><br /><br /><br /><br />
+    <div style="width:100%;">
+        <div style="width:35%; display:inline-block; float:left;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="3" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>MODALIDAD DE INGRESO ECONÓMICO</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>MODALIDAD</b>
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>Padre</b>
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>Madre</b>
+                    </td>
+                </tr>
+
+                @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_ECONOMIC_METHOD.ECONOMIC_METHOD)
+                {
+                    <tr>
+                        <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            @item.Value
+                        </td>
+                        <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            @(Model.EconomicMethodFatherTutor == item.Key ? "✖" : "--")
+                        </td>
+                        <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                            @(Model.EconomicMethodMother == item.Key ? "✖" : "--")
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div style="width:60%; display:inline-block; float:right;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="5" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>OCUPACIÓN DE QUIEN SOSTIENE EL HOGAR DE LA MADRE</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>A.DEPENDIENTE</b>
+                    </td>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>B.INDEPENDIENTE</b>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" align="center" style="font-size:12px;font-family:Arial;border: 1px solid black;">
+                        <b>SECTOR</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Publico
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DSectorMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_SECTOR.PUBLIC ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Comercio formal
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.ISectorMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_SECTOR.FORMAL_TRADE ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Privado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DSectorMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_SECTOR.PRIVATE ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Comercio ambulatorio
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.ISectorMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_SECTOR.AMBULATORY_TRADE ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" align="center" style="font-size:12px;font-family:Arial;border: 1px solid black;">
+                        <b>CONDICIÓN LABORAL</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Nombrado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DWorkConditionMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_WORK_CONDITION.APPOINTED ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Por Servicios
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.IWorkConditionMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_WORK_CONDITION.BY_SERVICES ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Contratado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DWorkConditionMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_WORK_CONDITION.HIRED ? "✖" : "--")
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Otro
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.IWorkConditionMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_WORK_CONDITION.OTHERS ? "✖" : "--")
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Especifique actividad:<br />
+                        @(String.IsNullOrEmpty(Model.DEspecificActivityMother) ? "--" : Model.DEspecificActivityMother )
+                    </td>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Especifique actividad:<br />
+                        @(String.IsNullOrEmpty(Model.IEspecificActivityMother) ? "--" : Model.IEspecificActivityMother)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>C.DESOCUPADO</b>
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.DBusyMother == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_BUSY.YES ? "✖" : "--")
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <br />  <br />  <br /> <br /> <br /><br /><br /><br /><br /><br /><br /> <br /> <br /><br /><br />
+    <div style="page-break-before:always;" >
+        <div style="width:35%; display:inline-block; float:left;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>INGRESO ECONÓMICO FAMILIAR (Gastos)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Alimentación
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.EconomicExpensesFeeding)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Servicios básicos
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.EconomicExpensesBasicServices)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Educación
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.EconomicExpensesEducation)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Otros
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.EconomicExpensesOthers)</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="width:40%; display:inline-block; float:right;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>INGRESO ECONÓMICO FAMILIAR</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Remuneración del padre
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b> S/.@(Model.FatherRemuneration)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Remuneración de la madre
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.MotherRemuneration)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Ingreso del estudiante
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.StudentRemuneration)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Otros ingresos
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.OtherRemuneration)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Total, ingreso familiar
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>S/.@(Model.TotalRemuneration)</b>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <br />  <br />  <br /> <br /> <br /><br /><br />
+    <div style="font-size:16px; font-family:Arial; margin-left:10px;">
+        <b>3.2 DEL ESTUDIANTE:</b>
+    </div>
+    <br />
+    <div>
+        <div style="width:35%; display:inline-block; float:left;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>VIVIENDA DEL ESTUDIANTE</b>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Con sus padres
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentCoexistence == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_COEXISTENCE.WITH_PARENTS ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Con uno de sus padres
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentCoexistence == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_COEXISTENCE.ONE_PARENT ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Como alojado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentCoexistence == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_COEXISTENCE.HOSTED ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Como cuidante
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentCoexistence == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_COEXISTENCE.CAUTION ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Cuarto alquilado
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentCoexistence == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_COEXISTENCE.RENTED_ROOM ? "✖" : "--")
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="width:40%; display:inline-block; float:right;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>TRABAJO DEL ESTUDIANTE</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Tu dedicación es a :
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>TIEMPO COMPLETO</b>
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentWorkDedication == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_WORK_DEDICATION.COMPLETE ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>TIEMPO PARCIAL</b>
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentWorkDedication == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_WORK_DEDICATION.PARTIAL ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>POR HORAS</b>
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentWorkDedication == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_WORK_DEDICATION.FOR_HOURS ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Especifique la actividad: <br />
+                        @(Model.StudentWorkDescription)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Condición laboral: @( AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_WORK_DEDICATION.VALUES[Model.StudentWorkCondition] )
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div>
+        <div style="width:35%; display:inline-block; float:left;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>DEPENDENCIA ECONÓMICA</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Depende de ambos padres
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentDependency == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_DEPENDENCY.BY_PARENTS ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Sólo del padre
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentDependency == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_DEPENDENCY.BY_FATHER ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Sólo de la madre
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentDependency == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_DEPENDENCY.BY_MOTHER ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        De un familiar
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentDependency == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_DEPENDENCY.UNIQUEPARENT ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        De sí mismo
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.StudentDependency == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_DEPENDENCY.MYSELF ? "✖" : "--")
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="width:40%; display:inline-block; float:right;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>RIESGO FAMILIAR</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Hijo de padres vivos
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.FamilyRisk == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_RISK.LIVING_PARENTS ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Huérfano de padre
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.FamilyRisk == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_RISK.DEAD_FATHER ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Huérfano de madre
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.FamilyRisk == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_RISK.DEAD_MOTHER ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Huérfano de padre y madre
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.FamilyRisk == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_RISK.DEAD_FATHER_MOTHER ? "✖" : "--")
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Vive sólo
+                    </td>
+                    <td align="center" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        @(Model.FamilyRisk == AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_RISK.ALONE ? "✖" : "--")
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <b style="font-size:14px;font-family:Arial;">PERSONA A QUIEN AUTORIZA BRINDAR INFORMACIÓN ACADÉMICA Y SOCIOECONÓMICA</b>
+    <div>
+        <table style="width:100%;  border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>APELLIDOS Y NOMBRES</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>DOMICILIO</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>CELULAR</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(String.IsNullOrEmpty(Model.AuthorizedPersonFullName) ? "--" : Model.AuthorizedPersonFullName)
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(String.IsNullOrEmpty(Model.AuthorizedPersonAddress) ? "--" : Model.AuthorizedPersonAddress)
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(String.IsNullOrEmpty(Model.AuthorizedPersonPhone) ? "--" : Model.AuthorizedPersonPhone)
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <br />
+    <br />
+    <div style="font-size:16px; font-family:Arial;">
+        <b>4. ASPECTO DE VIVIENDA:</b>
+    </div>
+    <div style="font-size:16px; font-family:Arial; margin-left:10px;">
+        <b>4.1 DE LA FAMILIA DEL ESTUDIANTE</b>
+    </div>
+    <div>
+        <table style="width:100%;  border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <td colspan="2" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>TENENCIA</b>
+                </td>
+                <td colspan="2" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>TIPO DE CONSTRUCCIÓN</b>
+                </td>
+                <td colspan="2" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>TIPO DE VIVIENDA</b>
+                </td>
+                <td colspan="2" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>SERVICIOS</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Propia
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TENURE.OWN) == Model.Tenure ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Noble
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_CONSTRUCTION_TYPE.NOBLE == Model.ContructionType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Casa
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TYPE.HOME) == Model.ZoneType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Agua
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.Water == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Alquiler-Venta
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TENURE.RENTAL_SALE) == Model.Tenure ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Mixto
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_CONSTRUCTION_TYPE.MIXED == Model.ContructionType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Casa en condominio
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TYPE.HOME_CONDOMINIUM) == Model.ZoneType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Desagüe
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.Drain == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Alquilada
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TENURE.RENTED) == Model.Tenure ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Rústico
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_CONSTRUCTION_TYPE.RUSTIC == Model.ContructionType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Dpto. en edificio
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TYPE.APARTMENT_IN_BUILDING) == Model.ZoneType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Luz
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.Light == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Prestada
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TENURE.BORROWED) == Model.Tenure ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Precario
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_CONSTRUCTION_TYPE.PRECARIUS == Model.ContructionType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Dpto. en quinta
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TYPE.FIFTH_APARTMENT) == Model.ZoneType ? "✖" : "--")</b>
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Teléfono
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.LivingPlacePhone == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Compartida
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TENURE.SHARED) == Model.Tenure ? "✖" : "--")</b>
+                </td>
+                <td colspan="2" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    &nbsp
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Cuarto
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TYPE.ROOM) == Model.ZoneType ? "✖" : "--")</b>
+                </td>
+
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Internet
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.Internet == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="width:100%">
+        <div style="width:45%; display:inline-block; float:left;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>ESTRUCTURA DE VIVIENDA (Precisar Cantidad)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        N° de pisos
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@(Model.NumberFloors)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        N° de dormitorios
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@(Model.NumberRooms)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Cocina
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@(Model.NumberKitchen)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Baño
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@(Model.NumberBathroom)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Sala
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@(Model.NumberLivingRoom)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Comedor
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@(Model.NumberDinningRoom)</b>
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+        <div style="width:45%; display:inline-block; float:right;">
+            <table style="border: 1px solid black; border-collapse: collapse;width:100%; ">
+                <tr>
+                    <td colspan="4" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        <b>EQUIPAMIENTO</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Tv Color
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.TV == true ? "✖" : "--")</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Teléfono
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.HasPhone == true ? "✖" : "--")</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Radio
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.Radio == true ? "✖" : "--")</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Equipo de sonido
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.Stereo == true ? "✖" : "--")</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Plancha
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.Iron == true ? "✖" : "--")</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Celular
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.EquipPhone == true ? "✖" : "--")</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Laptop
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.Laptop == true ? "✖" : "--")</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Ropero
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.Closet == true ? "✖" : "--")</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Refrigerador
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.Fridge == true ? "✖" : "--")</b>
+                    </td>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Biblioteca Personal
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.PersonalLibrary == true ? "✖" : "--")</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        Computadora
+                    </td>
+                    <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                        <b>@( Model.EquipComputer == true ? "✖" : "--")</b>
+                    </td>
+                    <td colspan="2" align="left" style="font-size:14px;font-family:Arial;border: 1px solid black;">
+                        &nbsp
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div style="font-size:16px; font-family:Arial;">
+        <b>5. ASPECTO ALIMENTACIÓN:</b>
+    </div>
+    <div>
+        <table style="width:100%;  border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>ALIMENTACIÓN</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>DESAYUNO</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>ALMUERZO</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>CENA</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>CASA</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.BreakfastHome == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.LunchHome == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.DinnerHome == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>PENSIÓN</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.BreakfastPension == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.LunchPension == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.DinnerPension == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>CASA DE PARIENTES</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.BreakfastRelativeHome == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.LunchRelativeHome == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.DinnerRelativeHome == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>OTROS</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.BreakfastOther == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.LunchOther == true ? "✖" : "--")</b>
+                </td>
+                <td align="center" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>@( Model.DinnerOther == true ? "✖" : "--")</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <br />
+    <div style="font-size:16px; font-family:Arial;">
+        <b>6. ASPECTO DE SALUD:</b>
+    </div>
+    <div>
+        <table style="width:100%;  border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <td colspan="3" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>5.1 DE LA FAMILIA</b>
+                </td>
+                <td colspan="3" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    <b>5.2 DEL ESTUDIANTE</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    ¿Tiene familiar enfermo?
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    SI ( @(Model.ListStudentFamilyOnlyRead.Any(x=>x.IsSick)? "✖" : "" ) )
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    NO ( @(!Model.ListStudentFamilyOnlyRead.Any(x => x.IsSick) ? "✖" : "" ) )
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    ¿Padece de alguna enfermedad?
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    SI ( @(Model.IsSick == Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.HEALTH_PARENT_SICK.YES) ? "✖" : "") )
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    NO ( @(Model.IsSick == Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.HEALTH_PARENT_SICK.NO) ? "✖" : "") )
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    ¿Quien es?<br />
+                    @if (Model.ListStudentFamilyOnlyRead.Any(x=>x.IsSick))
+                      {
+                          @foreach (var item in Model.ListStudentFamilyOnlyRead.Where(x=>x.IsSick == true))
+                          {
+                             @("-"+" "+item.Name + " " + item.PaternalName + " " + item.MaternalName)<br />
+                          }
+                      }
+                      else
+                      {
+                          
+                      }                     
+                    
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Tipo de enfermedad <br />
+                    @if (Model.ListStudentFamilyOnlyRead.Any(x => x.IsSick))
+                    {
+                        @foreach (var item in Model.ListStudentFamilyOnlyRead.Where(x => x.IsSick == true))
+                        {
+                            @("-" + " " + item.Name + " " + item.PaternalName + " " + item.MaternalName + " :" + item.DiseaseType) <br />
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+                <td colspan="2" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    @(Model.TypeParentIllness)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Tipo de enfermedad
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Tiene seguro de salud
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    SI ( @(Model.HaveInsurance == Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.HEALTH_INSURANCE.YES) ? "✖" : "") )
+                </td>
+                <td align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    NO ( @(Model.HaveInsurance == Convert.ToByte(AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.HEALTH_INSURANCE.NO) ? "✖" : "") )
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    Intervenciones quirúrgica <br />
+                    @if (Model.ListStudentFamilyOnlyRead.Any(x => x.IsSick))
+                    {
+                        @foreach (var item in Model.ListStudentFamilyOnlyRead.Where(x => x.IsSick == true))
+                        {
+                            @("-" + " " + item.Name + " " + item.PaternalName + " " + item.MaternalName + " :" + ((item.SurgicalIntervention == true) ? "Si" : "No")) <br />
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+                <td colspan="3" align="left" style="font-size:14px; font-family:Arial;border: 1px solid black;">
+                    ¿Cual y dónde? &nbsp; @(Model.InsuranceDescription!= 0? AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.TYPE_INSURANCE.VALUES[Convert.ToInt32(Model.InsuranceDescription)]:"")
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="float:right;font-size:14px;font-family:Arial; text-rendering:geometricPrecision;">
+        @GeneralHelpers.GetInstitutionLocation(), ____ de __________________ del 20__
+    </div>
+</body>
+</html>

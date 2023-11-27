@@ -1,0 +1,64 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.TeacherViewModels.TeacherViewModel
+@{
+    ViewBag.Title = "Editar Docente";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Gestión de Docentes", Area = "Admin", Controller = "Teacher", Action = "Index"},
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+    ViewBag.BackUrl = Url.Action("Index", "Teacher");
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Datos de Docente
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <form class="m-form m-form--state m-form--fit" id="edit-form" asp-action="Edit" asp-controller="Teacher" method="post" enctype="multipart/form-data">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div id="alert-text" class="m-alert__text">
+                            @ViewBag.ErrorMessage
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <input hidden asp-for="Id" />
+                @await Html.PartialAsync("_TeacherEntryForm", (Model))
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/areas/admin/teacher/edit.js"></script>
+}
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/css/areas/admin/teacher/edit.css" />
+}

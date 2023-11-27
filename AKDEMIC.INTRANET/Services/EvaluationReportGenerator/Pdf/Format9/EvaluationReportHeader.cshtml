@@ -1,0 +1,201 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using AKDEMIC.CORE.Extensions
+@using AKDEMIC.CORE.Helpers
+@using Microsoft.AspNetCore.Hosting;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+    Model.Course.Section.Students = Model.Course.Section.Students.Where(x => x.Status != ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN).ToList();
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />    
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/format1/evaluation_report_header.css"))" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <br />
+    <div style="position:absolute;text-align: center;padding: 20px 20px;">
+    </div>
+    <header style="height:90px !important;">
+    </header>
+    <br />
+    <table style="border: none; border:2px solid white;">
+        <tbody>
+            <tr>
+                <td width="80%">
+                    <table>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline"> ACTA DE EVALUACIONES: @(AKDEMIC.CORE.Helpers.ConstantHelpers.Intranet.EvaluationReportType.NAMES.ContainsKey(Model.BasicInformation.Type) ? AKDEMIC.CORE.Helpers.ConstantHelpers.Intranet.EvaluationReportType.NAMES[Model.BasicInformation.Type].ToUpper() : "-") </h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline"> FACULTAD: @Model.Course?.Career?.Faculty</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline"> ESCUELA PROFESIONAL: @Model.Course?.Career?.Name </h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline"> PLAN CURRICULAR: @Model.Course.Curriculum</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline"> ASIGNATURA: @($"{Model.Course.Code}-{Model.Course.Name}")</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline">DOCENTE: @Model.Course.Section.Teacher </h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline">CRÉDITOS: @Model.Course.Credits</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <h3 style="display: inline">
+                                    PERIODO ACADÉMICO: @Model.Term.Name &emsp;
+                                    CICLO: @(ConstantHelpers.ACADEMIC_YEAR.TEXT.ContainsKey(Model.Course.AcademicYear) ? ConstantHelpers.ACADEMIC_YEAR.TEXT[Model.Course.AcademicYear].ToUpper() : "-") &emsp;
+                                    @if (Model.BasicInformation.Type != ConstantHelpers.Intranet.EvaluationReportType.EXTRAORDINARY_EVALUATION)
+                                    {
+                                        @(Model.Course.Section.Code.Contains("GRUPO") ? Model.Course.Section.Code : $"GRUPO {Model.Course.Section.Code}");
+                                        <span>&emsp;</span>
+                                    }
+                                    Usuario: @Model.UserLoggedIn.ToLower()
+                                </h3>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="20%" style="border:2px solid white;">
+                    <table>
+                        <tr>
+                            <td style="text-align: center; width: 17%;">
+                                <span style="font-size: 17px; font-weight: bold;"> @Model.BasicInformation.Code &emsp; &emsp; &emsp;  &emsp; @*Pag. 1/1*@</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header" style="width: 100px !important;">
+                                <span class="detail-header"> HORAS TEÓRICAS: @(Model.Course.TheoreticalHours)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <span class="detail-header"> HORAS PRÁCTICAS: @(Model.Course.PracticalHours)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header">
+                                <span class="detail-header"> HORAS EFECTIVAS: @(Model.Course.EffectiveHours)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header" colspan="3">
+                                <span class="detail-header"> FECHA: @(Model.BasicInformation.DateByConfiguration.HasValue ? Model.BasicInformation.DateByConfiguration.ToLocalDateFormat() : "-")</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header" colspan="3">
+                                <span class="detail-header"> HORA : @(Model.BasicInformation.DateByConfiguration is null ? "-" : Model.BasicInformation.DateByConfiguration.ToDefaultTimeZone()?.ToString("hh:mm:ss tt").ToUpper())</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-header" colspan="3">
+                                <span class="detail-header" style="font-size:10px !important; letter-spacing:-0.5px !important;"> F. I. : @DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt").ToUpper()</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div style="width: 100% !important; margin-top: 815px;" >
+        <table style="border:2px solid white;">
+            <tr>
+                <td width="40%">
+                    <table >
+                        <thead>
+                            <tr>
+                                @if (Model.Course.PartialAveragesCount <= 3)
+                                {
+                                    <th style="width:180px; text-align:center; font-weight:bold; font-size:8px !important;">FÓRMULA DE PROMEDIO FINAL</th>
+                                    <th style="border:0px !important; text-align:right; font-size:8px;">&emsp; </th>
+                                }
+                                else
+                                {
+                                    <th style="width:280px; text-align:center; font-weight:bold; font-size:8px !important;">FÓRMULA DE PROMEDIO FINAL</th>
+                                    <th style="border:0px !important; text-align:right; font-size:8px;">&emsp; </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th style="text-align: center;font-size: 13px;font-weight: bold; border-bottom:0px !important">PF=@Model.Course.Formula</th>
+                            </tr>
+                            @if (Model.Course.PartialAveragesCount == 0)
+                            {
+                                <tr>
+                                    <th style="font-size:9px; border-top:0px !important;">PF: Promedio Final</th>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <th style="font-size:9px; border-top:0px !important; border-bottom:0px !important;">PF: Promedio Final</th>
+                                </tr>
+                            }
+
+                            @for (int i = 1; i <= Model.Course.PartialAveragesCount; i++)
+                            {
+                                @if (i + 1 == Model.Course.PartialAveragesCount)
+                                {
+                                    <tr>
+                                        <th style="font-size:8px; border-bottom:0px !important;">@(i)PP: @AKDEMIC.INTRANET.Helpers.ConstantHelpers.SEQUENCEORDER.NAMES[i] Promedio Parcial</th>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <th style="font-size:8px; border-top:0px !important;">@(i)PP: @AKDEMIC.INTRANET.Helpers.ConstantHelpers.SEQUENCEORDER.NAMES[i] Promedio Parcial</th>
+                                    </tr>
+                                }
+                            }
+
+
+                        </tbody>
+                    </table>
+                </td>
+                <td style="border:2px solid white;">
+                    <table style="margin-top:80px !important;">
+                        <tbody>
+                            <tr>
+                                <th width="40%" style="text-align:center;border-bottom:0px !important; padding-bottom:10px !important; border-right:0px !important; border-left:0px !important; border-top:1px solid !important;">&emsp; Docente Responsable &emsp; <br />Firma y Sello</th>
+                                <th width="20%" style="width:100px; border:0px !important;">&emsp;</th>
+                                <th width="40%" style="text-align:center;border-bottom:0px !important; padding-bottom:10px !important; border-right:0px !important; border-left:0px !important; border-top:1px solid !important;">&emsp; Registros Académicos &emsp;<br />Firma y Sello<br /></th>
+                            </tr>
+                            <tr>
+                                <th colspan="3" style="text-align:center; border:0px !important; padding:0px !important; margin:0px !important;">
+                                    <img style="max-height:45px; width:200px;" src="@Model.FinalQR" />
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

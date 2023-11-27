@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Mis Solicitudes";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData {Name="Mis Solicitudes", Controller=null, Action=null},
+    };
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+<div id="observation_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-modal-title">
+                    Observaciones
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="recordHistoryId" />
+                <div class="form-group m-form__group m-form__group--first">
+                    <table class="table table-striped table-bordered" id="table_observations"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/student/myrequest/index.js" asp-append-version="true"></script>
+}

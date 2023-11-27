@@ -1,0 +1,291 @@
+﻿@using Microsoft.AspNetCore.Http
+@model AKDEMIC.INTRANET.ViewModels.TemplatesViewModels.InvoiceViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Boleta</title>
+    @*<style>
+        @@page {
+            margin: 0
+        }
+
+        body {
+            margin: 0
+        }
+
+        .sheet {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+
+        body.A3 .sheet {
+            width: 297mm;
+            height: 419mm
+        }
+
+        body.A3.landscape .sheet {
+            width: 420mm;
+            height: 296mm
+        }
+
+        body.A4 .sheet {
+            width: 210mm;
+            height: 296mm
+        }
+
+        body.A4.landscape .sheet {
+            width: 297mm;
+            height: 209mm
+        }
+
+        /*body.A5 .sheet {
+            width: 148mm;
+            height: 209mm
+        }
+
+        body.A5.landscape .sheet {
+            width: 210mm;
+            height: 147mm
+        }*/
+
+
+        @@media screen {
+            /*body {
+                background: #e0e0e0
+            }*/
+
+            /*.sheet {
+                background: white;
+                box-shadow: 0 .5mm 2mm rgba(0,0,0,.3);
+                margin: 5mm;
+            }*/
+        }
+
+        /** Fix for Chrome issue #273306 **/
+        @@media print {
+            body.A3.landscape {
+                width: 420mm
+            }
+
+            body.A3, body.A4.landscape {
+                width: 297mm
+            }
+
+            body.A4, body.A5.landscape {
+                width: 210mm
+            }
+
+            /*body.A5 {
+                width: 148mm
+            }*/
+        }
+    </style>*@
+    <!-- Set page size here: A5, A4 or A3 -->
+    <!-- Set also "landscape" if you need -->
+    <style>
+        @@page {
+            size: A5 landscape
+        }
+    </style>
+    <!-- Custom styles for this document -->
+
+    <style>
+        /*body.A5.landscape .sheet {
+            width: 210mm;
+            height: 114mm;
+        }*/
+
+        body {
+            font-family: serif
+        }
+
+        h1 {
+            font-family: 'Tangerine', cursive;
+            font-size: 40pt;
+            line-height: 18mm
+        }
+
+        h2, h3 {
+            font-family: 'Tangerine', cursive;
+            font-size: 24pt;
+            line-height: 7mm
+        }
+
+        h4 {
+            font-size: 32pt;
+            line-height: 14mm
+        }
+
+        h2 + p {
+            font-size: 18pt;
+            line-height: 7mm
+        }
+
+        h3 + p {
+            font-size: 14pt;
+            line-height: 7mm
+        }
+
+        li {
+            font-size: 11pt;
+            line-height: 5mm
+        }
+
+        h1 {
+            margin: 0
+        }
+
+            h1 + ul {
+                margin: 2mm 0 5mm
+            }
+
+        h2, h3 {
+            margin: 0 3mm 3mm 0;
+            float: left
+        }
+
+            h2 + p,
+            h3 + p {
+                margin: 0 0 3mm 50mm
+            }
+
+        h4 {
+            margin: 2mm 0 0 50mm;
+            border-bottom: 2px solid black
+        }
+
+            h4 + ul {
+                margin: 5mm 0 0 50mm
+            }
+
+        article {
+            border: 4px double black;
+            padding: 5mm 10mm;
+            border-radius: 3mm
+        }
+
+        body.A5.landscape .sheet {
+            width: 159mm;
+            height: 102mm;
+        }
+
+        .invoice {
+            padding: 17mm 13mm 0 24mm;
+            font-size: 14px;
+        }
+
+            .invoice .invoice-number {
+                font-size: 20px;
+                display: block;
+                text-align: right;
+            }
+
+            .invoice .invoice-text {
+                display: block;
+                padding-left: 17mm;
+                text-transform: uppercase;
+            }
+
+                .invoice .invoice-text.number {
+                    width: 50mm;
+                    display: inline-block;
+                }
+
+                .invoice .invoice-text.date {
+                    width: 20mm;
+                    display: inline-block;
+                    padding-left: 30mm;
+                }
+
+            .invoice .table-container {
+                height: 51mm;
+                padding: 7mm 0 1mm 0;
+            }
+
+            .invoice table {
+                table-layout: fixed;
+                width: 100%;
+            }
+
+        .table > tbody {
+            font-size: 14px;
+        }
+
+            .table > tbody > tr > th,
+            .table > tbody > tr > td {
+                line-height: 1.4;
+                vertical-align: top;
+            }
+
+                .table > tbody > tr > td.td-qty {
+                    width: 20mm;
+                    text-align: right;
+                }
+
+                    .table > tbody > tr > td.td-qty span {
+                        padding: 1mm 6mm 0 0;
+                    }
+
+                .table > tbody > tr > td.td-name {
+                    width: 72mm;
+                    text-transform: uppercase;
+                }
+
+                .table > tbody > tr > td.td-cost {
+                    width: 27mm;
+                    text-align: right;
+                }
+
+                    .table > tbody > tr > td.td-cost span {
+                        padding: 0 5mm 0 0;
+                    }
+
+        .invoice .invoice-total {
+            display: block;
+            text-align: right;
+            padding-right: 5mm;
+        }
+    </style>
+</head>
+
+<body class="A5 landscape">
+    <section class="sheet invoice">
+        <div class="invoice-header">
+        </div>
+        <div class="row" style="padding-top: 1mm;">
+            <span class="invoice-text number"> @Model.Number </span>
+            <span class="invoice-text date"> @Model.Date </span>
+        </div>
+        <div class="row">
+            <span class="invoice-text"> @Model.FullName </span>
+        </div>
+        <div class="row table-container">
+            <table class="table">
+                <tbody>
+                
+                @foreach (var detail in Model.Details)
+                {
+                    <tr>
+                        <td class="td-qty"> <span>1</span> </td>
+                        <td class="td-name"> <span>@detail.Concept</span> </td>
+                        <td class="td-cost"> <span>@detail.Amount</span> </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <span class="invoice-total"> @Model.TotalAmount </span>
+        </div>
+
+    </section>
+</body>
+</html>

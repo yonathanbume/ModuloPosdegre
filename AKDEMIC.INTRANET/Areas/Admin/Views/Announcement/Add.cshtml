@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "Agregar banner";
+    ViewBag.SubTitle = "Datos del banner";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "banners" ,Action= "Index", Controller="Announcement", Area="Admin"},
+new BreadcrumbViewData { Name = (string)ViewBag.Title}
+};
+    ViewData["BackUrl"] = Url.Action("Index", "Announcement", new { area = "Admin" });
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Subtitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form id="add-form" class="m-form m-form--state m-form--fit" method="post" enctype="multipart/form-data">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-12">
+                        <label class="form-control-label" for="Fields_Name">Titulo</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" name="Title" class="form-control m-input" autocomplete="off">
+                        </div>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Fields.Name" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-12">
+                        <label class="form-control-label">Descripción</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <textarea name="Description" class="form-control m-input"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-6">
+                        <label class="form-control-label">Fecha de inicio</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input id="StartDate" name="StartDate" class="form-control m-input" placeholder="Fecha inicio" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="form-control-label">Fecha de fin</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input name="EndDate" id="EndDate" class="form-control m-input" placeholder="Fecha fin" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label class="form-control-label">Roles</label>
+
+                        <select name="SelectedRoles" class="form-control m-input m-select2 select2-roles" multiple required></select>
+
+                    </div>
+                </div>
+                <div class="m-card-profile">
+                    <div class="m-card-profile__title">
+                        Foto
+                    </div>
+                    <div class="m-card-user">
+                        <div class="m-card-profile">
+                            <img id="current-picture" src="~/images/default-banner.jpg" />
+                        </div>
+                    </div>
+                    <div class="m-card-profile__details">
+                        <div class="form-group m-form__group row">
+                            <div class="m-form__group-sub col-lg-6 mx-auto">
+                                <div class="custom-file">
+                                    <input class="form-control m-input custom-file-input" placeholder="Usuario" accept="image/*" type="file" name="Picture" id="Picture">
+                                    <label class="custom-file-label selected" for="PhotoUrl">
+                                        Selecciona una Imagen
+                                    </label>
+                                </div>
+                                <span class="text-danger field-validation-valid" data-valmsg-for="Pathfile" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Styles {
+
+<link href="~/css/areas/admin/announcement/add_edit.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/areas/admin/announcement/index.js"></script>
+    <script src="~/js/modules/form.js"></script>
+}

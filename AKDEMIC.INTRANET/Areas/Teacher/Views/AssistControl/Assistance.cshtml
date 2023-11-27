@@ -1,0 +1,54 @@
+﻿@model Guid
+@{
+    ViewData["Title"] = "Detalle de Secciones";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Lista de Secciones" , Url = Url.Action("Index","AssistControl") },
+new BreadcrumbViewData { Name = "Clases dictadas" }
+
+};
+    ViewData["BackUrl"] = Url.Action("Index", "AssistControl", new { area = "Teacher" });
+}
+<input type="hidden" id="SectionId" value="@Model" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de clases pasadas sin toma de asistencia
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button data-id="@Model" class="btn btn-primary btn-sm m-btn m-btn--icon btn-history pull-right"><span><i class="la la-list"> </i> Historial Asistencia</span></button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label class="form-control-label">Seleccione una fecha</label>
+                                <input id="datepicker" class="form-control" autocomplete="off" />
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label class="form-control-label">&nbsp;</label>
+                                <button class="btn btn-primary btn-block" id="clear-datepicker">Limpiar filtro</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/teacher/assistcontrol/assistance.js" asp-append-version="true"></script>
+}

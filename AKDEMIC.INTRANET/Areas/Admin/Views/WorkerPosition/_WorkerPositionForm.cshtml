@@ -1,0 +1,67 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.WorkerPositionViewModels.WorkerPositionViewModel
+
+
+<input hidden asp-for="Id" />
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="Description" class="form-control-label">Descripci&oacute;n</label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="Description" class="form-control m-input" placeholder="Descripción" required pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" />
+        </div>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="Age" class="form-control-label">Edad</label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="Age" class="form-control m-input" placeholder="Edad" type="text" required pattern="[0-9]*" required maxlength="2" />
+        </div>
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="Document" class="form-control-label">Documento de Norma</label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="Document" class="form-control m-input" placeholder="Documento de Norma" required pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" />
+        </div>
+        <span asp-validation-for="Document" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="Category" class="form-control-label">Categor&iacute;a</label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="Category" class="form-control m-input" placeholder="Categoría" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+        </div>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="Dedication" class="form-control-label">Dedicaci&oacute;n</label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="Dedication" class="form-control m-input" placeholder="Dedicación" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+        </div>
+        <span asp-validation-for="Dedication" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="AcademicDegree" class="form-control-label">Grado Acad&eacute;mico</label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="AcademicDegree" class="form-control m-input" placeholder="Grado Académico" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+        </div>
+        <span asp-validation-for="AcademicDegree" class="text-danger"></span>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="JobTitle" class="form-control-label">T&iacute;tulo profesional</label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="JobTitle" class="form-control m-input" placeholder="Título Profesional" type="text" pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" required />
+        </div>
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
+    </div>
+</div>
+

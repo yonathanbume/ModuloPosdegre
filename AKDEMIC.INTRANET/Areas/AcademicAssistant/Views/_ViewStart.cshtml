@@ -1,0 +1,10 @@
+﻿@{
+    if (User.IsInRole(AKDEMIC.CORE.Helpers.ConstantHelpers.ROLES.STUDENTS) || User.IsInRole(AKDEMIC.CORE.Helpers.ConstantHelpers.ROLES.TEACHERS))
+    {
+        Layout = "~/Views/Shared/Templates/Default/_SlimLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/Templates/Default/_Layout.cshtml";
+    }
+}

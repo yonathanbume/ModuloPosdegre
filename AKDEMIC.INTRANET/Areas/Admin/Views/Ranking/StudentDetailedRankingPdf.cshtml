@@ -1,0 +1,128 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.RankingViewModels.StudentDetailedRankingPdfViewModel
+@{
+    Layout = null;
+    var rowNumber = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/pages/pdf/rankingreportspdf.css" />
+    <style>
+        /*.filter-info {
+                margin-block-start: 0;
+                margin-block-end: 0;
+            }
+
+                .filter-info:nth-of-type(2) {
+                    margin-bottom: 0;
+                }
+
+                .filter-info:nth-of-type(3) {
+                    margin-top: 0;
+                }
+
+            .ranking-table tr {
+                font-size: small;
+            }*/
+        .chart-end::before,
+        .chart-end::after {
+            display: inline-block;
+            content: "";
+            border-top: .3rem double black;
+            width: 25%;
+            margin: 0 1rem;
+            transform: translateY(-1rem);
+        }
+    </style>
+</head>
+<body>
+    <div class="cited-text" style="font-size:22px;font-family:Georgia;padding:5px;text-align: center;
+    font-weight: bold;padding-top:50px;padding-bottom:30px;">
+        @(GeneralHelpers.GetTheme().ToUpper())
+        <div class="cited-text" style="font-size:18px;padding:5px">
+            VICERECTORADO ACADEMICO
+        </div>
+    </div>
+    <div class="" style="text-align:left;font-size:14px;padding:5px">
+        FACULTAD: @Model.FilterInformation?.Career?.ToUpper() <div style="display:inline-block;float:right"><strong>CUADRO DE MERITOS [@Model?.FilterInformation?.Term]</strong></div>
+        <br />
+        <br />
+        @*ESCUELA PROFESIONAL: @(string.IsNullOrEmpty(Model.FilterInformation.AcademicProgram) ? "Todas" : Model.FilterInformation.AcademicProgram.ToUpper())<br />*@
+        @*SEMESTRE: @Model.CurrentSemester.ToUpper() <br />*@
+        CUADRO DE MERITOS EMITIDO SEGUN: REGLAMENTO APROBADO EN C.U. DEL 12 Mayo 2016 - RR 1428-2016-R-UNA
+    </div>
+
+    <table style="    font-size: 13px;
+    width: 100%;
+    padding: 13px;
+    padding-right: 10px;
+    padding-left: 10px;border-collapse: collapse;">
+        @* ranking-table *@
+        @*<colgroup span="1"></colgroup>*@
+        <colgroup span="1"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+
+        <thead>
+            <tr >
+                @*<th style="border:1px solid black" colspan="1" scope="colgroup">Nro</th>*@
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th style="border:1px solid black" colspan="7" scope="colgroup"> SEMESTRE</th>
+                <th></th>
+            </tr>
+            <tr>
+                @*<th style="border:1px solid black"></th>*@
+                <th style="border:1px solid black" colspan="1" scope="colgroup">Ord Mer</th>
+                <th style="border:1px solid black" colspan="1" scope="colgroup">Codigo</th>
+                <th style="border:1px solid black" colspan="1" scope="colgroup"> Apellidos y Nombres</th>
+                <th style="border:1px solid black" colspan="1" scope="colgroup"> Exp</th>
+                <th style="border:1px solid black">PPS</th>
+                <th style="border:1px solid black">Pln</th>
+                <th style="border:1px solid black">CrP</th>
+                <th style="border:1px solid black">CrM</th>
+                <th style="border:1px solid black">CrA</th>
+                <th style="border:1px solid black">CrD</th>
+                <th style="border:1px solid black">Mod</th>
+                <th style="border:1px solid black" colspan="1" scope="colgroup"> CONDICION</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var summary in Model.StudentSummaries)
+            {
+                <tr  style="border:1px solid black;">
+                    @*<td style="text-align:center;">@(rowNumber + 1)</td>*@
+                    <td style="text-align:center; border:1px solid black">@summary.MeritOrder</td>
+                    <td style="text-align:center;border:1px solid black">@summary.Code</td>
+                    <td sstyle="border:1px solid black">&emsp;@summary.Name</td>
+                    <td style="text-align:center;border:1px solid black">@summary.AcademicProgramCode</td>
+                    <td style="text-align:center;border:1px solid black">@summary.WeightedAverageGrade.ToString("0.00")</td>
+                    <td style="text-align:center;border:1px solid black">@summary.Plan</td>
+                    <td style="text-align:center;border:1px solid black">@summary.PlanCredit</td>
+                    <td style="text-align:center;border:1px solid black">@summary.EnrollmentCredit</td>
+                    <td style="text-align:center;border:1px solid black">@summary.ApprovedCredits</td>
+                    <td style="text-align:center;border:1px solid black">@summary.DisapprovedCredits</td>
+                    <td style="text-align:center;border:1px solid black">@summary.Modality.ToUpper()</td>
+                    <td style="text-align:center;border:1px solid black">@summary.Condition.ToUpper()</td>
+                    @{ rowNumber = rowNumber + 1; }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="cited-text" style="font-size:14px;font-family:Georgia;padding:5px;
+    font-weight: bold;padding-top:50px;padding-bottom:10px">
+        IMPORTANTE: Este cuadro debe llevar la firma y el sello del Coordinador Acad&eacute;mico para garantizar su conformidad.
+        <br />
+    </div>
+    <div class="chart-end" style="text-align:center">FIN DEL CUADRO</div>
+</body>
+</html>

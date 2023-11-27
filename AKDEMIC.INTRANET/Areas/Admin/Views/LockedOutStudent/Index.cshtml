@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "Gestión de Bloqueados";
+    ViewBag.SubTitle = "Listado de Estudiantes Bloqueados";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+@section Styles {
+    <link href="~/css/areas/academic/studentinformation/information.css" rel="stylesheet" type="text/css" />
+}
+<style>
+    .dz-upload {
+        display: block;
+        background-color: darkblue;
+        height: 10px;
+        width: 0%;
+    }
+</style>
+
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-xl-10 order-2 order-xl-1">
+                    <div class="row">
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Facultad</label>
+                            <select class="form-control m-input m-select2 select2-faculties">
+                                <option>Todas</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Escuela</label>
+                            <select class="form-control m-input m-select2 select2-careers">
+                                <option>Todas</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Programas</label>
+                            <select class="form-control m-input m-select2 select2-programs">
+                                <option>Todos</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>&emsp;</label>
+                            <div class="m-input m-input-icon m-input-icon--left">
+                                <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por Nombre o DNI..." id="search">
+                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                    <span><i class="la la-search"></i></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 order-1 order-xl-2 m--align-right">
+                    <label>&ensp;</label>
+                    <button id="AddAbility" data-toggle="modal" data-target="#AddLockdOutModal" class="btn btn-primary m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-plus"></i>
+                            <span>Nuevo bloqueo</span>
+                        </span>
+                    </button>
+                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered students-datatable"></table>
+        </div>
+    </div>
+</div>
+
+<div id="AddLockdOutModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Bloqueo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label>Seleccione un Estudiante</label>
+                            <select name="UserId" class="form-control m-select2" id="add-user-select2" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label>Motivo de Bloqueo</label>
+                            <input type="text" id="Reason" class="form-control" name="Reason" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="EditLockdOutModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">
+                    Editar motivo Bloqueo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label>Motivo de Bloqueo</label>
+                            <input type="hidden" id="EditId" name="UserId"/>
+                            <input type="text" id="EditReason" class="form-control" name="Reason" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/lockedoutstudent/index.js"></script>
+}

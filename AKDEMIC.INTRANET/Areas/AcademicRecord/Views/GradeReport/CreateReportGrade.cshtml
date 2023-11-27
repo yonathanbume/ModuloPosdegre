@@ -1,0 +1,270 @@
+﻿@model AKDEMIC.INTRANET.Areas.AcademicRecord.Models.GradeReport.ResultViewModel
+@{
+    ViewBag.Title = "Gestión de Informes de Grados";
+    ViewBag.SubTitle = "Informes de grados";
+
+
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = "GradeReport", Action = "Index" , Area ="AcademicRecord" },
+new BreadcrumbViewData { Name = "Creación del informe de grados", Controller = null, Action = null },
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" role="tab">
+                            <i class="la la-user"></i> Datos de Interesado
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab">
+                            <i class="la la-edit"></i> Datos de Informe <span style="margin-left: 5px;" id="student-fullname"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_6_1" role="tabpanel">
+                    <div class="modal-body">
+                        <form id="student-information" method="post">
+
+                            <div class="form-group m-form__group">
+                                <div class="input-group">
+                                    <input id="username-search" type="text" class="form-control" placeholder="Buscar estudiante por código ..." required value="@(ViewBag.username)">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-primary" type="submit"><span><i class="la la-search"></i></span></button>
+                                    </div>
+                                    @*<div style="margin-right: 10px;"></div>
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-secondary" id="btn-reset" type="button"><span><i class="la la-rotate-left"></i></span></button>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </form>
+                        <div id="div-rendering">
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Code">C&oacute;digo</label>
+                                    <input id="Code" type="text" class="form-control" name="Code" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="PaternalSurName">Apellido Paterno</label>
+                                    <input id="PaternalSurName" type="text" class="form-control" name="PaternalSurName" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="MaternalSurName">Apellido Materno</label>
+                                    <input id="MaternalSurName" type="text" class="form-control" name="MaternalSurName" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Name">Nombres</label>
+                                    <input id="Name" type="text" class="form-control" name="Name" disabled />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="Faculty">Facultad</label>
+                                    <input id="Faculty" type="text" class="form-control" name="Faculty" disabled />
+                                </div>
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="Career">Escuela Profesional</label>
+                                    <input id="Career" type="text" class="form-control" name="Career" disabled />
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="CurricularSystem">Sistema Curricular</label>
+                                    <input id="CurricularSystem" type="text" class="form-control" name="CurricularSystem" disabled />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="Curriculum">Plan de estudios</label>
+                                    <input id="Curriculum" type="text" class="form-control" name="Curriculum" disabled />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="AcademicProgram">Especialidad</label>
+                                    <input id="AcademicProgram" type="text" class="form-control" name="AcademicProgram" disabled />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="m_tabs_6_2" role="tabpanel">
+                    <form id="grade-report-information" method="post" enctype="multipart/form-data" role="form">
+                        <input type="hidden" name="RecordHistoryId" value="@(ViewBag.RecordHistoryId)" />
+                        <input type="hidden" name="StudentId" id="StudentId" />
+                        <div class="modal-body">
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    @if (bool.Parse(Model.Value))
+                                    {
+                                        <label for="ProcedureId">Trámite</label>
+                                        <select id="ProcedureId" name="ProcedureId" class="form-control m-select2" required></select>
+                                    }
+                                    else
+                                    {
+                                        <label for="ConceptId">Concepto</label>
+                                        <select id="ConceptId" name="ConceptId" class="form-control m-select2" required></select>
+                                    }
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Year">A&ntilde;o</label>
+                                    <input id="Year" type="number" class="form-control" autocomplete="off" name="Year" min="1" required disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Number">N&uacute;mero</label>
+                                    <input id="Number" class="form-control" name="Number" autocomplete="off" required disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Date">Fecha</label>
+                                    <input id="Date" type="text" class="form-control" name="Date" autocomplete="off" required disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="YearsStudied">Años Estudiados</label>
+                                    <input type="number" class="form-control" min="4" name="YearsStudied" autocomplete="off" placeholder="1" required />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="SemesterStudied">Semestres Estudiados</label>
+                                    <input type="number" class="form-control" name="SemesterStudied" autocomplete="off" required />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="AdmissionTermId">Semestre de Ingreso</label>
+                                    <select id="AdmissionTermId" type="text" class="form-control m-select2" name="AdmissionTermId" autocomplete="off" disabled></select>
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="GraduationTermId">Semestre de Egreso</label>
+                                    <select id="GraduationTermId" type="text" class="form-control m-select2" name="GraduationTermId" autocomplete="off" required></select>
+                                </div>
+
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="GraduationDate">Fecha de Egreso</label>
+                                    <input id="GraduationDate" type="text" class="form-control" name="GraduationDate" autocomplete="off" required />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="PromotionGrade">Nota de Promoción</label>
+                                    <input id="PromotionGrade" type="number" class="form-control" name="PromotionGrade" autocomplete="off" min="1" placeholder="1" required />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="Credits">Créditos</label>
+                                    <input id="Credits" type="number" class="form-control" name="Credits" placeholder="1" autocomplete="off" min="1" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="ResearchWork">Nombre del trabajo de investigación</label>
+                                    <input id="ResearchWork" type="text" class="form-control" name="ResearchWork" autocomplete="off" maxlength="500" />
+                                </div>
+
+
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="ResearchWorkURL">URL del trabajo de investigación</label>
+                                    <div class="input-group">
+                                        <input id="ResearchWorkURL" type="text" class="form-control" name="ResearchWorkURL" autocomplete="off"
+                                               value="@( ConstantHelpers.Institution.Repositories[ConstantHelpers.GENERAL.Institution.Value])" maxlength="500" />
+                                        <div class="input-group-append">
+                                            <button id="btn-redirect" class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="BachelorOrigin">Procedencia de bachiller</label>
+                                    <input id="BachelorOrigin" type="text" class="form-control" name="BachelorOrigin" autocomplete="off" maxlength="500" />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="PedagogicalTitleOrigin">Procedencia del título pedagógico</label>
+                                    <input id="PedagogicalTitleOrigin" type="text" class="form-control" name="PedagogicalTitleOrigin" autocomplete="off" maxlength="500" />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="StudyModality">Modalidad de obtención del grado</label>
+                                    <select id="StudyModality" name="StudyModality" class="form-control m-input">
+                                        @foreach (var item in ConstantHelpers.STUDY_MODALITY.VALUES)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="OriginDegreeCountry">País de procedencia del grado o título</label>
+                                    <input id="OriginDegreeCountry" type="text" class="form-control" name="OriginDegreeCountry" maxlength="500" autocomplete="off" />
+                                </div>
+
+
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Observation">Observaciones</label>
+                                <textarea style="resize:none;height:150px;" class="form-control" id="Observation" name="Observation" maxlength="700" autocomplete="off"></textarea>
+                            </div>
+
+                            @if (Model.DegreeRequirements.Count() > 0)
+                            {
+                                <div class="form-group m-form__group">
+                                    <br />
+                                    <h5>Requisitos</h5>
+                                    <br />
+                                    @foreach (var item in Model.DegreeRequirements)
+                                    {
+                                        <div class="d_requirement" id="@(item.Id)">
+                                            <label>@(item.Name)</label>
+                                            <br />
+                                            <label for="Observation">Adjuntar archivo</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" placeholder="Documento" accept="application/*" required>
+                                                <label class="custom-file-label" for="SignatureFile">Seleccione archivo</label>
+                                            </div>
+                                            <div class="form-group m-form__group" style="margin-top:5px;">
+                                                <label for="Observation">Observaciones</label>
+                                                <textarea style="resize:none;height:100px;" class="form-control" maxlength="700" autocomplete="off"></textarea>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    }
+
+
+                                </div>
+                            }
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"> Guardar </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var isIntegrated = @(Model.Value.ToLower());
+    </script>
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/academicrecord/gradereport/create.js"></script>
+}

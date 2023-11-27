@@ -1,0 +1,220 @@
+﻿@{
+    ViewData["Title"] = "Gestión de autoridades";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Home", Controller = "Home", Action = "Index" },
+new BreadcrumbViewData {Name="Gestión de autoridades", Controller=null, Action=null},
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">Gestión de autoridades</h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button id="AddAbility" data-toggle="modal" data-target="#AddAuthorityModal" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nueva autoridad</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="tbl-data"> </table>
+        </div>
+    </div>
+</div>
+<div id="AddAuthorityModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Autoridad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-university-authority-form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label>Seleccione un Usuario</label>
+                            <select name="UserId" class="form-control m-select2" id="add-user-select2" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label for="TypeAdd">Tipo:</label>
+                            <select id="TypeAdd" name="Type" class="form-control m-input" required>
+                                @foreach (var item in ConstantHelpers.UNIVERSITY_AUTHORITY.TYPE.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label for="File">Resoluci&oacute;n</label>
+                            <div class="custom-file">
+                                <input name="File" id="FileAdd" type="file" class="custom-file-input" lang="es" required />
+                                <label class="custom-file-label" for="File">
+                                    Seleccione un archivo
+                                </label>
+                            </div>
+                            <div class="invalid-feedback">Campo Obligatorio</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label for="ResolutionDate">Fecha Resoluci&oacute;n</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input name="ResolutionDate" id="ResolutionDateAdd" class="form-control m-input" placeholder="Fecha de Resolución" required />
+                                <span class="m-input-icon__icon m-input-icon__icon--right">
+                                    <span>
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </span>
+                                <span for="ResolutionDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="EditAuthorityModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Autoridad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="edit-university-authority-form">
+                <input type="hidden" name="Id" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label>Seleccione un Usuario</label>
+                            <select name="UserId" class="form-control m-select2" id="edit-user-select2" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label for="Type">Tipo:</label>
+                            <select id="Type" name="Type" class="form-control m-input" required>
+                                @foreach (var item in ConstantHelpers.UNIVERSITY_AUTHORITY.TYPE.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label for="File">Resoluci&oacute;n</label>
+                            <div class="custom-file">
+                                <input name="File" id="FileEdit" type="file" class="custom-file-input" lang="es" required />
+                                <label class="custom-file-label" for="File">
+                                    Seleccione un archivo
+                                </label>
+                            </div>
+                            <div class="invalid-feedback">Campo Obligatorio</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label for="ResolutionDate">Fecha Resoluci&oacute;n</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input name="ResolutionDate" id="ResolutionDateEdit" class="form-control m-input" placeholder="Fecha de Resolución" required />
+                                <span class="m-input-icon__icon m-input-icon__icon--right">
+                                    <span>
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </span>
+                                <span for="ResolutionDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+<!--begin::Modal-->
+<div class="modal fade" id="history_modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="edit-label">
+                    Historial de Autoridades
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-striped table-bordered" id="history_table"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+@section Scripts{
+    <script src="~/js/areas/admin/universityauthority/index.js"></script>
+}

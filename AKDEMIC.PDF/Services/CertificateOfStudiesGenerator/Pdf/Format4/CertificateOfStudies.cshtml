@@ -1,0 +1,436 @@
+﻿@using AKDEMIC.CORE.Extensions;
+@using Microsoft.AspNetCore.Hosting;
+@inject IWebHostEnvironment _webHostEnvironment
+
+@model AKDEMIC.PDF.Services.CertificateOfStudiesGenerator.Models.CertificateOfStudiesModel
+@{
+    Layout = null;
+    var counter = 1;
+    var rowspan = 1;
+    var maxTableHigth_1 = 2044;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificado de Estudios</title>
+
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/certificate_studies/report_fonts.css"))" rel="stylesheet" type="text/css" />
+    <style>
+
+        body {
+            /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
+            font-family: sans-serif;
+        }
+
+        .document-header div {
+            text-align: center;
+        }
+
+        .title-document {
+            font-style: italic !important;
+            letter-spacing: 3px !important;
+        }
+
+        .font-arial {
+            font-family: 'ArialRounded' !important;
+            font-weight: bold;
+        }
+
+        .university-name {
+            font-family: Georgia;
+            font-size: 23px;
+            padding: 10px;
+        }
+
+        .company-name {
+            font-weight: normal !important;
+            font-family: Georgia;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        .area-name {
+            font-size: 16px;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .office-name {
+            padding: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .address-text {
+            padding: 0 0 10px 0;
+            font-size: 12px;
+        }
+
+        .header-image.left {
+            float: left;
+            width: 140px;
+            height: 140px;
+        }
+
+        .header-image.right {
+            float: right;
+            width: 140px;
+            height: 140px;
+        }
+
+
+        table.minimalistBlack {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            font-family: Arial, Helvetica, sans-serif;
+            border: 1px solid #000000;
+        }
+
+            table.minimalistBlack td {
+                /*border: 1px solid #000000;*/
+                border-left: 1px solid #000000;
+                border-right: 1px solid #000000;
+                padding: 1px !important;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            table.minimalistBlack th {
+                border: 1px solid #000000;
+                padding: 1px 1px !important;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            table.minimalistBlack thead {
+            }
+
+                table.minimalistBlack thead th {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: #000000;
+                    text-align: center;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+            table.minimalistBlack tfoot td {
+                font-size: 14px;
+            }
+
+            table.minimalistBlack tfoot {
+                display: table-row-group
+            }
+
+            table.minimalistBlack tr {
+                page-break-inside: avoid
+            }
+
+        .sign {
+            max-width: 95%;
+            text-align: center;
+            border: 1px solid #000000;
+            padding-top: 100px;
+        }
+
+            .sign.left {
+                margin-right: auto;
+            }
+
+            .sign.center {
+                margin: auto;
+            }
+
+            .sign.right {
+                margin-left: auto;
+            }
+
+            .sign span {
+                border-top: 1px solid #000000;
+                color: #000000;
+                width: 95%;
+                display: block;
+                margin: auto;
+                padding: 2px 0;
+            }
+
+        .FontCreated {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+
+
+        .footer {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .container-document-detail {
+            width: 100%;
+            margin-top: 20px !important;
+        }
+
+        .document-detail {
+            margin-top: 10px !important;
+            font-size: 17px;
+            font-weight: 700;
+            width: 75%;
+        }
+
+            .document-detail p {
+                margin-bottom: 5px !important;
+            }
+
+        .rotate {
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            width: 1.5em;
+        }
+
+            .rotate div {
+                -moz-transform: rotate(-90.0deg);
+                -o-transform: rotate(-90.0deg);
+                -webkit-transform: rotate(-90.0deg);
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+                -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+                margin-left: -15em;
+                margin-right: -15em;
+            }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+
+        #th_rowspan_content {
+            page-break-inside: avoid;
+        }
+
+        table tr {
+            font-size: 13px;
+        }
+
+        #main_table_thead tr {
+            padding: 0px !important;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div style="width :100%; text-align:right !important; font-weight:bold;">
+        @Model.UserProcedureCode
+    </div>
+
+    <div class="document-header">
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/themes/@AKDEMIC.CORE.Helpers.GeneralHelpers.GetTheme()/logo-report.png" width="90" height="90" />
+        <img class="header-image right" style="visibility:hidden !important;" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" width="90" height="90" />
+
+        <div>
+            <div class="university-name font-arial" style="margin:0px; padding:0px;">
+                <b> @AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName().ToUpper()</b>
+            </div>
+            <div class="company-name center" style="margin:0px; margin-top:8px !important; padding:0px;">
+                <b>@AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionLocation().ToUpper() - PERÚ </b>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="university-name font-arial title-document" style="margin-top:10px; padding:0px; font-size:28px !important; text-align:center; ">
+        <b> CERTIFICADO DE ESTUDIOS</b>
+    </div>
+
+
+    <div style="margin-top:10px; text-align:center !important;">
+        El Secretario General de la @AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName()
+    </div>
+
+    <div class="university-name" style="margin-top:10px; padding:0px; font-size:30px !important; text-align:center; font-style:italic;">
+        <b> CERTIFICA:</b>
+    </div>
+
+
+    <div class="container-document-detail">
+        <table style="width:100%;">
+            <tr class="FontCreated">
+                <td width="20%">Que, don(ña):</td>
+                <td style="font-weight:normal;">@Model.Student.FullName</td>
+            </tr>
+            <tr class="FontCreated">
+                <td>Alumno(a) de:</td>
+                <td style="font-weight:normal;">LA ESCUELA PROFESIONAL DE @Model.Student.Career</td>
+            </tr>
+            <tr class="FontCreated">
+                <td>&emsp;</td>
+                <td style="font-weight:normal;">DE LA FACULTAD DE @Model.Student.Faculty</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="margin-top:5px; font-size:15px !important;">
+        Aprobó las siguientes asignaturas del currículo y/o plan de estudio respectivo, habiendo obtenido en sus evaluaciones finales los resultados que se expresan a continuación
+    </div>
+
+    <br />
+    <table class="minimalistBlack" id="main_table" style="margin-bottom:10px;">
+        <thead>
+            <tr style="text-align:center;">
+                <th colspan="2">ASIGNATURAS</th>
+                <th>Créditos</th>
+                <th>Evaluación<br />Final</th>
+                <th>Fecha</th>
+                <th style="font-size:13px !important;">Curriculo Y/O<br />Plan De<br />Estudio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ayc in Model.AcademicYearCourses)
+            {
+                <tr>
+                    <td colspan="2" style="font-size:15px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-align:center;">=CICLO @ayc.AcademicYear=</td>
+                    <td>&emsp;</td>
+                    <td>&emsp;</td>
+                    <td>&emsp;</td>
+                    <td>&emsp;</td>
+                </tr>
+                @foreach (var item in ayc.Courses)
+                {
+                    <tr>
+                        <td style="text-align:center; border:0px !important; white-space:nowrap !important;"> @item.Code </td>
+                        <td style="text-align:left; border:0px !important;">@item.Name</td>
+                        <td>@item.Credits</td>
+                        <td>@item.Grade</td>
+                        <td>@item.DateByConfiguration.ToLocalDateFormat()</td>
+                        <td>@Model.Student.CurriculumYear</td>
+                    </tr>
+                    rowspan++;
+                }
+                counter++;
+                rowspan++;
+            }
+        </tbody>
+    </table>
+
+    <div style="margin-top:10px">
+        Así constan en las Actas de Evaluación Final que obran en esta Secretaria a las que me remito.
+    </div>
+
+    <div style="margin-top:10px; text-align:right; font-size:18px !important; font-weight:bold;">
+        @AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionLocation(), @Model.University.CurrentLocalDateTime.Day de @(AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[Model.University.CurrentLocalDateTime.Month]) de @Model.University.CurrentLocalDateTime.Year
+    </div>
+
+    <table style="width:100%;">
+        <tr>
+            <td width="40%" style="padding:15px !important;">
+                <table height="100%" width="100%">
+                    <tr style="height:80px !important;">
+                        <td>&emsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&emsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border-top:1px solid black; text-align:center;">
+                            @if (AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value == AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.UNSCH)
+                            {
+                                @Html.Raw("Abog. Yuri Walter Vega Jaime") <br />
+                            }
+                            Secretario General
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&emsp;</td>
+                    </tr>
+                    <tr style="height:80px !important;">
+                        <td style="font-size:11px !important; vertical-align:bottom; text-align:center;">
+                            <img style="width:100px; height:100px !important;" src="@Model.ImgQR" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="20%">
+                <div style="width:100%; height:240px; border:1px solid black;">
+                </div>
+            </td>
+
+            <td width="40%" style="padding:15px !important;">
+                <table height="100%" width="100%">
+                    <tr>
+                        <td>&emsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border-top:1px solid black; text-align:center;">
+                            @if (AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value == AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.UNSCH)
+                            {
+                                @Html.Raw("Jorge Luis Benites Aycahe") <br />
+                            }
+                            Responsable del Área de Certificación
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:100px !important;">&emsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border-top:1px solid black; text-align:center;">
+                            @if (AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value == AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.UNSCH)
+                            {
+                                @Html.Raw("Econ. Rosa Soledad Osorio Rojas") <br />
+                            }
+                            Jefe de Certificación, Grados y titulo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&emsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    @*    <table style="margin-left:15px !important;" width="100%">
+    <tr>
+    <td style="font-weight:bold; text-align:left;" width="10%">LETRADA</td>
+    <td style="font-weight:bold; text-align:left;" width="30%">VIGESIMAL</td>
+    <td rowspan="6" style="text-align:center;">
+    <img style="width:100px; height:100px !important;" src="@Model.ImgQR" />
+    </td>
+    </tr>
+    <tr>
+    <td>A</td>
+    <td>18-19-20 Aprobado (Excelente)</td>
+    </tr>
+    <tr>
+    <td>B</td>
+    <td>15-16-17 Aprobado (Superior al Promedio)</td>
+    </tr>
+    <tr>
+    <td>C</td>
+    <td>11-12-13-14 Aprobado (Promedio)</td>
+    </tr>
+    <tr>
+    <td>D</td>
+    <td>06-07-08-09-10 Desaprobado (Inferior al promedio)</td>
+    </tr>
+    <tr>
+    <td>E</td>
+    <td>00-01-02-03-04-05 Desaprobado (Deficiente)</td>
+    </tr>
+    </table>*@
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

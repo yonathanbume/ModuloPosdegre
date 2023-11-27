@@ -1,0 +1,97 @@
+﻿body {
+}
+
+tr {
+    border-top: 10px solid;
+    border-bottom: 10px solid;
+    border-color: transparent;
+}
+
+td{
+    vertical-align:middle;
+    margin: 10px;
+}
+.topic-row{
+    margin-top: 50px;
+}
+
+.topic {
+    padding: 1.5px;
+    overflow: hidden;
+    background: #e4f3fb;
+    width: 100%;
+    height: 80px; 
+}
+    .topic:hover {
+        background: #fafcfb;
+        transition: 0.4s;
+    }
+
+.topic-icon {
+    height: 100%;
+    float: left;
+    position:relative;
+}
+
+.topic-image {
+    width: 60px;
+    height: 60px;
+    display: inline-block; 
+    margin-left:7px;
+    position: relative;
+    top: 50%;
+    transform: perspective(1px) translateY(-50%);
+}
+
+.topic-content { 
+    width:90%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px;
+    margin-left: 10px;
+    display: inline-block;
+
+}
+
+.topic-title, .topic-details  { 
+    display: inline-block;
+}
+.topic-user {
+    display: block;
+    margin-top:10px;
+    font-size: 10px; 
+}
+.topic-title a {
+    font-size: 15px;
+}
+
+.topic-details{ 
+    float:right;
+}
+
+
+div.pager {
+    text-align: right; 
+    margin: 1em 0;
+}
+
+    div.pager span {
+        display: inline-block;
+        width: 1.8em;
+        height: 1.8em;
+        line-height: 1.8;
+        text-align: center;
+        cursor: pointer;
+        background: #30bce2;
+        color: #fff;
+        margin-right: 0.5em;
+    }
+
+    div.pager span.active {
+        background: #375ea1;
+    }
+
+.col-new-theme{
+    text-align: right;
+}

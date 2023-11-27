@@ -1,0 +1,90 @@
+﻿@using AKDEMIC.INTRANET.ViewModels.ForumViewModels
+@model AKDEMIC.INTRANET.ViewModels.ForumViewModels.ForumViewModel
+@{
+    ViewData["Title"] = "Foros";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Foros" }
+};
+}
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption m-auto">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text" style="font-size: 20px; font-weight: bold;">
+                                Categorías
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model.Forums != null)
+    {
+        for (int i = 0; i < Model.Forums.Count; i++)
+        {
+            if (i % 2 == 0)
+            {
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <a class="btn btn-block btn-secondary text-left" style="height: 100px; min-height: 100px; max-height: 100px;" href="/Foro/Categoria/@Model.Forums[i].Id">
+                            <div class="d-inline-block m-auto text-center" style="width: 70px">
+                                <img src="~/images/demo/logo3.png" alt="">
+                            </div>
+                            <div class="w-75 d-inline-block">
+                                <h5>@Model.Forums[i].Name</h5>
+                                <span style="font-weight: 100; font-size: 10px;">@Model.Forums[i].Description</span>
+                            </div>
+                        </a>
+                    </div>
+                    @{i++;}
+                    @if (i + 1 <= Model.Forums.Count)
+                    {
+                        <div class="col-6">
+                            <a class="btn btn-block btn-secondary text-left" style="height: 100px; min-height: 100px; max-height: 100px;" href="/Foro/Categoria/@Model.Forums[i].Id">
+                                <div class="d-inline-block m-auto text-center" style="width: 70px">
+                                    <img src="~/images/demo/logo3.png" alt="">
+                                </div>
+                                <div class="w-75 d-inline-block">
+                                    <h5>@Model.Forums[i].Name</h5>
+                                    <span style="font-weight: 100; font-size: 10px;">@Model.Forums[i].Description</span>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    }
+</div>
+
+@*<div class="m-portlet__body">
+        <div class="m-widget4">
+            @foreach (var forum in Model.Forums)
+            {
+                <a class="forum-category" href="/Foro/Categoria/@forum.Id">
+                    <div class="m-widget4__item">
+
+                        <div class="m-widget4__img m-widget4__img--logo">
+                            <img src="~/images/demo/logo3.png" alt="">
+                        </div>
+                        <div class="m-widget4__info">
+                            <span class="m-widget4__title">
+                                @forum.Name
+                            </span><br>
+                            <span class="m-widget4__sub">
+                                @forum.Description
+                            </span>
+                        </div>
+                        <span class="m-widget4__ext">
+                            <span class="m-widget4__number m--font-brand">@((forum.Topics == null) ? 0 : forum.Topics.Where(x=>x.DeletedAt == null).Count() )</span>
+                        </span>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>*@

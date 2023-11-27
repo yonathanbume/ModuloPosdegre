@@ -1,0 +1,38 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.StudentCommentViewModels
+@model IEnumerable<StudentCommentViewModel>
+@foreach (var item in Model)
+{
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="row" style="width:100%">
+                    <div class="col-sm-6">
+
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon">
+                                <i class="flaticon-avatar"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Administrador <small class="m-portlet__head-icon">@item.RegisterDate.ToShortDateString() - @item.RegisterDate.ToLongTimeString()</small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" style="text-align:end">
+
+                        <button type="button" class="btn btn-primary edit" data-id="@item.Id" data-toggle="modal" data-target="#modal-edit"><i class="flaticon-edit"></i> Editar</button>
+                        <button type="button" class="btn btn-danger delete" data-id="@item.Id"><i class="flaticon-delete-1"></i> Eliminar</button>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-portlet__body">
+            @item.CommentDescription
+        </div>
+    </div>
+
+}

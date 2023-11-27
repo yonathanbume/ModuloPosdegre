@@ -1,0 +1,62 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.HomeViewModels.IpAddressViewModel
+
+@{
+    ViewData["Title"] = "About";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>IP lado servidor</p>
+
+<p>RemoteIpAddress: @Model.RemoteIpAddress</p>
+<p>ContextAccesorIpAddress: @Model.ContextAccesorIpAddress</p>
+
+
+<p>IP javascript</p>
+
+<p>Service smart ip: <span id="smartip"></span></p>
+<p>Service hostip: <span id="hostip"></span></p>
+
+@section Scripts {
+    <script>
+
+        function myIP() {
+            if (window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
+            else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+
+            //xmlhttp.open("GET", " https://api.hostip.info/get_html.php ", false);
+            xmlhttp.open("GET", " https://api.hostip.info/", false);
+            xmlhttp.send();
+
+            var xmlDoc = xmlhttp.responseXML;
+            var x = xmlDoc.getElementsByTagName("ip")[0];
+
+            //hostipInfo = xmlhttp.responseText.split("/\n/");
+
+            //for (i = 0; hostipInfo.length >= i; i++) {
+            //    console.log(hostipInfo[i]);
+            //    if (hostipInfo[i] == undefined) continue;
+
+            //    ipAddress = hostipInfo[i].split(":");
+            //    console.log(ipAddress[0]);
+            //    if (ipAddress[0] == "IP") {
+            //        $("#hostip").html(ipAddress[1]);
+            //        console.log(ipAddress[1]);
+            //    }
+            //    //return ipAddress[1];
+            //    console.log("------");
+            //}
+
+            $("#hostip").html(x.innerHTML);
+        }
+
+        $(function () {
+            $.getJSON("httpS://smart-ip.net/geoip-json?callback=?", function (data) { $("#smartip").html(data.host); });
+
+            myIP();
+        });
+
+
+    </script>
+}
+

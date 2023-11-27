@@ -1,0 +1,496 @@
+﻿@using AKDEMIC.INTRANET.ViewModels.HomeViewModels
+@model HomeViewModel
+
+
+@section Styles {
+    <link href="~/css/views/home/index.css" rel="stylesheet" asp-append-version="true" />
+    @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+    {
+        <link href="~/css/views/home/index-student.css" rel="stylesheet" />
+    }
+}
+
+<div id="carousel-announcement" class="carousel slide" data-ride="carousel">
+
+    @if (Model.Announcements.Count > 0)
+    {
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Announcements.Count; i++)
+            {
+                var item = Model.Announcements[i];
+                var itemClass = i == 0 ? "active" : "";
+                var maxDescriptionLength = 149;
+                var isSmallDescription = Model.Announcements[i].Description.Length <= maxDescriptionLength;
+                <div class="carousel-item @itemClass" data-duration="500">
+                    <img src="@(string.IsNullOrEmpty(item.Pathfile) ? "" : $"imagenes/{item.Pathfile}")">
+                    <div class="carousel-caption">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>@item.Title</h3>
+                                <input type="hidden" name="txtAll" value="@item.Description" />
+                                @if (!isSmallDescription)
+                                {
+                                    <p>
+                                        @item.Description.Substring(1, 148) . . .
+                                        <a onclick="announcementHome.viewMore()">Ver más</a>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>@item.Description </p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <a class="carousel-control-prev" href="#carousel-announcement" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-announcement" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    }
+
+</div>
+
+
+<div class="m-content">
+
+    @if (Model.ManageAnnouncements != null)
+    {
+        @if (Model.ManageAnnouncements.Count() > 0)
+        {
+            <div class="m-portlet m-portlet--accent m-portlet--head-solid-bg m-portlet--head-sm m--margin-top-20" m-portlet="true" id="m_portlet_tools_1">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon">
+                                <i class="flaticon-bell"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Comunicados
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                                <a href="#" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-angle-down"></i></a>
+                            </li>
+                            <li class="m-portlet__nav-item">
+                                <a href="#" m-portlet-tool="remove" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-close"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-widget3">
+                        @foreach (var item in Model.ManageAnnouncements)
+                        {
+                            <div class="m-widget3__item">
+                                <div class="m-widget3__header" style="display: flex;">
+                                    <div class="m-widget3__user-img">
+                                        <img class="m-widget3__img" src="~/images/demo/user.png" alt="">
+                                    </div>
+                                    <div class="m-widget3__info" style="width: auto;">
+                                        <span class="m-widget3__username">
+                                            @item.Title
+                                        </span><br>
+                                        <span class="m-widget3__time">
+                                            Para los roles: <span class="m--font-accent">@Html.Raw(item.AllRoles || !item.Roles.Any() ? "Todos" : item.Roles.Count() > 1 ? string.Join("</span> y <span class='m--font-accent'>", string.Join("</span>, <span class='m--font-accent'>", item.Roles.Take(item.Roles.Count() - 1)), item.Roles.Last()) : item.Roles.First())</span>.
+                                            Para las escuelas: <span class="m--font-info">@Html.Raw(item.AllCareers || !item.Careers.Any() ? "Todos" : item.Careers.Count() > 1 ? string.Join("</span> y <span class='m--font-info'>", string.Join("</span>, <span class='m--font-info'>", item.Careers.Take(item.Careers.Count() - 1)), item.Careers.Last()) : item.Careers.First())</span>.
+                                        </span>
+                                    </div>
+                                    @if (item.HasFile)
+                                    {
+                                        <div class="m-widget3__info" style="width: auto;">
+                                            <button data-id="@item.Id" class="btn btn-sm btn-success btn-download"><i class="fa fa-download"></i></button>
+                                        </div>
+                                    }
+                                    <div class="m-widget3__info" style="width: auto;">
+
+                                    </div>
+                                    <span class="m-widget3__status m--font-info" style="margin-left: auto; margin-right: 0; padding-top: 0;">
+                                        @item.DisplayTime.ToLocalDateTimeFormat() @(!string.IsNullOrEmpty(item.DisplayTime.ElapsedTime()) ? $"({(item.DisplayTime.ElapsedTime().Contains(" ") ? $"hace {item.DisplayTime.ElapsedTime()}" : item.DisplayTime.ElapsedTime())})" : "")
+                                    </span>
+                                </div>
+                                <div class="m-widget3__body" contenteditable="true">
+                                    <p class="m-widget3__text" style="margin-top: 0px !important;">
+                                        @item.Message
+                                    </p>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+</div>
+
+<partial name="Partials/_ModalBeginningAnnouncement" model="Model.BeginningAnnouncements" />
+<partial name="Partials/_ModalUserAnnouncement" model="Model.UserAnnouncement" />
+
+@if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.Akdemic)
+{
+    <!--end::Modal-->
+    @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+    {
+
+        <br />
+        <div class="m-content sub-content">
+            <div class="row">
+                <div class="col-md-6 center-block">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption" style="width:100%">
+                                <div class="m-portlet__head-title" style="width:100%">
+                                    <h3 class="m-portlet__head-text">
+                                        Ficha socioeconomica
+                                    </h3>
+                                </div>
+                                <div class="m-portlet__head-tools">
+                                    <ul class="m-portlet__nav">
+                                        <li class="m-portlet__nav-item" style="float:right">
+                                            <a asp-action="Index" asp-controller="StudentInformation" style="color:white" class="btn btn-sm btn-primary m-btn m-btn--icon " title="Ir">
+                                                <span>
+                                                    <span>Ir</span>
+                                                    <i class="la la-arrow-circle-o-right"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordion-content" class="m-content">
+            <div id="accordion-portlet" class="m-portlet portlet-accordion">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="accordion">
+                        <ul>
+                            <li class="accordion-item">
+                                <h5>Comunicados</h5>
+                                <div id="accordion-announcements" class="accordion-item-content">
+
+                                </div>
+                            </li>
+                            <li class="accordion-item">
+                                <h5>Eventos</h5>
+                                <div id="accordion-events" class="accordion-item-content">
+                                </div>
+                            </li>
+                            <li class="accordion-item ">
+                                <h5>Pagos</h5>
+                                <div id="accordion-payments" class="accordion-item-content">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-content sub-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="m-portlet schedule-height">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 id="schedule" class="m-portlet__head-text"></h3>
+                                </div>
+                            </div>
+                            <div id="days" class="m-portlet__head-tools">
+                                <div class="slideshow-container">
+                                    <!-- Full-width slides/quotes -->
+                                    <div class="mySlides">
+                                        <p>Lunes</p>
+                                    </div>
+                                    <div class="mySlides">
+                                        <p>Martes</p>
+                                    </div>
+
+                                    <div class="mySlides">
+                                        <p>Miercoles</p>
+                                    </div>
+                                    <div class="mySlides">
+                                        <p>Jueves</p>
+                                    </div>
+                                    <div class="mySlides">
+                                        <p>Viernes</p>
+                                    </div>
+                                    <div class="mySlides">
+                                        <p>S&aacute;bado</p>
+                                    </div>
+
+                                    <!-- Next/prev buttons -->
+                                    <a class="prev" style="border-radius: 50%;text-align: center;border:1px solid #949494; color: #949494;"><i class="fas fa-angle-left" style="margin-right: 5%; margin-top: 15%;display: block;"></i></a>
+                                    <a class="next" style="border-radius: 50%;text-align: center;border:1px solid #949494; color:#949494;"><i class="fas fa-angle-right" style="margin-left: 5%; margin-top: 15%;display: block;"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div id="monday" class="mySchedule">
+
+                            </div>
+                            <div id="tuesday" class="mySchedule">
+
+                            </div>
+                            <div id="wednesday" class="mySchedule">
+
+                            </div>
+                            <div id="thursday" class="mySchedule">
+
+                            </div>
+                            <div id="friday" class="mySchedule">
+
+                            </div>
+                            <div id="saturday" class="mySchedule">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-portlet mid-height">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                Estado Curricular
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                    <div class="m-calendar__container">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-portlet foros">
+                                <div class="m-portlet__head">
+                                    <div class="foro-title">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <h3 class="m-portlet__head-text head-foros">
+                                                    Últimos foros
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="foro-comments-icon">
+                                        <i class="fas fa-comments head-foros"></i>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body" id="foro-content">
+                                </div>
+                                <div class="curve"> </div>
+                                <a class="foro-link" href="@Url.Action("Index","Forum")">
+                                    <i class="la la-arrow-right icon-arrow foro-link-icon"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <partial name="Partials/_ModalFirstTime" model="Model.Profile.UserViewModel" />
+    }
+
+}
+
+
+@if (User.IsInRole(ConstantHelpers.ROLES.TEACHERS))
+{
+    <div class="m-portlet ">
+        <div class="m-portlet__body  m-portlet__body--no-padding">
+            <div class="row m-row--no-padding m-row--col-separator-xl">
+                <div class="col-md-12 col-lg-6 col-xl-3">
+                    <!--begin::Total Profit-->
+                    <div class="m-widget24">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title">
+                                Mi Horario
+                            </h4>
+                            <br>
+                            <span class="m-widget24__desc">
+                                De la Semana
+                            </span>
+                            <span class="m-widget24__stats m--font-brand">
+                                <a asp-area="Teacher" asp-controller="WeekClassSchedule" asp-action="Index">
+                                    <i class="la la-external-link"></i>
+                                </a>
+                            </span>
+                            <div class="m--space-10"></div>
+                            <span class="m-widget24__change">
+
+                            </span>
+                            <span class="m-widget24__number">
+
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::Total Profit-->
+                </div>
+                <div class="col-md-12 col-lg-6 col-xl-3">
+                    <!--begin::New Users-->
+                    <div class="m-widget24">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title">
+                                Toma de Asistencia
+                            </h4>
+                            <br>
+                            <span class="m-widget24__desc">
+                                De la clase en curso
+                            </span>
+                            <span class="m-widget24__stats m--font-success">
+                                <a asp-area="Teacher" asp-controller="StudentAssistance" asp-action="Index">
+                                    <i class="la la-2x la-external-link"></i>
+                                </a>
+                            </span>
+                            <div class="m--space-10"></div>
+                            <span class="m-widget24__change">
+
+                            </span>
+                            <span class="m-widget24__number">
+
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::New Users-->
+                </div>
+                <div class="col-md-12 col-lg-6 col-xl-3">
+                    <!--begin::New Feedbacks-->
+                    <div class="m-widget24">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title">
+                                Registrar Notas
+                            </h4>
+                            <br>
+                            <span class="m-widget24__desc">
+                                De mis secciones actuales
+                            </span>
+                            <span class="m-widget24__stats m--font-info">
+                                <a asp-area="Teacher" asp-controller="Grade" asp-action="Index">
+                                    <i class="la la-external-link"></i>
+                                </a>
+                            </span>
+                            <div class="m--space-10"></div>
+                            <span class="m-widget24__change">
+
+                            </span>
+                            <span class="m-widget24__number">
+
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::New Feedbacks-->
+                </div>
+                <div class="col-md-12 col-lg-6 col-xl-3">
+                    <!--begin::New Orders-->
+                    @*<div class="m-widget24">
+                            <div class="m-widget24__item">
+                                <h4 class="m-widget24__title">
+                                    Mis Tutor&iacute;as
+                                </h4>
+                                <br>
+                                <span class="m-widget24__desc">
+                                    Programadas
+                                </span>
+                                <span class="m-widget24__stats m--font-danger">
+                                    <a asp-area="Teacher" asp-controller="Tutorial" asp-action="Index">
+                                        <i class="la la-external-link"></i>
+                                    </a>
+                                </span>
+                                <div class="m--space-10"></div>
+                                <span class="m-widget24__change">
+
+                                </span>
+                                <span class="m-widget24__number">
+
+                                </span>
+                            </div>
+                        </div>*@
+                    <!--end::New Orders-->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COUNTER))
+{
+    <div class="m-content">
+        <div class="m-portlet col-xl-8" id="container_number_request">
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-xl-12">
+                        <div class="m-widget1">
+                            <div class="m-widget1__item">
+                                <div class="row m-row--no-padding align-items-center">
+                                    <div class="col">
+                                        <h3 class="m-widget1__title">Cantidad de Solicitudes en el mes de <strong>@(ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.Month])</strong></h3>
+                                    </div>
+                                    <div class="col m--align-right">
+                                        <span class="m-widget1__number m--font-brand" id="number_request">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-content" style="padding-top:0px !important;">
+        <div class="m-portlet col-xl-8" id="container_chart">
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-xl-12">
+                        <div id="chart" class="chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script src="~/js/views/home/index.js" asp-append-version="true"></script>
+    <script src="~/js/views/home/beginningannouncements.js" asp-append-version="true"></script>
+    <script src="~/js/views/home/userannouncements.js"></script>
+    @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+    {
+        <script src="~/js/views/home/index-student.js"></script>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COUNTER))
+    {
+        <script src="~/js/lib/highcharts/highcharts.js"></script>
+        <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+        <script src="~/js/lib/highcharts/exporting.js"></script>
+        <script src="~/js/lib/highcharts/export-data.js"></script>
+        <script src="~/js/views/home/index-academic-counter.js"></script>
+    }
+}
+
+

@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Reporte - Fichas de Estudiantes";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de estudiantes" }
+};
+}
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Lista de estudiantes
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="m-portlet__body">
+
+            <div class="row m--margin-bottom-20">
+                @*<div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                <label>Periodo Académico :</label>
+                <select id="select2Terms" class="form-control m-input m-select2"></select>
+            </div>*@
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Escuela Profesional :</label>
+                    <select id="select2Careers" class="form-control m-input m-select2"></select>
+                </div>
+
+                <div class="col-lg-3 tablet-and-mobile" style="margin-top:25px;">
+                    <label>&nbsp;&nbsp;</label>
+                    <button class="btn btn-primary m-btn m-btn--icon" id="search">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Buscar</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/report_exist_student_information/index.js"></script>
+}
+

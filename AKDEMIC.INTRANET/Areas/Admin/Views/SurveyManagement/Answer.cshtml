@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Respuestas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Gestión de encuestas", Controller = "SurveyManagement", Action = "Index", Area = "Admin"},
+new BreadcrumbViewData { Name = "Respuestas", Controller = null, Action = null}
+
+};
+    var surveyId = ViewBag.SurveyId;
+}
+<input value="@surveyId" hidden id="SurveyId" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Respuestas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-bottom-30">
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/areas/admin/surveymanagement/answer.js"></script>
+}
+

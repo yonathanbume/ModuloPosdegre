@@ -1,0 +1,28 @@
+﻿<div class="modal fade" id="signature_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Firma Digital</h5>
+            </div>
+            <form id="form_signature">
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="Signature">Imagen de la firma</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="file" type="file" accept="image/png , image/jpeg" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo..</label>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label for="Description">&emsp;</label>
+                        <img style="width:100% !important;" id="img_signature" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-add" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Reporte Consolidado";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Reporte de Ingresantes", Controller = "AdmitteddReport", Action = "Index", Area = "AcademicRecord" },
+    new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <a asp-controller="AdmitteddReport" asp-area="AcademicRecord" asp-action="Index" class="btn btn-primary m-btn m-btn--icon m-btn--icon-only"><i class="la la-arrow-left"></i></a>
+                        &nbsp;
+                        Reporte consolidado de ingresantes
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-sm-12 col-xl-2">
+                                <label>Periodo Académico:</label>
+                                <select id="term-select" class="m-select2"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="data-container" class="m--hide">
+                <div>
+                    <div id="career-chart" class="chart"></div>
+                </div>
+
+                <table class="table table-striped table-bordered" id="student-table"></table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/highcharts/highcharts.js"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+    <script src="~/js/areas/academicrecord/admittedreport/summaryreport.js" asp-append-version="true"></script>
+}
+

@@ -1,0 +1,375 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+
+@{
+    Layout = null;
+}
+
+<div class="main-container">
+    <div class="nation-name">
+        <img src="@Model.NationalEmblem" style="width:130px !important; float:left;" />
+        REP&Uacute;BLICA
+        DEL PER&Uacute;
+        <img src="@Model.Shield" style="width:130px !important; float:right;" />
+    </div>
+    <div class="by-name">
+        @ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value].ToUpper()
+    </div>
+    <div class="by-name">
+        EN NOMBRE DE LA NACI&Oacute;N
+    </div>
+    <div class="nation-name-2">
+        El rector de la @ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value]
+    </div>
+    <div class="founded">
+        Fundada el 03 de julio de 1677
+    </div>
+    <br />
+    <div class="academic-degree">
+        @if (Model.GradeTypeDescription == ConstantHelpers.GRADE_INFORM.DegreeType.VALUES[ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR])
+        {
+            @Html.Raw("Confiere el GRADO ACADÉMICO DE BACHILLER en:")
+        }
+        else
+        {
+            @Html.Raw("Confiere el TÍTULO PROFESIONAL de:")
+        }
+    </div>
+    <br />
+    <div class="description">
+        <table>
+            <tr>
+                <td colspan="2" style="font-size:28pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.AcademicDegreeDenomination</td>
+            </tr>
+            <tr>
+                <td height="50px">A </td>
+                <td style="font-size:28pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black; height:40px !important;">@Model.StudentName.ToUpper() @Model.StudentPaternalSurName.ToUpper() @Model.StudentMaternalSurName.ToUpper()</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                @if (Model.GradeTypeDescription == ConstantHelpers.GRADE_INFORM.DegreeType.VALUES[ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR])
+                {
+                    <td width="25%">Quien optó dicho GRADO el día</td>
+                }
+                else
+                {
+                    <td width="25%">Quien optó dicho TÍTULO el día</td>
+                }
+                <td height="50px" width="8%" style="font-size:28pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.UniveristaryDateDay</td>
+                <td>de</td>
+                <td width="20%" style="font-size:28pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.UniveristaryDateMonth</td>
+                <td>de</td>
+                <td width="20%" style="font-size:28pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.UniveristaryDateYear</td>
+                <td>, correspondiente a la Facultad de </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td height="50px" style="font-size:28pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.Faculty</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td width="22%" height="50px">de la Escuela Profesional de </td>
+                <td style="font-size:28pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.Career</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div class="description-student">
+        <table>
+            <tr>
+                <td>
+                    Cumpliendo con los requisitos exigidos por las disposiciones legales vigentes.
+                </td>
+            </tr>
+            <tr>
+                <td height="35px">Por tanto:</td>
+            </tr>
+            <tr>
+                <td height="35px">Le expide el presente DIPLOMA a fin de que se le reconozca como tal.</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td width="60%"></td>
+                <td>@ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], </td>
+                <td style="font-size:24pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.CurrentDay</td>
+                <td>de </td>
+                <td width="15%" style="font-size:24pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.CurrentMonth</td>
+                <td>del año </td>
+                <td style="font-size:24pt !important; font-weight:bold !important; text-align:center; border-bottom:1px solid black;">@Model.CurrentYear</td>
+            </tr>
+        </table>
+    </div>
+    <div style="width:100%" class="signature_div">
+        <table style="font-size:8pt !important;" class="table-signature">
+            <tr>
+                <td width="5%">&emsp;</td>
+                <td width="20%" style="height:200px !important; border-bottom:2px solid;">&emsp;</td>
+                <td width="5%">&emsp;</td>
+                <td width="20%" style="border-bottom:2px solid;">&emsp;</td>
+                <td>&emsp;</td>
+                <td>
+                    <div style=" margin-left:44px !important; height:160px; width:140px !important; border:1px solid black;">
+                    </div>
+                </td>
+                <td width="5%">&emsp;</td>
+                <td width="20%" style="border-bottom:2px solid;">&emsp;</td>
+                <td width="5%">&emsp;</td>
+            </tr>
+            <tr>
+                <td>&emsp;</td>
+                <td>@Model.Rector
+                <td>
+                <td>&emsp;</td>
+                <td>@Model.GeneralSecretary</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>@Model.Dean</td>
+                <td>&emsp;</td>
+            </tr>
+            <tr>
+                <td>&emsp;</td>
+                <td>RECTOR</td>
+                <td>&emsp;</td>
+                <td>SECRETARIO GENERAL</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>DECANO</td>
+                <td>&emsp;</td>
+            </tr>
+            <tr>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td style="border-bottom:2px solid;">&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+            </tr>
+            <tr>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>INTERESADO</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+
+<div class="back-page">
+    <table>
+        <tr>
+            <td style="text-align:center; font-weight:bold; font-size:15pt !important;">
+                <img src="@Model.Shield" style="width:130px !important; float:left;" />
+                <div style="padding-top:40px !important;">
+                    @ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value].ToUpper()
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td colspan="3">CÓDIGO DE LA UNIVERSIDAD: &emsp;@Model.UniversityCode</td>
+        </tr>
+        <tr>
+            <td>TIPO DE DOCUMENTO (DNI):</td>
+            <td></td>
+            <td style="border-bottom:1px dashed">@Model.DocumentType</td>
+        </tr>
+        <tr>
+            <td>NÚMERO DE DOCUMENTO</td>
+            <td></td>
+            <td style="border-bottom:1px dashed">@Model.DocumentNumber</td>
+        </tr>
+        <tr>
+            <td colspan="3">BACHILLER ( @(Model.GradeTypeDescription == ConstantHelpers.GRADE_INFORM.DegreeType.VALUES[ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR]? "X" : " ") ) &emsp; TÍTULO ( @(Model.GradeTypeDescription == ConstantHelpers.GRADE_INFORM.DegreeType.VALUES[ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE]? "X" : " ") ) &emsp; MAESTRÍA (&emsp;)</td>
+        </tr>
+        <tr>
+            <td colspan="3">DOCTOR (&emsp;) &emsp; SEGUNDA ESPECIALIDAD PROFESIONAL (&emsp;)</td>
+        </tr>
+        <tr>
+            <td height="30px" colspan="3"></td>
+        </tr>
+        <tr>
+            <td colspan="3">MODALIDAD DE OBTENCIÓN</td>
+        </tr>
+        <tr>
+            <td colspan="3">- TRABAJO DE INVESTIGACIÓN ( &emsp; )</td>
+        </tr>
+        <tr>
+            @if (Model.GradeModalityGain == ConstantHelpers.DEGREE_OBTENTION_MOD.SUPPORTING_TESIS)
+            {
+                <td colspan="3">- SUSTENTACIÓN DE TESIS ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- SUSTENTACIÓN DE TESIS ( &emsp; )</td>
+            }
+        </tr>
+        <tr>
+            @if (Model.GradeModalityGain == ConstantHelpers.DEGREE_OBTENTION_MOD.SUFFIENCY_EXAM)
+            {
+                <td colspan="3">- TRABAJO DE SUFICIENCIA PROFESIONAL ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- TRABAJO DE SUFICIENCIA PROFESIONAL ( &emsp; )</td>
+            }
+        </tr>
+        <tr>
+            @if (Model.GradeModalityGain == ConstantHelpers.DEGREE_OBTENTION_MOD.ACADEMIC_WORK)
+            {
+                <td colspan="3">- TRABAJO ACADÉMICO ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- TRABAJO ACADÉMICO ( &emsp; )</td>
+            }
+
+        </tr>
+        <tr>
+            @if (Model.GradeModalityGain == ConstantHelpers.DEGREE_OBTENTION_MOD.AUTOMATIC_BACHELOR)
+            {
+                <td colspan="3">- AUTOMÁTICO ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- AUTOMÁTICO ( &emsp; )</td>
+            }
+        </tr>
+        <tr>
+            <td colspan="3">- SUFICIENCIA PROFESIONAL ( &emsp; )</td>
+        </tr>
+        <tr>
+            @if (Model.GradeModalityGain == ConstantHelpers.DEGREE_OBTENTION_MOD.PROFFESIONAL_EXPERIENCE)
+            {
+                <td colspan="3">- EXPERIENCIA PROFESIONAL ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- EXPERIENCIA PROFESIONAL ( &emsp; )</td>
+            }
+
+        </tr>
+        <tr>
+            <td colspan="1">- OTROS </td>
+            <td colspan="2" style="border-bottom:1px dashed black"></td>
+        </tr>
+        <tr>
+            <td height="20px" colspan="3"></td>
+        </tr>
+        <tr>
+            <td>MODALIDAD DE ESTUDIOS:</td>
+        </tr>
+        <tr>
+            @if (Model.StudentModality == ConstantHelpers.STUDY_MODALITY.PRESENTIAL)
+            {
+                <td colspan="3">- PRESENCIAL ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- PRESENCIAL ( &emsp; )</td>
+            }
+        </tr>
+        <tr>
+            @if (Model.StudentModality == ConstantHelpers.STUDY_MODALITY.SEMI_PRESENTIAL)
+            {
+                <td colspan="3">- SEMI PRESENCIAL ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- SEMI PRESENCIAL( &emsp; )</td>
+            }
+        </tr>
+        <tr>
+            @if (Model.StudentModality == ConstantHelpers.STUDY_MODALITY.DISTANCE)
+            {
+                <td colspan="3">- A DISTANCIA ( X )</td>
+            }
+            else
+            {
+                <td colspan="3">- A DISTANCIA ( &emsp; )</td>
+            }
+        </tr>
+        <tr>
+            <td height="20px" colspan="3"></td>
+        </tr>
+
+    </table>
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td width="20%">RESOLUCIÓN Nº</td>
+            <td style="border-bottom:1px dashed black">@Model.ResolutionNumber</td>
+        </tr>
+    </table>
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td width="50%">FECHA DE CONSEJO UNIVERSITARIO</td>
+            <td style="border-bottom:1px dashed black">@Model.UniversityCouncilDate</td>
+        </tr>
+    </table>
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td width="23%">Nº DE DIPLOMA</td>
+            <td style="border-bottom:1px dashed black">@Model.DiplomaNumber</td>
+        </tr>
+    </table>
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td>TIPO DE EMISIÓN :</td>
+            @if (Model.EmittedDiplomaType == ConstantHelpers.EMISION_TYPE_OF_DIPLOMAT.ORIGINAL)
+            {
+                <td>ORIGINAL ( X )</td>
+            }
+            else
+            {
+                <td>ORIGINAL ( &emsp; )</td>
+            }
+            @if (Model.EmittedDiplomaType == ConstantHelpers.EMISION_TYPE_OF_DIPLOMAT.DUPLICATE)
+            {
+                <td>DUPLICADO ( X )</td>
+            }
+            else
+            {
+                <td>DUPLICADO ( &emsp; )</td>
+            }
+        </tr>
+    </table>
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td width="10%">LIBRO</td>
+            <td style="border-bottom:1px dashed black">@Model.Book</td>
+        </tr>
+    </table>
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td width="10%">FOLIO</td>
+            <td style="border-bottom:1px dashed black">@Model.Foil</td>
+        </tr>
+    </table>
+    <table class="table-student-details" style="font-size:10pt !important;">
+        <tr>
+            <td width="15%">REGISTRO</td>
+            <td style="border-bottom:1px dashed black">@Model.RegisterNumber</td>
+        </tr>
+    </table>
+</div>
+
+

@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Comunidad";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString(), Controller = null, Action = null}
+    };
+}
+
+@section Styles{
+<style>
+    .container_rect {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+
+        .container_rect img {
+            margin-top: 13px;
+            width: 100px;
+        }
+
+        .container_rect .m-portlet__body {
+            height: 200px;
+        }
+
+        .container_rect a {
+            text-decoration: none !important;
+        }
+
+            .container_rect a:hover .m-portlet {
+                box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.7);
+            }
+
+        .container_rect i {
+            font-size: 120px;
+        }
+
+</style>
+}
+
+<div class="m-content">
+    <h4 class="text-center m--font-boldest m--font-primary mb-5">COMUNIDAD</h4>
+
+    <div class="row">
+        <div class="col-md-4 container_rect">
+            <a asp-action="Index" asp-controller="Forum">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <h4>Foros</h4>
+                        <div class="text-primary">
+                            <img src="~/images/community/foros_inicio.svg" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 container_rect">
+            <a asp-action="Index" asp-controller="SurveyUser">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <h4>Encuestas</h4>
+                        <div class="text-primary">
+                            <img src="~/images/community/encuestas_inicio.svg" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 container_rect">
+            <a asp-action="Index" asp-controller="EventInscription">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <h4>Eventos</h4>
+                        <div class="text-primary">
+                            <img src="~/images/community/eventos_inicio.svg" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+</div>

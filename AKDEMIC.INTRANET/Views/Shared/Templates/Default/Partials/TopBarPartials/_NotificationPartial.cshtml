@@ -1,0 +1,59 @@
+﻿@model string;
+
+@{
+    //1 para movil
+    //2 para desktop
+    var responsiveType = Model;
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1">
+        <a href="#" class="m-nav__link m-dropdown__toggle m_topbar_notification_icon">
+            <span class="m-nav__link-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
+            <span class="m-nav__link-icon"><i class="flaticon-music-2"></i></span>
+        </a>
+        <div class="m-dropdown__wrapper">
+            <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+            <div class="m-dropdown__inner">
+                <div class="m-dropdown__header m--align-center">
+                    <span class="m-dropdown__header-title"><span class="number-notification">0</span> Notificacion(es)</span>
+                    <span class="m-dropdown__header-subtitle">Bandeja de Notificaciones</span>
+                </div>
+                <div class="m-dropdown__body">
+                    <div class="m-dropdown__content">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active show" data-toggle="tab" href="#topbar_notifications_notifications_@responsiveType" role="tab">
+                                    Notificaciones
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#topbar_notifications_messages_@responsiveType" role="tab">
+                                    Mensajes
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active show" id="topbar_notifications_notifications_@responsiveType" role="tabpanel">
+                                <div class="m-scrollable" style="max-height:250px" data-scrollable="true" data-mobile-max-height="200">
+                                    <div class="m-list-timeline m-list-timeline--skin-light">
+                                        <div class="m-list-timeline__items"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="topbar_notifications_messages_@responsiveType" role="tabpanel">
+                                <div class="m-scrollable" style="max-height:250px" data-scrollable="true" data-mobile-max-height="200">
+                                    <div class="m-list-timeline m-list-timeline--skin-light">
+                                        <div class="m-list-timeline__items"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+
+}

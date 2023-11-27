@@ -1,0 +1,41 @@
+﻿@using AKDEMIC.INTRANET.Areas.Teacher.Models.TutorialViewModels
+@model TutorialViewModel
+
+<input asp-for="Id" hidden/>
+
+<div class="row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="SectionId"></label>
+        <select asp-for="SectionId" class="form-control m-input m-select2 select2-sections" placeholder="Sección" required></select>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="Date"></label>
+        <div class="input-group">
+            <input asp-for="Date" type="text" class="form-control m-input date-picker" placeholder="Fecha" required autocomplete="off"/>
+            <div class="input-group-append"><span class="input-group-text"><i class="la la-calendar"></i></span></div>
+        </div>
+        
+    </div>
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="ClassroomId"></label>
+        <select asp-for="ClassroomId" class="form-control m-input m-select2 select2-classrooms" placeholder="Aula" required></select>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group m-form__group col-6">
+        <label asp-for="Start"></label>
+        <div class="input-group">
+            <input asp-for="Start" type="text" class="form-control m-input timepicker" placeholder="Inicio" required autocomplete="off" />
+            <div class="input-group-append"><span class="input-group-text"><i class="la la-clock-o"></i></span></div>
+        </div>
+    </div>
+    <div class="form-group m-form__group col-6">
+        <label asp-for="End"></label>
+        <div class="input-group">
+            <input asp-for="End" type="text" class="form-control m-input timepicker" placeholder="Fin" required autocomplete="off" />
+            <div class="input-group-append"><span class="input-group-text"><i class="la la-clock-o"></i></span></div>
+        </div>
+    </div>
+</div>

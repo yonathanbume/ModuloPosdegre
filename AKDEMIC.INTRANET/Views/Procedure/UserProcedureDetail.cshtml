@@ -1,0 +1,362 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.ProcedureViewModels.UserProcedureViewModel
+@{
+    ViewData["Title"] = Model.Procedure.Name;
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Listado de Trámites", Controller = "Procedure", Action = "Index" },
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+    };
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <strong>
+                        DETALLE DE LA SOLICITUD
+                    </strong>
+                </div>
+            </div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-3">
+                    <label asp-for="CreatedAt" class="required-form-label"><strong>Fec. Solicitud:</strong></label>
+                    <input class="form-control" asp-for="CreatedAt" readonly />
+                </div>
+
+                <div class="m-form__group-sub col-lg-3">
+                    <label asp-for="Term" class="required-form-label"><strong>Periodo:</strong></label>
+                    <input class="form-control" asp-for="Term" readonly />
+                </div>
+
+                <div class="m-form__group-sub col-lg-3">
+                    <label asp-for="Dependency" class="required-form-label"><strong>Dependencia:</strong></label>
+                    <input class="form-control" asp-for="Dependency" readonly />
+                </div>
+
+                <div class="m-form__group-sub col-lg-3">
+                    <label asp-for="StatusStr" class="required-form-label"><strong>Estado:</strong></label>
+
+                    @if (Model.Status == ConstantHelpers.USER_PROCEDURES.STATUS.PENDING_PAYMENT)
+                    {
+                        <div class="input-group">
+                            <input class="form-control" asp-for="StatusStr" readonly />
+                            <div class="input-group-append">
+                                <a href="/tramites/esquela-pago-pdf/@Model.Id" target="_blank" style="height:100% !important; width:40px !important;" title="Descargar" class="btn btn-primary m-btn m-btn--icon m-btn--icon-only">
+                                    <i class="la la-download"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <input class="form-control" asp-for="StatusStr" readonly />
+
+                    }
+                </div>
+            </div>
+
+            @if (Model.RecordHistoryId != null)
+            {
+                if (!string.IsNullOrEmpty(Model.RecordHistoryStartTerm) && !string.IsNullOrEmpty(Model.RecordHistoryEndTerm))
+                {
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="RecordHistoryStartTerm" class="required-form-label"><strong>Periodo Inicio:</strong></label>
+                            <input class="form-control" asp-for="RecordHistoryStartTerm" readonly />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="RecordHistoryEndTerm" class="required-form-label"><strong>Periodo Fin:</strong></label>
+                            <input class="form-control" asp-for="RecordHistoryEndTerm" readonly />
+                        </div>
+                    </div>
+                }
+
+                if (Model.RecordHistoryStartAcademicYear.HasValue && Model.RecordHistoryEndAcademicYear.HasValue)
+                {
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="RecordHistoryStartAcademicYear" class="required-form-label"><strong>Ciclo Inicio:</strong></label>
+                            <input class="form-control" asp-for="RecordHistoryStartAcademicYear" readonly />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="RecordHistoryEndAcademicYear" class="required-form-label"><strong>Ciclo Fin:</strong></label>
+                            <input class="form-control" asp-for="RecordHistoryEndAcademicYear" readonly />
+                        </div>
+                    </div>
+                }
+
+                if (!string.IsNullOrEmpty(Model.RecordHistoryTerm))
+                {
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="RecordHistoryTerm" class="required-form-label"><strong>Periodo seleccionado:</strong></label>
+                            <input class="form-control" asp-for="RecordHistoryTerm" readonly />
+                        </div>
+                    </div>
+                }
+            }
+
+            @if (Model.Activity != null)
+            {
+                if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.CAREER_TRANSFER)
+                {
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="Activity.Career" class="required-form-label"><strong>Escuela a transferir:</strong></label>
+                            <input class="form-control" asp-for="Activity.Career" readonly />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="Activity.Curriculum" class="required-form-label"><strong>Plan de estudio a transferir:</strong></label>
+                            <input class="form-control" asp-for="Activity.Curriculum" readonly />
+                        </div>
+                    </div>
+                }
+
+                if (
+                Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.COURSE_WITHDRAWAL ||
+                Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.GRADE_RECOVERY ||
+                Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.SUBSTITUTE_EXAM
+                )
+                {
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="Activity.StudentSection" class="required-form-label"><strong>Curso:</strong></label>
+                            <input class="form-control" asp-for="Activity.StudentSection" readonly />
+                        </div>
+                    </div>
+                }
+
+                if (
+                Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.COURSE_WITHDRAWAL_MASSIVE
+                )
+                {
+                    <label class="required-form-label"><strong>Cursos a retirar:</strong></label>
+
+                    <ul>
+                        @foreach (var item in Model.Activity.StudentSectionsDescription)
+                        {
+                            <li>@item</li>
+                        }
+                    </ul>
+                }
+
+                if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.CHANGE_ACADEMIC_PROGRAM)
+                {
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="Activity.AcademicProgram" class="required-form-label"><strong>Especialidad a transferir:</strong></label>
+                            <input class="form-control" asp-for="Activity.AcademicProgram" readonly />
+                        </div>
+                    </div>
+                }
+
+                if (
+                Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.EXTRAORDINARY_EVALUATION ||
+                Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.EXONERATED_COURSE
+                )
+                {
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="Activity.Course" class="required-form-label"><strong>Curso:</strong></label>
+                            <input class="form-control" asp-for="Activity.Course" readonly />
+                        </div>
+                    </div>
+                }
+            }
+
+            @if (!string.IsNullOrEmpty(Model.UrlImage))
+            {
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label class="required-form-label"><strong>Foto:</strong></label>
+
+                        <div class="m-form__group-sub">
+                            <div style="text-align:center">
+                                <img style="width: 250px; height:250px; border:2px solid;" src="/imagenes/@Model.UrlImage" class="img-fluid" />
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="/imagenes/@Model.UrlImage" download class="m-link m--font-boldest m--font-primary">Descargar</a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-12">
+                    <label asp-for="Comment" class="required-form-label"><strong>Sustento:</strong></label>
+                    <textarea class="form-control" asp-for="Comment" rows="5" readonly></textarea>
+                </div>
+            </div>
+
+            <div class="m-divider mt-5 mb-5">
+                <span></span>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <strong>
+                        DETALLE DEL TRÁMITE
+                    </strong>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-12">
+                    <label asp-for="Procedure.Name" class="required-form-label"><strong>Nombre del Trámite:</strong></label>
+                    <input class="form-control" asp-for="Procedure.Name" readonly />
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-12">
+                    <label asp-for="Procedure.Description" class="required-form-label"><strong>Descripción:</strong></label>
+                    <p>
+                        @Html.Raw(Model.Procedure.Description)
+                    </p>
+                </div>
+            </div>
+
+            <div class="m-divider mt-5 mb-5">
+                <span></span>
+            </div>
+
+            @if (Model.Payment != null)
+            {
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <strong>
+                            DETALLES DEL PAGO
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Payment.Concept" class="required-form-label"><strong>Concepto:</strong></label>
+                        <input class="form-control" asp-for="Payment.Concept" readonly />
+                    </div>
+
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Payment.StatusStr" class="required-form-label"><strong>Estado:</strong></label>
+                        <input class="form-control" asp-for="Payment.StatusStr" readonly />
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-4">
+                        <label asp-for="Payment.SubTotal" class="required-form-label"><strong>Sub Total:</strong></label>
+                        <input class="form-control" asp-for="Payment.SubTotal" readonly />
+                    </div>
+
+                    <div class="m-form__group-sub col-lg-4">
+                        <label asp-for="Payment.IgvAmount" class="required-form-label"><strong>IGV:</strong></label>
+                        <input class="form-control" asp-for="Payment.IgvAmount" readonly />
+                    </div>
+
+                    <div class="m-form__group-sub col-lg-4">
+                        <label asp-for="Payment.Total" class="required-form-label"><strong>Total:</strong></label>
+                        <input class="form-control" asp-for="Payment.Total" readonly />
+                    </div>
+                </div>
+            }
+
+            <div class="m-divider mt-5 mb-5">
+                <span></span>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12">
+                    <strong>
+                        ARCHIVOS ADJUNTOS
+                    </strong>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="table m-table m-table--head-separator-primary mt-4" id="user_requirement_files_datatable">
+                    </table>
+
+                </div>
+            </div>
+
+            @if (Model.RecordHistoryId.HasValue && Model.Status == ConstantHelpers.USER_PROCEDURES.STATUS.FINALIZED)
+            {
+                @if (string.IsNullOrEmpty(Model.RecordHistoryFileUrl))
+                {
+                    <div class="row mt-5">
+                        <div class="col-12 text-center">
+                            <a href="/registrosacademicos/solicitudes/imprimir/@Model.RecordHistoryId?userProcedureId=@Model.Id" class="btn btn-primary m-btn m-btn--icon m-btn--outline-2x btn-md">
+                                <span>
+                                    <i class="la la-download"></i>
+                                    <span>Generar Documento</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row mt-5">
+                        <div class="col-12 text-center">
+                            <a href="/documentos/@Model.RecordHistoryFileUrl" target="_blank" class="btn btn-primary m-btn m-btn--icon m-btn--outline-2x btn-md">
+                                <span>
+                                    <i class="la la-download"></i>
+                                    <span>Generar Documento</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="user_requirement_files_upload_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="user_requirement_files_upload_form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adjuntar Archivo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="Id" />
+                    <label>Archivo:</label>
+                    <div id="file-selector-container" class="custom-file">
+                        <input required type="file" name="File" class="custom-file-input" lang="es" />
+                        <label class="custom-file-label">
+                            Seleccione un archivo
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/views/procedure/userproceduredetail.js" asp-append-version="true"></script>
+}

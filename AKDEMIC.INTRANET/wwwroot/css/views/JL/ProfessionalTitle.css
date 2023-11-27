@@ -1,0 +1,66 @@
+﻿.cuadrado {
+    padding: 5px;
+    margin: 5px;
+    background-color: #D7D7D7;
+    border: solid 1px #D7D7D7;
+    color: black;
+}
+
+.cuadrado-inline {
+    padding: 5px;
+    margin: 5px;
+    background-color: white;
+    border: solid 2px double;
+    color: white;
+}
+
+
+.cuadrado-con-borde {
+    padding: 5px;
+    margin: 5px;
+    background-color: #D7D7D7;
+    border: solid 1px #D7D7D7;
+    color: black;
+    border-radius: 14px 14px 14px 14px;
+    -moz-border-radius: 14px 14px 14px 14px;
+    -webkit-border-radius: 14px 14px 14px 14px;
+    border: 0px solid #000000;
+}
+
+
+.squre {
+    font-size: 20pt;
+    
+}
+.firm-content {
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin-top: 150px;
+    font-size: 14px;
+}
+
+.details-firm {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.firm {
+    text-align: center;
+    display: block;
+    width: 200px;
+    border-top: 1px solid;
+    margin: 0 auto;
+    font-family: Arial;
+}
+
+.name {
+    
+    margin-top: 20px;
+}
+.other {
+    margin: 0px auto;
+    margin: auto;
+}

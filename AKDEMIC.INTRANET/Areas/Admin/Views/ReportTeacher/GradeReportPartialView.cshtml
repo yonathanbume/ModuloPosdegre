@@ -1,0 +1,81 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Enrollment.Templates.StudentSection.SectionPartialGradesReportTemplate
+
+<div class="d-flex mb-4 justify-content-end">
+    <a target="_blank" href="/profesor/notas/acta-final/@Model.SectionId" class="btn btn-primary btn-sm m-btn  m-btn m-btn--icon">
+        <span>
+            <i class="la la-download"></i>
+            <span>Descargar</span>
+        </span>
+    </a>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+        <thead>
+            <tr>
+                <th>ESTUDIANTE</th>
+                @for (int i = 0; i < Model.Evaluations.Count; i++)
+                {
+                    <th>E@(i + 1) (@Model.Evaluations[i].Percentage%)</th>
+                }
+                <th>NOTA FINAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.FullName</td>
+                    @foreach (var evaluation in Model.Evaluations)
+                    {
+                        if (student.Grades.Any(y => y.EvaluationId == evaluation.EvaluationId))
+                        {
+                            var gradeFilter = student.Grades.Where(x => x.EvaluationId == evaluation.EvaluationId).FirstOrDefault();
+                            <td style="text-align:center !important;">
+                                @if (gradeFilter.HasGradeCorrection)
+                                {
+                                    <a href="#"><strong>@gradeFilter?.Value</strong></a>
+
+                                    <br />
+                                    <small>Nota anterior (@gradeFilter.LastGrade)</small>
+                                }
+                                else
+                                {
+                                    @gradeFilter?.Value
+                                }
+                            </td>
+                        }
+                        else
+                        {
+                            <td>-</td>
+                        }
+                    }
+                    <td class="text-center font-weight-bold">@(student.Status == ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN ? "Retirado" : student.Status == ConstantHelpers.STUDENT_SECTION_STATES.IN_PROCESS ? "En Proceso" : student.FinalGrade.ToString())</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<br />
+<h4 class="m--font-boldest2">DETALLE DE REGISTRO DE NOTAS</h4>
+<table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary col-xl-6 col-lg-6 col-md-12">
+    <thead>
+        <tr>
+            <th>NOMBRE</th>
+            <th>FEC. PUBLICACIÓN</th>
+            <th>USUARIO</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evaluation in Model.Evaluations)
+        {
+            <tr>
+                <td>@evaluation.Evaluation (@evaluation.Percentage%)</td>
+                <td>@(!evaluation.HasGradeRegistration ? "Sin Registrar" : evaluation.GradeRegistrationDate.ToLocalDateTimeFormat()) </td>
+                <td>@(!evaluation.HasGradeRegistration ? "Sin Registrar" : evaluation.User) </td>
+            </tr>
+        }
+    </tbody>
+</table>

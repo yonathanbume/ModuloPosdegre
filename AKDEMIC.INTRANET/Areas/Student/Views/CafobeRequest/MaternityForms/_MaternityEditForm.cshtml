@@ -1,0 +1,76 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.CafobeRequestViewModels
+@model MaternityViewModel
+
+<input hidden asp-for="@Model.Id">
+<input hidden asp-for="@Model.BabyControlCardUrl">
+<input hidden asp-for="@Model.DirectorRequestUrl">
+<input hidden asp-for="@Model.DniUrl">
+<input hidden asp-for="@Model.DocumentaryProcedureVoucherUrl">
+<input hidden asp-for="@Model.EnrollmentFormUrl">
+<input hidden asp-for="@Model.LastTermHistoriesUrl">
+<input hidden asp-for="@Model.BabyBirhtCertificateUrl">
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Ficha de matrícula <a href="/documentos/@(Model.EnrollmentFormUrl)" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="EnrollmentFormFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <label class="custom-file-label">Seleccione ficha de matrícula</label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Solicitud al director de la BDU <a href="/documentos/@(Model.DirectorRequestUrl)" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="DirectorRequestFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <label class="custom-file-label">Seleccione la solicitud al director de la BDU </label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Recibo de pago documentario <a href="/documentos/@(Model.DocumentaryProcedureVoucherUrl)" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="DocumentaryProcedureVoucherFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <label class="custom-file-label">Seleccione recibo de pago documentario</label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Boleta de notas del semestre anterior <a href="/documentos/@(Model.DocumentaryProcedureVoucherUrl)" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="LastTermHistoriesFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <label class="custom-file-label">Seleccione boleta de notas del semestre anterior</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Copia de DNI <a href="/documentos/@(Model.DniUrl)" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="DniFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <label class="custom-file-label">Seleccione copia de DNI</label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Certificado de nacimiento del bebé <a href="/documentos/@(Model.BabyBirhtCertificateUrl)" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="BabyBirhtCertificateFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <label class="custom-file-label">Seleccione Constancia de pertenecer al Quinto Superior</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Tarjeta de control del bebé <a href="/documentos/@(Model.BabyControlCardUrl)" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="BabyControlCardFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <label class="custom-file-label">Seleccione cuadro de méritos</label>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary btn-submit add"> Guardar </button>
+</div>

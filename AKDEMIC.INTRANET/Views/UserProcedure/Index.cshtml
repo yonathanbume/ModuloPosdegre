@@ -1,0 +1,206 @@
+﻿@using AKDEMIC.INTRANET.ViewModels.UserProcedureViewModels
+@model UserProcedureViewModel
+@{
+    ViewData["Title"] = "Solicitud de Trámites";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Trámites" }
+};
+}
+<input type="hidden" id="tab" name="tab" value="@ViewBag.Tab" />
+<input type="hidden" id="informationtupa" name="informationtupa" value="@ViewBag.InformationTupa" />
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Trámites de Usuarios
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-tabs m-tabs-line m-tabs-line--right" role="tablist">
+                    @if (ViewBag.Tab == 2)
+                    {
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link " data-toggle="tab" href="#user-procedure-tab-1" role="tab">
+                                <i class="flaticon-list-3"></i> Solicitud de Trámites
+                            </a>
+                        </li>
+                        @if (!ViewBag.InformationTupa)
+                        {
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#user-procedure-tab-2" role="tab">
+                                    <i class="flaticon-avatar"></i> Trámites Solicitados
+                                </a>
+                            </li>
+                        }
+
+                    }
+                    else
+                    {
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#user-procedure-tab-1" role="tab">
+                                <i class="flaticon-list-3"></i> Solicitud de Trámites
+                            </a>
+                        </li>
+                        @if (!ViewBag.InformationTupa)
+                        {
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#user-procedure-tab-2" role="tab">
+                                    <i class="flaticon-avatar"></i> Trámites Solicitados
+                                </a>
+                            </li>
+                        }
+
+                    }
+                    @if (!ViewBag.InformationTupa)
+                    {
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#user-procedure-tab-3" role="tab">
+                                <i class="flaticon-clock"></i> Trámites Finalizados
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                @if (ViewBag.Tab == 2)
+                {
+                    <div class="tab-pane" id="user-procedure-tab-1" role="tabpanel">
+                        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="form-group m-form__group row align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="procedure-datatable-get" class="m-datatable"></div>
+                    </div>
+                    <div class="tab-pane active" id="user-procedure-tab-2" role="tabpanel">
+                        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="form-group m-form__group row align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search-2">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="active-user-procedure-datatable-get" class="m-datatable"></div>
+                    </div>
+                }
+                else
+                {
+                    <div class="tab-pane active" id="user-procedure-tab-1" role="tabpanel">
+                        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="form-group m-form__group row align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="procedure-datatable-get" class="m-datatable"></div>
+                    </div>
+                    <div class="tab-pane" id="user-procedure-tab-2" role="tabpanel">
+                        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="form-group m-form__group row align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search-2">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="active-user-procedure-datatable-get" class="m-datatable"></div>
+                    </div>
+                }
+
+                <div class="tab-pane" id="user-procedure-tab-3" role="tabpanel">
+                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <div class="row align-items-center">
+                            <div class="col-xl-8 order-2 order-xl-1">
+                                <div class="form-group m-form__group row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="m-input-icon m-input-icon--left">
+                                            <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search-3">
+                                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                <span><i class="la la-search"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="historic-user-procedure-datatable-get" class="m-datatable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("Index/_HistoricUserProcedureModalObservation")
+@await Html.PartialAsync("Index/_ProcedureModalRequest")
+
+@section Scripts {
+    <script>
+        var uit = {
+            id: @Model.UITViewModel.Id,
+            value: @Model.UITViewModel.Value,
+            year: @Model.UITViewModel.Year,
+        };
+
+        var userProcedureStatusValues = {
+            1: "Solicitado",
+            2: "Archivado",
+            3: "En Proceso",
+            4: "Aceptado",
+            5: "No Procede",
+            6: "Pendiente",
+            7: "Observado",
+            8: "Generado",
+            9: "Finalizado",
+            10: "Por Completar",
+            11: "Pendiente de Pago"
+        };
+
+    </script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/modules/select.js"></script>
+    <script src="~/js/views/userprocedure/index.js" asp-append-version="true"></script>
+}

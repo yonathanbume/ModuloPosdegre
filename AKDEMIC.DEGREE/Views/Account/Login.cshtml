@@ -1,0 +1,63 @@
+﻿@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "~/Views/Shared/Templates/Login/_Layout.cshtml";
+}
+<div class="m-login__wrapper">
+    <div class="form">
+        <a href="#">
+            <img class="logo" src="~/images/themes/@GeneralHelpers.GetTheme()/logo.png">
+        </a>
+        <h1>@AKDEMIC.DEGREE.Helpers.ConstantHelpers.Project.NAME.ToUpper()</h1>
+        <form asp-route-returnurl="@ViewData["ReturnUrl"]" id="main_form_login" method="post">
+            <div asp-validation-summary="All" class="text-danger" style="font-weight: 500;"></div>
+            <div class="group">
+                <input asp-for="UserName" placeholder="USUARIO" name="username" autocomplete="off" />
+                <img class="ico" src="~/images/login/user.svg" />
+                <div class="bar"></div>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="group">
+                <input asp-for="Password" type="password" placeholder="CONTRASEÑA" name="password" />
+                <i class="fa fa-eye"></i>
+                <img class="ico" src="~/images/login/pass.svg" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="bar"></div>
+            </div>
+            <div class="group">
+                <button id="m_login_signin_submit" class="btn button-submit">
+                    INGRESAR
+                </button>
+                <a class="forget-password-label" asp-controller="Account" asp-action="ForgotPassword">¿Olvidaste tu contraseña?</a>
+                <br />
+                <a href="@Url.Action("DiplomaTracking", "Home")" target="_blank" class="forget-password-label">Seguimiento del diploma</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(".group>i").hide();
+        $(".group>i").click(function () {
+            var x = document.getElementById("Password");
+            if (x.type === "password") {
+                x.type = "text";
+                this.className = "fa fa-eye-slash";
+            }
+            else {
+                x.type = "password";
+                this.className = "fa fa-eye";
+            }
+        });
+        $("#Password").on("focus", function () {
+            $(".group>i").show();
+            $(".ico:eq(1)").hide();
+        }).on("blur", function () {
+            if (this.value != "") return;
+            $(".group>i").hide();
+            $(".ico:eq(1)").show();
+        });
+    </script>
+    <script src="~/js/views/account/login.js" asp-append-version="true"></script>
+}

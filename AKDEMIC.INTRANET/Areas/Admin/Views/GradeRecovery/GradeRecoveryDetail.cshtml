@@ -1,0 +1,186 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.GradeRecoveryViewModels.GradeRecoveryExamViewModel
+@{
+    ViewBag.Title = "Detalles del Exámen";
+    ViewBag.Breadcrumbs = new[] {
+        new BreadcrumbViewData{Name="Gestion de Exámenes de Recuperación de Notas",Controller="GradeRecovery",Action="Index", Area="Admin"},
+        new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<input type="hidden" asp-for="GradeRecoveryExamId" />
+<div class="m-content">
+
+    @if (Model.Status == ConstantHelpers.GRADE_RECOVERY_EXAM_STATUS.CONFIRMED)
+    {
+        <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="m-alert__icon">
+                <i class="flaticon-exclamation-1"></i>
+                <span></span>
+            </div>
+            <div class="m-alert__text">
+                <strong>Examen Confirmado!</strong> No se puede asignar / remover estudiantes.
+            </div>
+        </div>
+    }
+
+    @if (Model.Status == ConstantHelpers.GRADE_RECOVERY_EXAM_STATUS.EXECUTED)
+    {
+
+        <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="m-alert__icon">
+                <i class="flaticon-exclamation-1"></i>
+                <span></span>
+            </div>
+            <div class="m-alert__text">
+                <strong>Examen Concluido!</strong> El detalle de las notas se encuentra en la parte inferior.
+            </div>
+        </div>
+    }
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                @if (Model.Status == ConstantHelpers.GRADE_RECOVERY_EXAM_STATUS.PENDING)
+                {
+                    <button id="confirm_exam" class="btn btn-primary btn-sm m-btn--icon">
+                        <span>
+                            <i class="la la-check"></i>
+                            <span>Confirmar Examen</span>
+                        </span>
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-6">
+                    <label>Curso:</label>
+                    <input class="form-control m-input" value="@Model.Course" readonly>
+                </div>
+                <div class="col-lg-6">
+                    <label>Secci&oacute;n:</label>
+                    <input class="form-control m-input" value="@Model.Section" readonly>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-lg-6">
+                    <label>Periodo:</label>
+                    <input class="form-control m-input" value="@Model.Term" readonly>
+                </div>
+                <div class="col-lg-6">
+                    <label>Aula donde se realizará el exámen:</label>
+                    <input class="form-control m-input" value="@Model.Classroom" readonly>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-lg-6">
+                    <label>Fec/hora Inicio:</label>
+                    <input class="form-control m-input" readonly value="@Model.StartDateTime">
+                </div>
+                <div class="col-lg-6">
+                    <label>Fec/hora Fin:</label>
+                    <input class="form-control m-input" readonly value="@Model.EndDateTime">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.EvaluationTypeAssigned))
+    {
+        <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="m-alert__icon">
+                <i class="flaticon-exclamation-1"></i>
+                <span></span>
+            </div>
+            <div class="m-alert__text">
+                <strong>Las notas a reemplazar solo serán de evaluaciones de tipo @Model.EvaluationTypeAssigned.ToUpper().</strong>
+            </div>
+        </div>
+    }
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Estudiantes asignados al examen
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                @if (Model.Status == ConstantHelpers.GRADE_RECOVERY_EXAM_STATUS.PENDING)
+                {
+                    <button data-toggle="modal" data-target="#assigned_students_modal" class="btn btn-primary btn-sm m-btn--icon">
+                        <span>
+                            <i class="la la-plus"></i>
+                            <span>Asignar / Remover Estudiantes</span>
+                        </span>
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-10 order-1 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Status == ConstantHelpers.GRADE_RECOVERY_EXAM_STATUS.EXECUTED)
+            {
+                <table class="table table-hover" id="assigned_students_executed"></table>
+            }
+            else
+            {
+                <table class="table table-hover" id="assigned_students"></table>
+
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="assigned_students_modal" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Estudiantes de la Secci&oacute;n @Model.Section
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover" id="students_table"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                <button type="button" id="assign_students_button" class="btn btn-primary"> Guardar </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/graderecovery/detail.js" asp-append-version="true"></script>
+}
+

@@ -1,0 +1,578 @@
+﻿@model AKDEMIC.INTRANET.Areas.Student.Models.GradeViewModels.CourseTermSyllabusViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>SILABO @Model.GeneralInformation.CourseName (@Model.GeneralInformation.TermName)</title>
+
+    <style>
+        * {
+            font-family: Arial;
+            font-size: 15px;
+        }
+
+        .A4 {
+            width: 98%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .title {
+            letter-spacing: 1.5px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .table-detail {
+            margin-left: 25px;
+        }
+
+        .table-formula {
+            margin-left: 100px;
+        }
+
+        .table-border {
+            border: 1px solid;
+        }
+
+            .table-border td {
+                border: 1px solid;
+                padding: 3px;
+            }
+
+        table td {
+            page-break-inside: avoid;
+        }
+
+        table tr {
+            page-break-inside: avoid;
+        }
+
+        .p-l {
+            padding-left: 25px;
+        }
+
+        .oblique {
+            font-style: oblique;
+        }
+
+        .footer-date {
+            margin-top: 20px;
+            width: 100%;
+            text-align: right;
+        }
+
+        .border-top {
+            border-top: 1px solid;
+        }
+
+        .border-top-none{
+            border-top:0px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="A4">
+        <h1 class="title">SILABO</h1>
+        <table>
+            <tr>
+                <td class="bold">FACULTAD</td>
+                <td>@Model.GeneralInformation.Faculty</td>
+            </tr>
+            <tr>
+                <td class="bold">ESCUELA PROFESIONAL</td>
+                <td>@Model.GeneralInformation.Career</td>
+            </tr>
+            <tr>
+                <td class="bold">PROGRAMA DE ESTUDIOS</td>
+                <td>@(string.IsNullOrEmpty(Model.GeneralInformation.AcademicProgram) ? "No asignada" : Model.GeneralInformation.AcademicProgram)</td>
+            </tr>
+        </table>
+
+        <h2>I. INFORMACI&Oacute;N GENERAL</h2>
+        <table class="table-detail">
+            <tr>
+                <td colspan="3" class="bold">1.1 Identificaci&oacute;n Acad&eacute;mica</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">a)</td>
+                <td class="p-l">Curso</td>
+                <td class="bold p-l">@Model.GeneralInformation.CourseName</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">b)</td>
+                <td class="p-l">C&oacute;digo</td>
+                <td class="p-l">@Model.GeneralInformation.CourseCode</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">c)</td>
+                <td class="p-l">Prerequisito</td>
+                <td class="p-l">@Model.GeneralInformation.Prerequisites</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">d)</td>
+                <td class="p-l">N&uacute;mero de Horas</td>
+                <td class="p-l">
+                    @{ var hours = new List<string>
+                                                                                                                                                                                                                    {
+                        (Model.GeneralInformation.TheoreticalHours == "00" ? "" : $"{Model.GeneralInformation.TheoreticalHours}h teóricas"),
+                        (Model.GeneralInformation.PracticalHours == "00" ? "" : $"{Model.GeneralInformation.PracticalHours}h prácticas"),
+                        (Model.GeneralInformation.SeminarHours == "00" ? "" : $"{Model.GeneralInformation.SeminarHours}h prácticas"),
+                        (Model.GeneralInformation.VirtualHours == "00" ? "" : $"{Model.GeneralInformation.VirtualHours}h virtuales"),
+                        (Model.GeneralInformation.TotalHours == "00" ? "" : $"Total {Model.GeneralInformation.TotalHours} horas")
+                    };
+                    }
+                    @(string.Join(", ", hours.Where(x => !string.IsNullOrEmpty(x)).ToList()))
+                </td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">e)</td>
+                <td class="p-l">Cr&eacute;ditos</td>
+                <td class="p-l">@Model.GeneralInformation.Credits</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">f)</td>
+                <td class="p-l">N&uacute;mero de Horas virtuales</td>
+                <td class="p-l">@Model.GeneralInformation.VirtualHours</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">g)</td>
+                <td class="p-l">Año y Semestre Acad&eacute;mico</td>
+                <td class="p-l">@Model.GeneralInformation.TermName</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">h)</td>
+                <td class="p-l">Ciclo de Estudios</td>
+                <td class="p-l">@(ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS[Model.GeneralInformation.Cycle])</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">i)</td>
+                <td class="p-l">Duraci&oacute;n</td>
+                <td class="p-l">
+                    @($"Del {Model.GeneralInformation.TermClassStart.Day} de " +
+                $"{ConstantHelpers.MONTHS.VALUES[Model.GeneralInformation.TermClassStart.Month]} " +
+                $"al {Model.GeneralInformation.TermClassEnd.Day} de " +
+                $"{ConstantHelpers.MONTHS.VALUES[Model.GeneralInformation.TermClassEnd.Month]} del {Model.GeneralInformation.TermClassEnd.Year} ({Model.GeneralInformation.TotalWeeks} semanas)")
+                </td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">j)</td>
+                <td class="p-l">&Aacute;rea Curricular</td>
+                <td class="p-l">@Model.GeneralInformation.Area</td>
+            </tr>
+            <tr>
+                <td class="p-l" width="2%">k)</td>
+                <td class="p-l">Caracter&iacute;sticas del Curso</td>
+                <td class="p-l">@Model.GeneralInformation.Features</td>
+            </tr>
+            <tr>
+                <td colspan="3">&emsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="bold">1.2 Docente</td>
+            </tr>
+            @foreach (var teacher in Model.GeneralInformation.Teachers)
+            {
+                <tr>
+                    <td class="p-l" width="2%">a)</td>
+                    <td class="p-l">Apellidos y Nombres</td>
+                    <td class="p-l">@(string.IsNullOrEmpty(teacher.Name) ? "Sin Asignar" : teacher.Name)</td>
+                </tr>
+                <tr>
+                    <td class="p-l" width="2%">b)</td>
+                    <td class="p-l">Condici&oacute;n y Categoria</td>
+                    <td class="p-l">@(string.IsNullOrEmpty(teacher.TeacherCondition) ? "-" : teacher.TeacherCondition)</td>
+                </tr>
+                <tr>
+                    <td class="p-l" width="2%">c)</td>
+                    <td class="p-l">Especialidad</td>
+                    <td class="p-l">@(string.IsNullOrEmpty(teacher.TeacherSpeciality) ? "-" : teacher.TeacherSpeciality)</td>
+                </tr>
+                <tr>
+                    <td colspan="3">&emsp;</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3" class="bold">1.3 Ambiente donde se realiz&oacute; el aprendizaje</td>
+            </tr>
+
+            @if (!string.IsNullOrEmpty(Model.GeneralInformation.LearningEnvironment))
+            {
+                <tr>
+                    <td class="p-l" width="2%">a)</td>
+                    <td colspan="2">@Model.GeneralInformation.LearningEnvironment</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td class="p-l" width="2%">a)</td>
+                    <td class="p-l" colspan="2">Sin Asignar</td>
+                </tr>
+            }
+            @*@if (Model.GeneralInformation.Classrooms.Any())
+            {
+                @foreach (var classroom in Model.GeneralInformation.Classrooms)
+                {
+                    var tempName = $"{classroom.Classroom} - {(string.IsNullOrEmpty(classroom.Building) ? "Pabellón sin especificar" : classroom.Building)}, Campus : {(string.IsNullOrEmpty(classroom.Campus) ? "Sede sin especificar" : classroom.Campus)}";
+                    <tr>
+                        <td class="p-l" width="2%">a)</td>
+                        <td colspan="2">@(string.IsNullOrEmpty(classroom.FullName) ? tempName : classroom.FullName)</td>
+                    </tr>
+                }
+            }
+            else if (!string.IsNullOrEmpty(Model.GeneralInformation.LearningEnvironment))
+            {
+                <tr>
+                    <td class="p-l" width="2%">a)</td>
+                    <td colspan="2">@Model.GeneralInformation.LearningEnvironment</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td class="p-l" width="2%">a)</td>
+                    <td class="p-l" colspan="2">Sin Asignar</td>
+                </tr>
+            }*@
+            <tr>
+                <td colspan="3">&emsp;</td>
+            </tr>
+        </table>
+
+        <h2>II. SUMILLA</h2>
+        <table class="table-detail">
+            <tr>
+                <td>
+                    @Html.Raw(Model.Summary)
+                </td>
+            </tr>
+        </table>
+
+        <h2>III. PERFIL DEL EGRESADO EN RELACI&Oacute;N AL CURSO</h2>
+        <table class="table-detail">
+            <tr>
+                <td>
+                    @Html.Raw(Model.GraduateProfile)
+                </td>
+            </tr>
+        </table>
+
+        <h2>IV. LOGRO DE APRENDIZAJE DEL CURSO</h2>
+        <table class="table-detail">
+            <tr>
+                <td>
+                    @Html.Raw(Model.LearningAchievement)
+                </td>
+            </tr>
+        </table>
+
+        @*<h2>V. LOGRO DE APRENDIZAJE DEL CURSO</h2>
+        <table class="table-detail">
+            <tr>
+                <td>
+                    @Html.Raw(Model.LearningAchievement)
+                </td>
+            </tr>
+        </table>*@
+
+        <h2>V. TRATAMIENTO DE UNIDADES DID&Aacute;CTICAS</h2>
+        @foreach (var unit in Model.CourseUnits)
+        {
+            <table class="table-detail table-border">
+                <tr>
+                    <td class="bold" width="30%" colspan="2">UNIDAD @unit.Number</td>
+                    <td>@unit.Name</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <span class="bold">LOGROS DE APRENDIZAJE DE LA UNIDAD</span>
+                        <div>
+                            @unit.LearningAchievements
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bold" colspan="2">TIEMPO DE DESARROLLO</td>
+                    <td>@unit.DevelopmentTime</td>
+                </tr>
+                <tr>
+                    <td class="bold" colspan="2">HORAS DE ENSEÑANZA VIRTUAL/UNIDAD</td>
+                    <td>@unit.VirtualHours</td>
+                </tr>
+            </table>
+
+            <table class="table-detail table-border border-top-none">
+                @if (unit.WeekNumberStart != 0 && unit.WeekNumberEnd != 0)
+                {
+                    <tr>
+                        <td class="bold center border-top-none" width="10%">SEMANAS</td>
+                        <td class="bold center border-top-none" width="45%">CRITERIOS DE DESEMPEÑO</td>
+                        <td class="bold center border-top-none" width="45%">CONOCIMIENTOS</td>
+                    </tr>
+
+                    @for (int i = unit.WeekNumberStart; i <= unit.WeekNumberEnd; i++)
+                    {
+                        var syllabysWeek = Model.CourseSyllabusWeek.Where(x => x.Week == i).FirstOrDefault();
+                        <tr>
+                            <td class="center">Semana @i</td>
+                            <td>@(syllabysWeek == null ? Html.Raw("") : Html.Raw(syllabysWeek.PerformanceCriterion))</td>
+                            <td>@(syllabysWeek == null ? Html.Raw("") : Html.Raw(syllabysWeek.EssentialKnowledge))</td>
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td colspan="3" class="bold">PORCENTAJE DE AVANCE ACAD&Eacute;MICO DE LA UNIDAD: @unit.Weighing%</td>
+                </tr>
+            </table>
+
+            <p class="p-l">
+                * El docente deberá programar “actividades de retroalimentación” los cuales se desarrollarán a lo largo de cada unidad didáctica con el fin de asegurar los adecuados aprendizajes de los estudiantes.
+            </p>
+            <br />
+        }
+
+        <h2>VI. ESTRATEGIAS METODOL&Oacute;GICAS</h2>
+
+        <table class="table-detail">
+            <tr>
+                <td>
+                    <span class="bold">6.1 De Enseñanza</span>
+                    <div class="p-l">@Html.Raw(Model.MethodologicalStrategies.Teaching)</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="bold">6.2 De Aprendizaje</span>
+                    <div class="p-l">@Html.Raw(Model.MethodologicalStrategies.Learning)</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="bold">6.3 De Investigaci&oacute;n Formativa</span>
+                    <div class="p-l">@Html.Raw(Model.MethodologicalStrategies.Research)</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="bold">6.4 De Responsabilidad Social Universitaria</span>
+                    <div class="p-l">@Html.Raw(Model.MethodologicalStrategies.SocialResponsability)</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="bold">6.5 De Enseñanza Virtual</span>
+                    <div class="p-l">@Html.Raw(Model.MethodologicalStrategies.VirtualTeaching)</div>
+                </td>
+            </tr>
+        </table>
+
+        <h2>VII. MEDIOS Y MATERIALES DID&Aacute;CTICOS</h2>
+        <table class="table-detail">
+            <tr>
+                <td>
+                    @Html.Raw(Model.DidacticMaterials)
+                </td>
+            </tr>
+        </table>
+
+        <h2>VIII. EVALUACI&Oacute;N DEL APRENDIZAJE</h2>
+        <p class="bold p-l">8.1 Logro de aprendizaje, evidencias de desempeño, ponderaci&oacute;n, t&eacute;cnicas e instrumentos de evaluaci&oacute;n.</p>
+        <table class="table-detail table-border">
+            <tr>
+                <td class="bold center" width="5%">UNIDAD</td>
+                <td class="bold center">LOGROS DE APRENDIZAJE</td>
+                <td class="bold center">EVIDENCIAS DESEMPEÑO:<br /> De acción, objeto o producto (%)</td>
+                <td class="bold center" width="5%">PONDERACI&Oacute;N (Obligatorio en base a 100%)</td>
+                <td class="bold center">T&Eacute;CNICAS</td>
+                <td class="bold center">INSTRUMENTOS</td>
+            </tr>
+            @if (Model.CourseUnits.Any())
+            {
+                @foreach (var unit in Model.CourseUnits)
+                {
+                    <tr>
+                        <td class="center">@unit.Number</td>
+                        <td>@unit.LearningAchievements</td>
+                        <td>@unit.PerformanceEvidence</td>
+                        <td class="center">@(Model.CourseUnits.All(y=>y.AcademicProgressPercentage == 0M) ? Math.Round((100M / Model.CourseUnits.Count()), 2, MidpointRounding.AwayFromZero) :  unit.AcademicProgressPercentage)%</td>
+                        <td>@unit.Techniques</td>
+                        <td>@unit.Tools</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">No hay unidades disponibles</td>
+                </tr>
+            }
+        </table>
+
+        <p class="bold p-l">8.2 Evidencias de aprendizaje del semestre acad&eacute;mico.</p>
+        <table class="table-detail table-border">
+            <tr>
+                <td class="bold" width="50%">LOGRO DE APRENDIZAJE DEL CURSO</td>
+                <td class="bold" width="50%">
+                    EVIDENCIAS: <br />
+                    ACCIÓN, OBJETO o PRODUCTO
+                </td>
+                <td class="bold" width="50%">FECHA DE PRESENTACI&Oacute;N</td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Raw(Model.LearningAchievement)
+                </td>
+                <td>
+                    @Html.Raw(Model.LearningProduct.Product)
+                </td>
+                <td>
+                    @Html.Raw(Model.LearningProduct.PresentationDate)
+                </td>
+            </tr>
+        </table>
+
+        <p class="p-l">
+            • Evidencias que deben ser socializados con la comunidad como parte de la responsabilidad social universitaria. Por la emergencia sanitaria podría optarse por la difusión vía página web y redes sociales.
+        </p>
+
+
+        <p class="bold p-l">8.3 Calificaci&oacute;n </p>
+        @{
+            List<string> values = new List<string>();
+            List<string> valuesFinal = new List<string>();
+
+            var porcentage = 100M / Model.CourseUnits.Count();
+            var strPorcentage = porcentage % 1 == 0 ? $"{(int)porcentage}" : $"{porcentage:F}";
+            var width = Model.CourseUnits.Count() > 7 ? "75%" : $"{Model.CourseUnits.Count() * 10}%";
+
+            for (int i = 0; i < Model.CourseUnits.Count(); i++)
+            {
+                if (Model.CourseUnits[i].AcademicProgressPercentage != 0)
+                    strPorcentage = $"{Model.CourseUnits[i].AcademicProgressPercentage}";
+
+                values.Add($"{strPorcentage}%(LA{i + 1})");
+                //valuesFinal.Add($"{ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS[(i + 1)]}UPP");
+                var academicProgressPercetage = Model.CourseUnits.All(y => y.AcademicProgressPercentage == 0M) ? Math.Round((100M / Model.CourseUnits.Count()), 2, MidpointRounding.AwayFromZero) : Model.CourseUnits[i].AcademicProgressPercentage;
+                valuesFinal.Add($"({academicProgressPercetage}%){ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS[(i + 1)]}UPP");
+            }
+
+            var formula = string.Join("+", values);
+            var finalFormula = string.Join("+", valuesFinal);
+        }
+        @*<table class="table-formula">
+            <tr>
+                <td width="25%" class="bold oblique">Promedio Parcial de la Unidad = </td>
+                <td width="@width" class="center">@formula</td>
+                <td>&emsp;</td>
+            </tr>
+            <tr>
+                <td class="p-l">&emsp;</td>
+                <td class="center @(Model.CourseUnits.Count() > 1 ? "border-top" : "") border-top"> @(Model.CourseUnits.Count() > 1 ? "100" : "")</td>
+                <td>&emsp;</td>
+            </tr>
+        </table>*@
+
+        @*<table class="table-detail">
+            <tr>
+                <td>Donde:</td>
+            </tr>
+            @for (int i = 0; i < Model.CourseUnits.Count(); i++)
+            {
+                <tr>
+                    <td>LA@(i + 1) : logro de aprendizaje @(i + 1)</td>
+                </tr>
+            }
+        </table>*@
+
+        <p class="p-l">La f&oacute;rmula para la obtenci&oacute;n del promedio final del curso es la siguiente:</p>
+
+        <table class="table-formula">
+            <tr>
+                <td width="15%" class="bold oblique">Promedio Final = </td>
+                <td width="@width" class="center">@finalFormula</td>
+                <td>&emsp;</td>
+            </tr>
+            <tr>
+                <td class="p-l">&emsp;</td>
+                @*<td class="center @(Model.CourseUnits.Count() > 1 ? "border-top" : "") border-top"> @(Model.CourseUnits.Count() > 1 ? Model.CourseUnits.Count().ToString() : "")</td>*@
+                @*<td class="center border-top">100</td>*@
+                <td>&emsp;</td>
+            </tr>
+        </table>
+
+        <table class="table-detail">
+            <tr>
+                <td>Donde:</td>
+            </tr>
+            @for (int i = 0; i < Model.CourseUnits.Count(); i++)
+            {
+                <tr>
+                    <td>@(ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS[(i + 1)])UPP : @(ConstantHelpers.ACADEMIC_YEAR.TEXT[(i + 1)]) unidad promedio parcial</td>
+                </tr>
+            }
+        </table>
+        <br />
+        <table class="table-detail">
+            <tr>
+                <td>
+                    @Html.Raw(Model.Raiting)
+                </td>
+            </tr>
+        </table>
+
+        <h2>IX. FUENTES DE INFORMACI&Oacute;N</h2>
+        <table class="table-detail">
+            <tr>
+                <td class="bold">9.1 Bibliogr&aacute;ficas</td>
+            </tr>
+            <tr>
+                <td class="p-l">
+                    <span class="bold">B&aacute;sica</span>
+                    <div>@Html.Raw(Model.BibliographicReferences.Basic)</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="p-l">
+                    <span class="bold">Complementarias</span>
+                    <div>@Html.Raw(Model.BibliographicReferences.Complementary)</div>
+                </td>
+            </tr>
+            <tr class="p-l">
+                <td class="p-l">
+                    <span class="bold">Electr&oacute;nicas</span>
+                    <div>@Html.Raw(Model.BibliographicReferences.Electronic)</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="p-l">
+                    <span class="bold">Producci&oacute;n intelectual del docente relacionado con el curso</span>
+                    <div>@Html.Raw(Model.BibliographicReferences.IntellectualProduction)</div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="footer-date">
+            @(ConstantHelpers.Institution.Locations.ContainsKey(ConstantHelpers.GENERAL.Institution.Value) ?
+                ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value] : "Lima"), @ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.ToDefaultTimeZone().Month] del @DateTime.UtcNow.ToDefaultTimeZone().Year
+            </div>
+        </div>
+    </body>
+</html>

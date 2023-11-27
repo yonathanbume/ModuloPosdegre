@@ -1,0 +1,140 @@
+﻿@using AKDEMIC.INTRANET.Areas.Teacher.Models.TutorialViewModels
+@model TutorialViewModel
+@{
+    ViewBag.Title = "Programación de Tutorías";
+    ViewBag.SubTitle = "Listado de Tutorías Programadas";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" />
+}
+
+<!--begin::Modal-->
+@*<div class="modal fade" id="add_modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-modal-label">
+                    Programar Nueva Tutor&iacute;a
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form" asp-controller="Tutorial" asp-action="CreateTutorial">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="add_form_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="add_form_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    @await Html.PartialForAsync(m => m, "_TutorialEntryForm", "Add")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnCreate" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span><i class="la la-plus"></i></span>
+                        <span class="ladda-label">Agregar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>*@
+<!--end::Modal-->
+<!--begin::Modal-->
+<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="edit-modal-label">
+                    Detalle de Tutor&iacute;a
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-fill nav-tabs m-tabs-line m-tabs-line--2x m-tabs-line--primary" role="tablist" id="tabContent">
+                    <li class="nav-item m-tabs__item"><a class="nav-link" href="#general" data-toggle="tab"><i class="la la-info-circle"></i> Informaci&oacute;n General</a></li>
+                    <li class="nav-item m-tabs__item"><a class="nav-link" href="#students" data-toggle="tab"><i class="la la-users"></i> Estudiantes Inscritos</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" id="general" role="tabpanel">
+                        <form id="edit-form" asp-controller="Tutorial" asp-action="EditTutorial">
+                            <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="edit_form_msg">
+                                <div class="m-alert__icon">
+                                    <i class="la la-warning"></i>
+                                </div>
+                                <div class="m-alert__text" id="edit_form_msg_txt">
+                                    Oh rayos! Ocurri&oacute; un error en el servidor
+                                </div>
+                                <div class="m-alert__close">
+                                    <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+
+                            @await Html.PartialForAsync(m => m, "_TutorialEntryForm", "Edit")
+
+                            <hr id="separator" />
+                            <div class="pull-right">
+                                <button id="btnDelete" type="button" class="btn btn-danger m-btn--icon m-btn--icon-left"><i class="la la-trash"></i></button>
+                                <button id="btnCancelEdit" type="button" class="btn btn-secondary m-btn--icon m-btn--icon-left"><span><i class="la la-close"></i><span>Cancelar Edici&oacute;n</span></span></button>
+                                <button id="btnEdit" type="button" class="btn btn-primary m-btn m-btn--icon m-btn--icon-left"><span><i class="la la-edit"></i><span>Editar</span></span></button>
+                                <button id="btnSave" type="submit" class="btn btn-primary m-btn m-btn--icon m-btn--icon-left">
+                                    <span><i class="la la-save"></i><span>Guardar</span></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="students" role="tabpanel">
+                        <div class="students-datatable"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button id="btnAdd" class="btn btn-primary m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-plus"></i>
+                        <span>Programar Nueva Tutor&iacute;a</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-calendar__container"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/areas/teacher/tutorial/index.js"></script>
+}

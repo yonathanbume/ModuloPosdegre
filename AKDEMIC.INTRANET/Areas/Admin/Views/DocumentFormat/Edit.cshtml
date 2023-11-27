@@ -1,0 +1,108 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.DocumentFormatViewModels.DocumentFormatViewModel
+
+@{
+    ViewBag.Title = ConstantHelpers.RECORDS.VALUES[Model.Id];
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Constancias", Controller = "DocumentFormat", Area = "Admin", Action = "Index" },
+    new BreadcrumbViewData { Name = (string)ViewBag.Title }
+    };
+}
+
+@section Styles{
+    <style>
+        .note-editor.note-frame .note-editing-area .note-editable {
+            padding: 20px;
+            padding-top: 30px !important;
+        }
+
+    </style>
+}
+
+
+
+<div class="m-content">
+
+    <div class="m-alert m-alert--icon alert alert-secondary" role="alert">
+
+        <div class="m-alert__text">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <strong>Variables : </strong>
+                </div>
+            </div>
+            <div class="row">
+
+                @if (
+                Model.Id == ConstantHelpers.RECORDS.STUDYRECORD ||
+                Model.Id == ConstantHelpers.RECORDS.UPPERTHIRD ||
+                Model.Id == ConstantHelpers.RECORDS.UPPERFIFTH ||
+                Model.Id == ConstantHelpers.RECORDS.TENTH_HIGHER ||
+                Model.Id == ConstantHelpers.RECORDS.UPPER_MIDDLE ||
+                Model.Id == ConstantHelpers.RECORDS.ENROLLMENT_REPORT
+                )
+                {
+                    @foreach (var item in AKDEMIC.CORE.Helpers.ConstantHelpers.DOCUMENT_FORMAT.VARIABLES.VALUES)
+                    {
+                        <div class="col-4" style="font-weight:normal; color:black;">
+                            {{@item}}
+                        </div>
+                    }
+                }
+                else
+                {
+                    @foreach (var item in AKDEMIC.CORE.Helpers.ConstantHelpers.DOCUMENT_FORMAT.VARIABLES.CONSTANT_VALUES)
+                    {
+                        <div class="col-4" style="font-weight:normal; color:black;">
+                            {{@item}}
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form id="main_form">
+            <input type="hidden" asp-for="Id" />
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group">
+                    <label>Titulo</label>
+                    <input type="text" class="form-control m-input" placeholder="Ingresar Titutlo" asp-for="Title">
+                </div>
+
+                <div class="form-group m-form__group">
+                    <label>Contenido</label>
+                    <textarea class="form-control m-input" asp-for="Content"></textarea>
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 m--valign-middle">
+                    </div>
+                    <div class="col-lg-6 m--align-right">
+                        <button type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                            <span>
+                                <i class="la la-save"></i>
+                                <span>Guardar</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/document_format/edit.js" asp-append-version="true"></script>
+}

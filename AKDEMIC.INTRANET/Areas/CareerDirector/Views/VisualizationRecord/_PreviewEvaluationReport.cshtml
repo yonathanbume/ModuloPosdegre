@@ -1,0 +1,145 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.EvaluationReportViewModels.ActaScoresViewModel
+@{
+    Layout = null;
+}
+<div class="text-left">
+    <div class="row">
+        <div class="col-6">
+            <strong>ACTA DE EVALUACIONES : </strong> @(ConstantHelpers.Intranet.EvaluationReportType.NAMES.ContainsKey(Model.Type) ? ConstantHelpers.Intranet.EvaluationReportType.NAMES[Model.Type].ToUpper() : "-") <br />
+        </div>
+        <div class="col-6">
+            <strong>FACULTAD : </strong>@Model.BasicInformation.Faculty<br />
+        </div>
+        <div class="col-6">
+            <strong>COMPONENTE CURRICULAR : </strong>@Model.BasicInformation.Course<br />
+        </div>
+        <div class="col-6">
+            <strong>ESCUELA PROFESIONAL : </strong> @Model.BasicInformation.Career<br />
+        </div>
+        <div class="col-6">
+            <strong>DOCENTE : </strong> @Model.BasicInformation.Teacher<br />
+        </div>
+        <div class="col-6">
+            <strong>CRÉDITOS: </strong> @Model.BasicInformation.Credits<br />
+        </div>
+        <div class="col-6">
+            <strong>GRUPO: </strong> @Model.BasicInformation.Section<br />
+        </div>
+    </div>
+</div>
+<table class="table table-striped table-bordered" id="data-table-preview-2">
+    <thead>
+        <tr>
+            <th colspan="3" style="border:0px;"></th>
+            @if (Model.BasicInformation.EvaluationByUnits)
+            {
+                <th colspan="@((int)Model.BasicInformation.CourseUnits)" class="bold center header2">PROMEDIOS PARCIALES</th>
+
+            }
+            else
+            {
+                <th colspan="@((int)Model.BasicInformation.Evaluations)" class="bold center header2">PROMEDIOS PARCIALES</th>
+            }
+            <th colspan="2" class="bold center header2">PROMEDIO FINAL</th>
+        </tr>
+        <tr>
+            <th colspan="1" class="bold center">N°</th>
+            <th colspan="2" class="bold center">APELLIDOS Y NOMBRES</th>
+            @if (Model.BasicInformation.EvaluationByUnits)
+            {
+                @for (int i = 1; i <= Model.BasicInformation.CourseUnits; i++)
+                {
+                    <th class="bold center" style="max-width:50px !important; font-size:10px;">@AKDEMIC.INTRANET.Helpers.ConstantHelpers.SEQUENCEORDER.NAMES[i] PROMEDIO PARCIAL</th>
+                }
+            }
+            else
+            {
+                @for (int i = 1; i <= Model.BasicInformation.Evaluations; i++)
+                {
+                    <th class="bold center" style="max-width:50px !important; font-size:10px;">@AKDEMIC.INTRANET.Helpers.ConstantHelpers.SEQUENCEORDER.NAMES[i] PROMEDIO PARCIAL</th>
+                }
+            }
+
+            <th class="bold center">Número</th>
+            <th class="bold center">Letras</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Rows.Count; i++)
+        {
+            <tr style="text-align:center;">
+                <th class="thd" style="text-align: center;">@Model.Rows[i].Order</th>
+                <th class="thd" style="border-right:0px !important;">@Model.Rows[i].Code - @Model.Rows[i].Surnames , @Model.Rows[i].Names</th>
+                <th class="thd" style="width:100px; border-left:0px !important;">@(Model.Type == ConstantHelpers.Intranet.EvaluationReportType.DIRECTED_COURSE ? "DIRIGIDO" : (Model.BasicInformation.IsSummer.HasValue && Model.BasicInformation.IsSummer.Value) ? "NIVELACIÓN" : AKDEMIC.CORE.Helpers.ConstantHelpers.Student.COURSE_ATTEMPTS.NAMES[Model.Rows[i].Try]) </th>
+                @if (Model.BasicInformation.EvaluationByUnits)
+                {
+                    @for (int v = 0; v < Model.BasicInformation.CourseUnits; v++)
+                    {
+                        @if (Model.Rows[i].PartialAverages.Count() > 0)
+                        {
+                            @if (Model.Rows[i].PartialAverages[v] < Model.Approbed)
+                            {
+                                <th class="red thd" style="text-align: center !important">@($"{Model.Rows[i].PartialAverages[v]:00}")</th>
+                            }
+                            else
+                            {
+                                if (Model.Rows[i].PartialAverages[v] == 21)
+                                {
+                                    <th class="thd" style="font-weight:bold; text-align:center !important;">-</th>
+                                }
+                                else
+                                {
+                                    <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Rows[i].PartialAverages[v]:00}")</th>
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    @for (int v = 0; v < Model.BasicInformation.Evaluations; v++)
+                    {
+                        @if (Model.Rows[i].PartialEvaluationAverages.Count() > 0)
+                        {
+                            @if (Model.Rows[i].PartialEvaluationAverages[v] < Model.Approbed)
+                            {
+                                <th class="red thd" style="text-align: center !important">@($"{Model.Rows[i].PartialEvaluationAverages[v]:00.00}")</th>
+                            }
+                            else
+                            {
+                                if (Model.Rows[i].PartialEvaluationAverages[v] == 21)
+                                {
+                                    <th class="thd" style="font-weight:bold; text-align:center !important;">-</th>
+                                }
+                                else
+                                {
+                                    <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Rows[i].PartialEvaluationAverages[v]:00.00}")</th>
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+                @if (Model.Rows[i].FinalEvaluationNumber < Model.Approbed)
+                {
+                    <th class="red thd" style="text-align: center !important;">@($"{Model.Rows[i].FinalEvaluation:00}")</th>
+                    <th class="red thd" style="text-align: center !important;">@Model.Rows[i].FinalEvaluationText</th>
+                }
+                else
+                {
+                    <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Rows[i].FinalEvaluation:00}")</th>
+                    <th class="thd" style="font-weight:bold; text-align:center !important;">@Model.Rows[i].FinalEvaluationText</th>
+                }
+            </tr>
+        }
+
+        @if (Model.Rows.Count == 0)
+        {
+            <tr>
+                <th class="center" colspan="12">No hay estudiantes en la sección</th>
+            </tr>
+        }
+    </tbody>
+</table>

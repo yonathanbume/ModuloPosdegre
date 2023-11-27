@@ -1,0 +1,458 @@
+﻿@using AKDEMIC.CORE.Extensions;
+@using Microsoft.AspNetCore.Hosting;
+
+@inject IWebHostEnvironment _webHostEnvironment
+
+@model AKDEMIC.PDF.Services.AcademicRecordGenerator.Models.AcademicRecordModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>RECORD ACADÉMICO</title>
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .footer-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-univ-logo {
+            float: left;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+
+        .header {
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+            .header .university-title {
+                font-size: 25px !important;
+                margin: 0px !important;
+                text-decoration: underline;
+                padding-top: 5px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-title2 {
+                font-size: 20px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+                font-weight: bold !important;
+                text-decoration: underline !important;
+            }
+
+            .header .university-title3 {
+                font-size: 15px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .resolution-title {
+                font-size: 15px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .office-title {
+                font-size: 11px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                font-size: 25px !important;
+                margin: 0px !important;
+                text-decoration: underline !important;
+                font-weight: bold !important;
+                padding: 0px !important;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+        .header-extra-info {
+            margin-top: 20px !important;
+            text-align: left !important;
+        }
+
+            .header-extra-info p {
+                font-size: 16px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+        .header-extra-second {
+            margin-top: 70px !important;
+            text-align: right !important;
+        }
+
+            .header-extra-second p {
+                font-size: 16px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+
+        .table-general-detail {
+            width: 100%;
+            text-align: left;
+            font-weight: normal;
+            font-size: 15px !important;
+        }
+
+            .table-general-detail td {
+                padding: 0px !important;
+                padding-top: 6px !important;
+                padding-bottom: 0px !important;
+                margin: 0px !important;
+            }
+
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            padding-bottom: 5px !important;
+            font-size: 14px !important;
+            font-weight: bold;
+            border-bottom: 1px solid;
+        }
+
+        .bordered-detail {
+            font-size: 14px !important;
+            height: 20px !important;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 11px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+
+        .blue {
+            color: #000080 !important;
+        }
+
+        .red {
+            color: red !important;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="7">
+                    <table style="width:100% !important;">
+                        <tr>
+                            <th colspan="3" style="text-align:right !important;">
+                                @(string.IsNullOrEmpty(Model.UserProcedureCode)?"-":Model.UserProcedureCode)
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="15%">
+                                <div class="header-univ-logo">
+                                    <img src="@Model.LogoImg" />
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header">
+                                    <p class="university-title">@AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                                    <p class="university-title2">@Model.HeaderText</p>
+                                    @*   @if (string.IsNullOrEmpty(Model.SubHeaderText))
+                                        {
+                                        <p class="university-title3">@Model.SubHeaderText</p>
+                                        }*@
+                                </div>
+                                <div class="header-extra-info">
+                                    <p>@Model.Student.Faculty</p>
+                                    <p>@Model.Student.Career</p>
+                                    <p>@(string.IsNullOrEmpty(Model.Student.Campus) ? "-" : Model.Student.Campus)</p>
+                                </div>
+                            </th>
+                            <th width="15%">
+                                <div class="header-extra-second">
+                                    <p>@DateTime.UtcNow.ToLocalDateFormat()</p>
+                                    <p>@Model.UserLoggedIn</p>
+                                    <p>&emsp;</p>
+                                    <p>@DateTime.UtcNow.ToDefaultTimeZone().ToString("HH:mm:ss")</p>
+                                </div>
+                            </th>
+                        </tr>
+                    </table>
+                    <table style="width:100% !important;">
+                        <tr>
+                            <th width="15%"></th>
+                            <th style="border-bottom:2px solid #000080;"></th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7">
+                    <div style="height:10px"></div>
+                    <div class="header">
+                        <p class="header-title">
+                            RECORD ACADÉMICO
+                        </p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7">
+                    <table class="table-general-detail">
+                        <tbody>
+                            <tr>
+                                <td class="bold" style="text-decoration:underline !important;" width="10%">ALUMNO :</td>
+                                <td class="bold blue">@Model.Student.UserName</td>
+                                <td class="bold blue">@Model.Student.FullName</td>
+                                <td class="bold blue" style="text-align:right !important;">&emsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th height="20px">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Terms)
+            {
+
+                <tr>
+                    <td colspan="7" class="bold">&emsp; SEMESTRE ACADÉMICO &emsp; &emsp; <span style="font-weight:normal !important;">@item.Name</span></td>
+                </tr>
+
+                <tr>
+                    <th height="10px"></th>
+                </tr>
+
+                <tr class="bordered-header">
+                    <th class="bordered-header">CÓDIGO</th>
+                    <th class="bordered-header" style="text-align:left !important;">CURSO</th>
+                    <th class="bordered-header">CV</th>
+                    <th class="bordered-header">TN</th>
+                    <th class="bordered-header">TC</th>
+                    <th class="bordered-header">CR</th>
+                    <th class="bordered-header" style="text-align:left !important;">NOTA</th>
+                </tr>
+
+                @foreach (var course in item.Courses)
+                {
+                    <tr class="bordered-detail">
+                        <td class="bordered-detail">@course.Code</td>
+                        <td class="bordered-detail" style="text-align:left !important;">@course.Name</td>
+                        <td class="bordered-detail">@course.CV</td>
+                        <td class="bordered-detail">@(course.ByDeferred?"A" : "")</td>
+                        <td class="bordered-detail">@(course.IsElective?"E":"O")</td>
+                        <td class="bordered-detail">@course.Credits</td>
+                        <td class="bordered-detail @(course.Approved ? "" : "red")" style="text-align:left !important;">@course.FinalGrade @course.FinalGradeText.ToUpper()</td>
+                    </tr>
+                }
+
+                <tr>
+                    <th height="20px" style="border-top:2px solid #000080 !important;" colspan="7">
+                    </th>
+                </tr>
+            }
+
+            <tr>
+                <td colspan="7">
+                    <table width="100%" style="border-top:2px solid black; border-bottom:2px solid black; font-size:13px !important;">
+                        <tr>
+                            <td>SEMESTRES RETIRADOS: @string.Join("; ", Model.Student.WithdrawalTerms)</td>
+                            <td>SEMESTRES SUSPENDIDOS: @string.Join("; ", Model.Student.SuspendedTerms)</td>
+                        </tr>
+                        <tr>
+                            <td>SEMESTRES RESERVADOS: @string.Join("; ", Model.Student.ReservedTerms)</td>
+                        </tr>
+                        <tr>
+                            <td>SEMESTRES ABANDONADOS: @string.Join("; ", Model.Student.AbandonedTerms)</td>
+                        </tr>
+                        <tr>
+                            <td height="20px"></td>
+                        </tr>
+                        <tr>
+                            <td>TOTAL DE CURSOS APROBADOS : <span class="bold">@Model.Student.ApprovedCourses</span></td>
+                            <td>PROMEDIO GENERAL : <span class="bold">@Model.Student.LastWeightedAverageGrade</span></td>
+                        </tr>
+                        <tr>
+                            <td>TOTAL DE CRÉDITOS APROBADOS : <span class="bold">@Model.Student.ApprovedCredits</span> </td>
+                            <td>PROMEDIO CRÉDITOS APROBADOS :<span class="bold">@Model.Student.AverageApprovedCredits</span></td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <table width="100%" style="font-size:13px !important;">
+                        <tr>
+                            <td>Leyenda:</td>
+                            <td>TN.- Tipo de Nota (A=Aplazado, S=SubSanación)</td>
+                            <td>TC.- Tipo de Curso (O=Obligatorio, E=Electivo)</td>
+                            <td>CR.- Nro. Créditos x Curso</td>
+                        </tr>
+                        <tr>
+                            <td>&emsp;</td>
+                            <td colspan="3">CV.- Curso Convalidado(C); Curso Supernumerario(S)</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            @if (AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value == AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.UNSM)
+            {
+                @*  <tr>
+                    <td colspan="7">
+                    <table width="100%">
+                    <tr>
+                    <td style="width:25%">
+                    <img style="width:100px" src="@Model.QrCode" />
+                    </td>
+                    <td style="text-align:center; width:50%">
+                    <img style="width:240px" src="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"images/unsm/firma.png"))" />
+                    </td>
+                    <td style="width:25%">
+                    &emsp;
+                    </td>
+                    </tr>
+                    </table>
+                    </td>
+
+                    </tr>*@
+
+                <tr>
+                    <td colspan="7">
+                        <img style="width:100px !important" src="@Model.QrCode" />
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7">
+                        <img style="width:100px !important" src="@Model.QrCode" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

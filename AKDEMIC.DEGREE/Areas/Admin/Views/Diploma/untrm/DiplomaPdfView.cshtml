@@ -1,0 +1,164 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+
+@{
+    Layout = null;
+}
+
+<div class="main-container">
+    <div class="nation-name">
+        REP&Uacute;BLICA DEL PER&Uacute;
+    </div>
+    <div class="nation-name">
+        <img src="@Model.NationalEmblem" />
+    </div>
+    <div class="nation-name">
+        EN NOMBRE DE LA NACI&Oacute;N
+    </div>
+    <div class="university-name">
+        @ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value].ToUpper()
+    </div>
+
+    <div class="description">
+        <table>
+            <tr>
+                <td colspan="2">El Rector de la Universidad.</td>
+            </tr>
+      
+        </table>
+        <table>
+            <tr>
+                <td height="30px"></td>
+            </tr>
+            <tr>
+                <td>por cuanto don(ña): <span>@Model.StudentName.ToUpper() @Model.StudentPaternalSurName.ToUpper() @Model.StudentMaternalSurName.ToUpper()</span></td>
+            </tr>
+            <tr>
+                <td>ha cumplido los requisitos exigidos por la <span>Facultad de @Model.Faculty</span></td>
+            </tr>
+            <tr>
+                <td>Escuela Profesional de <span>@Model.Career</span> para obtener el <span>@Model.GradeTypeDescription </span> de:</td>
+            </tr>
+        </table>
+    </div>
+    <div class="description-student">
+        <table>
+            <tr>
+                <td class="font-engoer text-center">@Model.AcademicDegreeDenomination</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>habiendose aprobado su otorgamiento en Sesi&oacute;n de Consejo Universitario del @Model.UniveristaryDateDay de @Model.UniveristaryDateMonth del @Model.UniveristaryDateYear</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Por tanto:</td>
+            </tr>
+            <tr>
+                <td>Se le expide el presente Diploma para que se le reconozca como tal y se le concede los privilegios y beneficios que las leyes de la Rep&uacute;plica le otorgan.</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Dado y firmado en la ciudad de @ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], el @Model.CurrentDay de @Model.CurrentMonth de @Model.CurrentYear</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="width:100%" class="signature_div">
+        <table style="font-size:10pt !important;" class="table-signature">
+            <tr>
+                <td style="height:100px !important; border-bottom:2px solid;"></td>
+                <td style="width:36mm !important;"></td>
+                <td style="border-bottom:2px solid;"></td>
+                <td style="width:36mm !important;"></td>
+                <td style="border-bottom:2px solid;"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align:central !important;">@Model.Rector</td>
+                <td></td>
+                <td style="vertical-align:central !important;">@Model.GeneralSecretary</td>
+                <td></td>
+                <td style="vertical-align:central !important;">@Model.Dean</td>
+            </tr>
+            <tr>
+                <td>Rector</td>
+                <td></td>
+                <td>Secretario General</td>
+                <td></td>
+                <td>Decano</td>
+            </tr>
+            @*<tr>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td><img src="@Model.Shield" style="width:60px !important;" /></td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+            </tr>*@
+        </table>
+    </div>
+</div>
+
+<div class="back-page">
+    <table class="table-student-details">
+        <tr class="border">
+            <td class="border" colspan="2">C&oacute;digo de la Universidad</td>
+            <td class="border" colspan="2">@Model.UniversityCode</td>
+        </tr>
+        <tr class="border">
+            <td class="border">Tipo de Documentos</td>
+            <td class="border">@Model.DocumentType</td>
+            <td class="border">Nª</td>
+            <td class="border">@Model.DocumentNumber</td>
+        </tr>
+        <tr class="border">
+            <td class="border">Grado o T&iacute;tulo</td>
+            <td class="border">@Model.GradeAbrev</td>
+            <td class="border">Modalidad de Estudio</td>
+            <td class="border">@Model.StudentModality</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="4">Numero de la Resoluci&oacute;n Rectoral N° @Model.ResolutionNumber</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="2">Fecha de Resoluci&oacute;n Rectoral</td>
+            <td class="border" colspan="2">@Model.ResoultionRectorDate</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="2">Número de Diploma</td>
+            <td class="border" colspan="2">@Model.DiplomaNumber</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="2">Tipo de Emisi&oacute;n del Diploma</td>
+            <td class="border" colspan="2">@Model.EmittedDiplomaType</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="4">
+                Registrado con Nª @Model.RegisterNumber &emsp;
+                Libro Nª @Model.Book &emsp;
+                Folio Nª @Model.Foil &emsp;
+            </td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="4">Modalidad de obtención del Grado o T&iacute;tulo: @Model.GradeModalityGain</td>
+        </tr>
+    </table>
+
+    <table class="table-book" style="border-radius:20px !important;">
+        <tr>
+            <td style="padding:20px !important;" colspan="3">Registrado en el Libro N°. @Model.RegisterNumber  Folio N° @Model.Foil </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="font-weight:bold; padding:20px !important;">GRADO  N° @Model.DiplomaNumber</td>
+        </tr>
+        <tr>
+            <td style="height:60px !important;" colspan="3">&emsp;</td>
+        </tr>
+        <tr>
+            <td>&emsp;</td>
+            <td style="text-align:center !important; border-top:1px solid; text-align:center; height:10px !important; padding-bottom:20px !important;">@Model.StudentName @Model.StudentPaternalSurName @Model.StudentMaternalSurName</td>
+            <td>&emsp;</td>
+        </tr>
+    </table>
+</div>

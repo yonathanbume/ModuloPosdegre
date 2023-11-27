@@ -1,0 +1,119 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.RankingViewModels.GraduatedRankingPdfViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/pages/pdf/rankingreportspdf.css"/>
+    <style>
+        .ranking-table tr {
+            font-size: small;
+            page-break-after:always
+        }
+    </style>
+</head>
+<body>
+    <h2 class="document-title">RANKING DE EGRESADOS POR ESCUELA PROFESIONAL/SEMESTRE DE INGRESO-EGRESO</h2>
+    <p class="filter-info">
+        <label class="label uppercase">Escuela Profesional:</label>
+        <span class="label uppercase">@(string.IsNullOrEmpty(Model.GraduatedFilterInformation.Career) ? "Todas" : Model.GraduatedFilterInformation.Career)</span>
+    </p>
+    <p class="filter-info">
+        <label class="label uppercase">Semestre de Ingreso:</label>
+        <span class="label uppercase">@(string.IsNullOrEmpty(Model.GraduatedFilterInformation.AdmissionTermHyphenated) ? "Todos" : Model.GraduatedFilterInformation.AdmissionTermHyphenated)</span>
+    </p>
+    <p class="filter-info">
+        <label class="label uppercase">Semestre de Egreso:</label>
+        <span class="label uppercase">@(string.IsNullOrEmpty(Model.GraduatedFilterInformation.GraduationTermHyphenated) ? "Todos" : Model.GraduatedFilterInformation.GraduationTermHyphenated)</span>
+    </p>
+    <table class="ranking-table">
+        <thead>
+            <tr>
+                <th>N</th>
+                <th>CODIGO</th>
+                <th>DNI</th>
+                @*<th>CARRERA</th>*@
+                @*@if (string.IsNullOrEmpty(Model.GraduatedFilterInformation.Career))
+                {
+                }*@
+                <th>APELLIDOS, NOMBRES</th>
+                <th>SEM. INGRESO</th>
+                @*@if (string.IsNullOrEmpty(Model.GraduatedFilterInformation.AdmissionTerm))
+                {
+                }*@
+                <th>SEM. EGRESO</th>
+                @*@if (string.IsNullOrEmpty(Model.GraduatedFilterInformation.GraduationTerm))
+                {
+                }*@
+                <th>PROMEDIO PONDERADO</th>
+                @*<th>ORDEN</th>*@
+                @{
+                    var maxMeritType = Model.GraduatedSummaries.Max(x => x.MeritType);
+                    maxMeritType = maxMeritType == ConstantHelpers.ACADEMIC_ORDER.UPPER_TENTH 
+                        ? ConstantHelpers.ACADEMIC_ORDER.UPPER_FIFTH : maxMeritType;
+                }
+                @if (maxMeritType.HasValue)
+                {
+                    for (var i = ConstantHelpers.ACADEMIC_ORDER.UPPER_THIRD; i <= maxMeritType; ++i)
+                    {
+                        <th>@ConstantHelpers.ACADEMIC_ORDER.SHORT_VALUES.GetValueOrDefault(i).ToUpper()</th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var summary in Model.GraduatedSummaries)
+            {
+                <tr>
+                    <td>@summary.Position</td>
+                    <td>@summary.Code</td>
+                    <td>@summary.Dni</td>
+                    @*@if (string.IsNullOrEmpty(Model.GraduatedFilterInformation.Career))
+                    {
+                        <td>@summary.Career</td>
+                    }
+                    else
+                    {
+                        <td>@Model.GraduatedFilterInformation.Career</td>
+                    }*@
+                    <td>@summary.Name</td>
+                    @if (string.IsNullOrEmpty(Model.GraduatedFilterInformation.AdmissionTerm))
+                    {
+                        <td>@summary.AdmissionTerm</td>
+                    }
+                    else
+                    {
+                        <td>@Model.GraduatedFilterInformation.AdmissionTerm</td>
+                    }
+                    @if (string.IsNullOrEmpty(Model.GraduatedFilterInformation.GraduationTerm))
+                    {
+                        <td>@summary.GraduationTerm</td>
+                    }
+                    else
+                    {
+                        <td>@Model.GraduatedFilterInformation.GraduationTerm</td>
+                    }
+                    <td>@summary.WeightedAverageGrade.ToString("0.0000")</td>
+                    @*<td>@summary.MeritOrder</td>*@
+                    @if (maxMeritType.HasValue)
+                    {
+                        for (var i = ConstantHelpers.ACADEMIC_ORDER.UPPER_THIRD; i <= maxMeritType; ++i)
+                        {
+                            <td class="underline">
+                                @if (summary.MeritType.HasValue && summary.MeritType >= i)
+                                {
+                                    @ConstantHelpers.ACADEMIC_ORDER.SHORT_VALUES.GetValueOrDefault(i).ToUpper()
+                                }
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

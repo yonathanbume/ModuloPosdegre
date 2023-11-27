@@ -1,0 +1,62 @@
+﻿
+body {
+    font-family: Verdana, sans-serif;
+}
+
+.document-title {
+    font-weight: bolder;
+    font-size: x-large;
+    text-transform: uppercase;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.value {
+    text-transform: uppercase;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.ranking-table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: hidden;
+}
+
+.ranking-table th:first-child {
+    border-radius: 0.5em 0 0 0;
+    -moz-border-radius: 0.5em 0 0 0;
+    -webkit-border-radius: 0.5em 0 0 0;
+}
+
+.ranking-table th:last-child {
+    border-radius: 0 0.5em 0 0;
+    -moz-border-radius: 0 0.5em 0 0;
+    -webkit-border-radius: 0 0.5em 0 0;
+}
+
+.ranking-table th {
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    padding: 5px 10px !important;
+    text-align: left;
+}
+
+.ranking-table td {
+    padding: 2px 4px !important;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.ranking-table tr {
+    page-break-inside: avoid;
+}

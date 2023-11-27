@@ -1,0 +1,74 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.UserViewModels.UserViewModel
+@{
+    ViewBag.Title = "Editar Usuario";
+    ViewBag.ErrorMessage = "¡Ups! Parece que hubo un error con los datos ingresados. Revíselo e intente otra vez.";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Gestión de Usuarios", Area = "Admin", Controller = "User", Action = "Index"},
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+    ViewBag.BackUrl = Url.Action("Index", "User");
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Datos de Usuario
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <div class="row pull-right">
+                    <label class="col-form-label">Estado</label>
+                    <div class="m--margin-left-10 m--margin-right-20">
+                        <span class="m-switch m-switch--outline m-switch--icon m-switch--primary">
+                            <label>
+                                <input type="checkbox" asp-for="IsActive">
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form id="edit-form" class="m-form m-form--state m-form--fit m-form--label-align-right" asp-action="Edit" asp-controller="User" asp-area="Admin" enctype="multipart/form-data">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div id="alert-text" class="m-alert__text">
+                            @ViewBag.ErrorMessage
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <input id="current-username" hidden value="@Model.UserName" />
+                @await Html.PartialAsync("_UserEntryForm")
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/user/edit.js" asp-append-version="true"></script>
+}

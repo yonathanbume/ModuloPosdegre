@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Ranking de estudiantes";
+    ViewBag.SubTitle = "Listado de estudiantes por periodo ingreso - egreso";
+    ViewBag.Breadcrumbs = new[] {
+        new BreadcrumbViewData { Name = ViewBag.Title }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn btn-primary btn-sm btn-report m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-file-pdf-o"></i>
+                                <span>Reporte PDF</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2 col-md-4">
+                                <label>Periodo de ingreso</label>
+                                <select class="form-control m-input m-select2 select2-terms"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3 col-md-4">
+                                <label>Escuela profesional</label>
+                                <select class="form-control m-input m-select2 select2-careers"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3 col-md-4">
+                                <label>Programa académico</label>
+                                <select class="form-control m-input m-select2 select2-programs" disabled></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2 col-md-3">
+                                <label>Estado</label>
+                                <select class="form-control m-input m-select2 select2-status">
+                                    <option value="0">Todos</option>
+                                    @foreach (var item in ConstantHelpers.Student.States.VALUES.OrderBy(x => x.Value))
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                   
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="students-datatable table table-hover table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/ranking/newstudents.js"></script>
+}

@@ -1,0 +1,173 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.GradeRectificationViewModels.GradeRectificationViewModel
+@{
+    ViewData["Title"] = "Rectificacion de Notas Antiguas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Rectificacion de Notas Antiguas", Controller = null, Action = null}
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Lista de Solicitudes de Rectificaciones de Notas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button data-toggle="modal" data-target="#request_modal"  class="btn btn-primary m-btn btn-sm m-btn--icon btn-chart btn-add">
+                            <span>
+                                <i class="fa fa-plus"></i>
+                                <span>Nueva Solicitud</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="request_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">
+                    Crear Solicitud
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="create-form" class="m-form m-form--state" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="createAlert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="createAlertText">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label>Periodo</label>
+                        <select asp-for="TermId" class="form-control" required></select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label>Docente</label>
+                        <select asp-for="TeacherId" class="form-control select2-teachers" required> </select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label asp-for="Type">Tipo</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="m-option">
+                                    <span class="m-option__control">
+                                        <span class="m-radio m-radio--brand m-radio--check-bold">
+                                            <input type="radio" asp-for="Type" id="Type1" value="1" required />
+                                            <span></span>
+                                        </span>
+                                    </span>
+                                    <span class="m-option__label">
+                                        <span class="m-option__head">
+                                            <span class="m-option__title">
+                                                Corrección de Notas
+                                            </span>
+                                            <span class="m-option__focus">
+
+                                            </span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="m-option">
+                                    <span class="m-option__control">
+                                        <span class="m-radio m-radio--brand m-radio--check-bold">
+                                            <input type="radio" asp-for="Type" id="Type2" value="2" />
+                                            <span></span>
+                                        </span>
+                                    </span>
+                                    <span class="m-option__label">
+                                        <span class="m-option__head">
+                                            <span class="m-option__title">
+                                                Sustitutorio
+                                            </span>
+                                            <span class="m-option__focus">
+                                            </span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group type">
+                        <label>Curso</label>
+                        <select asp-for="SectionId" class="form-control" required></select>
+                    </div>
+
+                    <div class="form-group m-form__group type1">
+                        <label>Evaluaciones</label>
+                        <select asp-for="EvaluationId" class="form-control select2-evaluation"> </select>
+                    </div>
+
+                    <div class="form-group m-form__group type">
+                        <label>Alumno</label>
+                        <select asp-for="StudentIds" class="form-control" multiple required>  </select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" asp-for="ReasonFile" class="custom-file-input" lang="es" />
+                            <label class="custom-file-label" for="reso-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button id="btnCreate" type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/graderectification/index.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Bienestar Institucional";
+    ViewBag.SubTitle = "Listado de Estudiantes";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Bienestar institucional" }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon">
+                        <i class="flaticon-users"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Periodo Académico</label>
+                                <select class="m-select2" id="termId">
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Facultades</label>
+                                <select class="m-select2" id="facultyId">
+                                    <option value=0 selected>Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Escuelas profesionales</label>
+                                <select class="m-select2" id="careerId">
+                                    <option value=0 selected>Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Modalidad de Ingreso</label>
+                                <select class="m-select2" id="admissionTypeId">
+                                    <option value=0 selected>Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <button id="btn-reporte-excel" type="button" class="btn btn-primary m-btn m-btn--icon" style="display:block">
+                                    <span>
+                                        <i class="la la-file-excel-o"></i>
+                                        <span>Excel</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/institutionalwelfare/index.js" asp-append-version="true"></script>
+}

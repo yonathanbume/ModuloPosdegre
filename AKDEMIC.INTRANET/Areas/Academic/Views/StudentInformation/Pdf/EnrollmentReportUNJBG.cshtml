@@ -1,0 +1,299 @@
+﻿@using AKDEMIC.REPOSITORY.Repositories.Enrollment.Templates.StudentSection
+@model EnrollmentReportTemplate
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+
+        /*.sheet {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        body {
+            font-family: monospace;
+            background: #e0e0e0;
+            /*background: #fff;
+        }
+
+        .sheet {
+            background: #fff;
+            padding: 25px;
+        }
+
+        body.A4 .sheet {
+            width: 210mm;
+            height: 296mm
+        }
+
+        body.A4.landscape .sheet {
+            width: 297mm;
+            height: 209mm
+        }*/
+
+
+        .watermark {
+            /*height: 450px;
+            width: 600px;*/
+            position: relative;
+            overflow: hidden;
+        }
+
+            .watermark .watermark-text {
+                position: absolute;
+                top: 200px;
+                left: 80px;
+                color: #DEDEDE;
+                font-size: 45px;
+                pointer-events: none;
+                -webkit-transform: rotate(-25deg);
+                -moz-transform: rotate(-25deg);
+                z-index: -1;
+            }
+
+        .watermark-off .watermark-text {
+            display: none;
+        }
+
+        .report-header {
+            margin-bottom: 5px;
+            min-height: 60px;
+        }
+
+            .report-header .logo-container {
+                position: absolute;
+            }
+
+                .report-header .logo-container img {
+                    top: 0;
+                    left: 0;
+                    height: 60px;
+                    width: 60px
+                }
+
+            .report-header .title-container {
+                font-weight: bold;
+                padding-top: 5mm;
+                margin-left: 65px;
+            }
+
+                .report-header .title-container label {
+                    display: block;
+                }
+
+                .report-header .title-container .title {
+                    font-size: 14px;
+                    text-align: center;
+                }
+
+                .report-header .title-container .subtitle {
+                    font-size: 11px;
+                    text-align: center;
+                }
+
+        table.table-courses {
+            border-collapse: collapse;
+            /*border: 1px solid black;*/
+        }
+
+            table.table-courses th, table.table-courses td {
+                border-collapse: collapse;
+                border: 1px solid black;
+            }
+
+        .outer-border-only {
+            border-collapse: collapse;
+            border: 1px solid black;
+            text-align: center;
+            font-weight: bold;
+        }
+
+            .outer-border-only td {
+                border: none !important;
+            }
+
+
+        .none-border-row, .none-border-row td {
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="A4 @(Model.IsConfirmed ? "watermark-off" : "watermark")">
+    <div class="sheet">
+        <div class="report-header">
+            <div class="logo-container" style="">
+                <img src="@Model.Image" />
+            </div>
+
+            <div class="title-container">
+
+                <label class="title">@GeneralHelpers.GetInstitutionName().ToUpper()</label>
+                <label class="subtitle">CIUDAD UNIVERSITARIA MIRAFLORES S/N-CASILLA 316 TELEFONO 583000 ANEXOS 2340,2341 - EMAIL: oasa@unjbg.edu.pe</label>
+                <hr />
+                <label class="subtitle"> "Basadre Vive" </label>
+
+                <h1 style="text-align: center">FICHA DE MATRÍCULA</h1>
+            </div>
+        </div>
+        <br />
+
+     @*   <p class="watermark-text">Ficha de Matr&iacute;cula por Confirmar</p>*@
+
+        <table style="width: 100%">
+            <tr>
+                <td style="font-weight: bold">FACULTAD</td>
+                <td colspan="3">: @Model.FacultyName.ToUpper()</td>
+                <td style="font-weight: bold; text-align: right">PLAN :</td>
+                <td>ESIS - F1</td>
+            </tr>
+
+            <tr>
+                <td style="font-weight: bold">CAR.PROF.</td>
+                <td colspan="3">: @Model.SchoolName.ToUpper()</td>
+                <td style="font-weight: bold; text-align: right">PERIODO :</td>
+                <td style="font-weight: bold">@Model.Semester.ToUpper()</td>
+            </tr>
+
+            <tr>
+                <td style="font-weight: bold">SITUACIÓN MAT.</td>
+                <td>: @Model.StudentCondition.ToUpper()</td>
+                <td style="font-weight: bold">FECHA MAT.:</td>
+                <td> @Model.EnrollmentDate </td>
+                <td style="font-weight: bold; text-align: right">N° FICHA :</td>
+                <td> XXXXX  </td>
+            </tr>
+        </table>
+
+        <br />
+
+        <table class="table-courses" style="width: 100%">
+            <thead>
+                <tr>
+                    <td colspan="2">@Model.StudentCode</td>
+                    <td colspan="4"> @Model.StudentName</td>
+                    <td colspan="3"> AÑO/SEMESTRE</td>
+                    <td> @Model.CurrentSemester.ToUpper() </td>
+                </tr>
+
+                <tr class="outer-border-only">
+                    <td> N° </td>
+                    <td> CÓDIGO </td>
+                    <td> ASIGNATURA </td>
+                    <td style="width: 40px;"> HT </td>
+                    <td style="width: 40px;"> HP </td>
+                    <td style="width: 40px;"> HL </td>
+                    <td style="width: 50px;"> CRE </td>
+                    <td style="width: 50px;"> MAT </td>
+                    <td style="width: 50px;"> SEC </td>
+                    <td> REGIMEN </td>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{var count = 1; }
+                @foreach (var item in Model.Courses)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.CourseCode</td>
+                        <td>@item.CourseName</td>
+
+                        <td>@item.TheoricalHours</td>
+                        <td>@item.PracticalHours</td>
+                        <td>@item.LaboratoryHours</td>
+
+                        <td>@item.Credits</td>
+                        <td>@item.Try</td>
+                        <td>@item.Section</td>
+
+                        <td>@item.Regime</td>
+                    </tr>
+                    count++;
+                }
+            </tbody>
+
+            <tfoot>
+                <tr class="none-border-row" style="height: 30px">
+                    <td colspan="2" style=" font-weight: bold;">Fecha Impresión:</td>
+                    <td>@Model.PrintingDate a las @Model.PrintingHour</td>
+
+                    <td style="text-align: center; font-weight: bold;">@Model.Courses.Sum(x => x.TheoricalHours)</td>
+                    <td style="text-align: center; font-weight: bold;">@Model.Courses.Sum(x => x.PracticalHours)</td>
+                    <td style="text-align: center; font-weight: bold;">@Model.Courses.Sum(x => x.LaboratoryHours)</td>
+                    <td style="text-align: center; font-weight: bold;">@(Model.Courses.Sum(x => Convert.ToDecimal(x.Credits)).ToString("0.0"))</td>
+                    <td colspan="3" style="text-align: center;">INTERNET</td>
+                </tr>
+            </tfoot>
+        </table>
+        <table style="width: 100%">
+            <tr style="height: 120px;">
+                <td style="vertical-align:bottom;text-align:center; width: 33%">
+                    <hr style="width:90%;border-style: dashed;">
+                    <strong>Secretario Académico-Administrativo</strong>
+                </td>
+
+                <td style="vertical-align:bottom;text-align:center; width: 33%">
+                    <hr style="width:90%;border-style: dashed;">
+                    <strong>Asistente de Registros Académicos</strong>
+                </td>
+
+                <td style="vertical-align:bottom;text-align:center; width: 33%">
+                    <hr style="width:90%;border-style: dashed;">
+                    <strong>Firma del estudiante</strong>
+                </td>
+            </tr>
+        </table>
+
+
+        <h3 style="text-decoration: underline;">Resumen de Datos Obligatorios</h3>
+        <table style="margin-left: 15px;">
+            <tr>
+                <td style="font-weight: bold">N° DNI</td>
+                <td> @Model.Document </td>
+                <td style="font-weight: bold">Fecha Nac.</td>
+                <td> @Model.BirthDay </td>
+            </tr>
+
+            <tr>
+                <td style="font-weight: bold">Celulares</td>
+                <td colspan="3"> @Model.PhoneNumber </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Email</td>
+                <td colspan="3"> @Model.Email </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Centro Estudio</td>
+                <td colspan="3"> --- </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Ubigeo Residencia</td>
+                <td colspan="3"> --- </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Ubigeo Procedencia</td>
+                <td colspan="3"> --- </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Ubigeo Nacimiento</td>
+                <td colspan="3"> --- </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

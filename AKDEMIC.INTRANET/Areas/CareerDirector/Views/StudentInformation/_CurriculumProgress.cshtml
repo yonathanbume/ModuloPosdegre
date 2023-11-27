@@ -1,0 +1,71 @@
+﻿@model Guid
+
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                   Historial Acad&eacute;mico
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+
+        <div class="m-form--label-align-right m--margin-bottom-20">
+            <div class="row align-items-center">
+                <div class="col-xl-8 order-2 order-xl-1">
+                </div>
+                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                    <a asp-action="AcademicHistoryPdf" asp-controller="JeffreyPdf" asp-area="" asp-route-studentId="@Model" class="btn btn-primary btn-sm m-btn m-btn--icon" target="_blank">
+                        <span>
+                            <i class="la la-file-pdf-o"></i>
+                            <span>Imprimir</span>
+                        </span>
+                    </a>
+                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                </div>
+            </div>
+        </div>
+
+        <h5>Cursos obligatorios</h5>
+        <table class="table table-striped table-bordered" id="curriculum_table">
+            <thead>
+                <tr>
+                    <th>Ciclo</th>
+                    <th>C&oacute;digo</th>
+                    <th>Curso</th>
+                    <th>Cr&eacute;ditos</th>
+                    <th>N° veces</th>
+                    <th>Nota</th>
+                    <th>Semestre</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+        </table>
+
+        <br />
+        <br />
+
+        <h5>Cursos electivos</h5>
+        <table class="table table-striped table-bordered" id="elective_table">
+            <thead>
+                <tr>
+                    <th>Ciclo</th>
+                    <th>C&oacute;digo</th>
+                    <th>Curso</th>
+                    <th>Cr&eacute;ditos</th>
+                    <th>N° veces</th>
+                    <th>Nota</th>
+                    <th>Semestre</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+        </table>
+    </div>

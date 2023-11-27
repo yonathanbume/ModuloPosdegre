@@ -1,0 +1,191 @@
+﻿@inject AKDEMIC.SERVICE.Services.Generals.Interfaces.IConfigurationService _configurationService
+
+@{
+    ViewData["Title"] = "Evaluaciones Extraordinarias";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+    };
+
+    var types = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.EXTRAORDINARY_EVALUATION_TYPES_ENABLED));
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">@ViewData["Title"]</h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button data-toggle="modal" data-target="#add_evaluation_modal" title="Añadir" class="btn btn-primary m-btn--icon" style="color:white;">
+                    <span>
+                        <i class="la la-plus"></i>
+                        <span>Añadir Evaluaci&oacute;n</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Tipos de Evaluaciones</label>
+                                <select id="Type_filter" class="form-control m-select2" required>
+                                    <option selected>Todos</option>
+                                    @foreach (var item in ConstantHelpers.Intranet.ExtraordinaryEvaluation.TYPES.Where(x => types.Contains(x.Key)))
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table id="datatable" class="table table-striped"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="add_evaluation_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Añadir Evaluaci&oacute;n Extraordinaria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add_evaluation_form" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Escuela Profesional</label>
+                        <select name="CareerId" class="form-control m-select2" required></select>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Plan de Estudio</label>
+                        <select name="CurriculumId" class="form-control m-select2" required></select>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Curso</label>
+                        <select name="CourseId" class="form-control m-select2" required></select>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Tipo de Evaluaci&oacute;n</label>
+                        <select name="Type" class="form-control m-select2" required>
+                            <option selected disabled>Seleccionar tipo</option>
+                            @foreach (var item in ConstantHelpers.Intranet.ExtraordinaryEvaluation.TYPES.Where(x => types.Contains(x.Key)))
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label add_select_teacherId">Seleccione el Profesor Presidente</label>
+                        <select name="TeacherId" class="form-control m-select2" required></select>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label add_select_committee">Seleccione el Comit&eacute;</label>
+                        <select name="Committee" class="form-control m-select2" multiple></select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Resolución</label>
+                        <input type="text" name="Resolution" class="form-control m-input" placeholder="Ingrese Resolución">
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" name="ResolutionFile" class="custom-file-input" lang="es" />
+                            <label class="custom-file-label" for="reso-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="edit_evaluation_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Evaluaci&oacute;n Extraordinaria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit_evaluation_form" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="Id" />
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Curso</label>
+                        <input type="text" name="Course" class="form-control m-input" readonly>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el Profesor Presidente</label>
+                        <select name="TeacherId" class="form-control m-select2" required></select>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el Comit&eacute;</label>
+                        <select name="Committee" class="form-control m-select2" multiple></select>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Tipo de Evaluaci&oacute;n</label>
+                        <select name="Type" class="form-control m-select2" required>
+                            <option selected disabled>Seleccionar tipo</option>
+                            @foreach (var item in ConstantHelpers.Intranet.ExtraordinaryEvaluation.TYPES.Where(x => types.Contains(x.Key)))
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Resolución</label>
+                        <input type="text" name="Resolution" class="form-control m-input" placeholder="Ingrese Resolución" required>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" name="ResolutionFile" class="custom-file-input" lang="es" />
+                            <label class="custom-file-label" for="reso-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group m-from__group d-none" id="edit_file_url">
+                        Archivo adjunto <a href="#" target="_blank" class="m-link m--font-boldest" name="FileUrl">Descargar</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/extraordinaryevaluation/index.js" asp-append-version="true"></script>
+}

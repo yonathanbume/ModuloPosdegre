@@ -1,0 +1,98 @@
+﻿
+@model AKDEMIC.INTRANET.Areas.Admin.Models.EventTypesViewModels.EventTypeViewModel
+@{
+    ViewBag.Title = "Gestión de Tipo de Eventos";
+    ViewBag.SubTitle = "Listado de Tipo de Eventos";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3> 
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4  order-1 m--align-right">
+                        <button class="btn btn-primary btn-action" data-toggle="modal" data-target="#create_modal">
+                            <span>
+                                <i class="fa fa-plus"></i>
+                                Nuevo Tipo de Evento
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable" id="ajax_data"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="create_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Tipo de Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="create-form" asp-controller="EventType" asp-action="AddType" data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="DefaultAjaxFunctions.beginAjaxCall" data-ajax-complete="DefaultAjaxFunctions.endAjaxCall" data-ajax-success="DefaultAjaxFunctions.ajaxSuccess" data-ajax-failure="DefaultAjaxFunctions.createFailure">
+                    @await Html.PartialAsync("_EventTypeForm", Model)
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Actualizar Tipo de Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form" asp-controller="EventType" asp-action="UpdateType" data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="DefaultAjaxFunctions.beginAjaxCall" data-ajax-complete="DefaultAjaxFunctions.endAjaxCall" data-ajax-success="DefaultAjaxFunctions.ajaxSuccess" data-ajax-failure="DefaultAjaxFunctions.createFailure">
+                    @await Html.PartialAsync("_EventTypeForm", Model)
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/css/areas/admin/eventType/index.css" type="text/css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/areas/admin/eventType/index.js"></script>
+    <script src="~/js/jquery-ajax-unobtrusive.min.js"></script>
+}

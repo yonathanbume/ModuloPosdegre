@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Visualizador de Actas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Visualizador de Actas" }
+};
+}
+@section Styles {
+    <style>
+        input:disabled {
+            cursor: not-allowed;
+        }
+        table.dataTable tr.dtrg-group td {
+            background-color: #e0e0e0
+        }
+
+        table.dataTable tr.dtrg-group.dtrg-level-0 td {
+            font-weight: bold
+        }
+
+        table.dataTable tr.dtrg-group.dtrg-level-1 td, table.dataTable tr.dtrg-group.dtrg-level-2 td {
+            background-color: #f0f0f0;
+            padding-top: 0.25em;
+            padding-bottom: 0.25em;
+            padding-left: 2em;
+            font-size: 0.9em
+        }
+
+        table.dataTable tr.dtrg-group.dtrg-level-2 td {
+            background-color: #f3f3f3
+        }
+    </style>
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de secciones del periodo 2020-I
+                    </h3>
+                </div>
+            </div>
+            @*<div class="m-portlet__head-tools">
+                <input class="form-control mr-2" id="evaluation_report_code" placeholder="Buscar por código de acta." />
+                <button type="button" style="width:50px;" id="search_by_code" class="btn btn-primary m-btn m-btn--icon btn-lg m-btn--icon-only">
+                    <i class="la la-search"></i>
+                </button>
+            </div>*@
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Periodo Academico:</label>
+                                <select id="term_select" class="m-select2">
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Escuela Profesional:</label>
+                                <select id="careerId" class="m-select2">
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Plan de estudio:</label>
+                                <select id="curriculumId" class="m-select2">
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Programa/Especialidad:</label>
+                                <select id="academicProgramId" class="m-select2">
+                                </select>
+                            </div>
+                       
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Curso:</label>
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input" placeholder="Buscar por curso..." id="courseName">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>&nbsp;</label>
+                                <button type="button" style="width:50px;display:block;" id="search_all" class="btn btn-primary m-btn m-btn--icon btn-lg m-btn--icon-only">
+                                    <i class="la la-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+<div id="previewView" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Vista previa
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<table class="table table-striped table-bordered" id="data-table-preview"></table>*@
+                <div id="preview-datatable" style="text-align:center;">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:right;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/dataTables.rowGroup.js"></script>
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/careerdirector/visualizationrecord/index.js" asp-append-version="true"></script>
+}
+

@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Reporte de alertas por fechas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Reporte de alertas por fechas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Fecha de Inicio</label>
+                                <input id="StartDate" name="StartDate" class="form-control m-input" placeholder="Fecha inicio" autocomplete="off">
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Fecha de Fin</label>
+                                <input id="EndDate" name="EndDate" class="form-control m-input" placeholder="Fecha fin" autocomplete="off">
+                            </div>
+                            <div style="padding-top: 24px;" class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <button id="btn-search" class="btn btn-primary"><i class="la la-search"></i> Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon">
+                                        <i class="flaticon-graph"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Reportes estadísticos
+                                    </h3>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="m-portlet__body" style="display: flex; flex-flow: row wrap;  justify-content: center;  align-items: center;  text-align: center;">
+                            <div id="chart_div_report_alert_date"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/alerts/alertdate.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+}
+
+

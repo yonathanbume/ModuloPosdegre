@@ -1,0 +1,90 @@
+﻿@using Newtonsoft.Json;
+@using AKDEMIC.INTRANET.Areas.Admin.Models.PaymentViewModels
+@model PaymentViewModel
+@{
+    ViewData["Title"] = "Pagos";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Pagos" }
+    };
+};
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Trámites
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="payment-datatable" class="m-datatable"></div>
+        </div>
+    </div>
+</div>
+<div id="payment-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nuevo Trámite
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="payment-modal-form">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="payment-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="create_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <input asp-for="Id" type="hidden">
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label asp-for="Name">Nombre:</label>
+                            <input asp-for="Name" class="form-control m-input" placeholder="Nombre del Trámite" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button name="Send" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/areas/admin/payment/index.js"></script>
+}

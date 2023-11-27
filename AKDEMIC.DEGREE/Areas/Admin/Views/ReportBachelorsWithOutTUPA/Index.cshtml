@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Reporte de estudiantes egresados sin solicitud de bachiller";
+
+}
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Reporte de estudiantes egresados sin solicitud de bachiller
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="m-portlet__body">
+            <form id="frmReport" class="m-form--state">
+                <div class="form-group m-form__group col-md-12">
+                    <label>Facultades:</label>
+                    <select id="faculties" class="form-control select2-hidden-accessible" data-select2-id="faculties" tabindex="-1" aria-hidden="true"></select>
+                </div>
+                <br>
+                <div class="form-group m-form__group col-md-12">
+                    <label>Escuelas:</label>
+                    <select id="careers" class="form-control select2-hidden-accessible" data-select2-id="careers" aria-hidden="true"></select>
+                </div>
+                <br>
+                <div class="form-group m-form__group col-md-12">
+                    <label class="form-control-label">Programas:</label>
+                    <select id="programs" class="form-control m-input select2-hidden-accessible" data-select2-id="programs" aria-hidden="true"></select>
+                </div>
+                <br>
+                <br>
+                <div class="col-xs-12" style="text-align:right">
+                    <button id="btnSend" type="submit" class="btn btn-primary">Generar reporte</button>
+                </div>
+            </form>
+
+        </div>
+        <div>
+            <div class="m-portlet__body">
+                <div id="chart_div_report_bachelor_without_request" style="text-align:center;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/lib/highcharts/highcharts.js"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+    <script type="text/javascript">
+        @*var careerList = JSON.parse(@(ViewBag.careerList));*@
+        var careerList = @Html.Raw(Json.Serialize(ViewBag.CareerList));
+        var facultyList= @Html.Raw(Json.Serialize(ViewBag.FacultyList));
+
+        @*var facultyList = JSON.parse(@(ViewBag.FacultyList));*@
+    </script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/reports/ReportBachelorWithOutTUPA.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+}

@@ -1,0 +1,179 @@
+﻿@using AKDEMIC.INTRANET.ViewModels.StudentInformationViewModels
+@model List<SectionViewModel>
+
+@if (Model.Count() > 0)
+{
+    if (Model.Any(x => x.CanActive))
+    {
+        <div class="m-form__section" style="text-align:center;">
+            La ficha ya fue evaluada para este estudiante
+        </div>
+    }
+    else
+    {
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <div>
+                <div class="form-group">
+                    <div id="section_container" style="position: relative; zoom: 1;">
+                        <div class="m-portlet m-portlet--primary m-portlet--head-solid-bg m-portlet--bordered m-portlet--head-sm m-year-portlet">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon">
+                                            <i class="flaticon-folder"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            @(i + 1).&emsp;@Model[i].Title
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="row">
+                                    @for (int j = 0; j < Model[i].Questions.Count(); j++)
+                                    {
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                            <div class="col-12">
+                                                <input id="Sections_@i.ToString()_Questions_@j.ToString()_Id" name="Sections[@i].Questions[@j].Id" value="@Model[i].Questions[j].Id" hidden />
+                                                @*<label class="p-3 row form-control-label"> @(j + 1).&emsp;@Model[i].Questions[j].Description</label>*@
+                                                <div class="p-3 row">
+                                                    @(j + 1).&emsp;@Model[i].Questions[j].Description
+                                                </div>
+                                                @*<div id="Sections[@i].Questions[@j].Selection-error" class="form-control-feedback" style="color: red; display: none;"></div>*@
+                                                <div class="p-2 row" style="display:block;">
+                                                    <input id="Sections_@i.ToString()_Questions_@j.ToString()_Type" name="Sections[@i].Questions[@j].Type" value="@Model[i].Questions[j].Type" hidden />
+                                                    @switch (Model[i].Questions[j].Type)
+                                                    {
+                                                        case AKDEMIC.INTRANET.Helpers.ConstantHelpers.QUESTIONNAIRE.TEXT_QUESTION:
+                                                            <div class="form-group m-form__group row">
+                                                                <input id="Sections_@i.ToString()_Questions_@j.ToString()_Description" data-inputtype="@Model[i].Questions[j].DescriptionType" name="Sections[@i].Questions[@j].Description" class="form-control form-text-input" maxlength="100" required />
+                                                            </div>
+                                                            break;
+                                                        case AKDEMIC.INTRANET.Helpers.ConstantHelpers.QUESTIONNAIRE.MULTIPLE_SELECTION_QUESTION:
+
+                                                            <div class="m-form__group form-group">
+                                                                <div class="m-radio-inline">
+                                                                    @for (int k = 0; k < Model[i].Questions[j].Answers.Count; k++)
+                                                                    {
+                                                                        <label class="option ">
+                                                                            <input type="checkbox" class="form-checkbox-input" id="Sections_@i.ToString()_Questions_@j.ToString()_Selection_@k.ToString()_Id" name="Sections[@i].Questions[@j].Selection" value="@Model[i].Questions[j].Answers[k].Id" required>@Model[i].Questions[j].Answers[k].Description
+                                                                        </label>@:&emsp;
+                                                                    }
+                                                                </div>
+                                                            </div>
+
+                                                            break;
+                                                        case AKDEMIC.INTRANET.Helpers.ConstantHelpers.QUESTIONNAIRE.UNIQUE_SELECTION_QUESTION:
+
+                                                            if (Model[i].Questions[j].Answers.Count < 6)
+                                                            {
+                                                                <div class="m-form__group form-group">
+                                                                    <div class="m-radio-inline">
+                                                                        @for (int k = 0; k < Model[i].Questions[j].Answers.Count; k++)
+                                                                        {
+                                                                            <label class="option ">
+                                                                                <input type="radio" class="form-radio-input" id="Sections_@i.ToString()_Questions_@j.ToString()_Selection_@k.ToString()_Id" name="Sections[@i].Questions[@j].Selection" value="@Model[i].Questions[j].Answers[k].Id" required>@Model[i].Questions[j].Answers[k].Description
+                                                                            </label> @:&emsp;
+                                                                        }
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <select class="form-control m-input m-input--square m-select2 selection-option" id="Sections_@i.ToString()_Questions_@j.ToString()_Selection_@j.ToString()_Id" name="Sections[@i].Questions[@j].Selection" required>
+                                                                    @for (int k = 0; k < Model[i].Questions[j].Answers.Count; k++)
+                                                                    {
+                                                                        <option value="@Model[i].Questions[j].Answers[k].Id">@Model[i].Questions[j].Answers[k].Description</option>
+                                                                    }
+                                                                </select>
+                                                            }
+
+                                                            break;
+
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div>
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6">
+                    <label>Clasificación SISFOH</label>
+                    <select class="form-control m-input" name="sisfohClasification" required>
+                        @foreach (var item in ConstantHelpers.INSTITUTIONAL_WELFARE_SURVEY.SISFOH.VALUES)
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    </select>
+                </div>
+                <div class="m-form__group-sub col-lg-6">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label>Documento de validación</label>
+                        <div class="custom-file">
+                            <input name="SisfohConstancy" type="file" class="custom-file-input" placeholder="Archivo" accept="application/*">
+                            <label class="custom-file-label" for="File">Seleccione archivo</label>
+                        </div>
+                        <label>Tama&ntilde;o máximo del archivo: 20MB  </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+    @*@if (!Model.Any(x => x.CanActive))
+        {
+            <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-10">
+                <div class="m-form__actions">
+                    <div class="row" style="float: right;">
+                        <div>
+                            <button class="btn btn-primary m-btn" data-wizard-action="submit" id="send_requeriments" style="display: inline-block;" autocomplete="off">
+                                <span>
+                                    <i class="la la-check"></i>&nbsp;&nbsp;
+                                    <span>Guardar Evaluación</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }*@
+
+
+}
+else
+{
+    <div class="m-form__section" style="text-align:center;">
+        No se encontraron datos
+    </div>
+}
+
+
+<script>
+    //$("input[type=checkbox]").change(function () {
+    //    console.log("click checkbox");
+    //    if ($(this).prop("checked")) {
+    //        $(this).parent().attr("class", "option bg-selected");
+    //    }
+    //    else {
+    //        $(this).parent().attr("class", "option");
+    //    }
+
+    //});
+    //$("input[type=radio]").click(function () {
+    //    $(this).parent().parent().children().attr("class", "option")
+    //    if ($(this).prop("checked"))
+    //        $(this).parent().attr("class", "option bg-selected");
+    //    else
+    //        $(this).parent().attr("class", "option");
+    //});
+
+</script>

@@ -1,0 +1,240 @@
+﻿@model AKDEMIC.INTRANET.Areas.AcademicRecord.Models.TitleReport.TitleReportDetailViewModel
+@{
+    ViewBag.Title = "Detalle de Informe de Título";
+    ViewBag.SubTitle = "Informes de título";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = "TitleReport", Action = "Index" , Area ="AcademicRecord" },
+new BreadcrumbViewData { Name = "Detalle del informe de título", Controller = null, Action = null },
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" role="tab">
+                            <i class="la la-user"></i> Datos de Interesado
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab">
+                            <i class="la la-edit"></i> Datos de Informe
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_6_1" role="tabpanel">
+                    <div class="modal-body">
+                        <div id="div-rendering">
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Code">C&oacute;digo</label>
+                                    <input asp-for="UserName" type="text" class="form-control" name="Code" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="PaternalSurName">Apellido Paterno</label>
+                                    <input asp-for="PaternalSurname" type="text" class="form-control" name="PaternalSurName" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="MaternalSurName">Apellido Materno</label>
+                                    <input asp-for="MaternalSurname" type="text" class="form-control" name="MaternalSurName" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Name">Nombres</label>
+                                    <input asp-for="Name" type="text" class="form-control" name="Name" disabled />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="Faculty">Facultad</label>
+                                    <input asp-for="FacultyName" type="text" class="form-control" name="Faculty" disabled />
+                                </div>
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="Career">Escuela Profesional</label>
+                                    <input asp-for="CareerName" type="text" class="form-control" name="Career" disabled />
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="CurricularSystem">Sistema Curricular</label>
+                                    <input asp-for="CurricularSystem" type="text" class="form-control" name="CurricularSystem" disabled />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="Curriculum">Plan de estudios</label>
+                                    <input asp-for="Curriculum" type="text" class="form-control" name="Curriculum" disabled />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="AcademicProgram">Especialidad</label>
+                                    <input asp-for="AcademicProgram" type="text" class="form-control" name="AcademicProgram" disabled />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="m_tabs_6_2" role="tabpanel">
+                    <form>
+                        <div class="modal-body">
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    @if (Model.IsIntegrated)
+                                    {
+                                        <label for="ProcedureId">Trámite</label>
+                                        <select asp-for="ProcedureId" class="form-control m-select2" required disabled></select>
+                                    }
+                                    else
+                                    {
+                                        <label for="ConceptId">Concepto</label>
+                                        <select asp-for="ConceptId" class="form-control m-select2" required disabled></select>
+                                    }
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Year">A&ntilde;o</label>
+                                    <input asp-for="Year" type="number" class="form-control" autocomplete="off" min="1" required disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Number">N&uacute;mero</label>
+                                    <input asp-for="Number" class="form-control" autocomplete="off" min="1" required disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="Date">Fecha</label>
+                                    <input asp-for="Date" type="text" class="form-control" autocomplete="off" required disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="YearsStudied">Años Estudiados</label>
+                                    <input asp-for="YearsStudied" type="number" class="form-control" autocomplete="off" required disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="SemesterStudied">Semestres Estudiados</label>
+                                    <input asp-for="SemesterStudied" type="number" class="form-control" autocomplete="off" required disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="AdmissionTermId">Semestre de Ingreso</label>
+                                    <select asp-for="AdmissionTermId" class="form-control" autocomplete="off" required disabled></select>
+
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="GraduationTermId">Semestre de Egreso</label>
+                                    <select asp-for="GraduationTermId" class="form-control" autocomplete="off" required disabled></select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="GraduationDate">Fecha de Egreso</label>
+                                    <input asp-for="GraduationDate" type="text" class="form-control" autocomplete="off" required disabled />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="PromotionGrade">Nota de Promoción</label>
+                                    <input asp-for="PromotionGrade" type="number" class="form-control" autocomplete="off" min="1" required disabled />
+                                </div>
+                                <div class="col-md-4 m-form__group-sub">
+                                    <label for="Credits">Créditos</label>
+                                    <input asp-for="Credits" type="number" class="form-control" name="Credits" autocomplete="off" min="1" disabled />
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="ResearchWork">Nombre del trabajo de investigación</label>
+                                    <input asp-for="ResearchWork" type="text" class="form-control" name="ResearchWork" autocomplete="off" disabled />
+                                </div>
+                                <div class="col-md-6 m-form__group-sub">
+                                    <label for="ResearchWorkURL">URL del trabajo de investigación</label>
+                                    <input asp-for="ResearchWorkURL" type="text" class="form-control" name="ResearchWorkURL" autocomplete="off" disabled />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="BachelorOrigin">Procedencia de bachiller</label>
+                                    <input asp-for="BachelorOrigin" type="text" class="form-control" name="BachelorOrigin" autocomplete="off" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="PedagogicalTitleOrigin">Procedencia del título pedagógico</label>
+                                    <input asp-for="PedagogicalTitleOrigin" type="text" class="form-control" name="PedagogicalTitleOrigin" autocomplete="off" disabled />
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="StudyModality">Modalidad de obtención del grado</label>
+                                    <select asp-for="StudyModality" class="form-control m-input" disabled>
+                                        @foreach (var item in ConstantHelpers.STUDY_MODALITY.VALUES)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-3 m-form__group-sub">
+                                    <label for="OriginDegreeCountry">País de procedencia del grado o título</label>
+                                    <input asp-for="OriginDegreeCountry" type="text" class="form-control" name="OriginDegreeCountry" autocomplete="off" disabled />
+                                </div>
+
+
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Observation">Observaciones</label>
+                                <textarea asp-for="Observation" style="resize:none;height:150px;" class="form-control" autocomplete="off" disabled></textarea>
+                            </div>
+                            @if (Model.GradeReportDegreeRequirements.Count() > 0)
+                            {
+                                <div class="form-group m-form__group">
+                                    <br />
+                                    <h5>Requisitos</h5>
+                                    <br />
+                                    @foreach (var item in Model.GradeReportDegreeRequirements)
+                                    {
+                                        <div>
+                                            <label>@(item.DegreeRequirement.Name)</label>
+                                            @if (!String.IsNullOrEmpty(item.Document))
+                                            {
+                                                <button data-id="@(item.Id)" style="margin-left: 10px;" class="btn btn-success btn-sm download"> <i class='fa fa-download'></i></button>
+                                            }
+
+                                            <div class="form-group m-form__group" style="margin-top:5px;">
+                                                <label for="Observation">Observaciones</label>
+                                                <textarea disabled style="resize:none;height:100px;" class="form-control" maxlength="700" autocomplete="off">@(item.Description)</textarea>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    }
+
+
+                                </div>
+                            }
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var conceptId = '@(Model.ConceptId.HasValue ? Model.ConceptId.Value.ToString() : null)';
+        var procedureId = '@(Model.ProcedureId.HasValue ? Model.ProcedureId.Value.ToString() : null)';
+        var admissionTermId = '@(Model.AdmissionTermId.ToString())';
+        var graduationTermId = '@(Model.GraduationTermId != Guid.Empty ? Model.GraduationTermId.ToString() : null)';
+        var isIntegrated = @(Model.IsIntegrated.ToString().ToLower());
+
+    </script>
+    <script src="~/js/areas/academicrecord/titlereport/detail.js"></script>
+
+}
+
+
+

@@ -1,0 +1,124 @@
+﻿@font-face {
+    src: url('../../../fonts/untrm/calibri-regular.ttf');
+    font-family: 'Calibri';
+    font-weight: normal;
+}
+
+@font-face {
+    src: url('../../../fonts/untrm/calibri-bold.ttf');
+    font-family: 'Calibri';
+    font-weight: bold;
+}
+
+@font-face {
+    src: url('../../../fonts/untrm/EngOER_Normal.ttf');
+    font-family: 'Engoer';
+    font-weight: normal;
+}
+
+@font-face {
+    src: url('../../../fonts/untrm/EngOEB_Bold.ttf');
+    font-family: 'Engoer';
+    font-weight: bold;
+}
+
+@font-face {
+    src: url('../../../fonts/untrm/Tiraniti.TTF');
+    font-family: 'Tiraniti';
+}
+
+.font-engoer {
+    font-family: 'Engoer' !important;
+}
+
+.font-tiraniti {
+    font-family: 'Tiraniti' !important;
+}
+
+.main-container {
+    width: 100%;
+}
+
+.nation-name {
+    text-align: center;
+    font-size: 15pt !important;
+    font-family: 'Calibri';
+}
+
+    .nation-name img {
+        width: 90px !important;
+    }
+
+.university-name {
+    text-align: center;
+    font-family: 'Calibri';
+    font-size: 25pt !important;
+    font-weight: bold;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.description table {
+    font-family: 'Tiraniti';
+    font-size: 16pt !important;
+}
+
+.description-student table {
+    font-family: 'Tiraniti';
+    margin-top: 20px !important;
+    font-size: 16pt !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.signature_div {
+    font-weight: bold;
+}
+
+.table-signature {
+    width: 100%;
+    text-align: center;
+    font-family: 'Tiraniti';
+    font-size:12pt !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    /*border: 1px solid red;*/
+}
+
+    table tr, td {
+        vertical-align: bottom;
+    }
+
+.back-page {
+    width: 100%;
+    padding-top: 600px !important;
+    font-family: 'Calibri';
+    font-size: 9.5pt;
+}
+
+    .back-page .table-student-details {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 40%;
+        font-weight: bold;
+        float: left;
+    }
+
+    .back-page .table-book {
+        border-collapse: collapse;
+        border: 1px solid;
+        border-spacing: 0;
+        width: 30%;
+        height: 180px !important;
+        float: right;
+    }
+
+.border {
+    border: 1px solid;
+}

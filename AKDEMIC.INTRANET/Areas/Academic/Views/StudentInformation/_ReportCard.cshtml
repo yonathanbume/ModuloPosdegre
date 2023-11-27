@@ -1,0 +1,104 @@
+﻿@model List<SelectListItem>
+
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Notas por Periodo
+            </h3>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="m-portlet__body">
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="m-alert m-alert--icon alert alert-danger" role="alert">
+            <div class="m-alert__icon">
+                <i class="la la-warning"></i>
+            </div>
+            <div id="error-text" class="m-alert__text">
+                &nbsp;No posee historial de cursos matriculados
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="m-form--label-align-right">
+            <div class="row align-items-center">
+                <div class="col-xl-8 order-2 order-xl-1">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <label>Periodo: &emsp;</label>
+                            <select id="select-term" asp-items="@Model" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                    <a href="#" class="btn btn-primary btn-sm m-btn m-btn--icon" id="reportcard-link" target="_blank">
+                        <span>
+                            <i class="la la-file-pdf-o"></i>
+                            <span>Imprimir</span>
+                        </span>
+                    </a>
+                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                </div>
+            </div>
+            <br />
+            <div class="">
+                <table class="table m-table mx-auto table-bordered m-table--border-metal table-metronic">
+                    <tr>
+                        <th>Estudiante</th>
+                        <td colspan="5" id="header-student-name"></td>
+                    </tr>
+                    <tr>
+                        @*<th>Ciclo</th>*@
+                        @*<td id="header-cycle"></td>*@
+                        <th>Total de Cr&eacute;ditos</th>
+                        <td id="header-credits"></td>
+                        <th>N° Cursos</th>
+                        <td id="header-courses"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered" id="card_table">
+            <thead>
+                <tr>
+                    <th>Plan</th>
+                    <th>Ciclo</th>
+                    <th>C&oacute;digo</th>
+                    <th>Curso</th>
+                    <th>Secc.</th>
+                    <th>Cred.</th>
+                    <th>HT</th>
+                    <th>HP</th>
+                    <th>Nota</th>
+                    <th>Docente</th>
+                </tr>
+            </thead>
+        </table>
+    }
+</div>
+
+<div class="modal fade" id="report_card_student_grades_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-weight:bold;">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="report_card_student_grades_datatable" class="table table-striped"></table>
+            </div>
+        </div>
+    </div>
+</div>

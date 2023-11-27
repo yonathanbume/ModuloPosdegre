@@ -1,0 +1,43 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.HolidayViewModels.HolidayViewModel
+<input type="hidden" asp-for="Id">
+<div class="form-group row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="Name"></label>
+        <div class="input-group m-input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="la la-pencil"></i></span>
+            </div>
+            <input asp-for="Name" class="form-control m-input letters" required/>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="Date"></label>
+        <div class="input-group m-input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="la la-calendar"></i></span>
+            </div>
+            <input asp-for="Date" class="form-control datepicker-input" autocomplete="off" required placeholder="Seleccione fecha inicio" />
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="Type"></label>
+        <select asp-for="Type" class="form-control m-select2" required></select>
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-5 col-form-label">¿Recuperable?</label>
+    <div class="col-7">
+        <span class="m-switch m-switch--outline m-switch--icon m-switch--primary">
+            <label>
+                <input type="checkbox" asp-for="NeedReschedule">
+                <span></span>
+            </label>
+        </span>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Gestion de Examenes de Recuperación de Notas";
+    ViewBag.SubTitle = "Listado de Grupos";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-9 order-1 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Escuela Profesional</label>
+                                <select class="m-select2" id="careerId">
+                                    <option value="0">Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Plan de estudios</label>
+                                <select class="m-select2" id="curriculumId"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 order-2 order-xl-2">
+                        <div class="form-group m-form__group">
+                            <label>&emsp;</label>
+                            <div class="m-input m-input-icon m-input-icon--left">
+                                <button type="button" class="btn btn-primary m-btn m-btn--icon btn-block" data-toggle="modal" data-target="#create_modal">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Nuevo Ex&aacute;men</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-9 order-1 order-xl-2">
+                    </div>
+                    <div class="col-xl-3 order-2 order-xl-2  m--align-right">
+               
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover" id="ajax_data"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="create_modal" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nuevo Exámen
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="create_form" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Escuela Profesional</label>
+                            <select name="CareerId" class="form-control m-input m-select2" required></select>
+                        </div>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Plan de Estudio</label>
+                            <select name="CurriculumId" class="form-control m-input m-select2" required></select>
+                        </div>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Curso</label>
+                            <select name="CourseId" class="form-control m-input m-select2" required></select>
+                        </div>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Secci&oacute;n</label>
+                            <select name="SectionId" class="form-control m-input m-select2" required></select>
+                        </div>
+                        <h5 class="ml-3">Datos del sal&oacute;n donde ser&aacute; realizado el ex&aacute;men</h5>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Aula</label>
+                            <select name="ClassroomId" class="form-control m-input m-select2"></select>
+                        </div>
+                        <div class="form-group m-form__group col-lg-4">
+                            <label>Fecha de Evaluaci&oacute;n</label>
+                            <input class="form-control m-input" name="StartDate" placeholder="Fec. Inicio" />
+                        </div>
+                        <div class="form-group m-form__group col-lg-4">
+                            <label>Hora de Evaluaci&oacute;n</label>
+                            <input class="form-control m-input" name="StartTime" placeholder="Hora Inicio" />
+                        </div>
+                        <div class="form-group m-form__group col-lg-4">
+                            <label>Duraci&oacute;n (minutos)</label>
+                            <input type="number" class="form-control m-input" placeholder="Duración" name="Duration" min="0" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/dataTables.rowGroup.js"></script>
+    <script src="~/js/areas/admin/graderecovery/index.js" asp-append-version="true"></script>
+}
+

@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "Tipo de apoyo económico";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+    };
+}
+
+<style>
+    a {
+        text-decoration: none !important;
+    }
+
+        a:hover .m-portlet {
+            box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.7);
+        }
+
+        a i {
+            font-size: 120px;
+        }
+</style>
+
+<div class="m-content">
+    <h4 class="text-center">@ViewData["Title"].ToString().ToUpper()</h4>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <a asp-action="HighPerformance" asp-controller="CafobeRequest" asp-area="Student">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-file-text" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Alto Rendimiento</h4>
+                        <span></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Maternity" asp-controller="CafobeRequest" asp-area="Student">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-file-text" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Maternidad</h4>
+                        <span></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Ophthalmological" asp-controller="CafobeRequest" asp-area="Student">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-file-text" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Oftalmológico</h4>
+                        <span></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-action="FamilyDeath" asp-controller="CafobeRequest" asp-area="Student">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-file-text" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Defunción</h4>
+                        <span></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-action="Health" asp-controller="CafobeRequest" asp-area="Student">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-file-text" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Salud</h4>
+                        <span></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-action="StimulusScholarshipOrOutstandingSportsman" asp-controller="CafobeRequest" asp-area="Student">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-file-text" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Beca de estímulo o Deportista</h4>
+                        <span></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+    <script>
+        $('a').hover(
+            function () {
+                $(this).children(":first").children(":first").addClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-primary');
+            },
+            function () {
+                $(this).children(":first").children(":first").removeClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-primary');
+            }
+        )
+    </script>
+}

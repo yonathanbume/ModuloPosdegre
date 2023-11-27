@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Directores de Proyecto";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = "Inciio", Controller = "Home", Action = "Index" },
+    new BreadcrumbViewData {Name="Gestión de Directores de Proyecto", Controller=null, Action=null},
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;"><i class="fa fa-object-group">&ensp;</i>Gestión de Directores de Proyecto</h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button id="add_projectDirector" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Agregar</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="tbl-data">
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="projectDirector_modal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Agregar Tipo de Equipo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="projectDirector_form">
+                <input type="hidden" name="Id" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Nombre:</label>
+                            <input type="text" class="form-control m-input" name="Name" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Apellidos:</label>
+                            <input type="text" class="form-control m-input" name="Surnames" placeholder="Apellidos" required>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Documento:</label>
+                            <input type="text" class="form-control m-input" name="IdentificationCard" placeholder="Documento" required>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Teléfono:</label>
+                            <input type="text" class="form-control m-input" name="PhoneNumber" placeholder="Teléfono" required>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Sexo:</label>
+                            <select class="m-select2" name="Sex" required>
+                                @foreach (var item in ConstantHelpers.SEX.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Departamento:</label>
+                            <select class="m-select2" name="DepartmentId" required>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Estado Civil:</label>
+                            <select class="m-select2" name="CivilStatus" required>
+                                @foreach (var item in ConstantHelpers.CIVIL_STATUS.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Dirección:</label>
+                            <input type="text" class="form-control m-input" name="Address" placeholder="Dirección" required>
+                        </div>
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Correo Electrónico:</label>
+                            <input type="text" class="form-control m-input" name="Email" placeholder="Correo Electrónico" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/admin/projectdirector/index.js" asp-append-version="true"></script>
+}

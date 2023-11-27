@@ -1,0 +1,42 @@
+﻿
+div.pager {
+    text-align: right;
+    margin: 1em 0;
+}
+
+    div.pager span {
+        display: inline-block;
+        width: 1.8em;
+        height: 1.8em;
+        line-height: 1.8;
+        text-align: center;
+        cursor: pointer;
+        background: #30bce2;
+        color: #fff;
+        margin-right: 0.5em;
+    }
+
+        div.pager span.active {
+            background: #375ea1;
+        }
+
+.btn-event-type {
+    border: none;
+}
+
+.btn-read-more:hover {
+    background-color: #fbfbfb;
+    border-color: none;
+}
+
+#empty-events {
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    /*display: none;*/
+}
+
+.empty-events-message {
+    margin: 0 auto;
+    display: block;
+}

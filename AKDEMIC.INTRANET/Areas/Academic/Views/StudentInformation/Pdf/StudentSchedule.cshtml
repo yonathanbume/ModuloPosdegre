@@ -1,0 +1,284 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.ClassSchedule.ClassScheduleReportTemplate
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 11px;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teacherInfo {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .firstTeacherInfo {
+            width: 45%;
+            display: inline-block;
+        }
+
+        .truelabel {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .truelabel2 {
+            width: 110px;
+            display: inline-block;
+        }
+
+        .truelabel3 {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .secondTeacherInfo {
+            width: 54%;
+            display: inline-block;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+        }
+
+        .border {
+            border: 1px solid black;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr style="height:100px">
+                <th colspan="1" style="text-align: center;padding: 0px 20px;">
+                    <img style="top: 0; left: 0; height: 60px;width:60px" src="@Model.Image" />
+                    <P style="margin:0px;font-style: italic;font-weight: 600;letter-spacing: -0.5px;">@Model.HeaderText</P>
+                </th>
+                <th colspan="14"></th>
+            </tr>
+            <tr>
+                <th colspan="14">
+                    <div class="unk-header" style="font-size:14px;">
+                        <p style="margin:0px;text-transform: uppercase" class="negrita">@GeneralHelpers.GetInstitutionName()</p>
+                        <p style="margin:0px;" class="negrita">HORARIO DEL ESTUDIANTE</p>
+                        <br />
+                        <p style="margin:0px;text-align:left" class="negrita">
+                            CÓDIGO:&emsp;@(string.IsNullOrEmpty(Model.UserName) ? "-" : Model.UserName)
+                        </p>
+                        <p style="margin:0px;text-align:left" class="negrita">
+                            APELLIDOS Y NOMBRES:&emsp;@(string.IsNullOrEmpty(Model.FullName) ? "-" : Model.FullName)
+                        </p>
+                        <p style="margin:0px;text-align:left" class="negrita">
+                            ESCUELA PROFESIONAL:&emsp;@(string.IsNullOrEmpty(Model.CareerName) ? "-" : Model.CareerName)
+                        </p>
+                        <p style="margin:0px;text-align:left" class="negrita">
+                            PLAN CURRICULAR:&emsp;@(string.IsNullOrEmpty(Model.CurriculumCode) ? "-" : Model.CurriculumCode)
+                        </p>
+                        <p style="margin:0px;text-align:left" class="negrita">
+                            PERIODO ACAD&Eacute;MICO:&emsp;@(string.IsNullOrEmpty(Model.TermName) ? "-" : Model.TermName)
+                        </p>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <table>
+        <thead>
+            @*<tr>
+            <th colspan="6" class="negrita border">HORARIO</th>
+            </tr>*@
+            <tr>
+                <th class="negrita border" style="background-color:lightgray">HORA</th>
+                <th class="negrita border" style="background-color:lightgray">LUNES</th>
+                <th class="negrita border" style="background-color:lightgray">MARTES</th>
+                <th class="negrita border" style="background-color:lightgray">MIÉRCOLES</th>
+                <th class="negrita border" style="background-color:lightgray">JUEVES</th>
+                <th class="negrita border" style="background-color:lightgray">VIERNES</th>
+                <th class="negrita border" style="background-color:lightgray">SÁBADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ScheduleParameters.Count; i++)
+            {
+                @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNICA && (Model.ScheduleParameters[i].Item3 == "13.00 - 14.00" || Model.ScheduleParameters[i].Item3 == "18.00 - 19.00"))
+                {
+                    <tr>
+                        <th colspan="6" style="border:black 5px 0px inset;padding: 0px;"></th>
+                    </tr>
+                }
+                <tr>
+                    @{
+                        var prequery = Model.SectionSchedules.Where(x =>
+                        (x.StartTime.ToLocalTimeSpanUtc() >= Model.ScheduleParameters[i].Item1 && x.EndTime.ToLocalTimeSpanUtc() <= Model.ScheduleParameters[i].Item2) ||
+                        (Model.ScheduleParameters[i].Item1 >= x.StartTime.ToLocalTimeSpanUtc() && x.EndTime.ToLocalTimeSpanUtc() > Model.ScheduleParameters[i].Item2) ||
+                        (x.StartTime.ToLocalTimeSpanUtc() >= Model.ScheduleParameters[i].Item1 && x.StartTime.ToLocalTimeSpanUtc() < Model.ScheduleParameters[i].Item2) ||
+                        (x.EndTime.ToLocalTimeSpanUtc() > Model.ScheduleParameters[i].Item1 && x.EndTime.ToLocalTimeSpanUtc() < Model.ScheduleParameters[i].Item2)
+                        ).OrderBy(x => x.EndTime);
+                    }
+                    <th class="border">
+                        <p style="font-size: 8px !important; line-height: 8px !important;">@Model.ScheduleParameters[i].Item3</p>
+                    </th>
+                    <th class="border">
+                        @{
+                            var resultMo = prequery.Where(x => x.WeekDay == ConstantHelpers.WEEKDAY.MONDAY).ToArray();
+                        }
+                        @if (resultMo != null)
+                        {
+                            for (int v = 0; v < resultMo.Length; v++)
+                            {
+                                var sty = $"padding-top : {(v != 0 ? "3px" : "0px")}; border-top : {(v != 0 ? "1px solid black" : "0")}; padding-bottom : {(resultMo.Length > 1 && v != resultMo.Length ? "3px" : "0px")} !important;";
+                                <div style="@sty">
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px;">@resultMo[v].Code</p>
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px; margin-top: 5px;">@resultMo[v].TimeText</p>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            <p style="font-size: 8px !important; line-height: 8px;">-</p>
+                        }
+                    </th>
+                    <th class="border">
+                        @{
+                            var resultTu = prequery.Where(x => x.WeekDay == ConstantHelpers.WEEKDAY.TUESDAY).ToArray();
+                        }
+                        @if (resultTu != null)
+                        {
+                            for (int v = 0; v < resultTu.Length; v++)
+                            {
+                                var sty = $"padding-top : {(v != 0 ? "3px" : "0px")}; border-top : {(v != 0 ? "1px solid black" : "0")}; padding-bottom : {(resultTu.Length > 1 && v != resultTu.Length ? "3px" : "0px")} !important;";
+                                <div style="@sty">
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px;">@resultTu[v].Code</p>
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px; margin-top: 5px;">@resultTu[v].TimeText</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p style="font-size: 8px !important; line-height: 8px;">-</p>
+                        }
+                    </th>
+                    <th class="border">
+                        @{
+                            var resultWe = prequery.Where(x => x.WeekDay == ConstantHelpers.WEEKDAY.WEDNESDAY).ToArray();
+                        }
+                        @if (resultWe != null)
+                        {
+                            for (int v = 0; v < resultWe.Length; v++)
+                            {
+                                var sty = $"padding-top : {(v != 0 ? "3px" : "0px")}; border-top : {(v != 0 ? "1px solid black" : "0")}; padding-bottom : {(resultWe.Length > 1 && v != resultWe.Length ? "3px" : "0px")} !important;";
+                                <div style="@sty">
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px;">@resultWe[v].Code</p>
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px; margin-top: 5px;">@resultWe[v].TimeText</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p style="font-size: 8px !important; line-height: 8px;">-</p>
+                        }
+                    </th>
+                    <th class="border">
+                        @{
+                            var resultTh = prequery.Where(x => x.WeekDay == ConstantHelpers.WEEKDAY.THURSDAY).ToArray();
+                        }
+                        @if (resultTh != null)
+                        {
+                            for (int v = 0; v < resultTh.Length; v++)
+                            {
+                                var sty = $"padding-top : {(v != 0 ? "3px" : "0px")}; border-top : {(v != 0 ? "1px solid black" : "0")}; padding-bottom : {(resultTh.Length > 1 && v != resultTh.Length ? "3px" : "0px")} !important;";
+                                <div style="@sty">
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px;">@resultTh[v].Code</p>
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px; margin-top: 5px;">@resultTh[v].TimeText</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p style="font-size: 8px !important; line-height: 8px;">-</p>
+                        }
+                    </th>
+                    <th class="border">
+                        @{
+                            var resultFr = prequery.Where(x => x.WeekDay == ConstantHelpers.WEEKDAY.FRIDAY).ToArray();
+                        }
+                        @if (resultFr != null)
+                        {
+                            for (int v = 0; v < resultFr.Length; v++)
+                            {
+                                var sty = $"padding-top : {(v != 0 ? "3px" : "0px")}; border-top : {(v != 0 ? "1px solid black" : "0")}; padding-bottom : {(resultFr.Length > 1 && v != resultFr.Length ? "3px" : "0px")} !important;";
+                                <div style="@sty">
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px;">@resultFr[v].Code</p>
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px; margin-top: 5px;">@resultFr[v].TimeText</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p style="font-size: 8px !important; line-height: 8px;">-</p>
+                        }
+                    </th>
+                    <th class="border">
+                        @{
+                            var resultSun = prequery.Where(x => x.WeekDay == ConstantHelpers.WEEKDAY.SATURDAY).ToArray();
+                        }
+                        @if (resultSun != null)
+                        {
+                            for (int v = 0; v < resultSun.Length; v++)
+                            {
+                                var sty = $"padding-top : {(v != 0 ? "3px" : "0px")}; border-top : {(v != 0 ? "1px solid black" : "0")}; padding-bottom : {(resultSun.Length > 1 && v != resultSun.Length ? "3px" : "0px")} !important;";
+                                <div style="@sty">
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px;">@resultSun[v].Code</p>
+                                    <p style="font-size: 8px !important; line-height: 8px; margin: 0px; padding: 0px; margin-top: 5px;">@resultSun[v].TimeText</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p style="font-size: 8px !important; line-height: 8px;">-</p>
+                        }
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

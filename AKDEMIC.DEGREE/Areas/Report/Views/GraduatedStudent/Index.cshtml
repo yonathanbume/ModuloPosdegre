@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Reporte de egresados";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Reportes" },
+new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text"><i class="flaticon-search"></i>&nbsp;@ViewData["Title"]</h3>
+                </div>
+
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button type="button" class="btn btn-sm btn-success btn-excel" autocomplete="off">
+                            Exportar a excel <i style="margin-left:4px;" class="fa fa-download"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
+                                        <tbody>
+                                            <tr id="filter_col0" data-column="0">
+                                                <td>Grado Tipo</td>
+                                                <td align="center">
+                                                    <select class="form-control column_filter" id="col0_filter">
+                                                        <option selected value="0">Todos</option>
+                                                        <option value="@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.GRADUATED">@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.VALUES[AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.GRADUATED] </option>
+                                                        <option value="@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.BACHELOR">@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.VALUES[AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.BACHELOR] </option>
+                                                        <option value="@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.QUALIFIED">@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.VALUES[AKDEMIC.CORE.Helpers.ConstantHelpers.Student.States.QUALIFIED] </option>
+
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr id="filter_col1" data-column="1">
+                                                <td>Escuela Profesional</td>
+                                                <td align="center">
+                                                    <select class="form-control column_filter" id="col1_filter">
+                                                        <option selected value="0">Todos</option>
+                                                        @foreach (var carrera in Model.Carreras)
+                                                        {
+                                                            <option value="@carrera.Id">@carrera.Description</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr id="filter_col2" data-column="2">
+                                                <td>Año de egreso</td>
+                                                <td align="center">
+                                                    <input class="form-control" id="col2_filter" autocomplete="off" placeholder="Seleccione un año" />
+                                                </td>
+                                            </tr>
+                                            <tr id="filter_col3" data-column="3">
+                                                <td>Año de ingreso</td>
+                                                <td align="center">
+                                                    <input class="form-control" id="col3_filter" autocomplete="off" placeholder="Seleccione un año" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <table class="table table-striped table-bordered" id="table"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/report/graduatedstudent/index.js" asp-append-version="true"></script>
+}

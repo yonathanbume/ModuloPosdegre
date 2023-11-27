@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Listado de Solicitudes";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Solicitudes
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30" id="dependency-header-form">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por tipo..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-md-4" style="padding-top:0px !important">
+                                <label>Estado</label>
+                                <select class="m-select2" id="status_select">
+                                    <option>Todos</option>
+                                    @foreach (var item in ConstantHelpers.RECORD_HISTORY_STATUS.VALUES)
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table id="datatable" class="table table-striped"></table>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("Partials/_ChangeStatusPartialModal")
+@await Html.PartialAsync("Partials/_ObservationPartialModal")
+@await Html.PartialAsync("Partials/_EditDataInfoPartialModal")
+
+<div id="receipt_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-modal-title">
+                    Observaciones
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="receipt_form">
+                    <input type="hidden" name="RecordHistoryId" id="receipt_recordHistoryId" />
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Recibo</label>
+                        <input name="Receipt" class="form-control" maxlength="100" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/academicrecord/request/index.js" asp-append-version="true"></script>
+}

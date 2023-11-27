@@ -1,0 +1,14 @@
+﻿@model string
+@{
+	ViewData["Title"] = "Registro de Asistencia";
+}
+
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+	<div class="m-content">
+		<div class="row">
+			<div class="col-12">
+				@await  Html.PartialAsync("_ErrorMessage", Model)
+			</div>
+		</div>
+	</div>
+</div>

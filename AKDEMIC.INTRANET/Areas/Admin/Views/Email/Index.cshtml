@@ -1,0 +1,168 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.EmailViewModels.ConfigurationViewModel
+@{
+    ViewBag.Title = "Gestión de Correos Electronicos";
+    ViewBag.SubTitle = "Listado de Correos por Sistema";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = ViewBag.Title }
+    };
+}
+
+<div class="m-content pb-0">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Configuraci&oacute;n del Env&iacute;o de Correos
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="configuration_form">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label>Puerto SMTP:</label>
+                        <input asp-for="Email_Port" class="form-control m-input">
+                    </div>
+                    <div class="col-lg-5">
+                        <label>Host SMTP:</label>
+                        <input asp-for="Email_Host" class="form-control m-input">
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Habilitar Correos por Sistema</label>
+                        <div class="col-3">
+                            <span class="m-switch m-switch--outline m-switch--primary">
+                                <label>
+                                    <input type="checkbox" asp-for="Multiple_Email">
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-6">
+                        <label>Correo Enviador:</label>
+                        <input asp-for="Email_Sender" class="form-control m-input">
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Contraseña</label>
+                        <div class="row">
+                            <div class="col-10">
+                                <input asp-for="Email_Password" type="password" autocomplete="off" class="form-control m-input">
+                                <input type="hidden" value="@Model.Email_Password" id="current_password" />
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-default" id="CurrentPasswordEye" autocomplete="off"><i class="la la-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions--solid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                        </div>
+                        <div class="col-lg-6 m--align-right">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="m-content pt-o">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-10 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Sistemas</label>
+                                <select class="m-select2" id="select_system">
+                                    <option disabled selected>Seleccionar sistema</option>
+                                    @foreach (var item in ConstantHelpers.Solution.Institution[ConstantHelpers.GENERAL.Institution.Value])
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-2 order-1 order-xl-2 m--align-right">
+                        <button class="btn btn-primary m-btn m-btn--icon" id="add_resource">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo Correo</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="email-modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+            </div>
+            <form id="email-form" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input name="Id" hidden />
+                    <div class="form-group m-form__group">
+                        <label>Correo Electr&oacute;nico*</label>
+                        <input name="Email" class="form-control m-input" placeholder="Correo" autocomplete="off" required>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label>Contraseña*</label>
+                        <input name="Password" class="form-control m-input" placeholder="Contraseña" autocomplete="off" required>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label>Confirmar Contraseña*</label>
+                        <input name="ConfirmPassword" class="form-control m-input" placeholder="Confirmar Contraseña" autocomplete="off" required>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label>Sistema*</label>
+                        <select class="m-select2" required>
+                            <option disabled selected>Seleccionar sistema</option>
+                            @foreach (var item in ConstantHelpers.Solution.Institution[ConstantHelpers.GENERAL.Institution.Value])
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-save" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/email/index.js"></script>
+}
+

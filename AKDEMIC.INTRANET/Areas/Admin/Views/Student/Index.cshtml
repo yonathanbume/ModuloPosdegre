@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Gestión de Estudiantes";
+    ViewBag.SubTitle = "Listado de Estudiantes";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+<style>
+    .dz-upload {
+        display: block;
+        background-color: darkblue;
+        height: 10px;
+        width: 0%;
+    }
+</style>
+
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-xl-12 order-2 order-xl-1">
+                    <div class="row">
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Facultad</label>
+                            <select class="form-control m-input m-select2 select2-faculties">
+                                <option>Todas</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Escuela</label>
+                            <select class="form-control m-input m-select2 select2-careers">
+                                <option>Todas</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Programas</label>
+                            <select class="form-control m-input m-select2 select2-programs">
+                                <option>Todos</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Plan de Estudio</label>
+                            <select class="form-control m-input m-select2 select2-curriculums">
+                                <option>Todos</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>Sede</label>
+                            <select class="form-control m-input m-select2 select2-campus">
+                                <option>Todos</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3">
+                            <label>&emsp;</label>
+                            <div class="m-input m-input-icon m-input-icon--left">
+                                <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por Nombre o DNI..." id="search">
+                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                    <span><i class="la la-search"></i></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered students-datatable"></table>
+        </div>
+    </div>
+</div>
+
+<!--begin::Modal-->
+<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Importar de Excel
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="UploadExcel" class="m-form" id="formupload">
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">Archivo</label>
+                        <div class="col-lg-9 col-md-12 col-sm-12">
+                            <div class="m-dropzone dropzone m-dropzone--primary dz-clickable" action="/admin/alumnos/subirexcel" id="m-drop-one" style="height: 50vh;">
+                                <div class="m-dropzone__msg dz-message needsclick">
+                                    <h3 class="m-dropzone__msg-title">Arrastra tu archivo aquí o haz click para Examinar.</h3>
+                                    <span class="m-dropzone__msg-desc">Solo archivos .xlsx y .xls son permitidos.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnupload" disabled>Subir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+@section Scripts {
+    <script src="~/js/areas/admin/student/index.js" asp-append-version="true"></script>
+}

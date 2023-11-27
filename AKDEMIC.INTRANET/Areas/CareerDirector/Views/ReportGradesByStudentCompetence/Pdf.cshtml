@@ -1,0 +1,111 @@
+﻿@model List<AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.GradeReportByCompetences.DataReport2>
+@{
+    Layout = null;
+}
+
+<div class="row" style="text-align:center;  margin-left: 20%;  margin-right: 20%;">
+    <table class="table" id="tbl-data-text" style="font-size: 18px; font-family: Calibri; border:1px solid black; border-collapse: collapse;width:100%">
+        <thead>
+            <tr style="border:1px solid black;">
+                <th style="text-align:center;background-color:gray;color:white">
+                    <b>NIVEL</b>
+                </th>
+                <th style="text-align:center;background-color:gray;color:white">
+                    <b>Puntaje</b>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align:center;border:1px solid black;">
+                    <b>Deficiente</b>, no logra la competencia
+                </td>
+                <td style="text-align:center;border:1px solid black;">
+                    0-10
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;border:1px solid black;">
+                    <b>Regular</b>, logró la competencia en proceso
+                </td>
+                <td style="text-align:center;border:1px solid black;">
+                    11-13
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;border:1px solid black;">
+                    <b>Bueno</b>, logró la competencia en forma aceptable
+                </td>
+                <td style="text-align:center;border:1px solid black;">
+                    14-16
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;border:1px solid black;">
+                    <b>Excelente</b>, logró eficazmente la competencia
+                </td>
+                <td style="text-align:center;border:1px solid black;">
+                    17-20
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />
+<br />
+<table class="table table-striped table-bordered" id="datatable-a" width="100%" style="font-size: 18px; font-family: Calibri; border:1px solid black; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th style="text-align:center; background: lightgray;border:1px solid black;" align="center"><b>Competencia</b></th>
+            <th style="text-align:center; background: lightgray;border:1px solid black;" align="center" colspan="2"><b>Deficiente</b></th>
+            <th style="text-align:center; background: lightgray;border:1px solid black;" align="center" colspan="2"><b>Regular</b></th>
+            <th style="text-align:center; background: lightgray;border:1px solid black;" align="center" colspan="2"><b>Bueno</b></th>
+            <th style="text-align:center; background: lightgray;border:1px solid black;" align="center" colspan="2"><b>Excelente</b></th>
+            <th style="text-align:center; background: lightgray;border:1px solid black;" align="center" colspan="2"><b>TOTAL</b></th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+            <th style="display: none">&nbsp;</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr style="text-align:center;">
+            <td style="text-align: center;border:1px solid black;">&nbsp;</td>
+            <td style="text-align: center;border:1px solid black;">N°</td>
+            <td style="text-align: center;border:1px solid black;">%</td>
+            <td style="text-align: center;border:1px solid black;">N°</td>
+            <td style="text-align: center;border:1px solid black;">%</td>
+            <td style="text-align: center;border:1px solid black;">N°</td>
+            <td style="text-align: center;border:1px solid black;">%</td>
+            <td style="text-align: center;border:1px solid black;">N°</td>
+            <td style="text-align: center;border:1px solid black;">%</td>
+            <td style="text-align: center;border:1px solid black;">N°</td>
+            <td style="text-align: center;border:1px solid black;">%</td>
+        </tr>
+
+        @foreach (var i in Model)
+        {
+            <tr style="text-align:center;">
+                <td style="text-align: center;border:1px solid black;">@i.CompetenceName</td>
+                <td style="text-align: center;border:1px solid black;">@i.RangeLevels.Where(x => x.Name == "Deficiente").FirstOrDefault().Total</td>
+                <td style="text-align: center;border:1px solid black;">@(i.RangeLevels.Sum(x => x.Total) > 0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Deficiente").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100), 2) : 0)</td>
+
+
+                <td style="text-align: center;border:1px solid black;">@i.RangeLevels.Where(x => x.Name == "Regular").FirstOrDefault().Total</td>
+                <td style="text-align: center;border:1px solid black;">@(i.RangeLevels.Sum(x => x.Total) >0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Regular").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100),2) : 0)</td>
+
+
+                <td style="text-align: center;border:1px solid black;">@i.RangeLevels.Where(x => x.Name == "Bueno").FirstOrDefault().Total</td>
+                <td style="text-align: center;border:1px solid black;">@(i.RangeLevels.Sum(x => x.Total) > 0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Bueno").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100),2) : 0)</td>
+
+
+                <td style="text-align: center;border:1px solid black;">@i.RangeLevels.Where(x => x.Name == "Excelente").FirstOrDefault().Total</td>
+                <td style="text-align: center;border:1px solid black;">@(i.RangeLevels.Sum(x => x.Total) > 0 ? Math.Round((((decimal)i.RangeLevels.Where(x => x.Name == "Excelente").FirstOrDefault().Total) / (decimal)(i.RangeLevels.Sum(x => x.Total)) * 100),2): 0)</td>
+                <td style="text-align: center;border:1px solid black;">@i.RangeLevels.Sum(x => x.Total)</td>
+                <td style="text-align: center;border:1px solid black;">100%</td>
+            </tr>
+        }
+    </tbody>
+</table>

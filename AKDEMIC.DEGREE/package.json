@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-unicorn": "^22.0.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-replace": "^1.0.0",
+    "gulp-responsive": "^3.0.1",
+    "gulp-sass": "^4.1.0",
+    "gulp-terser": "^1.4.0",
+    "node-sass": "^4.14.1",
+    "prettier": "2.1.2"
+  },
+  "dependencies": {
+    "acorn": "^8.0.4",
+    "del": "^6.0.0",
+    "gulp-less": "^4.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^2.6.5"
+  }
+}

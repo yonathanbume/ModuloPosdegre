@@ -1,0 +1,135 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.StudentAssistanceViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Registro de Asistencia";
+    ViewData["SubTitle"] = $"Sección {Model.Class.Section.Code} | Sesión {Model.Class.WeekNumber}.{Model.Class.ClassNumber} | {Model.Class.Date} ({Model.Class.StartTime} - {Model.Class.EndTime})";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Lista de secciones" , Url = Url.Action("Index","AssistControl") },
+new BreadcrumbViewData { Name = "Asistencia por sección ", Url = Url.Action("Assistance", "AssistControl", new { sid = Model.Class.Section.Id }) },
+new BreadcrumbViewData { Name = (string)ViewData["Title"], Controller = null, Action = null}
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <input hidden value="@Model.Class.ActivityId" id="defaultActivityId" />
+
+        <input id="CourseId" hidden value="@Model.Class.Section.Course.Id" />
+        <input id="SectionId" hidden value="@Model.Class.Section.Id" />
+
+        <form id="frm-assistance" class="m-form m-form--state" asp-controller="AssistControl" asp-action="PostStudentAssistance" method="post">
+            <div class="m-portlet__body">
+                <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="form_msg">
+                    <div class="m-alert__icon">
+                        <i class="la la-warning"></i>
+                    </div>
+                    <div class="m-alert__text" id="form_msg_txt">
+                        Oh rayos! Ocurri&oacute; un error en el servidor
+                    </div>
+                    <div class="m-alert__close">
+                        <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+
+
+                @if (Model.Class.Evaluations.Any())
+                {
+                    <div class="m-alert m-alert--icon m-alert--outline alert alert-primary mb-4" role="alert">
+                        <div class="m-alert__icon">
+                        </div>
+                        <div class="m-alert__text">
+                            <strong>@(Model.Class.Evaluations.Count() > 1 ? "Evaluaciones pendientes" : "Evaluación pendiente") en la semana @Model.Class.WeekNumber</strong><br />
+                            <span>Seleccione la evaluaci&oacute;n tomada en esta clase.</span><br />
+                            <div class="m-form__group form-group row">
+                                @for (int i = 0; i < Model.Class.Evaluations.Count(); i++)
+                                {
+                                    <input type="hidden" name="assists.Evaluations[@i].EvaluationId" value="@Model.Class.Evaluations[i].EvaluationId" />
+
+                                    <label class="col-3 col-form-label">@Model.Class.Evaluations[i].Name</label>
+                                    <div class="col-3">
+                                        <span class="m-switch m-switch--sm m-switch--icon">
+                                            <label>
+                                                @if (Model.Class.Evaluations[i].Taken)
+                                                {
+                                                    <input type="checkbox" value="true" checked name="assists.Evaluations[@i].Taken">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" value="true" name="assists.Evaluations[@i].Taken">
+                                                }
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <input hidden name="classId" value="@Model.Class.Id" id="classId" />
+
+                <div class="form-group m-form__group m-form__group--first">
+                    <strong>CURSO: </strong>
+                    <label>@Model.Class.Section.Course.Code - @Model.Class.Section.Course.Name</label>
+                </div>
+
+                <div class="form-group m-form__group m-form__group--first">
+                    <strong>MÁX. FALTAS (%): </strong>
+                    <label>@Model.Class.AbsencePercentage%</label>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-6 form-group m-form__group">
+                        <label class="form-control-label">Tema de Clase</label>
+                        <select id="activityId" name="assists.ActivityId" class="form-control m-input m-select2 select2-activities"></select>
+                    </div>
+                    <div class="col-6 form-group m-form__group pt-0">
+                        <label class="form-control-label">Asociar Videoconferencia</label>
+                        <div class="m-radio-inline mt-1">
+                            <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                                <label>
+                                    <input type="checkbox" asp-for="Class.HasVirtualClass">
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group @(Model.Class.HasVirtualClass?"":"d-none")" id="div_virtualclass">
+                    <label class="form-control-label">Videoconferencia de Clase</label>
+                    <select id="VirtualClassId" name="assists.VirtualClassId" class="form-control m-input m-select2 select2-videoconferences"></select>
+                </div>
+
+                <div id="assistance-datatable" class="m-datatable"></div>
+                <div class="col-12 mt-4">
+                    <label>Comentario</label>
+                    <textarea class="form-control" name="assists.Commentary" rows="4" maxlength="300"></textarea>
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 m--align-right">
+                        <button id="btnAssists" type="submit" class="btn btn-primary m-btn m-btn--icon"><span><i class="la la-save"></i><span>Guardar Asistencia</span></span></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/areas/teacher/assistcontrol/classassistance.js" asp-append-version="true"></script>
+}

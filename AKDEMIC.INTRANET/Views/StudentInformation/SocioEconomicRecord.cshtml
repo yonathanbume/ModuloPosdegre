@@ -1,0 +1,44 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.StudentInformationViewModels.IndexViewModel;
+
+@section Styles{
+    <link href="~/css/areas/student/studentinformation/printsocioeconomicrecord.css" rel="stylesheet" />
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        CONSTANCIA
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table style="border: 1px solid black; border-collapse: collapse;margin:auto">
+                <tr style="border:1px solid black">
+                    <td style="border:1px solid black;padding:5px">ESTUDIANTE</td>
+                    <td style="border:1px solid black;padding:5px">@Model.Name</td>
+                </tr>
+                <tr style="border:1px solid black">
+                    <td style="border:1px solid black;padding:5px">CODIGO UNIVERSITARIO</td>
+                    <td style="border:1px solid black;padding:5px">@Model.UserName</td>
+                </tr>
+                <tr style="border:1px solid black">
+                    <td style="border:1px solid black;padding:5px">FACULTAD</td>
+                    <td style="border:1px solid black;padding:5px">@Model.Faculty</td>
+                </tr>
+                <tr style="border:1px solid black">
+                    <td style="border:1px solid black;padding:5px">ESCUELA PROFESIONAL</td>
+                    <td style="border:1px solid black;padding:5px">@Model.Career</td>
+                </tr>
+            </table>
+            <br />
+            <p style="text-align:center">Por haber culminado satisfactoriamente el registro de la FICHA SOCIOECON&Oacute;MICA a trav&eacute;s de la plataforma Virtual para el proceso de Matr&iacute;cula @Model.Term</p>
+            <br />
+            <br />
+            <h3 style="text-align:center">GRACIAS POR SU IMPORTANTE PARTICIPACI&Oacute;N</h3>
+        </div>
+    </div>
+</div>

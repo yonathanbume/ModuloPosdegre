@@ -1,0 +1,53 @@
+﻿
+<div id="modal-profile-viewer" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Fotograf&iacute;a formal en formato digital</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group m-form__group row m-form__group--first align-items-center" style="margin:10px;">
+
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="m-form__group-sub col-lg-12 upload-demo-wrap">
+                                <div id="upload-offi" style="padding-bottom:30px;text-align:center">
+                                    <p style="font-weight:bold; text-align:center">Resolución de la imagen recomendada: <span style="color:#8b0404;">aprox 300px x 300px</span></p>
+                                    <img id="img-offi" style="width: 300px; height:300px;max-width: 100%;" src="/images/demo/user.png" />
+                                </div>
+                            </div>
+                            <div class="m-form__group-sub col-lg-12">
+                                <label class="required-form-label">Registra tu fotograf&iacute;a</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <div class="custom-file">
+                                        <input id="ProfilePicture" name="ProfilePicture" type="file" class="custom-file-input" accept="image/*" required />
+                                        <label class="custom-file-label" for="customFile">Adjuntar imagen</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 align-self-center">
+                        <div class="preview" style="overflow: hidden;"></div>
+                    </div>
+
+                </div>
+
+                <div class="m--margin-top-60"></div>
+
+                <div class="form-group m-form__group row text-center">
+                    <div class="m-form__group-sub col-md-12 col-lg-12 col-xs-12">
+                        <button id="btnCropSave" class="btn btn-lg btn-primary text-center" type="submit">Guardar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

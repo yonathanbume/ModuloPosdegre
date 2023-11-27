@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Semanas de Examen";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+    };
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">@ViewData["Title"]</h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right">
+                <div class="row align-items-center">
+                    <div class="col-xl-8">
+
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button data-toggle="modal" data-target="#add_exam_week_modal" class="btn btn-primary m-btn m-btn--air m-btn--icon btn-chart">
+                            <span>
+                                <i class="fa fa-plus"></i>
+                                <span>Nueva Semana</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <table id="datatable" class="table table-striped"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_exam_week_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Agregar Semana de Examen
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add_exam_week_form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="required-form-label">Periodo</label>
+                            <select name="TermId" class="form-control m-select2" required></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="required-form-label">Tipo de Examen</label>
+                            <select name="Type" class="form-control m-select2" required>
+                                @foreach (var item in ConstantHelpers.EXAM_WEEK_TYPE.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="required-form-label">Semana</label>
+                            <select name="Week" class="form-control m-select2" required></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/examweek/index.js" asp-append-version="true"></script>
+}

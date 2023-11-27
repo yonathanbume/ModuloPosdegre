@@ -1,0 +1,60 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.DependencyViewModels
+@model DependencyViewModel
+
+<div id="dependency-modal-detail" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Detalle de la Dependencia
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="dependency-modal-detail-form" class="m-form m-form--label-align-right m-form--state">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="dependency-modal-detail-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="detail_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <input asp-for="Id" type="hidden">
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label asp-for="Name" class="required-form-label">Nombre</label>
+                            <input name="Name" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label asp-for="Acronym" class="required-form-label">Siglas</label>
+                            <input name="Acronym" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-12 m-form__group-sub">
+                            <label for="UserName">Director</label>
+                            <input name="UserName" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-12 m-form__group-sub">
+                            <label asp-for="SignatureFile">Firma</label>
+                            <div id="dependency-modal-detail-signature-content" class="text-center"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

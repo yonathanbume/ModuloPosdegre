@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Situación Académica";
+    ViewBag.SubTitle = "Listado de estudiantes según cuadro de mérito";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button type="button" id="print_pdf" class="btn btn-primary m-btn m-btn--icon ml-1" autocomplete="off">
+                    <span>
+                        <i class="la la-file-pdf-o"></i>
+                        <span>Generar PDF</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Periodo</label>
+                                <select class="form-control m-input m-select2 select2-terms"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Facultad</label>
+                                <select class="form-control m-input m-select2 select2-faculties">
+                                    @*<option value="@Guid.Empty">Todas</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Escuela:</label>
+                                <select class="form-control m-input m-select2 select2-careers">
+                                    @*<option value="@Guid.Empty">Todas</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Plan de estudio</label>
+                                <select class="form-control" id="curriculum-select">
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Ciclo</label>
+                                <select class="form-control" id="academicyear-select">
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>&Oacute;rden M&iacute;nimo</label>
+                                <select class="form-control m-input m-select2 select2-orders">
+                                    <option value="-1">Ninguno</option>
+                                    @foreach (var item in ConstantHelpers.ACADEMIC_ORDER.VALUES)
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                </select>
+                            </div>
+                            @*<div class="form-group m-form__group col-xl-2">
+            <label>&emsp;</label>
+            <div class="m-input m-input-icon m-input-icon--left">
+                <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                    <span><i class="la la-search"></i></span>
+                </span>
+            </div>
+        </div>*@
+
+
+                            <div class="col-xl-2">
+                                <label style="display:block">&emsp;</label>
+                                <button id="btn-apply" class="btn btn-primary ladda-button" data-style="slide-down" title="Aplicar">
+                                    <span class="ladda-label">Aplicar</span>
+                                    <span class="ladda-spinner"></span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered students-datatable"></table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/academicsituation/index.js" asp-append-version="true"></script>
+}

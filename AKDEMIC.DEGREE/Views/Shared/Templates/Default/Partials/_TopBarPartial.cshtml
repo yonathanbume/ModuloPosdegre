@@ -1,0 +1,137 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AKDEMIC.ENTITIES.Models.Generals
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="m-topbar__nav m-nav m-nav--inline">
+    @if (AKDEMIC.DEGREE.Helpers.ConstantHelpers.Project.NOTIFICATION)
+    {
+    }
+
+    @await Html.PartialAsync("Templates/Default/Partials/TopBarPartials/_NotificationPartial")
+
+    @if (SignInManager.IsSignedIn(User) || User?.Identity.IsAuthenticated == true)
+    {
+        <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+            <a href="#" class="m-nav__link m-dropdown__toggle">
+                <span class="m-topbar__username">
+
+                    <span class="m-topbar__name">
+                        @User.GetFullName()
+                        @*<strong>Osorio Galvan,</strong> Leondrio*@
+                    </span>
+                    <span class="m-topbar__role">
+                        <strong>@User.GetRoles()</strong>
+                    </span>
+                </span>
+                &nbsp;
+                <span class="m-topbar__userpic">
+                    <img src="@(string.IsNullOrEmpty(User.GetPictureUrl()) ? "/images/demo/user.png" : "/archivos/" + User.GetPictureUrl())" class="m--img-rounded m--marginless m--img-centered" alt="" />
+                </span>
+                @*<span class="m-topbar__username m--hide">
+                        @User.GetFullName()
+                    </span>*@
+            </a>
+            <div class="m-dropdown__wrapper">
+                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                <div class="m-dropdown__inner">
+                    <div class="m-dropdown__header m--align-center">
+                        @*style="background: url(/images/demo/user_profile_bg.jpg); background-size: cover;"*@
+                        <div class="m-card-user m-card-user--skin-dark">
+                            <div class="m-card-user__pic">
+                                <img src="@(string.IsNullOrEmpty(User.GetPictureUrl()) ? "/images/demo/user.png" : "/archivos/" + User.GetPictureUrl())" class="m--img-rounded m--marginless" alt="" />
+                            </div>
+                            <div class="m-card-user__details">
+                                <span class="m-card-user__name m--font-weight-500">
+                                    @User.GetFullName()
+                                </span>
+                                <a href="" class="m-card-user__email m--font-weight-300 m-link">
+                                    @User.GetEmail()
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-dropdown__body">
+                        <div class="m-dropdown__content">
+                            @*<form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">*@
+                                <ul class="m-nav m-nav--skin-light">
+                                    <li class="m-nav__section m--hide">
+                                        <span class="m-nav__section-text">
+                                            Seccion
+                                        </span>
+                                    </li>
+
+                                    @*<li class="m-nav__item">
+                                            <a asp-controller="Profile" asp-action="Index" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                <span class="m-nav__link-text">
+                                                    Mi Perfil
+                                                </span>
+                                            </a>
+                                        </li>*@
+                                    @*<li class="m-nav__item">
+                                            <a href="../../header/profile.html" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                <span class="m-nav__link-text">
+                                                    Actividades
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="../../header/profile.html" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                <span class="m-nav__link-text">
+                                                    Mensajes
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                                        <li class="m-nav__item">
+                                            <a href="../../header/profile.html" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-info"></i>
+                                                <span class="m-nav__link-text">
+                                                    FAQ
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="../../header/profile.html" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-cogwheel"></i>
+                                                <span class="m-nav__link-text">
+                                                    Soporte
+                                                </span>
+                                            </a>
+                                        </li>*@
+                                    @*<li class="m-nav__separator m-nav__separator--fit"></li>*@
+                                    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.DEGREE_ADMIN))
+                                    {
+                                        <li class="m-nav__item">
+                                            <a asp-controller="Configuration" asp-area="Admin" asp-action="Index" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                                <span class="m-nav__link-text">
+                                                    Configuración
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                                    }
+
+                                <li class="m-nav__item">
+                                    @*<button type="submit" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                        Cerrar Sesi&oacute;n
+                                    </button>*@
+                                    <a asp-action="Logout" asp-controller="Account" asp-area="" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                        Cerrar Sesi&oacute;n
+                                    </a>
+                                </li>
+                                </ul>
+                            @*</form>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+
+</ul>

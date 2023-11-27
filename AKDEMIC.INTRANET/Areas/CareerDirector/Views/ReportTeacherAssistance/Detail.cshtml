@@ -1,0 +1,75 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.ReportTeacherAssistanceViewModels
+@model TeacherViewModel
+@{
+    ViewData["Title"] = "Reporte de asistencia";
+    ViewData["SubTitle"] = "Secciones del periodo";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Listado de docentes" , Area="CareerDirector",Controller="ReportTeacherAssistance", Action="Index" },
+        new BreadcrumbViewData { Name = "Reporte de asistencia"}
+};
+    ViewData["BackUrl"] = Url.Action("Index", "ReportTeacherAssistance", new { area = "CareerDirector" });
+}
+<div class="m-content">
+    <input asp-for="TeacherId" type="hidden" />
+    @*<input asp-for="ActiveTerm" type="hidden" />*@
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información del Docente
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <label>Periodo:  </label>
+                <div class="dropdown bootstrap-select m--align-left">
+                    <select id="select2-terms" class="m-select2"> </select>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Nombre: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Name</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>C&oacute;digo: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.UserName</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Escuela Profesional: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Career</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table class="table table-striped table-bordered" id="data-datatable"></table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/careerdirector/reportTeacherAssistance/report_details.js"></script>
+}

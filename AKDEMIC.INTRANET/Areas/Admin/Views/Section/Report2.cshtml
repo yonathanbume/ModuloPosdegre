@@ -1,0 +1,130 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.SectionsViewModels;
+@model ReportViewModel
+@{
+    var institutionName = GeneralHelpers.GetInstitutionName();
+}
+
+
+<html>
+<head>
+
+</head>
+<body>
+    <table>
+        <tr>
+            <td width="104px">
+                <img src="@Model.ImagePathLogo" style="width:100px" />
+            </td>
+            <td>
+                <div class="title">@institutionName<br />ACTA DE EVALUACI&Oacute;N</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="140px">
+                <table>
+                    @if (Model.Carrer != null)
+                    {
+                        <tr>
+                            <td class="subtitle">FACULTAD:</td>
+                            <td colspan="5">
+                                @Model.Faculty (Espec.: @Model.Carrer)
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td class="subtitle">A&Ntilde;O ACAD&Eacute;MICO:</td>
+                        <td colspan="5">A&Ntilde;O ACAD&Eacute;MICO @Model.Term</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitle">CURSO :</td>
+                        <td colspan="5">@Model.CourseCode @Model.CourseName</td>
+
+                        @if (Model.Carrer != null)
+                        {
+                            <td class="subtitle">AÑO :</td>
+                            <td>@Model.Year</td>
+
+                            <td class="subtitle">CICLO :</td>
+                            <td>@Model.AcademicYear</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="subtitle">CR&Eacute;DITOS:</td>
+                        <td colspan="5">@Model.Credits</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitle">PROFESOR:</td>
+                        <td colspan="5">@Model.Teacher</td>
+                        <td class="subtitle">EMISI&Oacute;N:</td>
+                        <td>@DateTime.Now.ToString("dd-MM-yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitle">ACTA:</td>
+                        <td colspan="5">CARGO</td>
+
+                        <td class="subtitle">R&Eacute;GIMEN:</td>
+                        <td>Semestral</td>
+
+                        <td class="subtitle">SECCI&Oacute;N:</td>
+                        <td>@Model.Section</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="800px" valign="top">
+                <table class="list">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">N&deg;</th>
+                            <th rowspan="2">C&Oacute;DIGO</th>
+                            <th rowspan="2">APELLIDOS Y NOMBRES</th>
+                            <th colspan="2">PROMEDIO FINAL</th>
+                        </tr>
+                        <tr>
+                            <th>NUM.</th>
+                            <th>LETRAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int i = 1; }
+                        @foreach (var item in Model.Students)
+                        {
+                            <tr>
+                                <td>@(i++)</td>
+                                <td>@item.Code</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Grade</td>
+                                <td>@item.GradeText</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="150px" valign="bottom">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="sign left">
+                                <span> PROFESOR DEL CURSO </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="sign center">
+                                <span> SECRETARIA ACAD&Eacute;MICA </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="sign right">
+                                <span> DIRECCI&Oacute;N DE ESCUELA </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

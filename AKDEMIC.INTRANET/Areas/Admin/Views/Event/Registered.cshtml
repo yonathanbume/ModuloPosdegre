@@ -1,0 +1,32 @@
+﻿@model Guid
+@{
+    ViewData["Title"] = "Registrados";
+    ViewData["SubTitle"] = "Lista de registrados";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData {Name="Eventos",Action="Index", Controller="Event",Area="Admin"},
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+
+};
+    ViewData["BackUrl"] = Url.Action("Index", "Event", new { area = "Admin" });
+}
+<div class="m-content">
+    <input id="Id" type="hidden" value="@Model" />
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div> 
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-datatable"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/admin/event/registered.js" type="text/javascript"></script>
+}

@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewData["Title"] = "Actas No Emitidas";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Buscador de Actas", Action="Search", Controller = "EvaluatioNReport", Area="Admin"  },
+    new BreadcrumbViewData { Name = "Actas No Emitidas"},
+    };
+}
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Periodo Acad&eacute;mico:</label>
+                                <select id="term_select" class="m-select2">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Escuela Profesional:</label>
+                                <select id="career_select" class="m-select2">
+                                    <option value="0" selected disabled>Seleccione una Escuela Profesional</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Plan de Estudio:</label>
+                                <select id="curriculum_select" class="m-select2" disabled>
+                                    <option value="0"> Seleccione un Plan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_assign_code" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Asignar Acta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="generate_evaluation_report">
+                <input type="hidden" name="SectionId" />
+                <input type="hidden" name="EvaluationReportId" />
+
+                <div class="modal-body">
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                                 <label class="required-form-label">Cod. Acta</label>
+                            <div class="input-group">
+                                <input name="EvaluationReportCode" class="form-control m-input" />
+                                <div class="input-group-append">
+                                    <button title="Validar Código" class="btn btn-primary validate_evaluationrepot" type="button">Validar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label class="form-control-label">Fecha de Recepci&oacute;n</label>
+                            <input name="ReceptionDate" class="form-control m-input" placeholder="Ingresar fec. recepción" required disabled/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="submit_evaluation_assign" type="submit" class="btn btn-primary">Asignar Acta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="previewView" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                <h5 class="modal-title">
+                Vista previa
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>*@
+            <div class="modal-body">
+                @*<table class="table table-striped table-bordered" id="data-table-preview"></table>*@
+                <div id="preview-datatable" style="text-align:center;">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:right;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles{
+    <style>
+        table.dataTable tr.dtrg-group td {
+            background-color: #e0e0e0
+        }
+
+        table.dataTable tr.dtrg-group.dtrg-level-0 td {
+            font-weight: bold
+        }
+
+        table.dataTable tr.dtrg-group.dtrg-level-1 td, table.dataTable tr.dtrg-group.dtrg-level-2 td {
+            background-color: #f0f0f0;
+            padding-top: 0.25em;
+            padding-bottom: 0.25em;
+            padding-left: 2em;
+            font-size: 0.9em
+        }
+
+        table.dataTable tr.dtrg-group.dtrg-level-2 td {
+            background-color: #f3f3f3
+        }
+    </style>
+}
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/dataTables.rowGroup.min.js"></script>
+    <script src="~/js/areas/admin/evaluationreport/evaluationreportnotissued.js" asp-append-version="true"></script>
+}
+

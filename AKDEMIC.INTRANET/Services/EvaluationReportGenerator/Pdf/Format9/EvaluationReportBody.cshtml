@@ -1,0 +1,119 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+    Model.Course.Section.Students = Model.Course.Section.Students.Where(x => x.Status != ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN).ToList();
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />    
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/format1/evaluation_report_body.css"))" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="3" style="border:0px;"></th>
+                <th colspan="@(Model.Course.PartialAveragesCount)" class="bold center header2">PROMEDIOS PARCIALES</th>
+                <th colspan="3" class="bold center header2">PROMEDIO FINAL</th>
+            </tr>
+            <tr>
+                <th colspan="1" class="bold center">N°</th>
+                <th colspan="1" class="bold center">CÓDIGO</th>
+                <th colspan="1" class="bold center">APELLIDOS Y NOMBRES</th>
+                @for (int i = 0; i < Model.Course.Evaluations.Count(); i++)
+                {
+                    <th class="bold center" style="max-width:50px !important; font-size:10px;">@Model.Course.Evaluations[i].Name</th>
+                }
+                <th class="bold center">Número</th>
+                <th class="bold center">Susti.</th>
+                <th class="bold center">Letras</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Course.Section.Students.Count(); i++)
+            {
+                <tr style="text-align:center;">
+                    <th class="thd" style="text-align: center;">@(i+1)</th>
+                    <th class="thd" style="border-right:0px !important;">@Model.Course.Section.Students[i].UserName</th>
+                    <th class="thd" style="border-right:0px !important;">@Model.Course.Section.Students[i].FullName <strong>@(Model.Course.Section.Students[i].HasSusti?"*" : "")</strong></th>
+
+                    @for (int v = 0; v < Model.Course.Section.Students[i].Averages.Count(); v++)
+                    {
+                        @if (!Model.Course.Section.Students[i].Averages[v].Average.HasValue)
+                        {
+                            <th class="thd" style="text-align: center !important">-</th>
+                        }
+                        else if (Model.Course.Section.Students[i].Averages[v].Approved)
+                        {
+                            <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Course.Section.Students[i].Averages[v].Average:00}")</th>
+                        }
+                        else
+                        {
+                            <th class="red thd" style="text-align: center !important">@($"{Model.Course.Section.Students[i].Averages[v].Average:00}")</th>
+                        }
+                    }
+
+                    @if (Model.Course.Section.Students[i].HasSusti)
+                    {
+                        @if (Model.Course.Section.Students[i].GradeBeforeSusti > Model.Term.MinGrade)
+                        {
+                            <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Course.Section.Students[i].GradeBeforeSusti:00}")</th>
+                        }
+                        else
+                        {
+                            <th class="red thd" style="text-align: center !important;">@($"{Model.Course.Section.Students[i].GradeBeforeSusti:00}")</th>
+                        }
+
+                        @if (Model.Course.Section.Students[i].Approved)
+                        {
+                            <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Course.Section.Students[i].FinalGrade:00}")</th>
+                            <th class="thd" style="font-weight:bold; text-align:left !important;">@Model.Course.Section.Students[i].FinalGradeText</th>
+                        }
+                        else
+                        {
+                            <th class="red thd" style="text-align: center !important;">@($"{Model.Course.Section.Students[i].FinalGrade:00}")</th>
+                            <th class="red thd" style="text-align: left !important;">@Model.Course.Section.Students[i].FinalGradeText</th>
+                        }
+                    }
+                    else
+                    {
+                        @if (Model.Course.Section.Students[i].Approved)
+                        {
+                            <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Course.Section.Students[i].FinalGrade:00}")</th>
+                            <th class="thd" style="font-weight:bold; text-align:center !important;"></th>
+                            <th class="thd" style="font-weight:bold; text-align:left !important;">@Model.Course.Section.Students[i].FinalGradeText</th>
+                        }
+                        else
+                        {
+                            <th class="red thd" style="text-align: center !important;">@($"{Model.Course.Section.Students[i].FinalGrade:00}")</th>
+                            <th class="red thd" style="text-align: center !important;"></th>
+                            <th class="red thd" style="text-align: left !important;">@Model.Course.Section.Students[i].FinalGradeText</th>
+                        }
+                    }
+
+                </tr>
+            }
+
+            @if (!Model.Course.Section.Students.Any())
+            {
+                <tr>
+                    <th class="center" colspan="12">No hay estudiantes en la sección</th>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="center" style="border:0px !important; text-align:left; font-size:13px; font-weight:bold;" colspan="3">*Examen Sustitutorio</th>
+
+                <th class="center" style="border:0px !important; text-align:right; font-size:15px;" colspan="@(Model.Course.PartialAveragesCount+3)">@AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.Locations[AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value], C.U. @DateTime.Now.Day de  @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.Now.Month].ToLower() de @DateTime.Now.Year</th>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

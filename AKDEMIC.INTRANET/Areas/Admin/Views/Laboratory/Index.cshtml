@@ -1,0 +1,144 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.LaboratoryViewModels
+@model AnswerRequestViewModel
+@{
+    Layout = "~/Views/Shared/Templates/Default/_SlimLayout.cshtml";
+    ViewBag.Title = "Solicitudes";
+    ViewBag.SubTitle = "Listado de solicitudes";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+<!--begin::Modal-->
+<div class="modal fade" id="request_modal" tabindex="-1000" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="edit-label">
+                    Solicitud de reserva de laboratorio
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="request-form" asp-controller="Laboratory" asp-action="AddBooking" data-ajax="true" data-ajax-method="POST" data-ajax-begin="RequestsTable.Request.begin" data-ajax-complete="RequestsTable.Request.complete" data-ajax-success="RequestsTable.Request.success" data-ajax-failure="RequestsTable.Request.failure">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="request_form_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="request_form_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="SectionId" class="required-form-label">Sección:</label>
+                            <select asp-for="SectionId" class="form-control m-select2" id="cSectionSearch" required disabled>
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="Date" class="required-form-label">Fecha:</label>
+                            <input asp-for="Date" class="form-control m-input" disabled required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="TimeStart" class="required-form-label">Inicia:</label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="la la-clock-o"></i></span>
+                                </div>
+                                <input asp-for="TimeStart" type="text" class="form-control" placeholder="Inicia" required readonly>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label asp-for="TimeEnd" class="required-form-label">Termina:</label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="la la-clock-o"></i></span>
+                                </div>
+                                <input asp-for="TimeEnd" type="text" class="form-control" placeholder="Inicia" required readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="Observation" class="required-form-label">Comentario:</label>
+                            <textarea asp-for="Observation" class="form-control m-input" placeholder="Comentario" disabled></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnSave" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button class="btn btn-primary m-btn m-btn--icon btn-add" data-toggle="modal" data-target="#syllabus-modal-create">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Registrar Reserva</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable" id="ajax_data"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/jquery-ajax-unobtrusive.min.js"></script>
+    <script src="~/js/areas/admin/laboratory/index.js" asp-append-version="true"></script>
+}
+

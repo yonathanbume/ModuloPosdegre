@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Gestión de foros";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Foros" }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de categor&iacute;as del foro
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn btn-primary m-btn m-btn--icon" onclick="forums.modal.load.create(this, event)">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nueva categor&iacute;a</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable" id="ajax_data"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="forums-modal-create" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nueva categor&iacute;a</h5>
+                </div>
+                <form id="forums-modal-create-form" action="@Url.Action("CreateForum", "Forum", new { area = "Admin" })" method="post">
+                    <div class="modal-body">
+                        <div class="form-group m-form__group">
+                            <label for="Name">Nombre</label>
+                            <input name="Name" class="form-control m-input" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="Careers">Escuelas</label>
+                            <select id="careers-select1" name="Careers" class="form-control m-input select2-careers" placeholder="Nombre" multiple></select>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="Description">Descripci&oacute;n</label>
+                            <textarea name="Description" class="form-control" placeholder="Descripcion" style="height: 80px; resize: none"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-add" data-dismiss="modal"> Cerrar </button>
+                        <button type="submit" class="btn btn-primary"> Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="forums-modal-edit" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar categor&iacute;a</h5>
+                </div>
+                <form id="forums-modal-edit-form" action="@Url.Action("UpdateForum", "Forum", new { area = "Admin" })" method="post">
+                    <input type="hidden" name="Id" />
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group">
+                            <label>Estado</label>
+                            <select id="activeForum" name="Active">
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="Name">Nombre</label>
+                            <input name="Name" class="form-control m-input" placeholder="Nombre">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="Careers">Escuelas</label>
+                            <select id="careers-select2" name="Careers" class="form-control m-input select2-careers" placeholder="Nombre" multiple></select>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="Description">Descripci&oacute;n</label>
+                            <textarea name="Description" class="form-control" placeholder="Descripcion" style="height: 80px; resize: none"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-add" data-dismiss="modal"> Cerrar </button>
+                        <button type="submit" class="btn btn-primary"> Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/forum/index.js"></script>
+
+}

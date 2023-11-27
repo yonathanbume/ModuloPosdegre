@@ -1,0 +1,100 @@
+﻿@model AKDEMIC.INTRANET.Areas.AcademicRecord.Models.Staff.EditStaff
+@{
+    ViewData["Title"] = "Editar Usuario";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de Usuarios", Area ="AcademicRecord" ,Controller = "Staff",Action ="Index"},
+new BreadcrumbViewData { Name = ViewData["Title"].ToString()}
+};
+}
+<div class="m-content">
+    <div class="m-portlet" id="edit__portlet">
+        <form id="edit-user">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">@ViewData["Title"]</h3>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" asp-for="UserId" />
+            <div class="m-portlet__body">
+                <h5>Datos del Usuario</h5><br />
+                <div class="form-group row">
+                    <div class="form-group m-form__group col-lg-12">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control m-input letters" autocomplete="off" required maxlength="30" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label asp-for="PaternalSurname"></label>
+                        <input asp-for="PaternalSurname" class="form-control m-input letters" autocomplete="off" required maxlength="30" disabled/>
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label asp-for="MaternalSurname"></label>
+                        <input asp-for="MaternalSurname" class="form-control m-input letters" autocomplete="off" required maxlength="30" disabled/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group m-form__group input-group col-lg-12">
+                        <label asp-for="UserName"></label>
+                        <div class="col-xl-12 col-lg-12 p-0">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-user"></i></span></div>
+                                <input asp-for="UserName" class="form-control m-input letters" maxlength="15" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group m-form__group input-group col-lg-6">
+                        <label asp-for="Email"></label>
+                        <div class="col-xl-12 col-lg-12 p-0">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-envelope"></i></span></div>
+                                <input asp-for="Email" class="form-control m-input letters">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group input-group col-lg-6">
+                        <label asp-for="PhoneNumber"></label>
+                        <div class="col-xl-12 col-lg-12 p-0">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
+                                <input asp-for="PhoneNumber" class="form-control m-input letters">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="m-form__actions m-form__actions--solid">
+                    <div class="row">
+                        <div class="col-6">
+                            <a id="btn-back" class="btn btn-secondary m-btn m-btn--icon">
+                                <span>
+                                    <i class="la la-reply"></i>
+                                    <span>Atr&aacute;s</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <button type="submit" class="btn btn-primary m-btn m-btn--icon">
+                                <span>
+                                    <i class="la la-archive"></i>
+                                    <span>Actualizar</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/academicrecord/staff/edit.js" asp-append-version="true"></script>
+}

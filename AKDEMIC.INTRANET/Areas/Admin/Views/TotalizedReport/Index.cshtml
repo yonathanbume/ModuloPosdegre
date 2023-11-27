@@ -1,0 +1,545 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.TotalizedReportViewModels;
+@model TotalizedReportViewModel
+
+@{
+    ViewData["Title"] = "Reportes";
+ ViewData["SubTitle"] = "Reportes Totalizados";
+ ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Reportes Totalizados
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> Hombres vs Mujeres </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Hombres / Mujeres</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Man_Woman)
+                            {
+                                <tr>
+                                    <td>@item.Concept</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;">N°Estudiantes por Preparación Universitaria </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de preparación</th>
+                                        <th>Total </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_UniversityPreparation)
+                            {
+                                <tr>
+                                    <td>@item.UniversityPreparationName</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Modalidad de Ingreso</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Modalidad de Ingreso</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Admission)
+                            {
+                                <tr>
+                                    <td>@item.AmissionTypeName</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Escuela </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Escuela</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Career)
+                            {
+                                <tr>
+                                    <td>@item.CareerName</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Rango de Edades</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Rango de Edades</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Range)
+                            {
+                                <tr>
+                                    <td>@item.RangeAgeDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Dependencia Económica</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de dependencia</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Dependency_Economic)
+                            {
+                                <tr>
+                                    <td>@item.DependencyName</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por tipo de colegio de procedencia</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Colegio</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_SchoolType)
+                            {
+                                <tr>
+                                    <td>@item.SchoolTypeName</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Alumnos por nivel de estudio</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Nivel de Estudio</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_LevelEducation)
+                            {
+                                <tr>
+                                    <td>@item.LevelEducationName</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+
+
+
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes segun su Estado Civil</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Estado Civil</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Civil_Status)
+                            {
+                                <tr>
+                                    <td>@item.CivilStatusName</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes según quien sostiene el hogar </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Persona encargada</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Principal_Person)
+                            {
+                                <tr>
+                                    <td>@item.PrincipalPersonDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Ingreso Familiar</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Ingreso Familiar</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_RemunerationTotal)
+                            {
+                                <tr>
+                                    <td>@item.TotalRemunerationDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Convivencia </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Convivencia</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Coexistence)
+                            {
+                                <tr>
+                                    <td>@item.StudentCoexistenceDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Riesgo Familiar</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Riesgo Familiar</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Family_Risk)
+                            {
+                                <tr>
+                                    <td>@item.FamiliRiskDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Tenencia de Vivienda </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Tenencia de Vivienda</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Tenure)
+                            {
+                                <tr>
+                                    <td>@item.TenureDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row col-12">
+
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Vivienda </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Vivienda</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_ZoneType)
+                            {
+                                <tr>
+                                    <td>@item.ZoneTypeDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Construcción de Vivienda</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Construcción</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Construction_Type)
+                            {
+                                <tr>
+                                    <td>@item.ConstructionTypeDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="row col-12">
+
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Estructura de Vivienda </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Estructura</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_BuildType)
+                            {
+                                <tr>
+                                    <td>@item.BuildTypeDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Alumnos por Tipo de Condición de Vivienda</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Condición</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstResult_Totalized_Student_Construction_Condition)
+                            {
+                                <tr>
+                                    <td>@item.ConstructionConditionDescription</td>
+                                    <td>@item.Total</td>
+                                </tr>
+                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+
+        </div>
+    </div>
+</div>

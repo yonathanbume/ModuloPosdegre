@@ -1,0 +1,91 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.DirectedCourseViewModels.GradeViewModel
+@{
+    ViewData["Title"] = "Calificación de Cursos Dirigidos";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Cursos Dirigidos" }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de solicitudes de cursos dirigidos
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+<div id="request-directedcourse-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Calificar Curso Dirigido
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="directedcourse-form" asp-action="DirectedCourseGrade" asp-area="Admin" asp-controller="DirectedCourse">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="directedcourse-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="directedcourse_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <h6 id="course-name">Curso Dirigido</h6>
+                    <input asp-for="Id" hidden/>
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label asp-for="Grade" class="required-form-label"></label>
+                        <input asp-for="Grade" class="form-control" type="number" step="0.01" min="0" max="20"/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Calificar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/directedcourse/index.js"></script>
+}
+

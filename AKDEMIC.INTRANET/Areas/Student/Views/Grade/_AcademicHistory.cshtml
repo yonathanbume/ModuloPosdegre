@@ -1,0 +1,11 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.GradeViewModels
+@model AcademicHistoryViewModel
+
+<input id="summaryAcademicYear" hidden value="@Model.AcademicYear" />
+<input id="summaryCreditSum" hidden value="@Model.CreditSum" />
+<input id="summarySectionCount" hidden value="@Model.SectionCount" />
+
+<div class="m-accordion m-accordion--bordered" id="courses-container">
+    @await Html.PartialAsync("_EnrolledCoursesList", Model.EnrolledCourses)
+</div>
+

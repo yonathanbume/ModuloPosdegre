@@ -1,0 +1,35 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:prettier/recommended",
+    "plugin:promise/recommended",
+    "plugin:unicorn/recommended",
+    "prettier",
+    "prettier/unicorn"
+  ],
+  "parser": "esprima",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "import",
+    "prettier",
+    "promise",
+    "unicorn"
+  ],
+  "rules": {
+    "quotes": [ "error", "double" ],
+    "semi": [ "error", "always" ]
+  }
+}

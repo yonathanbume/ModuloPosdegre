@@ -1,0 +1,281 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.EvaluationReportViewModels.ExtraordinaryEvaluationReportViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <style>
+        body {
+            font-family: "Calibri";
+            font-size: 13px;
+        }
+
+        h1 {
+            margin-bottom: 5px !important;
+            font-size: 28px;
+        }
+
+        h2 {
+            margin: 0px;
+            font-size: 18px;
+        }
+
+        img {
+            top: 0;
+            left: 0;
+            max-height: 60px;
+        }
+
+        header {
+            width: 100%;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+
+        th {
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 3px 3px !important;
+        }
+
+        th {
+            font-weight: normal;
+            text-align: left;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .bold {
+            font-weight: bold;
+            background-color: lightgray;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .header2 {
+            font-size: 10px;
+            padding: 3px 0px !important;
+        }
+
+        .header > th, td {
+            border: 1px solid black;
+            padding: 5px 3px !important;
+        }
+
+        .td-header {
+            border: none;
+            padding: 0px !important;
+        }
+
+        .detail-header {
+            font-size: 11px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .footer {
+            font-size: 15px;
+            text-align: center;
+            font-style: italic;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-bottom: -6px;
+        }
+
+        .thd {
+            padding: 5px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <div style="position:absolute;text-align: center;padding: 20px 20px;">
+        <img src="@Model.Img" />
+    </div>
+    <header>
+        <h1 class="negrita">@GeneralHelpers.GetInstitutionName().ToUpper()</h1>
+        <h2 class="negrita">VICE RECTORADO ACADÉMICO</h2>
+        <h2 class="negrita">OFICINA DE REGISTRO Y ARCHIVO ACADÉMICO</h2>
+    </header>
+    <br />
+
+    <table border="0" style="border: none; margin: 0">
+        <tbody>
+            <tr>
+                <td class="td-header">
+                    &emsp;
+                </td>
+                <td style="text-align: center; width: 160px;">
+                    @Model.Code
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h2 style="padding-left:20px; display: inline"> ACTA DE EVALUACIONES: EXTRAORDINARIO </h2>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> HORAS TEORICAS: @Model.TheoreticalHours</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h2 style="padding-left:20px; display: inline"> FACULTAD: @Model.Faculty</h2>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> HORAS PRÁCTICAS: @Model.PracticalHours</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h2 style="padding-left:20px; display: inline"> ESCUELA PROFESIONAL: @Model.Career </h2>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> HORAS EFECTIVAS: @Model.EffectiveHours</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h2 style="padding-left:20px; display: inline"> COMPONENTE CURRICULAR: @Model.Course</h2>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> FECHA: @DateTime.Now.ToString("dd/MM/yyyy")</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h2 style="padding-left:20px; display: inline">DOCENTE: @Model.Teacher </h2>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> HORA : @DateTime.Now.ToString("hh:mm:ss tt")</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h2 style="padding-left:20px; display: inline">CRÉDITOS: @Model.Credits</h2>
+                </td>
+                <td class="td-header">
+                    <span class="detail-header"> F. I. : @DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt")</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-header">
+                    <h2 style="padding-left:20px; display: inline">
+                        AÑO ACADÉMICO: @Model.Term &emsp; CICLO: @Model.Academicyear &emsp; Usuario: @Model.User
+                    </h2>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <br />
+    <table>
+        <thead>
+            <tr>
+                <th class="bold center">N°</th>
+                <th colspan="2" class="bold center">APELLIDOS Y NOMBRES</th>
+                <th class="bold center">PROMEDIO FINAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Students.Count(); i++)
+            {
+                <tr>
+                    <th class="thd">@(i + 1)</th>
+                    <th class="thd" style="border-right:0px !important;">@Model.Students[i].FullName</th>
+                    <th class="thd" style="width:100px; border-left:0px !important;">EXTRAORDINARIO</th>
+                    <th class="thd @(Model.Students[i].Approved ? "" : "red")">@Model.Students[i].Grade</th>
+                </tr>
+            }
+
+            @if (Model.Students.Count == 0)
+            {
+                <tr>
+                    <th class="center" colspan="4">No hay estudiantes en la sección</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <table>
+        <thead>
+            <tr>
+                <th class="bold center">DOCENTES</th>
+                <th class="bold center">CARGO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th class="thd" style="border-right:0px !important;">@Model.Teacher</th>
+                <th class="thd" style="border-right:0px !important;">Presidente</th>
+            </tr>
+            @foreach (var item in Model.Committee)
+            {
+                <tr>
+                    <th class="thd">@item</th>
+                    <th class="thd">Comit&eacute;</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <table>
+        <tbody>
+            <tr style="height:45px; vertical-align:top;">
+                <th style="width:50%;" colspan="2"><span style="float:left; font-size:10px;">Evidencia de Conocimiento</span></th>
+            </tr>
+            <tr style="height:45px; vertical-align:top;">
+                <th style="width:50%;" colspan="2"><span style="float:left; font-size:10px;">Evidencia de Desempeño</span></th>
+            </tr>
+            <tr style="height:45px; vertical-align:top;">
+                <th style="width:50%; "><span style="float:left; font-size:10px;">Evidencia de Producto</span></th>
+                <th style="border:0px !important; font-size:18px;"><span style="margin-top:2px; margin-left:2px;">@ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], @DateTime.UtcNow.ToDefaultTimeZone().Day de  @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.ToDefaultTimeZone().Month] del @DateTime.UtcNow.ToDefaultTimeZone().Year</span></th>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <table style="display:inline-block; width:70% !important;">
+        <tbody>
+            <tr>
+                <th style="width:190px; border:0px !important;">&emsp;</th>
+                <th style="border:0px !important;">&emsp;</th>
+            </tr>
+            @if (!string.IsNullOrEmpty(Model.ReceptionDate))
+            {
+                <tr>
+                    <th style="text-align:center; font-weight:bold; border-bottom:0px !important">Fecha de Recepción</th>
+                </tr>
+                <tr>
+                    <th style="font-weight:bold; text-align:center; border-top:0px !important;">@Model.ReceptionDate</th>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</body>
+</html>

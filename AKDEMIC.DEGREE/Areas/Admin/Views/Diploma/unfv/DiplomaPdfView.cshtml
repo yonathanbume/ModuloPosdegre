@@ -1,0 +1,171 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+
+@{
+    Layout = null;
+}
+<div class="main-container">
+    <div class="first-section">
+        <span class="header-1">REPUBLICA DEL PERÚ</span>
+        <br />
+        <span class="nation-name">A NOMBRE DE LA NACIÓN</span>
+    </div>
+    <br />
+    <div class="university-name">
+        El Rector de la "@ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value]"
+    </div>
+    <br />
+    <div class="pl-3">
+        <div class="description">
+            Por cuanto el Consejo de Facultad de
+        </div>
+        <br>
+        <div class="name-des text-center">
+            @Model.Career.ToUpper()
+        </div>
+        <br>
+
+        <div class="text-center description">
+            con fecha @Model.CurrentDay de @Model.CurrentMonth del @Model.CurrentYear, ha aprobado<br />
+            el otorgamiento del @Model.GradeTypeDescription de:
+        </div>
+        <br>
+
+        <div class="text-center name-des">
+            @Model.AcademicDegreeDenomination
+        </div>
+        <br>
+
+        <div class="description">
+            A favor de don (ña):
+        </div>
+        <br>
+
+        <div class="text-center name-des">
+            @Model.StudentName.ToUpper() @Model.StudentPaternalSurName.ToUpper() @Model.StudentMaternalSurName.ToUpper()
+        </div>
+        <br />
+        <br />
+        <div class="description">
+            Y, el Consejo Universitario, le ha conferido el mencionado @Model.GradeTypeDescription, para cuyo efecto expide el presente Diploma, a fin de que se le reconozca como tal.
+            <br />
+            <div class="text-right">
+                Dado en la Ciudad de Lima, @Model.FormatedDate
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div style="width:100%" class="signature_div">
+        <div style="width:33.3%;display:inline-block;float:left">
+            <div class="text-center" style="float:right;margin-right:150px;border-top: 1px solid;width:250px">
+                <div class="adobe-arabic-bold-italic-font">@(!String.IsNullOrEmpty(Model.Rector)? Model.Rector : " ")</div>
+                <label style="display:block">
+                    Rector
+                </label>
+            </div>
+        </div>
+        <div style="width:33.3%;display:inline-block;float:right">
+            <div class="text-center" style="float:left;margin-left:150px;border-top: 1px solid;width:250px">
+                <div class="adobe-arabic-bold-italic-font"> @(!String.IsNullOrEmpty(Model.Dean)? Model.Dean : " ")</div>
+                <label style="display:block">
+                    Decano
+                </label>
+            </div>
+        </div>
+        <div style="width:33.3%;display:inline-block;float:right">
+            <div class="text-center" " style="margin:auto;border-top: 1px solid;width:250px">
+                <div class="adobe-arabic-bold-italic-font">@(!String.IsNullOrEmpty(Model.GeneralSecretary)? Model.GeneralSecretary : " ")</div>
+                <label style="display:block">
+                    Secretario General
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div style="page-break-inside:avoid;" class="second-page">
+    <div style="text-align:right;">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%;font-size:12px;border:none;border-collapse: collapse;background-color:white;">
+            <tr>
+            </tr>
+            <tr style="background-color:white;">
+                <td style="width:50%;border:none;">
+                    <div style="height:100px;text-align:left;font-size:15px;">
+                        <br />
+
+                        <p>
+                            CONFERIDO POR R.R. Nª 345-2020-Cu-UNFV &emsp;&emsp;&emsp; FECHA: @Model.CurrentDay-@Model.CurrentMonth-@Model.CurrentYear
+                        </p>
+                        <p>
+                            TIPO DE DOCUMENTO: @Model.DocumentType Nª: @Model.DocumentNumber &emsp;&emsp;&emsp; ABREVIATURA G/T: T
+                        </p>
+                        <p>
+                            MODALIDAD DE ESTUDIOS: @Model.StudentModality &emsp;&emsp;&emsp; TIPO DE EMISIÓN DE DIPLOMA: @Model.EmittedDiplomaType
+
+                        </p>
+                        <p>
+                            MODALIDAD DE OBTENCIÓN: @Model.GradeModalityGain
+                        </p>
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style="text-align:center;width:50%;margin-left:100px;">
+                            <div style="border-top: 1px solid black;height: 2px; padding:10px; font-weight:bold;">
+                                JEFE DE LA OFICINA DE GRADOS Y TÍTULOS UNFV
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td style="width:50%;border:none;font-family:Arial, Helvetica, sans-serif;">
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+    <div style="width:100%">
+        <div style="float:right">
+            <img src="@Model.QRCode">
+        </div>
+    
+    </div>
+    <div class="text-center" style="margin-top:250px; font-weight:bold;">
+        <p>
+            Nª DIPLOMA : @Model.DiplomaNumber
+        </p>
+    </div>
+</div>

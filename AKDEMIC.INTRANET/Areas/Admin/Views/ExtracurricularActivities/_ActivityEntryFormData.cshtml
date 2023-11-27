@@ -1,0 +1,32 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.ExtracurricularActivitiesViewModel.ExtracurricularActivityViewModel;
+<input asp-for="Id" hidden />
+<div class="form-group row">
+    <div class="m-form__group-sub col-md-6">
+        <label asp-for="Code"></label>
+        <input asp-for="Code" class="form-control m-input" placeholder="Código" required maxlength="10" />
+    </div>
+    <div class="m-form__group-sub col-md-6">
+        <label asp-for="Credits"></label>
+        <input asp-for="Credits" class="form-control m-input" placeholder="Créditos" required min="0">
+    </div>
+</div>
+<div class="form-group m-form__group ">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" class="form-control m-input" placeholder="Nombre de la actividad" required maxlength="100" />
+</div>
+<div class="form-group m-form__group ">
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control m-input" maxlength="400" rows="4" required></textarea>
+</div>
+<div class="form-group m-form__group ">
+    <label asp-for="AreaId"></label>
+    <select asp-for="AreaId" required>
+        <option></option>
+    </select>
+</div>
+<div class="form-group m-form__group ">
+    <label asp-for="TermId"></label>
+    <select asp-for="TermId" required>
+        <option></option>
+    </select>
+</div>

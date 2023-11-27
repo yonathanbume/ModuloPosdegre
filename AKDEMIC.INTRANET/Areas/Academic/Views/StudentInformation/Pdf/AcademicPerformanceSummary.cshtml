@@ -1,0 +1,120 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.AcademicPerformanceSummaryViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="~/css/views/pdf/meritchart.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="cited-text" style="font-size:22px;font-family:Georgia;padding:5px;text-align: center;
+         font-weight: bold;padding-top:50px;padding-bottom:30px;">
+        <img class="header-image right"
+             style=" float: right;
+                    max-height: 100px;
+                    max-width: 100px;" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+        @(GeneralHelpers.GetTheme().ToUpper())
+    <div class="cited-text" style="font-size:18px;padding:5px">
+        @Model.University.HeaderOffice.ToUpper()
+    </div>
+    </div>
+    <div class="" style="text-align:left;font-size:14px;padding:5px">
+        NOMBRE: @Model.StudentName
+        <br />
+        FACULTAD: @Model.Faculty?.ToUpper()
+    </div>
+    <div style="text-align:center">
+        <strong>Resumen de notas</strong>
+    </div>
+    <table class="" style="  font-size: 13px;
+    width: 100%;
+    padding: 13px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-collapse: collapse;">
+        <colgroup span="1"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <tr style="border:1px solid black">
+            <th style="border:1px solid black" colspan="1" scope="colgroup"></th>
+            <th style="border:1px solid black" colspan="5" scope="colgroup">DATOS PARCIALES</th>
+            <th style="border:1px solid black" colspan="5" scope="colgroup"> DATOS ACUMULATIVOS</th>
+        </tr>
+        <tr style="border:1px solid black">
+
+            <th style="border:1px solid black"> Año - Per </th>
+            @* parciales *@
+
+            <th style="border:1px solid black"> C Cu</th>
+            <th style="border:1px solid black"> C Ap</th>
+            <th style="border:1px solid black"> C Ds</th>
+            <th style="border:1px solid black">
+                Ptje
+            </th>
+
+            <th style="border:1px solid black"> PPS </th>
+            @* acumulativos *@
+
+            <th style="border:1px solid black">
+                C Cu
+            </th>
+            <th style="border:1px solid black"> C Ap</th>
+            <th style="border:1px solid black"> C Ds</th>
+            <th style="border:1px solid black">
+                Ptje
+            </th>
+
+            <th style="border:1px solid black"> PPA </th>
+
+        </tr>
+        @{
+            var totalaccumulated = 0.0M;
+            var totalapproved = 0.0M;
+            var totaldisapproved = 0.0M;
+            var totalaverage = 0M;
+        }
+        @for (int i = 0; i < Model.Details.Count(); i++)
+        {
+            <tr style="border:1px solid black">
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].Term</td>
+
+                @* parciales *@
+
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].TotalCredits</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].ApprovedCredits</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].DisapprovedCredits</td>
+                <td style="text-align:center;border:1px solid black">--</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].Average</td>
+
+                @* acumulativos *@
+
+                <td style="text-align:center;border:1px solid black">@(totalaccumulated = totalaccumulated + Model.Details[i].TotalCredits)</td>
+                <td style="text-align:center;border:1px solid black">@(totalapproved = totalapproved + Model.Details[i].ApprovedCredits)</td>
+                <td style="text-align:center;border:1px solid black">@(totaldisapproved = totaldisapproved + Model.Details[i].DisapprovedCredits)</td>
+                <td style="text-align:center;border:1px solid black">--</td>
+                @if (i == 0)
+                {
+                    totalaverage = Model.Details[i].Average;
+                }
+                else
+                {
+                    totalaverage = ((totalaverage + Model.Details[i].Average) / 2);
+                }
+                <td style="text-align:center;border:1px solid black">@totalaverage.ToString("0.00")</td>
+            </tr>
+        }
+    </table>
+
+    @*<div style="width:100%; text-align:start">
+            <img style="width:100px; height:100px !important;" src="@Model.ImageQR" />
+        </div>*@
+
+    @*<div class="document-footer" style="text-align:right"><div class="pull-right">C&Oacute;DIGO:@Model.PageCode</div></div>*@
+    <div class="document-footer" style="text-align:right;margin-top:20px"><div class="">@Model.Location, @Model.Date</div></div>
+</body>
+
+</html>

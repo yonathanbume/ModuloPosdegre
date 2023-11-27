@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Deudas Pendientes";
+    ViewData["SubTitle"] = "Deudas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Mis pagos pendientes
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 order-1 order-lg-2 m--align-right">
+                        <a asp-action="EnrollmentPaymentsPdf" asp-controller="PendingDebt" asp-area="Student" class="btn btn-sm btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-file-pdf-o"></i>
+                                <span>Pagos matr&iacute;cula</span>
+                            </span>
+                        </a>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/student/pendingdebt/index.js" asp-append-version="true"></script>
+}

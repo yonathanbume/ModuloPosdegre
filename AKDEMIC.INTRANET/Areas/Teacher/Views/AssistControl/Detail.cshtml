@@ -1,0 +1,64 @@
+﻿@model Guid
+@{
+    ViewData["Title"] = "Detalle de secciones";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Lista de secciones" , Url = Url.Action("Index","AssistControl") },
+new BreadcrumbViewData { Name = "Asistencia por sección " }
+
+};
+    ViewData["BackUrl"] = Url.Action("Index", "AssistControl", new { area = "Teacher" });
+}
+<input id="IdSection" type="hidden" value="@Model" />
+<input id="sectionId" type="hidden" value="@Model" />
+@*<input id="IdTeacher" type="hidden" value="@Model.TeacherId" />*@
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de estudiantes
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            @*<div class="m-datatable-students"></div>*@
+
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+<!--begin::Modal-->
+<div class="modal fade" id="assistances_modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-label">
+                    Inasistencias
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <table class="table table-hover table-striped table-bordered" id="absences-datatable"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/teacher/assistcontrol/detail.js" asp-append-version="true"></script>
+}

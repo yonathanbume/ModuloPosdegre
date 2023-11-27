@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Generación de Actas";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+    };
+}
+@section Styles {
+    <style>
+        a {
+            text-decoration: none !important;
+        }
+
+            a:hover .m-portlet {
+                box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.7);
+            }
+
+            a i {
+                font-size: 120px;
+            }
+    </style>
+}
+
+<div class="m-content">
+    <h4 class="text-center" style="font-weight:bold !important;">@ViewData["Title"].ToString().ToUpper()</h4>
+    <br />
+    <div class="row">
+
+        <div class="col-md-3">
+            <a asp-action="Index" asp-controller="EvaluationReport" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Generación de Actas Finales</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-action="DeferredExam" asp-controller="EvaluationReport" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Generación de Actas de Examenes Aplazados</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-action="ExtraordinaryEvaluation" asp-controller="EvaluationReport" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Generación de Actas de Evaluaciones Extraordinarias</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-action="CorrectionExam" asp-controller="EvaluationReport" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Generación de Actas de Examenes de Subsanación Especial</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $('a').hover(
+            function () {
+                $(this).children(":first").children(":first").addClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-primary');
+            },
+            function () {
+                $(this).children(":first").children(":first").removeClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-primary');
+            }
+        )
+    </script>
+}

@@ -1,0 +1,379 @@
+﻿@model AKDEMIC.PDF.Services.CertificateOfStudiesGenerator.Models.CertificateOfStudiesModel
+@{
+    Layout = null;
+    var counter = 1;
+    var rowspan = 1;
+    var maxTableHigth_1 = 2044;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificado de Estudios</title>
+    <style>
+        body {
+            /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
+            font-family: sans-serif;
+        }
+
+        .document-header {
+            border-bottom: 1px solid black
+        }
+
+            .document-header div {
+                text-align: center;
+            }
+
+        .university-name {
+            font-family: Georgia;
+            font-size: 25px;
+            padding: 10px;
+        }
+
+        .company-name {
+            font-family: Georgia;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        .area-name {
+            font-size: 16px;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .office-name {
+            padding: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .address-text {
+            padding: 0 0 10px 0;
+            font-size: 12px;
+        }
+
+        .header-image.left {
+            float: left;
+            max-height: 100px;
+            max-width: 100px;
+        }
+
+        .header-image.right {
+            float: right;
+            max-height: 100px;
+            max-width: 100px;
+        }
+
+
+        table.minimalistBlack {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+            table.minimalistBlack td, table.minimalistBlack th {
+                border: 1px solid #000000;
+                padding: 1.5px 1.5px !important;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            table.minimalistBlack thead {
+            }
+
+                table.minimalistBlack thead th {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: #000000;
+                    text-align: center;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+            table.minimalistBlack tfoot td {
+                font-size: 14px;
+            }
+
+            table.minimalistBlack thead {
+                display: table-header-group
+            }
+
+            table.minimalistBlack tfoot {
+                display: table-row-group
+            }
+
+            table.minimalistBlack tr {
+                page-break-inside: avoid
+            }
+
+        .sign {
+            max-width: 95%;
+            text-align: center;
+            border: 1px solid #000000;
+            padding-top: 100px;
+        }
+
+            .sign.left {
+                margin-right: auto;
+            }
+
+            .sign.center {
+                margin: auto;
+            }
+
+            .sign.right {
+                margin-left: auto;
+            }
+
+            .sign span {
+                border-top: 1px solid #000000;
+                color: #000000;
+                width: 95%;
+                display: block;
+                margin: auto;
+                padding: 2px 0;
+            }
+
+        .FontCreated {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+
+        .footer {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .container-document-detail {
+            width: 100%;
+        }
+
+        .document-detail {
+            margin-top: 10px !important;
+            font-size: 20px;
+            font-weight: 700;
+            width: 75%;
+        }
+
+            .document-detail p {
+                margin-bottom: 5px !important;
+            }
+
+        .rotate {
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            width: 1.5em;
+        }
+
+            .rotate div {
+                -moz-transform: rotate(-90.0deg);
+                -o-transform: rotate(-90.0deg);
+                -webkit-transform: rotate(-90.0deg);
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+                -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+                margin-left: -15em;
+                margin-right: -15em;
+            }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+
+        #th_rowspan_content {
+            page-break-inside: avoid;
+        }
+
+        table tr {
+            font-size: 13px;
+        }
+
+        #main_table_thead tr {
+            background-color: #ac9e60;
+            padding: 0px !important;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="document-header">
+        <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" width="100" style="visibility:hidden;" />
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/themes/@AKDEMIC.CORE.Helpers.GeneralHelpers.GetTheme()/logo-report.png" width="100" />
+
+        <div>
+            <div class="university-name" style="margin:0px; padding:0px;">
+                <b> @AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName().ToUpper()</b>
+            </div>
+            <div class="company-name center" style="margin:0px; margin-top:8px !important; padding:0px;">
+                <b>@Model.University.HeaderOffice.ToUpper() </b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:0px;">
+                <b> @Model.University.Office.ToUpper() </b>
+            </div>
+            <div class="address-text" style="margin-top:5px;">
+                @Model.University.Campus - Télefono @Model.University.PhoneNumber - @Model.University.Address - Página Web @Model.University.WebSite
+            </div>
+        </div>
+    </div>
+
+    <div class="university-name" style="margin:0px; padding:0px; text-align:center; text-decoration:underline; padding-top:10px;">
+        <b> CERTIFICADO DE ESTUDIOS</b>
+        <br />
+        <b style="font-size:10px !important;text-decoration:none !important;"> SUSCRIBE EL RESPONSABLE DE LA UNIDAD DE REGISTROS ACADÉMICOS DE LA @AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName().ToUpper()</b>
+    </div>
+
+    <div class="container-document-detail">
+        <div class="document-detail" style="float:left">
+            <table style="font-size:20px !important;">
+                <tr class="FontCreated">
+                    <td>CERTIFICA QUE DON(ÑA)</td>
+                    <td style="padding-right:25px; padding-left:25px;">:</td>
+                    <td style="text-align:justify">@Model.Student.FullName</td>
+                </tr>
+                <tr class="FontCreated">
+                    <td>DE LA FACULTAD</td>
+                    <td style="padding-right:25px; padding-left:25px;">:</td>
+                    <td style="text-align:justify">@Model.Student.Faculty</td>
+                </tr>
+                <tr class="FontCreated">
+                    <td>DE LA ESCUELA PROFESIONAL</td>
+                    <td style="padding-right:25px; padding-left:25px;">:</td>
+                    <td style="text-align:justify">@Model.Student.Career</td>
+                </tr>
+                @if (!string.IsNullOrEmpty(Model.Student.AcademicProgram))
+                {
+                    <tr class="FontCreated">
+                        <td>DE LA MENCI&Oacute;N</td>
+                        <td style="padding-right:25px; padding-left:25px;">:</td>
+                        <td style="text-align:justify">@Model.Student.AcademicProgram</td>
+                    </tr>
+                }
+                <tr class="FontCreated">
+                    <td>CON N° DE MATRÍCULA</td>
+                    <td style="padding-right:25px; padding-left:25px;">:</td>
+                    <td style="text-align:justify">@Model.Student.UserName</td>
+                </tr>
+                <tr class="FontCreated">
+                    <td>PLAN DE ESTUDIOS</td>
+                    <td style="padding-right:25px; padding-left:25px;">:</td>
+                    <td style="text-align:justify">@Model.Student.Curriculum</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Ha obtenido los siguientes calificativos finales:</td>
+                </tr>
+            </table>
+        </div>
+        <div class="photo-container" style="margin-top:10px;margin-bottom:10px; border:1px dotted lightgray; float:right; width : 160px; height:180px;">
+        </div>
+    </div>
+    <table class="minimalistBlack" id="main_table" style="margin-bottom:10px;">
+        <thead id="main_table_thead">
+            <tr>
+                <th rowspan="2">&emsp;</th>
+                <th rowspan="2">ASIGNATURAS</th>
+                <th colspan="2">CALIFICACIONES</th>
+                <th rowspan="2">CRÉDITOS</th>
+                <th rowspan="2">SEMESTRE ACADÉMICO</th>
+            </tr>
+            <tr>
+                <th colspan="1">LETRAS</th>
+                <th colspan="1">N°</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="th_rowspan" rowspan="0" style="font-size:10px;" class="rotate"><div id="th_rowspan_content">CERTIFICADO OFICAL DE ESTUDIOS UNIVERSITARIOS<br />La escala de calificación es de 0 a 10 desaprobado y de 11 a 20 aprobado</div></td>
+            </tr>
+            @foreach (var ayc in Model.AcademicYearCourses)
+            {
+                <tr>
+                    <td style="font-size:15px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-align:left; text-decoration:underline;" colspan="6"> CICLO : @AKDEMIC.CORE.Helpers.ConstantHelpers.ACADEMIC_YEAR.TEXT[ayc.AcademicYear].ToUpper() </td>
+                </tr>
+                @foreach (var item in ayc.Courses)
+                {
+                    <tr>
+                        <td style="text-align:left">@item.Code - @item.Name@(string.IsNullOrEmpty(item.Observation) ? "" : $"({item.Observation})") </td>
+                        <td style="text-align:center; letter-spacing:1.1px;">@item.GradeText.ToUpper()</td>
+                        <td><strong>@item.Grade</strong></td>
+                        <td>@item.Credits</td>
+                        <td>@item.Term</td>
+                    </tr>
+                    rowspan++;
+                }
+                counter++;
+                rowspan++;
+            }
+        </tbody>
+
+
+    </table>
+
+    <div style="margin-top:20px !important;">
+        <strong>RESUMEN ACADÉMICO</strong>
+        <br />
+        <table>
+            <tr>
+                <td width="160px">Total créditos Aprobados</td>
+                <td>:</td>
+                <td>@Model.AcademicYearCourses.SelectMany(y=>y.Courses).Sum(y=>y.Credits)</td>
+            </tr>
+            <tr>
+                <td>Promedio Acumulado</td>
+                <td>:</td>
+                <td>@Model.Student.WeightedAverageCumulative</td>
+            </tr>
+
+            <tr>
+                <td colspan="3" style="font-weight:bold;">La presente certificación no acredita la culminación de los estudios ni de la obtención de grado académico o título profesional.</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="font-weight:bold;">Cualquier enmendadura o anotación de la línea de cierre de la relación invalida la presente certificación.</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <script>
+        var th = document.getElementById("th_rowspan");
+        var th_content = document.getElementById("th_rowspan_content");
+        var table = document.getElementById("main_table");
+
+        th.rowSpan = @rowspan;
+        if (@rowspan <12) {
+            th_content.style.fontSize = "8px";
+            th_content.textContent = "CERTIFICADO DE ESTUDIOS";
+        }
+
+        if (@rowspan == 3) {
+            th_content.style.fontSize = "8px";
+            th_content.textContent = "CERT.";
+        }
+
+        if (@rowspan == 1) {
+            th_content.textContent = "";
+        }
+
+        if (@rowspan > 29) {
+            th_content.textContent = "";
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

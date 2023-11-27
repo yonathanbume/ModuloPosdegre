@@ -1,0 +1,205 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.Format.ATSViewModel
+@@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 11px;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teacherInfo {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .firstTeacherInfo {
+            width: 45%;
+            display: inline-block;
+        }
+
+        .truelabel {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .truelabel2 {
+            width: 110px;
+            display: inline-block;
+        }
+
+        .truelabel3 {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .secondTeacherInfo {
+            width: 54%;
+            display: inline-block;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+        }
+
+        .border {
+            border: 1px solid black;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div style="position:absolute;text-align: center;padding: 0px 20px;">
+        <img style="top: 0; left: 0; height: 60px;width:80px" src="@Model.Image" />
+        <P style="margin:0px;font-style: italic;font-weight: 600;letter-spacing: -0.5px;"></P>
+        @*<P style="margin:0px;">Av. De Los Maestros S/N-Ciudad Universitaria S/N</P>
+            <P style="margin:0px;">Telefax 056-386109</P>
+            <P style="margin:0px;">ICA-PERÚ</P>*@
+    </div>
+    <div class="unk-header" style="font-size:14px;">
+        <p style="margin:0px;" class="negrita">@GeneralHelpers.GetInstitutionName().ToUpper()</p>
+        <p style="margin:0px;" class="negrita">FORMATO DE ANALISIS DE TRABAJO</p>
+        <p style="margin:0px;" class="negrita">LABORATORIO DE GEOTECNIA</p>
+        <p style="margin:0px;" class="negrita"></p>
+        <br />
+    </div>
+    <br />
+
+    <table style="border:0px !important;">
+        <tbody>
+            <tr>
+                <td></td>
+            </tr>
+    </table>
+
+    <table style="table-layout: fixed; width: 100%">
+        <tbody>
+            <tr>
+                <td style="text-align:right;width:13%">Valido de: </td>
+                <td class="border" style="width: 10%">
+                    <div style="text-align:center">  @Model.Date</div>
+                </td>
+                <td style="text-align:center; width: 13">A:</td>
+                <td class="border" style="width: 10%">
+                    <div style="text-align:center">  @Model.Date</div>
+                </td>
+                <td style="width:170px"></td>
+                <td style="text-align:right; width: 10%">Desde las:</td>
+                <td class="border" style="text-align:left; width: 10%">
+                    <div style="text-align:center"> @Model.StartTime</div>
+                </td>
+                <td style="text-align:center; width: 10%">Hasta las:</td>
+                <td class="border" style="width: 10%">
+                    <div style="text-align:center"> @Model.EndTime</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table style="table-layout: fixed; width: 100%">
+        <tbody>
+            <tr style="width:100%">
+                <td style="text-align:center; width:15.3%">Lugar de trabajo: </td>
+                <td class="border" style="width:20%">
+                    <div style="text-align:center">  Laboratorio de Geotecnia</div>
+                </td>
+                <td style="width:105px"></td>
+                <td style="text-align:right; width:12%">Equipo Objeto del trabajo:</td>
+                <td class="border" style="text-align:left;width: 20%">
+                    <div style="text-align:center"> </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table style="table-layout: fixed; width: 100%">
+        <tbody>
+            <tr style="width:100%">
+                <td style="text-align:center; width:15%">Trabajo a realizar: </td>
+                <td class="border" style="width:20%">
+                    <div style="text-align:center">  </div>
+                </td>
+                <td style="width:90px"></td>
+                <td style="text-align:center; width:12%">Concedido a:</td>
+                <td class="border" style="text-align:left;width: 20%">
+                    <div style="text-align:center"> @Model.Teacher</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br /><br /><br />
+    <table style=" width: 100%">
+        <thead>
+            <tr>
+                <th colspan="10" class="negrita border">HERRAMIENTAS Y/O EQUIPOS</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="negrita border">SECUENCIA ORDENADA DE PASOS</th>
+                <th colspan="2" class="negrita border">PELIGRO</th>
+                <th colspan="2" class="negrita border">CONSECUENCIAS</th>
+                <th class="negrita border">CONTROLES REQUERIDOS</th>
+                <th class="negrita border">RESPONSABLE CARGO</th>
+            </tr>
+            <tr>
+                <th style="width:10px" class="negrita border">1</th>
+                <th style="width:300px" class="negrita border"></th>
+                <th style="width:10px" class="negrita border">1.1</th>
+                <th style="width:300px" class="negrita border"></th>
+                <th style="width:10px" class="negrita border">1.1.1</th>
+                <th style="width:300px" class="negrita border"></th>
+                <th class="negrita border"></th>
+                <th class="negrita border"></th>
+            </tr>
+            @for (int i = 0; i < 35; i++)
+            {
+                <tr>
+                    <th style="width:10px" class="negrita border"><br /> </th>
+                    <th style="width:300px" class="negrita border"> <br /></th>
+                    <th style="width:10px" class="negrita border"> <br /></th>
+                    <th style="width:300px" class="negrita border"> </th>
+                    <th style="width:10px" class="negrita border"> </th>
+                    <th style="width:300px" class="negrita border"> </th>
+                    <th class="negrita border"></th>
+                    <th class="negrita border"></th>
+                </tr>
+            }
+
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,237 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.AcademicSituationViewModels.MeritChartPdfViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/pages/pdf/pdf-template.css" />
+    <link rel="stylesheet" href="~/css/pages/pdf/arial-family.css" />
+
+    <style>
+        body {
+            font-family: 'Arial' !important;
+            font-size: 11px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .table {
+            border-spacing: 0px;
+            border-collapse: collapse;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+
+            .table > thead {
+                font-size: 12px;
+            }
+
+            .table > tbody {
+                font-size: 12px;
+            }
+
+                .table > tbody > tr {
+                    /*page-break-inside: avoid;*/
+                    height: 25px;
+                }
+
+                    .table > thead > tr > th,
+                    .table > tbody > tr > th,
+                    .table > tbody > tr > td {
+                        font-weight: normal;
+                        line-height: 1.4;
+                        vertical-align: middle;
+                        border: 1px solid black;
+                        padding: 2px 3px;
+                    }
+
+                    .table > tbody > tr > td {
+                        border-top: none;
+                        border-bottom: none;
+                    }
+
+            .table > thead > tr > th {
+                text-align: center;
+            }
+
+            .table > tbody > tr > td.td-name {
+                width: 33mm;
+                max-width: 33mm;
+                text-transform: uppercase;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            .table > tbody > tr > td.td-cost {
+                width: 25mm;
+                text-align: right;
+            }
+
+        .report-header {
+            margin-bottom: 5px;
+            min-height: 60px;
+            /*position: relative;*/
+        }
+
+            .report-header .logo-container {
+                /*    position: absolute;
+                top: 0;
+                left: 0;*/
+            }
+
+            .report-header .logo-container2 {
+                /*   position: absolute;
+                top: 0;
+                right: 0;*/
+            }
+
+                .report-header .logo-container img,
+                .report-header .logo-container2 img {
+                    height: 60px;
+                    width: 60px
+                }
+
+            .report-header .title-container {
+                font-weight: bold;
+                padding-top: 3mm;
+                text-align: center;
+            }
+
+                .report-header .title-container label {
+                    display: block;
+                }
+
+                .report-header .title-container .title {
+                    font-size: 22px;
+                }
+
+                .report-header .title-container .sub-title {
+                    font-size: 20px;
+                }
+
+        .header-info {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th colspan="13" style="border: none; text-align: left;">
+                        <div class="header-container">
+                            <div class="report-header">
+                                <div class="logo-container" style="float: left;">
+                                    <img src="@Model.Image1" />
+                                </div>
+                                <div class="logo-container2" style="float: right;">
+                                    <img src="@Model.Image2" />
+                                </div>
+
+                                <div class="title-container">
+                                    <label class="title">@GeneralHelpers.GetInstitutionName().ToUpper()</label>
+                                    <label class="sub-title">VICERECTORADO ACADÉMICO</label>
+                                </div>
+                            </div>
+
+                            <div class="header-info">
+                                FACULTAD: @Model.Faculty.ToUpper()
+                                <div style="float: right; font-size: 20px; font-weight: 600;">
+                                    CUADRO DE MÉRITOS [@Model.Term]
+                                </div>
+                            </div>
+                            <div class="header-info">ESCUELA PROFESIONAL: @Model.Career.ToUpper()</div>
+                            <div class="header-info">SEMESTRE: @Model.AcademicYear.ToUpper()</div>
+                            <div class="header-info" style="margin-bottom: 5px;">CUADRO DE MÉRITOS EMITIDO SEGÚN: Reglamento aprobado por Resolución Rectoral 1241-2019-R-UNA y 2707.2018-R-UNA</div>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th rowspan="2" width="20" style="font-weight: 600;">Nro</th>
+                    <th rowspan="2" width="22" style="font-weight: 600;">Ord Mer</th>
+                    <th rowspan="2" width="38" style="font-weight: 600;">Código</th>
+                    <th rowspan="2" style="font-weight: 600;">Apellidos y Nombres</th>
+                    <th rowspan="2" width="22" style="font-weight: 600;">Esp</th>
+                    <th colspan="7" style="font-weight: 600;">SEMESTRE</th>
+                    <th rowspan="2" width="140" style="font-weight: 600;">CONDICIÓN</th>
+                </tr>
+                <tr>
+                    <th width="30" style="font-weight: 600;">PPS</th>
+                    <th width="27" style="font-weight: 600;">Pln</th>
+                    <th width="27" style="font-weight: 600;">CrP</th>
+                    <th width="27" style="font-weight: 600;">CrM</th>
+                    <th width="27" style="font-weight: 600;">CrA</th>
+                    <th width="27" style="font-weight: 600;">CrD</th>
+                    <th width="100" style="font-weight: 600;">Mod</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    var count = 0;
+                }
+                @foreach (var student in Model.Students)
+                {
+                    <tr>
+                        <td class="center">@student.Number</td>
+                        <td class="center" style="font-weight: 600;">@student.MeritOrder.ToString().PadLeft(3, '0')</td>
+                        <td class="center" style="border-right: none">@student.Code.ToUpper()</td>
+                        <td style="border-left: none">@student.Name.ToUpper()</td>
+                        <td class="center">@student.AcademicProgram</td>
+                        <td class="center" style="border-right: none; font-weight: 600;">@student.AverageGrade.ToString("0.00")</td>
+                        <td class="center" style="border-right: none; border-left: none">@student.Curriculum</td>
+                        <td class="center" style="border-right: none; border-left: none">@student.CurriculumCredits.ToString("0.00")</td>
+                        <td class="center" style="border-right: none; border-left: none">@student.EnrolledCredits.ToString("0.00")</td>
+                        <td class="center" style="border-right: none; border-left: none">@student.ApprovedCredits.ToString("0.00")</td>
+                        <td class="center" style="border-right: none; border-left: none">@student.DisapprovedCredits.ToString("0.00")</td>
+                        <td style="border-left: none">@student.Modality.ToUpper()</td>
+                        <td>@student.Condition.ToUpper()</td>
+                    </tr>
+
+                    count++;
+
+                    if (count % 35 == 0 && count != Model.Students.Count)
+                    {
+                        <tr>
+                            <td colspan="13" style="border: none; border-top: 1px solid black; font-weight: 600;">IMPORTANTE: Este cuadro debe llevar la firma y sello del Coordinador Académico para garantizar su conformidad</td>
+                        </tr>
+                        <tr>
+                            <td class="center" colspan="13" style="border: none; border-top: 1px solid black; height: 221px; vertical-align: top; font-weight: 600;">CONTINUA...</td>
+                        </tr>
+                    }
+
+                    if (count == Model.Students.Count)
+                    {
+                        <tr style="border: none;">
+                            <td colspan="13" style="border: none; border-top: 1px solid black; font-weight: 600;">IMPORTANTE: Este cuadro debe llevar la firma y sello del Coordinador Académico para garantizar su conformidad</td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="center" colspan="13" style="border: none; border-top: 1px solid black; font-weight: 600;">=========================== FIN DEL CUADRO ===========================</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+            @*<tfoot>
+                <tr>
+                    <td colspan="13">IMPORTANTE: Este cuadro debe llevar la firma y sello del Coordinador Académico para garantizar su conformidad</td>
+                </tr>
+            </tfoot>*@
+        </table>
+
+        @*<div class="center">=========================== FIN DEL CUADRO ===========================</div>*@
+    </div>
+
+</body>
+</html>

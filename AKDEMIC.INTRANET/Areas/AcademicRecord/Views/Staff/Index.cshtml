@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Gestion de Personal de Registros Académicos";
+    ViewBag.SubTitle = "Listado de Usuarios";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                @*<a asp-action="Add" asp-controller="Staff" asp-area="AcademicRecord" class="btn btn-primary btn-sm m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-plus"></i>
+                        <span>Nuevo Usuario</span>
+                    </span>
+                </a>*@
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered" id="users_datatable"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="assigned_deparments" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Asignar Departamentos</h5>
+            </div>
+            <form id="assigned_deparments_form" method="post">
+                <input name="UserId" type="hidden"/>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label>Departamentos</label>
+                        <select class="form-control m-select2" name="AcademicDepartments" id="AcademicDepartments" multiple disabled>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-add" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Asignar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/academicrecord/staff/index.js" asp-append-version="true"></script>
+}

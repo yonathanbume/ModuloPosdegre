@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Buscador de Actas";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Buscador de Actas" }
+    };
+}
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Buscador de Actas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12" id="btn_evaluation_filters">
+                        <div class="text-center">
+                            @if (!User.IsInRole(ConstantHelpers.ROLES.CERTIFICATION))
+                            {
+                                <div class="col-12 mb-3">
+                                    <a asp-controller="EvaluationReport" asp-area="Admin" asp-action="EvaluationReportIssued" class="btn btn-outline-primary btn-lg m-btn m-btn--outline-2x ">Actas Emitidas</a>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <a asp-controller="EvaluationReport" asp-area="Admin" asp-action="EvaluationReportNotIssued" class="btn btn-outline-primary btn-lg m-btn m-btn--outline-2x ">Actas No Emitidas</a>
+                                </div>
+                            }
+                            <div class="col-12 mb-3">
+                                <a asp-controller="EvaluationReport" asp-area="Admin" asp-action="EvaluationReportReceived" class="btn btn-outline-primary btn-lg m-btn m-btn--outline-2x ">Actas Recepcionadas</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

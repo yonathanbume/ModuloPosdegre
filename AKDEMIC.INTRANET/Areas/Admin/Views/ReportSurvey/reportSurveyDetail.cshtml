@@ -1,0 +1,108 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.Report_surveyViewModels
+@model ReportSurveyViewModel
+@{
+    ViewData["Title"] = "Reporte de encuesta";
+    ViewData["SubTitle"] = "Detalle de la encuesta";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Lista de encuestas" , Area="Admin",Controller="ReportSurvey", Action="Index" },
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+
+};
+    ViewData["BackUrl"] = Url.Action("Index", "ReportSurvey", new { area = "Admin" });
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <input asp-for="id" type="hidden" />
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información de la encuesta
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Nombre: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Name</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>C&oacute;digo: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.Code</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Periodo de publicaci&oacute;n</b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.StartEndDate</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Cantidad de respuestas</b></label>
+                </div>
+                <div class="col-sm-2">
+                    <label>@Model.NumberAnswers</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-4 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet  m-portlet--full-height ">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Usuarios encuestados
+                            </h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-datatable_user"></div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+        <div class="col-xl-8 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height ">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Preguntas
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools" style="width:700px; text-align:left;">
+                        <select class="custom-select form-control m-select2"></select>
+                    </div>
+
+                </div>
+                <div class="m-portlet__body">
+                    <div id="chart_div"></div>
+                    <div class="m-datatable_text_answer"></div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/report_survey/detail.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+}

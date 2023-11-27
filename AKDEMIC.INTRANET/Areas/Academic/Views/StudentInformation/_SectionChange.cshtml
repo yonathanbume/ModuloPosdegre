@@ -1,0 +1,70 @@
+﻿<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Listado de tr&aacute;mites
+            </h3>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="m-portlet__body">
+    
+    <table class="table table-striped table-bordered" id="observations_table"></table>
+</div>
+
+<div id="create-observation-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Cambio de secci&oacute;n
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="create-observation-form" asp-action="CreateObservation" asp-area="Academic" asp-controller="StudentInformation">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="observation-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="observation_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <input id="currentSectionId" name="currentSectionId" value="" />
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Sección actual</label>
+                        <input id="current-section" class="form-control" value="" disabled />
+                    </div>
+
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Motivo</label>
+                        <textarea name="Observation" class="form-control m-input disable-resize"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

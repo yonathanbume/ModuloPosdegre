@@ -1,0 +1,172 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.Survey.SurveyUserTemplate
+<style>
+    .header_space {
+        height: 1px;
+        margin-bottom: 28px;
+    }
+
+    .option {
+        border: 1px #dfe4ed solid;
+        border-radius: 15px;
+        padding: 5px 12px;
+        transition: 0.3s;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .option:hover {
+            background-color: #e6eaf0;
+        }
+
+        .option input {
+            position: absolute;
+            clip: rect(0,0,0,0);
+            pointer-events: none;
+        }
+</style>
+
+<div class="header_space">
+    @if (Model.Solved)
+    {
+        <strong class="text-danger">Usted ya ha resuelto esta encuesta</strong>
+    }
+</div>
+
+@for (int i = 0; i < Model.SurveyItems.Count; i++)
+{
+    <div class="m-form__section">
+        <div class="m-form__heading">
+            <h3 class="m-form__heading-title">@Model.SurveyItems[i].Title </h3>
+        </div>
+        @if (Model.SurveyItems[i].IsLikert)
+        {
+            @for (int j = 0; j < Model.SurveyItems[i].Questions.Count; j++)
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <input id="Items_@i.ToString()_Questions_@j.ToString()_Id" name="SurveyItems[@i].Questions[@j].Id" value="@Model.SurveyItems[i].Questions[j].Id" hidden />
+                        <div class="p-3 row">
+                            @(j + 1).&emsp;@Model.SurveyItems[i].Questions[j].Description
+                        </div>
+                        <div class="p-2 row">
+                            <input id="Items_@i.ToString()_Questions_@j.ToString()_Type" name="SurveyItems[@i].Questions[@j].Type" value="@Model.SurveyItems[i].Questions[j].Type" hidden />
+                            @switch (Model.SurveyItems[i].Questions[j].Type)
+                            {
+                                case ConstantHelpers.SURVEY.LIKERT_QUESTION:
+
+                                    @foreach (var item in ConstantHelpers.SURVEY_LIKERT.RATING_SCALE.LIKERT.OrderByDescending(x => x.Key))
+                                    {
+                                        @if (Model.Solved)
+                                        {
+                                            <label class="option @(Model.SurveyItems[i].Questions[j].Response == item.Value ? "bg-selected" : "")">
+                                                <input type="radio" name="SurveyItems[@i].Questions[@j].Description" value="@item.Value" disabled>@item.Value
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="option">
+                                                <input type="radio" name="SurveyItems[@i].Questions[@j].Description" value="@item.Value">@item.Value
+                                            </label>
+                                        }
+                                        @:&emsp;
+                                    }
+                                    break;
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            @for (int j = 0; j < Model.SurveyItems[i].Questions.Count; j++)
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <input id="Items_@i.ToString()_Questions_@j.ToString()_Id" name="SurveyItems[@i].Questions[@j].Id" value="@Model.SurveyItems[i].Questions[j].Id" hidden />
+                        <div class="p-3 row">
+                            @(j + 1).&emsp;@Model.SurveyItems[i].Questions[j].Description
+                        </div>
+                        <div class="p-2 row">
+                            <input id="Items_@i.ToString()_Questions_@j.ToString()_Type" name="SurveyItems[@i].Questions[@j].Type" value="@Model.SurveyItems[i].Questions[j].Type" hidden />
+                            @switch (Model.SurveyItems[i].Questions[j].Type)
+                            {
+                                case ConstantHelpers.SURVEY.TEXT_QUESTION:
+                                    if (Model.Solved)
+                                    {
+                                        <input id="Items_@i.ToString()_Questions_@j.ToString()_Description" name="SurveyItems[@i].Questions[@j].Description" class="form-control" value="@Model.SurveyItems[i].Questions[j].Response" disabled />
+                                    }
+                                    else
+                                    {
+                                        <input id="Items_@i.ToString()_Questions_@j.ToString()_Description" name="SurveyItems[@i].Questions[@j].Description" class="form-control" />
+                                    }
+                                    break;
+                                case ConstantHelpers.SURVEY.MULTIPLE_SELECTION_QUESTION:
+                                    for (int k = 0; k < Model.SurveyItems[i].Questions[j].Answers.Count; k++)
+                                    {
+                                        if (Model.Solved)
+                                        {
+                                            <label class="option @(Model.SurveyItems[i].Questions[j].Answers[k].Selected ? "bg-selected" : "")">
+                                                <input type="checkbox" id="Items_@i.ToString()_Questions_@j.ToString()_Selection_@k.ToString()_Id" name="SurveyItems[@i].Questions[@j].Selection" value="@Model.SurveyItems[i].Questions[j].Answers[k].Id" disabled>@Model.SurveyItems[i].Questions[j].Answers[k].Description
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="option">
+                                                <input type="checkbox" id="Items_@i.ToString()_Questions_@j.ToString()_Selection_@k.ToString()_Id" name="SurveyItems[@i].Questions[@j].Selection" value="@Model.SurveyItems[i].Questions[j].Answers[k].Id">@Model.SurveyItems[i].Questions[j].Answers[k].Description
+                                            </label>
+                                        }@:&emsp;
+                                    }
+                                    break;
+                                case ConstantHelpers.SURVEY.UNIQUE_SELECTION_QUESTION:
+                                    for (int k = 0; k < Model.SurveyItems[i].Questions[j].Answers.Count; k++)
+                                    {
+                                        if (Model.Solved)
+                                        {
+                                            <label class="option @(Model.SurveyItems[i].Questions[j].Answers[k].Selected ? "bg-selected" : "")">
+                                                <input type="radio" id="Items_@i.ToString()_Questions_@j.ToString()_Selection_@k.ToString()_Id" name="SurveyItems[@i].Questions[@j].Selection" value="@Model.SurveyItems[i].Questions[j].Answers[k].Id" disabled>@Model.SurveyItems[i].Questions[j].Answers[k].Description
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="option">
+                                                <input type="radio" id="Items_@i.ToString()_Questions_@j.ToString()_Selection_@k.ToString()_Id" name="SurveyItems[@i].Questions[@j].Selection" value="@Model.SurveyItems[i].Questions[j].Answers[k].Id">@Model.SurveyItems[i].Questions[j].Answers[k].Description
+                                            </label>
+                                        }@:&emsp;
+                                    }
+                                    break;
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <br />
+}
+<script>
+        if ('@Model.Solved' !== 'True')
+            $("#survey-form button").show();
+
+        $("input[type=checkbox]").change(function () {
+            console.log("click checkbox");
+            if ($(this).prop("checked")) {
+                console.log($(this));
+                $(this).parent().attr("class", "option bg-selected");
+            }
+            else {
+                console.log($(this));
+                $(this).parent().attr("class", "option");
+            }
+
+        });
+        $("input[type=radio]").click(function () {
+            console.log($(this));
+            console.log("click radio");
+            $(this).parent().parent().children().attr("class", "option")
+            if ($(this).prop("checked"))
+                $(this).parent().attr("class", "option bg-selected");
+            else
+                $(this).parent().attr("class", "option");
+        });
+</script>

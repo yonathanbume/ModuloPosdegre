@@ -1,0 +1,113 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.AcademicSituationViewModels.StudentInfoViewModel
+
+<div class="m-portlet m-portlet--responsive-mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Informaci&oacute;n del Estudiante
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <div class="row">
+            <div class="col-sm-2">
+                <label><b>Estudiante: </b></label>
+            </div>
+            <div class="col-sm-5">
+                <label>@Model.FullName</label>
+            </div>
+            <div class="col-sm-2">
+                <label><b>Ciclo: </b></label>
+            </div>
+            <div class="col-sm-3">
+                <label>@Model.AcademicYear</label>
+            </div>
+        </div>
+        <div class="row">
+            @*<div class="col-sm-2">
+                <label><b>Promedio Semestral: </b></label>
+            </div>
+            <div class="col-sm-5">
+                <label>@Model.WeightedFinalGrade (@Model.Term)</label>
+            </div>*@
+            <div class="col-sm-2">
+                <label><b>Estado: </b></label>
+            </div>
+            <div class="col-sm-3">
+                <label>@Model.Status</label>
+            </div>
+        </div>
+        <div class="row">
+            @*<div class="col-sm-2">
+                <label><b>Promedio Ponderado: </b></label>
+            </div>
+            <div class="col-sm-5">
+                <label>@Model.CumulativeWeightedFinalGrade</label>
+            </div>*@
+            <div class="col-sm-2">
+                <label><b>Cred. Aprobados Oblig.: </b></label>
+            </div>
+            <div class="col-sm-3">
+                <label>@Model.RequiredApprovedCredits.ToString("0.0") / @Model.RequiredCredits.ToString("0.0")</label>
+            </div>
+        </div>
+        <div class="row">
+            @*<div class="col-sm-2">
+                <label><b>Orden: </b></label>
+            </div>
+            <div class="col-sm-5">
+                <label>@Model.Order</label>
+            </div>*@
+            <div class="col-sm-2">
+                <label><b>Cred. Aprobados Elect.: </b></label>
+            </div>
+            <div class="col-sm-3">
+                <label>@Model.ElectiveApprovedCredits.ToString("0.0") / @Model.ElectiveCredits.ToString("0.0")</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label><b>Observaciones: </b></label>
+            </div>
+            <div class="col-sm-12">
+                <label>@Model.Observations</label>
+            </div>
+        </div>
+        @if (!User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+        {
+            <div class="row">
+                <div class="col-12" style="text-align:end; margin-top:10px;">
+                    <a asp-action="GetStudentSituationPdf" asp-controller="StudentInformation" asp-area="Academic" asp-route-id="@Model.Id" class="btn btn-primary btn-sm m-btn  m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-file-pdf-o"></i>
+                            <span>Exportar</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        }
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS) && ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNSCH)
+        {
+            <div class="row">
+                <div class="col-12" style="text-align:end; margin-top:10px;">
+                    <a asp-action="AcademicRecord" asp-controller="CurriculumProgress" asp-area="Student" class="btn btn-primary btn-sm m-btn  m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-file-pdf-o"></i>
+                            <span>Exportar</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

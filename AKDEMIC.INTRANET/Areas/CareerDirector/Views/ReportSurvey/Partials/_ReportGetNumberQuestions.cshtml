@@ -1,0 +1,156 @@
+﻿@using AKDEMIC.INTRANET.Areas.CareerDirector.Models.ReportSurveyViewModels
+@model List<ReportSeccionViewModel>
+
+@for (int n = 0; n < Model.Count; n++)
+{
+    @for (int i = 0; i < Model[n].Reportes.Count; i++)
+    {
+        if (Model[n].Reportes[i].Alternatives.Count != 0)
+        {
+            for (int j = 0; j < Model[n].Reportes[i].Alternatives.Count; j++)
+            {
+                <h3 id="alternativeDescription-@n-@i-@j" style="display:none">@Model[n].Reportes[i].Alternatives[j].Description</h3>
+
+                for (int k = 0; k < Model[n].Reportes[i].Answers.Count; k++)
+                {
+                    if (Model[n].Reportes[i].Alternatives[j].Description == Model[n].Reportes[i].Answers[k])
+                    {
+                        Model[n].Reportes[i].Alternatives[j].Count++;
+                    }
+                }
+            }
+        }
+    }
+    <div class="col-xl-12">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text"><i class="m-menu__link-icon flaticon-statistics">&ensp;</i>@(n + 1) . @Model[n].Title </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                @for (int i = 0; i < Model[n].Reportes.Count; i++)
+                {
+                    <div class="col-xl-12">
+                        <div class="m-portlet">
+                            <div class="m-portlet__head" style="background-color: lightgrey;">
+                                <div class="m-portlet__head-caption" style="width:100%">
+                                    <div class="m-portlet__head-title" style="width:100%;display: block;">
+                                        <h3 class="m-portlet__head-text" id="reportName-@n-@i" style="display:initial;"><i class="m-menu__link-icon flaticon-statistics">&ensp;</i>@(i + 1) . @Model[n].Reportes[i].Name</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                @if (Model[n].Reportes[i].Type == 1)
+                                {
+                                    <div class="highcharts-data-table">
+                                        <table>
+                                            <caption class="highcharts-table-caption"> @Model[n].Reportes[i].Name</caption>
+                                            <tbody>
+                                                @if (Model[n].Reportes[i].Answers.Count == 0)
+                                                {
+                                                    <tr>
+                                                        <th scope="row" class="text">No se encontraron registros</th>
+                                                    </tr>
+                                                }
+                                                @for (int j = 0; j < Model[n].Reportes[i].Answers.Count; j++)
+                                                {
+                                                    <tr>
+                                                        <th scope="row" class="text"> @Model[n].Reportes[i].Answers[j]</th>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                                @if (Model[n].Reportes[i].Type != ConstantHelpers.SURVEY.TEXT_QUESTION)
+                                {
+                                    <br /><div id="table-@n-@i" class="chart"></div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <script>
+
+        var deleteExtraTables = function(){
+            var total = $("body").find(".highcharts-data-table");
+            var current = $(".m-portlet").find(".highcharts-data-table");
+            var currentLength = current.length;
+            for (currentLength; currentLength < total.length; currentLength++) {
+                $(total[currentLength]).remove();
+            }
+        }
+
+    @for (var i = 0; i < Model[n].Reportes.Count; i++) {
+
+        <text>
+        if (@Model[n].Reportes[i].Type != _app.constants.survey.text_question) {
+            var data = [];
+            var categories = [];
+            @for (var j = 0; j < Model[n].Reportes[i].Alternatives.Count; j++) {
+                <text>
+                    data.push(@Model[n].Reportes[i].Alternatives[j].Count);
+                    categories.push($("#alternativeDescription-"+@n + '-' +@i + '-' +@j).text());
+                </text>
+            }
+            Highcharts.chart('table-'+@n +'-' +@i,{
+                chart: {
+                    events: {
+                        exportData: function () {
+                            deleteExtraTables();
+                        }
+                    }
+                },
+                title: {
+                    text: $("#reportName-"+@n + '-' +@i).text()
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    text: 'Fuente: AKDEMIC',
+                    href: ''
+                },
+                xAxis: {
+                    categories: categories,
+                    title: {
+                        text: 'Opciones'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Frecuencia'
+                    }
+                },
+                series: [{
+                    type: 'column',
+                    name: 'Frecuencia',
+                    colorByPoint: true,
+                    data: data,
+                    showInLegend: true
+                }],
+                exporting: {
+                    showTable: true,
+                    buttons: {
+                        contextButton: {
+                            menuItems: ["viewFullscreen", "printChart", "separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG", "separator", "downloadCSV", "downloadXLS"]
+                        }
+                    }
+                },
+            });
+        }
+        </text>
+
+    }
+    </script>
+}
+
+
+

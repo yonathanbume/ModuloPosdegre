@@ -1,0 +1,77 @@
+﻿@font-face {
+    src: url('../../../fonts/unica/calibri-regular.ttf');
+    font-family: 'Calibri';
+    font-weight: normal;
+}
+
+@font-face {
+    src: url('../../../fonts/unica/calibri-bold.ttf');
+    font-family: 'Calibri';
+    font-weight: bold;
+}
+
+table{
+    width:100%;
+}
+
+.header-univ-logo {
+    float: left;
+}
+
+    .header-univ-logo img {
+        height: 2.8cm !important;
+    }
+
+.header p {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.header .title {
+    font-size: 23px !important;
+}
+
+.header .sub-title {
+    font-size: 13px !important;
+    font-weight:normal;
+}
+
+.header-photo {
+    float: right;
+}
+
+
+
+.header-photo .user-photo {
+    border: 0px solid;
+    height: 3.65cm !important;
+    width: 3.67cm !important;
+    text-align: center;
+    line-height: 125px;
+}
+
+.main-table {
+    width: 100% !important;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.header {
+    font-family: 'Calibri';
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+table tbody {
+    font-size: 15pt !important;
+    font-family: 'Calibri';
+    text-align: center;
+}
+
+.border {
+    border: 1px solid;
+}
+
+.bold {
+    font-weight: bold;
+}

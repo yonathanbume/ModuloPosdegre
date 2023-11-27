@@ -1,0 +1,388 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.ProcedureViewModels.ProcedureViewModel
+@{
+    ViewData["Title"] = Model.Name;
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Listado de Trámites", Controller = "Procedure", Action = "Index" },
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+    };
+}
+
+@section Styles {
+<link href="~/assets/css/cropper/cropper.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div class="m-content">
+    <form id="request_form">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ConceptId" />
+        <input type="hidden" asp-for="ConceptAmount" />
+
+        @if (Model.Configuration.TupaReadOnly)
+        {
+            <div class="m-portlet">
+                <div class="m-portlet__head d-flex justify-content-center align-items-center">
+                    <strong class="h4 m--font-primary" style="font-weight:bold !important;">
+                        @Model.Name.ToUpper()
+                    </strong>
+                </div>
+            </div>
+
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-xl-12">
+
+                            @if (!string.IsNullOrEmpty(Model.Description))
+                            {
+                                <strong>
+                                    Descripción :
+                                </strong>
+
+                                <p>
+                                    @Html.Raw(Model.Description)
+                                </p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.LegalBase))
+                            {
+                                <br />
+                                <strong>
+                                    Base Legal :
+                                </strong>
+
+                                <p>
+                                    @Html.Raw(Model.LegalBase)
+                                </p>
+                            }
+                        </div>
+
+                        <div class="col-lg-12">
+                            <strong>
+                                Detalles :
+                            </strong>
+
+                            <ul class="mt-3 mb-4">
+                                <li>Duración : @Model.Duration @(Model.Duration > 1 ? "días" : "día") </li>
+                                <li>Costo : @(Model.ConceptAmount.HasValue ? $"S/. {Model.ConceptAmount}" : "Sin Costo")</li>
+                                @if (Model.StartDependencyEqualToDepedency)
+                                {
+                                    <li>Dependencia: @(Model.StartDependency??"Sin Asignar")</li>
+                                }
+                                else
+                                {
+                                    <li>Área Inicio: @(Model.StartDependency??"Sin Asignar")</li>
+                                    <li>Dependencia: @(Model.Dependency??"Sin Asignar")</li>
+                                }
+                            </ul>
+
+                            <strong>
+                                Requisitos :
+                            </strong>
+
+                            @if (Model.Requirements.Where(x => x.Type != AKDEMIC.CORE.Helpers.ConstantHelpers.PROCEDURE_REQUIREMENTS.TYPE.SYSTEM_VALIDATION).Any())
+                            {
+                                <ul class="mt-3 mb-4">
+                                    @foreach (var requirement in Model.Requirements.Where(x => x.Type != AKDEMIC.CORE.Helpers.ConstantHelpers.PROCEDURE_REQUIREMENTS.TYPE.SYSTEM_VALIDATION))
+                                    {
+                                        <li>
+                                            @requirement.Name @(requirement.Cost.HasValue ? $"- Costo : s/. {requirement.Cost:0.00}" : "")
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul class="mt-3 mb-4">
+                                    <li>
+                                        Sin requisitos.
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head d-flex justify-content-center align-items-center">
+                            <strong class="h4 m--font-primary" style="font-weight:bold !important;">
+                                @Model.Name.ToUpper()
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="m-portlet">
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-xl-12">
+
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        <strong>
+                                            Descripción :
+                                        </strong>
+
+                                        <p>
+                                            @Html.Raw(Model.Description)
+                                        </p>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(Model.LegalBase))
+                                    {
+                                        <br />
+                                        <strong>
+                                            Base Legal :
+                                        </strong>
+
+                                        <p>
+                                            @Html.Raw(Model.LegalBase)
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-8">
+                    <div class="m-portlet">
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <strong>
+                                        Detalles :
+                                    </strong>
+
+                                    <ul class="mt-3 mb-4">
+                                        <li>Duración : @Model.Duration @(Model.Duration > 1 ? "días" : "día") </li>
+                                        <li>Costo : @(Model.ConceptAmount.HasValue ? $"S/. {Model.ConceptAmount}" : "Sin Costo")</li>
+                                        @if (Model.StartDependencyEqualToDepedency)
+                                        {
+                                            <li>Dependencia: @(Model.StartDependency??"Sin Asignar")</li>
+                                        }
+                                        else
+                                        {
+                                            <li>Área Inicio: @(Model.StartDependency??"Sin Asignar")</li>
+                                            <li>Dependencia: @(Model.Dependency??"Sin Asignar")</li>
+                                        }
+                                    </ul>
+
+                                    <strong>
+                                        Requisitos :
+                                    </strong>
+
+                                    @if (Model.Requirements.Where(x => x.Type != AKDEMIC.CORE.Helpers.ConstantHelpers.PROCEDURE_REQUIREMENTS.TYPE.SYSTEM_VALIDATION).Any())
+                                    {
+                                        <ul class="mt-3 mb-4">
+                                            @foreach (var requirement in Model.Requirements.Where(x => x.Type != AKDEMIC.CORE.Helpers.ConstantHelpers.PROCEDURE_REQUIREMENTS.TYPE.SYSTEM_VALIDATION))
+                                            {
+                                                <li>
+                                                    @requirement.Name @(requirement.Cost.HasValue ? $"- Costo : s/. {requirement.Cost:0.00}" : "")
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <ul class="mt-3 mb-4">
+                                            <li>
+                                                Sin requisitos.
+                                            </li>
+                                        </ul>
+                                    }
+                                </div>
+                                @if (Model.NeedImage)
+                                {
+                                    <div class="col-lg-7">
+                                        <input type="hidden" asp-for="UserCroppedImage" />
+                                        <div class="form-group m-form__group">
+                                            <div class="m-input-icon m-input-icon--right">
+                                                <label class="required-form-label"><strong>Foto:</strong></label>
+                                                <div class="row">
+                                                    <div class="col-col-xl-10 col-lg-10 col-md-10">
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="input_user_image" accept="image/*">
+                                                            <label class="custom-file-label" for="customFile">
+                                                                Seleccione un archivo...
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-2 col-lg-2 col-md-2 mt-xl-0 mt-lg-0 mt-md-0 mt-3 d-flex align-items-center justify-content-center">
+                                                        <button type="button" id="btn_edit_user_image_cropper" title="Editar foto" class="d-none btn btn-lg btn-primary m-btn m-btn--icon m-btn--icon-only">
+                                                            <i class="la la-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-form__group-sub">
+                                            <div style="text-align:center">
+                                                <img id="user_cropped_image_preview" style="width: 250px; height:250px; border:2px solid;" src="/images/demo/user.png" class="img-fluid" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="form-group m-form__group row mt-4">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label asp-for="StudentComment" class="required-form-label"><strong>Sustento:</strong></label>
+                                    <textarea asp-for="StudentComment" class="form-control m-input" placeholder="Ingresar sustento..." rows="5" maxlength="800"></textarea>
+                                </div>
+                            </div>
+
+                            @if (Model.Configuration.PaymentType == ConstantHelpers.PROCEDURES.CONFIGURATION.PAYMENT_TYPE.PREVIOUS_PAYMENT && Model.ConceptAmount.HasValue && Model.ConceptAmount > 0)
+                            {
+                                @if (Model.Configuration.PreviousPaymentType == ConstantHelpers.PROCEDURES.CONFIGURATION.PREVIOUS_PAYMENT_TYPE.PAYMENT_RECEIPT)
+                                {
+                                    <div class="form-group m-form__group ">
+                                        <label class="required-form-label"><strong>Validar Recibo:</strong></label>
+                                        <div class="input-group">
+                                            <input type="hidden" asp-for="Payment.Id" />
+                                            <input type="text" class="form-control m-input" placeholder="Buscar Recibo" required readonly asp-for="Payment.OperationCode" data-toggle="modal" data-target="#modal_payment_receipt_detail">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-md m-btn  m-btn m-btn--icon" data-toggle="modal" data-target="#modal_payment_receipt_detail">
+                                                    <span>
+                                                        <i class="la la-search"></i>
+                                                        <span>Validar Recibo</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model.Configuration.PreviousPaymentType == ConstantHelpers.PROCEDURES.CONFIGURATION.PREVIOUS_PAYMENT_TYPE.CASHIER)
+                                {
+                                    <div class="form-group m-form__group">
+                                        <label class="required-form-label"><strong>Validar Recibo:</strong></label>
+                                        <div class="input-group">
+                                            <input type="hidden" asp-for="Payment.Id" />
+                                            <input type="text" class="form-control m-input" placeholder="Buscar Pago" required readonly asp-for="Payment.OperationCode" data-toggle="modal" data-target="#modal_cashier_payments">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-md m-btn  m-btn m-btn--icon" data-toggle="modal" data-target="#modal_cashier_payments">
+                                                    <span>
+                                                        <i class="la la-search"></i>
+                                                        <span>Buscar Pagos</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model.Configuration.PreviousPaymentType == ConstantHelpers.PROCEDURES.CONFIGURATION.PREVIOUS_PAYMENT_TYPE.MIXED)
+                                {
+                                    <div class="form-group m-form__group">
+                                        <label class="required-form-label"><strong>Validar Recibo:</strong></label>
+                                        <div class="input-group">
+                                            <input type="hidden" asp-for="Payment.Id" />
+                                            <input type="text" class="form-control m-input" placeholder="Seleccionar una opción" required readonly asp-for="Payment.OperationCode">
+                                            <div class="input-group-append">
+                                                <div class="btn-group" role="group" aria-label="First group">
+                                                    <button type="button" class="btn btn-primary btn-md m-btn  m-btn m-btn--icon" data-toggle="modal" data-target="#modal_payment_receipt_detail">
+                                                        <span>
+                                                            <i class="la la-search"></i>
+                                                            <span>Validar Recibo</span>
+                                                        </span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-secondary btn-md m-btn  m-btn m-btn--icon" data-toggle="modal" data-target="#modal_cashier_payments">
+                                                        <span>
+                                                            <i class="la la-search"></i>
+                                                            <span>Buscar Pagos</span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <strong class="m--font-primary">*Validar recibo o buscar un pago pendiente de uso.</strong>
+                                    </div>
+                                }
+                            }
+
+                            @if (Model.RecordHistory != null)
+                            {
+                                @await Html.PartialAsync("Partials/_RecordHistoryFields", Model)
+                            }
+
+                            @if(Model.Activity != null)
+                            {
+                                @await Html.PartialAsync("Partials/_ActivityFields", Model)
+                            }
+
+                            @if (Model.Requirements.Any(y => y.Type == AKDEMIC.CORE.Helpers.ConstantHelpers.PROCEDURE_REQUIREMENTS.TYPE.DIGITAL))
+                            {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>
+                                            Adjuntar Requisitos :
+                                        </strong>
+
+                                        <table class="table m-table m-table--head-separator-primary mt-4">
+                                            <thead>
+                                                <tr>
+                                                    <th><strong>Requisito</strong></th>
+                                                    <th><strong>Archivo</strong></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    var digitalRequirements = Model.Requirements.Where(y => y.Type == AKDEMIC.CORE.Helpers.ConstantHelpers.PROCEDURE_REQUIREMENTS.TYPE.DIGITAL).ToList();
+                                                }
+
+                                                @for (var i = 0; i < digitalRequirements.Count(); i++)
+                                                {
+                                                    <tr>
+                                                        <td>@digitalRequirements[i].Name</td>
+                                                        <td>
+                                                            <div class="form-group m-form__group">
+                                                                <input asp-for="Requirements[i].Id" value="@digitalRequirements[i].Id" type="hidden" />
+                                                                <div class="m-input-icon m-input-icon--right">
+                                                                    <div class="custom-file">
+                                                                        <input asp-for="Requirements[i].File" type="file" class="custom-file-input" required>
+                                                                        <label class="custom-file-label" for="customFile">
+                                                                            Seleccione un archivo...
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-outline-primary m-btn m-btn--icon m-btn--outline-2x btn-md">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Enviar Solicitud</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</div>
+
+@await Html.PartialAsync("Partials/_UserImagePartial")
+@await Html.PartialAsync("Partials/_PaymentReceiptPartial")
+@await Html.PartialAsync("Partials/_CashierPaymentPartial")
+@await Html.PartialAsync("Partials/_RequestResult", Model.PendingPaymentTitle)
+
+@section Scripts{
+<script src="~/js/lib/cropper/cropper.js"></script>
+<script src="~/js/views/procedure/detail.js" asp-append-version="true"></script>
+}

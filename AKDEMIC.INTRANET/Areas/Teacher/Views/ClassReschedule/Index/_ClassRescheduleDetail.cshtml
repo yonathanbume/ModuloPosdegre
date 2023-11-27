@@ -1,0 +1,99 @@
+﻿@using AKDEMIC.INTRANET.Areas.Teacher.Models.ClassRescheduleViewModels;
+@model ClassRescheduleViewModel
+
+<div id="class-reschedule-modal-detail" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-modal-label">
+                    Solicitud de Reprogramación de Clase
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="class-reschedule-modal-detail-form" class="m-form m-form--label-align-right m-form--state">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="class-reschedule-detail-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="create_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label for="CourseId">Curso</label>
+                            <input name="CourseId" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label name="SectionId">Sección</label>
+                            <input name="SectionId" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-8 m-form__group-sub">
+                            <label asp-for="ClassId" class="required-form-label">Clase</label>
+                            <input name="ClassId" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label name="IsPermanent" class="d-block">¿Es Permanente?</label>
+                            <input name="IsPermanent" type="text" class="form-control m-input" disabled readonly>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="StartDate" class="required-form-label">Fecha</label>
+                            <div class="input-group">
+                                <input name="StartDate" type="text" class="form-control m-input" disabled readonly>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="StartTime" class="required-form-label">Inicio</label>
+                            <div class="input-group">
+                                <input name="StartTime" type="text" class="form-control m-input" disabled readonly>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="EndTime" class="required-form-label">Fin</label>
+                            <div class="input-group">
+                                <input name="EndTime" type="text" class="form-control m-input" disabled readonly>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label asp-for="Justification" class="required-form-label">Justificación</label>
+                        <textarea name="Justification" class="form-control m-input disable-resize justification" maxlength="600" rows="6" disabled readonly></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Reporte de estudiantes bachilleres y titulados";
+}
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Reporte de estudiantes bachilleres y titulados
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="m-portlet__body">
+            <form id="form-valid" method="post">
+                <div class="col-md-12 m-form__group-sub">
+                    <label>Tipo:</label>
+                    <select id="gradeType" name="gradeType" class="form-control select2-hidden-accessible" data-select2-id="gradeType" tabindex="-1" aria-hidden="true">
+                        <option value="0">Todas</option>
+                        @foreach (var item in ConstantHelpers.GRADE_INFORM.DegreeType.VALUES)
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    </select>
+                </div>
+                <br>
+                <div class="col-md-12 m-form__group-sub">
+                    <label>Facultades:</label>
+                    <select id="faculties" name="faculties" class="form-control select2-hidden-accessible" data-select2-id="faculties" tabindex="-1" aria-hidden="true"></select>
+                </div>
+                <br>
+                <div class="col-md-12 m-form__group-sub">
+                    <label for="careers">Escuelas:</label>
+                    <select id="careers" name="careers" class="form-control select2-hidden-accessible" data-select2-id="careers" aria-hidden="true"></select>
+                </div>
+                <br>
+                <div class="col-md-12 m-form__group-sub">
+                    <label for="programs">Programas:</label>
+                    <select id="programs" name="programs" class="form-control select2-hidden-accessible" data-select2-id="programs" aria-hidden="true"></select>
+                </div>
+                <br>
+                <div class="col-xs-12" style="text-align:right">
+                    <button id="btnSend" class="btn btn-primary">Generar reporte</button>
+                </div>
+            </form>
+            <div id="chart_div_report_bachelor" style="display:none;">
+
+            </div>
+
+        </div>
+        @*<div>
+            <div class="m-portlet__body" style="text-align:center">
+                
+            </div>
+        </div>*@
+        @*<div style="display:block;">
+                <table id="table" class="table table-hover nowrap" style="width:100% !important"></table>
+            </div>*@
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/css/areas/reports/charts.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/lib/highcharts/highcharts.js"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+    <script type="text/javascript">
+        var careerList = @Html.Raw(Json.Serialize(ViewBag.CareerList));
+        var facultyList= @Html.Raw(Json.Serialize(ViewBag.FacultyList));
+    </script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/reports/ReportBachelor.js"></script>
+    @*<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>*@
+
+}
+
+

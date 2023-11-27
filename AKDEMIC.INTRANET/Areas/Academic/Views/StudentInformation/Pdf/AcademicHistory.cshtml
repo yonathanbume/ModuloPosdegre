@@ -1,0 +1,837 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.PdfViewModels.AcademicHistoryPdfViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/pages/pdf/academichistorypdf.css" />
+    <style>
+
+
+        body {
+            font-family: Arial;
+        }
+
+        /*body:after {
+                content: "Solo \A Lectura";
+                font-size: 13em;
+                color: rgba(104,104,104,0.3);
+                z-index: 9999;
+                text-align: center;
+                position: absolute;
+                left: 0%;
+                top: 20%;
+                text-align: center;
+                background-repeat: repeat-y;
+                page-break-inside: avoid;
+            }*/
+
+
+        .document-header {
+            text-align: center;
+            height: auto;
+            width: 100%;
+        }
+
+        * {
+            font-family: Arial;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Calibri;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+            margin-block-start: 0 !important;
+            margin-block-end: 0 !important;
+        }
+
+        .institution-title {
+            font-weight: bold;
+            font-size: x-large;
+            text-transform: uppercase;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        h3.area-title1 {
+            font-weight: 600;
+            font-size: medium;
+            margin-top: 3px !important;
+        }
+
+        h3.area-title2 {
+            font-weight: 600;
+            font-size: medium;
+        }
+
+        .logo-container {
+            float: left;
+            width: 100px;
+            margin-left: 20px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+
+        .logo-container2 {
+            float: right;
+            width: 100px;
+            margin-top: -200px;
+            margin-left: 20px;
+            /*position: absolute;*/
+            /*top: 5px;*/
+            /*left: 5px;*/
+        }
+
+        .logo2 {
+            width: 100%;
+            height: auto;
+        }
+
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+
+        .barcode {
+            width: 100%;
+        }
+
+        .barcode-object {
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td, th {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            padding-top: 6px !important;
+            padding-bottom: 6px !important;
+        }
+
+        .wrap {
+            width: 5%;
+            white-space: nowrap;
+        }
+
+        .student-info {
+            margin-top: 5px;
+        }
+
+        .student-info-title {
+            text-transform: uppercase;
+            font-size: x-large;
+            text-align: center;
+            margin-left: 5px;
+            font-weight: normal;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .table td {
+                padding: 0px !important;
+            }
+
+        .student-info-table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            width: 100%;
+        }
+
+            .student-info-table td {
+                border: 1px solid black;
+            }
+
+            .student-info-table .label {
+                background-color: lightgray;
+                font-size: 9px;
+                text-align: center;
+                padding: 2px !important;
+            }
+
+            .student-info-table .info-student-detail {
+                text-align: center;
+                font-size: 15px;
+                font-weight: 600;
+                padding: 2px !important;
+            }
+
+            .student-info-table td {
+                font-size: 8px;
+            }
+
+        .academic-history {
+            margin-top: 5px;
+        }
+
+        .academic-history-title {
+            font-size: large;
+            text-transform: uppercase;
+            margin-left: 5px;
+            font-weight: normal;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .academic-history-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .academic-history-table th {
+                background-color: lightgray;
+                font-weight: lighter;
+                font-size: 8px;
+            }
+
+            .academic-history-table td, .academic-history-table th {
+                border: 1px solid black;
+            }
+
+            .academic-history-table td {
+                font-size: 10px;
+                padding: 2.5px !important;
+            }
+
+            .academic-history-table tr {
+                page-break-inside: avoid;
+            }
+
+            .academic-history-table tfoot {
+                display: table-row-group; /* fix: footer repeat each page */
+            }
+
+            .academic-history-table .grade {
+                font-size: 10px;
+            }
+
+            .academic-history-table .grade_appro {
+                font-size: 13px;
+                font-weight: bold;
+            }
+
+            .academic-history-table .semester {
+                font-size: 13px !important;
+                font-weight: bold !important;
+            }
+
+        .director-signature {
+            margin-top: 10px;
+        }
+
+        td.center {
+            text-align: center;
+        }
+
+        .academic-history-footer {
+            font-size: small;
+            text-transform: uppercase;
+        }
+
+            .academic-history-footer td {
+                border: 0;
+                padding-left: 5px;
+            }
+
+        .director-signature {
+            margin-top: 200px;
+            border-top: 2px solid black;
+            text-align: center;
+            width: 30%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .signature-text {
+            text-align: center;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .signature-text p {
+                font-size: x-small;
+                margin-block-start: 0;
+                margin-block-end: 0;
+            }
+
+        .document-footer {
+            font-style: italic;
+            font-size: medium;
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+        table > tr {
+            page-break-inside: avoid;
+        }
+
+        .transparenttd {
+            border-color: transparent;
+            background-color: white;
+            color: transparent
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .legend {
+            margin-top: 15px;
+            width: 40% !important;
+        }
+    </style>
+    @if (string.IsNullOrEmpty(Model.JsPath))
+    {
+        <script src="~/js/lib/jsbarcode/JsBarcode.all.min.js"></script>
+    }
+    else
+    {
+        <script src="@Model.JsPath"></script>
+    }
+</head>
+<body>
+    <header class="document-header">
+        <div class="document-title">
+            <h1 class="institution-title">@GeneralHelpers.GetInstitutionName()</h1>
+            <h3 class="area-title1">FACULTAD DE @Model.StudentInfo.Faculty.ToUpper()</h3>
+            <h3 class="area-title2">ESCUELA PROFESIONAL DE @Model.StudentInfo.CareerName.ToUpper()</h3>
+        </div>
+        <div class="logo-container" style="width:70px;">
+            @if (string.IsNullOrEmpty(Model.ImagePathLogo))
+            {
+                <img class="logo" src="~/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+            }
+            else
+            {
+                <img class="logo" src="@Model.ImagePathLogo" />
+            }
+        </div>
+    </header>
+    @*<div class="barcode">
+            <svg id="barcode-object" class="barcode-object"></svg>
+        </div>*@
+    <div class="student-info">
+        <h3 class="student-info-title">HISTORIAL ACAD&Eacute;MICO</h3>
+        <table class="table">
+            <tr>
+                <td>
+                    <table class="student-info-table">
+                        <tr>
+                            <td colspan="2" width="30%" class="label">NUMERO DE MATRICULA</td>
+                            <td colspan="3" width="50%" class="label">APELLIDOS Y NOMBRES</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="info-student-detail">@Model.StudentInfo.StudentCode</td>
+                            <td colspan="3" class="info-student-detail">@Model.StudentInfo.StudentName</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="label">PLAN DE EST.</td>
+                            <td colspan="5" class="label">ESPECIALIDAD / MENCION</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="info-student-detail">@Model.StudentInfo.CurriculumCode</td>
+                            <td colspan="5" class="info-student-detail">@Model.StudentInfo.StudentRegime</td>
+                        </tr>
+                        <tr>
+                            <td class="label">AÑO DE INGRESO</td>
+                            <td class="label">MODALIDAD DE INGRESO</td>
+                            <td class="label">NRO DE INSCRIPCION</td>
+                            <td class="label">PUNTAJE / SOBRE</td>
+                            <td class="label">ORDEN / SOBRE</td>
+                        </tr>
+                        <tr>
+                            <td class="info-student-detail">@Model.StudentInfo.IncomeYear</td>
+                            <td class="info-student-detail">@Model.StudentInfo.Modality</td>
+                            <td class="info-student-detail">@Model.StudentInfo.RegisterNumber</td>
+                            <td class="info-student-detail">@Model.StudentInfo.Score</td>
+                            <td class="info-student-detail">@Model.StudentInfo.Position</td>
+                        </tr>
+                    </table>
+
+                </td>
+                <td rowspan="2" width="15%" class="label" style="text-align:center; font-size:13px; border:0.9px solid; border-left:0px !important;">FOTO</td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="student-info-table" style="border-top:0px solid !important;">
+                        <tr>
+                            <td style="border-top:0px solid !important;" width="25%" class="label">INGRESADO POR</td>
+                            <td style="border-top:0px solid !important;" width="25%" class="label">REVISADO POR</td>
+                            <td style="border-top:0px solid !important;" width="25%" class="label">FIRMA DEL ESTUDIANTE</td>
+                            <td style="border-top:0px solid !important;" width="25%" colspan="2" class="label">OBSERVACIONES</td>
+                            @*<td rowspan="10" width="20%" class="label" style="text-align:center; font-size:13px; border-top:0px solid !important;"></td>*@
+                        </tr>
+                        <tr style="height:20px">
+                            <td rowspan="3" class=""></td>
+                            <td rowspan="3" class=""></td>
+                            <td rowspan="3" class=""></td>
+                            <td class="" colspan="2"></td>
+                        </tr>
+                        <tr style="height:20px">
+                            <td class="" colspan="2"></td>
+                        </tr>
+                        <tr style="height:20px">
+                            <td class="" colspan="2"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="academic-history">
+        @*<h3 class="academic-history-title">DETALLE DE CURSOS</h3>*@
+        @{
+            var maxValue = 5;
+            var headNumber = Model.AcademicYears.Count > 0 
+                ? Model.AcademicYears.Max(ay => ay.Courses.Count == 0 ? 0 : ay.Courses.Max(c => c.AcademicHistories.Count()))
+                : maxValue;
+            
+            var maxColumns = headNumber > maxValue ? maxValue : headNumber;
+
+        }
+        <table class="academic-history-table">
+            <thead>
+                <tr>
+                    @*<th class="wrap">CICLO</th>*@
+                    <th>&emsp;</th>
+                    <th>NOMBRE DE LA ASIGNATURA</th>
+                    <th>CRED</th>
+                    @for (var i = 0; i < maxColumns; ++i)
+                    {
+                        <th class="label">Nota</th>
+                        <th class="label" width="45px">AÑO-PER</th>
+                    }
+                    <th>ACTA</th>
+                    <th>FECHA</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{var group = 0;}
+                @{var row = 0;}
+                @foreach (var academicYear in Model.AcademicYears)
+                {
+                    group = academicYear.AcademicYearNumber;
+                    row = Model.AcademicYears.Where(x => x.AcademicYearNumber == group).Count();
+
+                    <tr style="border:unset;font-size:12px">
+                        <th class="semester" colspan="@( 5 + (maxColumns * 2) )" style="text-align:left;border:unset">SEMESTRE: @ConstantHelpers.ACADEMIC_YEAR.TEXT[group].ToUpper()</th>
+                    </tr>
+
+                    foreach (var course in academicYear.Courses.Where(y => !y.IsElective))
+                    {
+
+                        var skip = 0;
+                        var take = maxValue;
+                        var tpmAcademicHistories = course.AcademicHistories.Skip(skip).Take(take).ToList();
+                        var duplicate = false;
+
+                        if (!tpmAcademicHistories.Any())
+                        {
+                            <tr>
+                                <td>@course.Code</td>
+                                <td>@($"{course.Name} {course.AcademicHistories.Where(x => !string.IsNullOrEmpty(x.Observation)).Select(x => $"({x.Observation})").FirstOrDefault()}")</td>
+                                <td class="center">@(course.Credits)</td>
+                                @for (var i = 0; i < maxColumns - tpmAcademicHistories.Count(); ++i)
+                                {
+                                    <td class="center">-</td>
+                                    <td class="center">-</td>
+                                }
+                                <td>@course.EvaluationReports?.GeneratedId.ToString().PadLeft(6, '0')</td>
+                                <td class="center">@course.EvaluationReports?.CreatedAt.ToLocalDateFormat()</td>
+                            </tr>
+                        }
+
+                        while (tpmAcademicHistories.Any())
+                        {
+                            <tr>
+                                @*<td class="center">@academicYear.AcademicYearNumber.ToString("D2")</td>*@
+                                <td>@(duplicate ? "" : course.Code)</td>
+                                <td>@(duplicate ? "" : $"{course.Name} {course.AcademicHistories.Where(x => !string.IsNullOrEmpty(x.Observation)).Select(x => $"({x.Observation})").FirstOrDefault()}")</td>
+                                <td class="center">@(duplicate ? "" : course.Credits)</td>
+                                @foreach (var academicHistory in tpmAcademicHistories)
+                                {
+                                    if (academicHistory.Approved)
+                                    {
+                                        <td class="center grade_appro">@(academicHistory.IsValidated && academicHistory.Grade == -1 ? "CV" : academicHistory.Withdrawn ? "RET" : academicHistory.Grade.ToString("00"))</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="center grade">@(academicHistory.IsValidated && academicHistory.Grade == -1 ? "CV" : academicHistory.Withdrawn ? "RET" : academicHistory.Grade.ToString("00"))</td>
+                                    }
+                                    <td class="center">@academicHistory.Term</td>
+                                }
+                                @for (var i = 0; i < maxColumns - tpmAcademicHistories.Count(); ++i)
+                                {
+                                    <td class="center">-</td>
+                                    <td class="center">-</td>
+                                }
+                                <td>@(duplicate?"": course.EvaluationReports?.GeneratedId.ToString().PadLeft(6, '0'))</td>
+                                <td class="center">@(duplicate?"": course.EvaluationReports?.CreatedAt.ToLocalDateFormat())</td>
+                            </tr>
+                            duplicate = true;
+                            skip += take;
+                            tpmAcademicHistories = course.AcademicHistories.Skip(skip).Take(take).ToList();
+                        }
+                    }
+
+                    if (academicYear.Courses.Any(y => y.IsElective))
+                    {
+                        <tr style="border:unset;font-size:12px">
+                            <th colspan="@( 5 + (maxColumns * 2) )" style="text-align:left;border:unset">ELECTIVOS</th>
+                        </tr>
+
+                        foreach (var course in academicYear.Courses.Where(y => y.IsElective))
+                        {
+
+                            var skip = 0;
+                            var take = maxValue;
+                            var tpmAcademicHistories = course.AcademicHistories.Skip(skip).Take(take).ToList();
+                            var duplicate = false;
+
+                            if (!tpmAcademicHistories.Any())
+                            {
+                                <tr>
+                                    <td>@course.Code</td>
+                                    <td>@($"{course.Name} {course.AcademicHistories.Where(x => !string.IsNullOrEmpty(x.Observation)).Select(x => $"({x.Observation})").FirstOrDefault()}")</td>
+                                    <td class="center">@(course.Credits)</td>
+                                    @for (var i = 0; i < maxColumns - tpmAcademicHistories.Count(); ++i)
+                                    {
+                                        <td class="center">-</td>
+                                        <td class="center">-</td>
+                                    }
+                                    <td>@course.EvaluationReports?.GeneratedId.ToString().PadLeft(6, '0')</td>
+                                    <td class="center">@course.EvaluationReports?.CreatedAt.ToLocalDateFormat()</td>
+                                </tr>
+                            }
+
+                            while (tpmAcademicHistories.Any())
+                            {
+                                <tr>
+                                    @*<td class="center">@academicYear.AcademicYearNumber.ToString("D2")</td>*@
+                                    <td>@(duplicate ? "" : course.Code)</td>
+                                    <td>@(duplicate ? "" : $"{course.Name} {course.AcademicHistories.Where(x => !string.IsNullOrEmpty(x.Observation)).Select(x => $"({x.Observation})").FirstOrDefault()}")</td>
+                                    <td class="center">@(duplicate ? "" : course.Credits)</td>
+                                    @foreach (var academicHistory in tpmAcademicHistories)
+                                    {
+                                        if (academicHistory.Approved)
+                                        {
+                                            <td class="center grade_appro">@(academicHistory.IsValidated && academicHistory.Grade == -1 ? "CV" : academicHistory.Withdrawn ? "RET" : academicHistory.Grade.ToString())</td>
+                                            <td class="center">@academicHistory.Term</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="center grade">@(academicHistory.IsValidated && academicHistory.Grade == -1 ? "CV" : academicHistory.Withdrawn ? "RET" : academicHistory.Grade.ToString())</td>
+                                            <td class="center">@academicHistory.Term</td>
+                                        }
+
+                                    }
+                                    @for (var i = 0; i < maxColumns - tpmAcademicHistories.Count(); ++i)
+                                    {
+                                        <td class="center">-</td>
+                                        <td class="center">-</td>
+                                    }
+                                    <td>@(duplicate?"": course.EvaluationReports?.GeneratedId.ToString().PadLeft(6, '0'))</td>
+                                    <td class="center">@(duplicate?"":course.EvaluationReports?.CreatedAt.ToLocalDateFormat())</td>
+                                </tr>
+                                duplicate = true;
+                                skip += take;
+                                tpmAcademicHistories = course.AcademicHistories.Skip(skip).Take(take).ToList();
+                            }
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot class="academic-history-footer">
+                <tr>
+                    <td colspan="@(maxColumns + 4)">
+                        CREDITOS APROBADOS: @Model.AcademicYears.Sum(ay => ay.Courses.Where(c => c.AcademicHistories.Any(ah => ah.Approved)).Sum(c => Convert.ToDecimal(c.Credits))).ToString("0.0")
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        @*  *@
+        <br />
+        @{
+
+            var yearDetails = Model.Details.GroupBy(y => y.Year).Select(x => x.Key).OrderBy(y => y).ToList();
+
+            var skipIn = 0;
+        }
+
+        @{var totalaccumulated = 0.0M; }
+        @{var totalapproved = 0.0M; }
+
+        @*@while (yearDetails.Skip(skipIn).Take(7).Any())
+            {
+                var years = Model.Details.GroupBy(y => y.Year).Select(x => x.Key).OrderBy(y => y).Skip(skipIn).Take(7).ToList();
+                var customDetail = Model.Details.Where(x => years.Contains(x.Year)).ToList();
+                skipIn += 7;
+
+                <table class="academic-history-table">
+                    <thead>
+                        <tr>
+                            <th>AÑOS ACADEMICOS</th>
+                            @{ var before = ""; }
+                            @foreach (var deta in customDetail)
+                            {
+                                var colspan = customDetail.Where(x => x.Year == deta.Year).Count();
+                                if (before != deta.Year.ToString())
+                                {
+                                    before = deta.Year.ToString();
+                                    <th colspan="@colspan" style="text-align:center">@deta.Year</th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>DATOS PARCIALES</strong> </td>
+                            @foreach (var deta in customDetail)
+                            {
+                                int number = int.Parse(deta.Number);
+                                @if (number == 3)
+                                {
+                                    <td style="text-align:center"><strong>VAC</strong></td>
+                                }
+                                else
+                                {
+                                    <td style="text-align:center"><strong>@ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS[number]</strong></td>
+                                }
+
+                            }
+                        </tr>
+                        <tr>
+                            <td>CREDITOS CURSADOS</td>
+                            @foreach (var deta in customDetail)
+                            {
+                                <td style="text-align:center">@deta.TotalCredits</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>CREDITOS APROBADOS</td>
+                            @foreach (var deta in customDetail)
+                            {
+                                <td style="text-align:center">@deta.ApprovedCredits</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>PUNTAJE SEMESTRAL</td>
+                            @foreach (var deta in customDetail)
+                            {
+                                <td style="text-align:center">@deta.TermScore</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>PROMEDIO PONDERADO SEMESTRAL</td>
+                            @foreach (var deta in customDetail)
+                            {
+                                <td style="text-align:center">@deta.WeightedAverageGrade</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td><strong>DATOS ACUMULATIVOS</strong></td>
+                            <td colspan="20"></td>
+
+                        </tr>
+                        <tr>
+                            <td>CREDITOS CURSADOS</td>
+                            @for (int i = 0; i < customDetail.Count(); i++)
+                            {
+                                <td style="text-align:center">@(totalaccumulated = totalaccumulated + Convert.ToDecimal(customDetail[i].TotalCredits))</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>CREDITOS APROBADOS</td>
+                            @for (int i = 0; i < customDetail.Count(); i++)
+                            {
+                                <td style="text-align:center">@(totalapproved = totalapproved + Convert.ToDecimal(customDetail[i].ApprovedCredits))</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>PUNTAJE ACUMULATIVO</td>
+                            @for (int i = 0; i < customDetail.Count(); i++)
+                            {
+                                <td style="text-align:center">@customDetail[i].CumulativeScore</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>PROMEDIO PONDERADO ACUMULATIVO</td>
+                            @{ var totalaverage = 0M;}
+                            @for (int i = 0; i < customDetail.Count(); i++)
+                            {
+
+                                <td style="text-align:center;border:1px solid black">@customDetail[i].CumulativeWeightedAverage.ToString("0.00")</td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br />
+
+            }*@
+
+        @*  *@
+
+        <div style="text-align:center">
+            <strong>Resumen de notas</strong>
+        </div>
+        <table class="" style="font-size: 10px; letter-spacing:0.5px !important;
+               width: 100%;
+               padding: 13px;
+               padding-right: 10px;
+               padding-left: 10px;
+               border-collapse: collapse;">
+            <colgroup span="1"></colgroup>
+            <colgroup span="2"></colgroup>
+            <colgroup span="2"></colgroup>
+            <tr style="border:1px solid black;">
+                <th style="border:1px solid black" colspan="1" scope="colgroup"></th>
+                <th style="border:1px solid black" colspan="5" scope="colgroup">DATOS PARCIALES</th>
+                <th style="border:1px solid black" colspan="5" scope="colgroup"> DATOS ACUMULATIVOS</th>
+            </tr>
+            <tr style="border:1px solid black;">
+
+                <th style="border:1px solid black"> Año - Per </th>
+                @* parciales *@
+
+                <th style="border:1px solid black"> C Cu</th>
+                <th style="border:1px solid black"> C Ap</th>
+                <th style="border:1px solid black"> C Ds</th>
+                <th style="border:1px solid black">
+                    Ptje
+                </th>
+
+                <th style="border:1px solid black"> PPS </th>
+                @* acumulativos *@
+
+                <th style="border:1px solid black">
+                    C Cu
+                </th>
+                <th style="border:1px solid black"> C Ap</th>
+                <th style="border:1px solid black"> C Ds</th>
+                <th style="border:1px solid black">
+                    Ptje
+                </th>
+
+                <th style="border:1px solid black"> PPA </th>
+
+            </tr>
+            @{
+                var totalaccumulated3 = 0.0M;
+                var totalapproved3 = 0.0M;
+                var totaldisapproved3 = 0.0M;
+            }
+
+            @for (int i = 0; i < Model.Details.Count(); i++)
+            {
+        <tr style="border:1px solid black">
+            @if (string.IsNullOrEmpty(Model.Details[i].Term))
+            {
+                <td style="text-align:center;border:1px solid black"></td>
+                <td style="text-align:center;border:1px solid black"></td>
+                <td style="text-align:center;border:1px solid black"></td>
+                <td style="text-align:center;border:1px solid black"></td>
+                <td style="text-align:center;border:1px solid black"></td>
+                <td style="text-align:center;border:1px solid black"></td>
+            }
+            else
+            {
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].Term</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].TotalCredits</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].ApprovedCredits</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].DisapprovedCredits</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].TermScore</td>
+                <td style="text-align:center;border:1px solid black">@Model.Details[i].Average</td>
+            }
+
+            @{
+                totalaccumulated3 = (totalaccumulated3 + Convert.ToDecimal(Model.Details[i].TotalCredits) + Model.Details[i].AdditionalCredits);
+                var totalaccum2 = totalaccumulated3.ToString("0.0");
+
+                totalapproved3 = totalapproved3 + Convert.ToDecimal(Model.Details[i].ApprovedCredits) + Model.Details[i].AdditionalCredits;
+                var totalapp2 = totalapproved3.ToString("0.0");
+
+                totaldisapproved3 = totaldisapproved3 + Convert.ToDecimal(Model.Details[i].DisapprovedCredits);
+                var totaldis2 = totaldisapproved3.ToString("0.0");
+            }
+            <td style="text-align:center;border:1px solid black">@(totalaccum2)</td>
+            <td style="text-align:center;border:1px solid black">@(totalapp2)</td>
+            <td style="text-align:center;border:1px solid black">@(totaldis2)</td>
+            <td style="text-align:center;border:1px solid black">@Model.Details[i].CumulativeScore</td>
+            <td style="text-align:center;border:1px solid black">@Model.Details[i].CumulativeWeightedAverage</td>
+        </tr>
+            }
+        </table>
+
+        @*  *@
+    </div>
+    <div class="legend">
+        <table class="academic-history-table" style="letter-spacing:1px !important;">
+            <tr>
+                <th colspan="2"><b>LEYENDA</b></th>
+            </tr>
+            <tr>
+                <th><b>ABREVIATURA</b></th>
+                <th><b>DESCRIPCIÓN</b></th>
+            </tr>
+            <tr>
+                <td>C Cu</td>
+                <td>Créditos Cursados</td>
+            </tr>
+            <tr>
+                <td>C Ap</td>
+                <td>Créditos Aprobados</td>
+            </tr>
+            <tr>
+                <td>C Ds</td>
+                <td>Créditos Desaprobados</td>
+            </tr>
+            <tr>
+                <td>Ptje</td>
+                <td>Puntaje Semestral/Acumulativo</td>
+            </tr>
+            <tr>
+                <td>PPS</td>
+                <td>Promedio Ponderado Semestral</td>
+            </tr>
+            <tr>
+                <td>PPA</td>
+                <td>Promedio Ponderado Acumulativo</td>
+            </tr>
+        </table>
+    </div>
+    @*<div class="director-signature">
+            </div>
+            <div class="signature-text">
+                    <p>DIRECCION DE ACTIVIDADES Y SERVICIOS ACADEMICOS</p>
+                    <p>UNIDAD DE REGISTRO CENTRAL</p>
+                </div>
+        @Model.Today.Day de @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[Model.Today.Month] del @Model.Today.Year
+        <footer class="document-footer">
+                URC / @Model.Today.Day de @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[Model.Today.Month] del @Model.Today.Year
+            </footer>*@
+    <script>
+        JsBarcode("#barcode-object", "@Model.StudentInfo.StudentCode", {
+            textAlign: "left",
+            format: "CODE39",
+            height: 50,
+            fontSize: 16,
+            font: "Arial"
+        });
+    </script>
+</body>
+</html>

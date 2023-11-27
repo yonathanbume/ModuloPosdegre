@@ -1,0 +1,45 @@
+﻿@model Guid
+@{
+    ViewBag.Title = "Asistente Académico";
+    ViewBag.SubTitle = "Notas de sección";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Asistente Académico", Controller = "AcademicAssistant", Action = "Index", Area = "AcademicAssistant"},
+new BreadcrumbViewData { Name = "Sección", Controller = null, Action = null}
+};
+}
+
+<div class="m-content">
+    <input id="Id" type="hidden" value="@Model" />
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Notas de sección
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                        <button class="btn btn-primary m-btn m-btn--air m-btn--icon" id="notification">
+                            <span>
+                                <i class="la la-bell"></i>
+                                <span>Notificar al profesor</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable"></div>
+            <div id="datatable"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/academicAssistant/academicAssistant/sectionScores.js"></script>
+}

@@ -1,0 +1,85 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.ProcedureViewModels.ProcedureViewModel
+
+<input type="hidden" asp-for="Activity.Type" />
+
+@if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.CAREER_TRANSFER)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-6">
+            <label asp-for="Activity.CareerId" class="required-form-label"><strong>Nueva Escuela Profesional:</strong></label>
+            <select class="form-control m-select2" asp-for="Activity.CareerId" required></select>
+        </div>
+        <div class="m-form__group-sub col-lg-6">
+            <label asp-for="Activity.CurriculumId" class="required-form-label"><strong>Nuevo Plan de Estudio:</strong></label>
+            <select class="form-control m-select2" asp-for="Activity.CurriculumId" required></select>
+        </div>
+    </div>
+}
+else if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.COURSE_WITHDRAWAL)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="Activity.StudentSectionId" class="required-form-label"><strong>Curso a retirar:</strong></label>
+            <select class="form-control m-select2 courses_enrolled" asp-for="Activity.StudentSectionId" required></select>
+        </div>
+    </div>
+}
+else if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.CHANGE_ACADEMIC_PROGRAM)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="Activity.AcademicProgramId" class="required-form-label"><strong>Nueva especialidad:</strong></label>
+            <select class="form-control m-select2" asp-for="Activity.AcademicProgramId" required></select>
+        </div>
+    </div>
+}
+else if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.EXONERATED_COURSE)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="Activity.CourseId" class="required-form-label"><strong>Curso a Exonerar:</strong></label>
+            <select class="form-control m-select2 exonerated_course_select" asp-for="Activity.CourseId" required></select>
+        </div>
+    </div>
+}
+else if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.EXTRAORDINARY_EVALUATION)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="Activity.CourseId" class="required-form-label"><strong>Curso:</strong></label>
+            <select class="form-control m-select2 extraordinary_evaluation_course_select" asp-for="Activity.CourseId" required></select>
+        </div>
+    </div>
+}
+else if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.GRADE_RECOVERY)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="Activity.StudentSectionId" class="required-form-label"><strong>Curso:</strong></label>
+            <select class="form-control m-select2 courses_grade_recovery" asp-for="Activity.StudentSectionId" required></select>
+        </div>
+    </div>
+}
+else if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.SUBSTITUTE_EXAM)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="Activity.StudentSectionId" class="required-form-label"><strong>Curso:</strong></label>
+            <select class="form-control m-select2 courses_subtitute_exam" asp-for="Activity.StudentSectionId" required></select>
+        </div>
+    </div>
+}
+else if (Model.Activity.Type == ConstantHelpers.PROCEDURE_TASK.ACTIVITY_TYPE.COURSE_WITHDRAWAL_MASSIVE)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="Activity.StudentSectionId" class="required-form-label"><strong>Cursos a retirar:</strong></label>
+            <select class="form-control m-input m-bootstrap-select m_selectpicker" multiple asp-for="Activity.JsonStudentSectionIds" required></select>
+        </div>
+    </div>
+
+    if (Model.ConceptAmount.HasValue)
+    {
+        <strong class="m--font-primary d-none course_withdrawal_massive_total_amount">MONTO TOTAL : S/ 0.00 </strong>
+    }
+}

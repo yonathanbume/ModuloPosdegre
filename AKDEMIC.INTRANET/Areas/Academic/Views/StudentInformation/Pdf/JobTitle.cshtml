@@ -1,0 +1,114 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.JobTitleViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div class="document-header">
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" />
+        <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+
+        <div class="cleared">
+            <div class="company-name" style="margin:0px; padding:0px;">
+                <b> @GeneralHelpers.GetInstitutionName().ToUpper()</b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:0px;">
+                <b>@Model.HeaderText</b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:0px;">
+                <b> DIRECCION GENERAL ACADEMICA</b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:0px;">
+                <b> OFICINA DE REGISTRO Y ARCHIVO ACADEMICO</b>
+            </div>
+            <div class="address-text">
+                @*Ciudad Universitaria. Télefono [TELEFONO] - [DIRECCION] - Pagina Web [PAGINA WEB]*@
+            </div>
+        </div>
+
+    </div>
+    <div class="document-body">
+        <u class="document-title">INFORME No @Model.Number</u>
+        <table class="table-details">
+            <tr>
+                <td class="first">DE LA</td>
+                <td>:</td>
+                <td>Jefa de la Oficina de registro y Archivo Acad&eacute;mico.</td>
+            </tr>
+            <tr>
+                <td class="first">AL</td>
+                <td>:</td>
+                <td>DECANO DE LA FACULTAD DE @Model.Faculty</td>
+            </tr>
+            <tr>
+                <td class="first">REFERENCIA</td>
+                <td>:</td>
+                <td style="text-rendering:geometricPrecision ">Requisitos que cumple el tr&aacute;mite de <strong>TITULO PROFESIONAL</strong>.</td>
+            </tr>
+            <tr>
+                <td class="first">FECHA</td>
+                <td>:</td>
+                <td>@ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], @Model.DateInform</td>
+            </tr>
+        </table>
+        <p>
+            @(Model.StudentGender == ConstantHelpers.SEX.FEMALE ? "La Srta." : "El Sr.") <b>@Model.Student</b> ex-alumn@(Model.StudentGender == ConstantHelpers.SEX.FEMALE ? "a" : "o") de la Facultad de&emsp;<b>@Model.Faculty</b> Escuela Profesional de <b>@Model.School</b> Especialidad de <b>@Model.Specialty</b>.
+        </p>
+
+        <p>
+            De acuerdo a los documentos que adjunta y los que obran en los archivos de esta Oficina,
+            cumple con el requisito que exige la Universidad para el tr&aacute;mite de <strong>T&Iacute;TULO PROFESIONAL.</strong>
+        </p>
+        <p>
+            El grado acad&eacute;mico de bachiller se Tramit&oacute; con Informe N° @Model.DocumentNumberBachelor - de fecha @Model.DocumentDateBachelor y con los siguientes datos :
+        </p>
+        <table class="table-details">
+            <tr>
+                <td class="first">N&Uacute;MERO DE MATR&Iacute;CULA</td>
+                <td>:</td>
+                <td>@Model.RegistrationNumber</td>
+            </tr>
+            <tr>
+                <td class="first">AÑO DE INGRESO</td>
+                <td>:</td>
+                <td>@Model.StartYear</td>
+            </tr>
+            <tr>
+                <td class="first">AÑO DE EGRESO</td>
+                <td>:</td>
+                <td>@Model.EndYear</td>
+            </tr>
+            <tr>
+                <td class="first">PROMEDIO ACUMULATIVO</td>
+                <td>:</td>
+                <td>@Model.Average</td>
+            </tr>
+            <tr>
+                <td class="first">MODALIDAD DE TITULACI&Oacute;N</td>
+                <td>:</td>
+                <td>@Model.Modality</td>
+            </tr>
+            <tr>
+                <td class="first">NOTA</td>
+                <td>:</td>
+                <td>@Model.Note</td>
+            </tr>
+        </table>
+        
+        <div style="padding-top:5px;">
+            El <b>T&iacute;tulo profesional</b> se tramita por la modalidad de @Model.Note con el informe <strong>"@(Model.ResearchWork)"</strong>
+        </div>
+        <p>
+            <strong>OBSERVACIONES  </strong> @Model.Observations
+        </p>
+    </div>    
+    @*<div class="document-footer" style="text-align:right"><div class="">@Model.Location, @Model.Date</div></div>*@
+</body>
+
+</html>

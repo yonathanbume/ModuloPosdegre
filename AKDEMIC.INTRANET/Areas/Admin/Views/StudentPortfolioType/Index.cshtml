@@ -1,0 +1,176 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.StudentPortfolioTypeModels
+@model TypeViewModel
+@{
+    ViewData["Title"] = "Categorías de Pago";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Categorías de Pago" }
+    };
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de tipos del portafolio del estudiante
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Buscar:</label>
+                                <input class="form-control" id="search" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+
+                        <button id="btn-new" class="btn btn-sm btn-primary m-btn m-btn--icon" data-toggle="modal" data-target="#create-modal">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo tipo</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+<div id="create-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Nuevo tipo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="create-form" asp-action="Create" asp-area="Admin" asp-controller="StudentPortfolioType">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="create-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="create-alert-text">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label asp-for="Name" class="required-form-label"></label>
+                        <input asp-for="Name" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label asp-for="DependencyId" class="required-form-label"></label>
+                        <select asp-for="DependencyId" class="form-control m-select2 create-dependency-select">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label asp-for="Type" class="required-form-label"></label>
+                        <select asp-for="Type" class="form-control m-select2" required>
+                            @foreach (var item in ConstantHelpers.Intranet.STUDENT_PORTFOLIO_TYPE.NAMES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <div class="m-checkbox-list">
+                            <label class="m-checkbox">
+                                ¿Puede subirlo el estudiante?
+                                <input asp-for="CanUploadStudent" type="checkbox"> 
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="edit-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Editar tipo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" asp-action="Update" asp-area="Admin" asp-controller="StudentPortfolioType">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="edit-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="edit-alert-text">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <input hidden id="edit-id" name="Id" />
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label asp-for="Name" class="required-form-label"></label>
+                        <input asp-for="Name" id="eName" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="form-group m-form__group m-form__group--last">
+                        <label asp-for="DependencyId" class="required-form-label"></label>
+                        <select asp-for="DependencyId" id="eDependencyId" class="form-control m-select2 edit-dependency-select">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <div class="m-checkbox-list">
+                            <label class="m-checkbox">
+                                ¿Puede subirlo el estudiante?
+                                <input asp-for="CanUploadStudent" id="eCanUploadStudent" type="checkbox">
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="saveBtn">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/studentportfoliotype/index.js" asp-append-version="true"></script>
+}

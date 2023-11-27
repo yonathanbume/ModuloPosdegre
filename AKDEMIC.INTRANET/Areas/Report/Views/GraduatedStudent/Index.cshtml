@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Reporte de Estudiantes",  Action = "Student" , Controller = "IntranetReport", Area = "Report" },
+new BreadcrumbViewData { Name = "Reportes de Estudiantes Egresados y por Egresar",  Action = "GraduatedStudents" , Controller = "IntranetReport", Area = "Report" },
+new BreadcrumbViewData { Name = "Reporte de egresados", Controller = null, Action = null }
+};
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/areas/admin/enrollment/index.css" />
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de estudiantes egresados
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Periodo Académico:</label>
+                                <select id="term_select" class="m-select2"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Escuela Profesional:</label>
+                                <select id="career_select" class="m-select2" disabled="disabled"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>&nbsp;</label>
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="students_table"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/report/graduatedstudent/index.js" asp-append-version="true"></script>
+}

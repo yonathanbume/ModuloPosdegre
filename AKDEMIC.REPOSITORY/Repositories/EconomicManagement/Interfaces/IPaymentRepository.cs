@@ -1,0 +1,123 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using AKDEMIC.CORE.Structs;
+using AKDEMIC.ENTITIES.Models.Degree;
+using AKDEMIC.ENTITIES.Models.DocumentaryProcedure;
+using AKDEMIC.ENTITIES.Models.EconomicManagement;
+using AKDEMIC.REPOSITORY.Base;
+using AKDEMIC.REPOSITORY.Repositories.EconomicManagement.Templates.Payment;
+using static AKDEMIC.CORE.Configurations.GeneralConfiguration.Datatable.ServerSide;
+
+namespace AKDEMIC.REPOSITORY.Repositories.EconomicManagement.Interfaces
+{
+    public interface IPaymentRepository : IRepository<Payment>
+    {
+        Task<Payment> GetWithIncludes(Guid id);
+        Task<DataTablesStructs.ReturnedData<object>> GetPartialPaymentDatatable(DataTablesStructs.SentParameters sentParameters, string search = null);
+        Task<IEnumerable<Payment>> GetPendingPayments(string code);
+        Task<IEnumerable<Payment>> GetPostulantPayments(Guid postulantId);
+        Task<IEnumerable<Payment>> GetPendingExternalPayments(string code);
+        Task<IEnumerable<(int day, string accounting, decimal total)>> 
+            GetEducationalRateSummaryByYearAndMonth(int year, int month);
+        Task<int> DegreePaymentCount(bool isIntegrated,List<Guid> resultsToSearch);
+        Task<DataTablesStructs.ReturnedData<object>> GetPaymentsByConceptList(DataTablesStructs.SentParameters sentParameters, string searchValue = null);
+        Task<DataTablesStructs.ReturnedData<object>> ConceptGenerateByRegistryPattern(DataTablesStructs.SentParameters sentParameters, Guid? facultyId, Guid? careerId, Expression<Func<RegistryPattern, dynamic>> selectPredicate = null, Func<RegistryPattern, string[]> searchValuePredicate = null, string searchValue = null);
+        Task<IEnumerable<Payment>> GetAllByUser(string userId, Guid termId);
+        Task<IEnumerable<Payment>> GetAllByUser(string userId, byte? status = null, byte? type = null);
+        Task<object> GetPaymentsHome(string userId);
+        Task<bool> ExistsAnotherExtemporaneousPaymentForUser(string userId);
+        Task<DataTablesStructs.ReturnedData<object>> GetDatatablePayment(DataTablesStructs.SentParameters sentParameters, byte? status = null, bool onlyConfigs = false, string search = null);
+        Task<List<Payment>> GetPaymentsReport(byte status, string date);
+        Task<List<Payment>> GetPaymentIncludeUserByStatusAndInvoiceId(byte status, Guid invoiceId);
+        IQueryable<Payment> GetPaymentQuery(List<Guid?> userProcedures);
+        Task<object> GetIncomes(List<Concept> concepts);
+        Task<List<Payment>> GetPaymentsAnyConcept(List<Concept> concepts);
+        Task<DataTablesStructs.ReturnedData<object>> GetPaymentDatatableReport(DataTablesStructs.SentParameters sentParameters, string search);
+        Task<object> GetPaymentReport(List<Concept> concepts);
+        IQueryable<Payment> PaymentsQry(DateTime date);
+        IQueryable<Payment> PaymentsQryConcept();
+        Task<object> GetOutstandingDebts(string userId);
+        Task<List<Payment>> GetdbPayments(Guid[] payments);
+        Task<object> GetPayedDebtDetail(Guid id);
+        Task<List<Payment>> GetInvoiceDetailList(Guid id);
+        Task<List<Payment>> GetPaymentByListConcept(IEnumerable<Concept> concepts);
+        Task<List<Payment>> GetDetailsDocument(Guid id);
+        Task<List<Payment>> GetPaymentsByIdList(Guid id);
+        Task<List<Payment>> GetPaymentByListPaymentGuid(List<Guid> payments);
+        Task<List<Payment>> GetPaymentListByInvoiceId(Guid id);
+        Task<List<Payment>> GetPaymentWithDataById(Guid id);
+        Task<List<Payment>> GetPaymentWithData();
+        Task<List<Payment>> GetInvoiceByPettyCashId(Guid id);
+        Task<List<Payment>> GetByPettyCashBookId(Guid pettyCashBookId);
+        Task<List<Payment>> GetPaymentWithDataByPettyCashIdClosed(Guid id);
+        Task<object> GetAssociatePaymentsGet(string userId, byte? status = null);
+        Task<DataTablesStructs.ReturnedData<object>> GetBankPaymentDatatableReport(DataTablesStructs.SentParameters sentParameters, DateTime? startDate = null, DateTime? endDate = null, Guid? formatId = null, ClaimsPrincipal user = null, string search = null);
+        Task<decimal> GetBankPaymentTotalAmount(DateTime? startDate = null, DateTime? endDate = null, ClaimsPrincipal user = null, string search = null);
+        Task<IEnumerable<Payment>> GetAllBankPaymentByDate(string issueDate);
+        Task<IEnumerable<Payment>> GetAllBankPaymentsByDateRange(Guid formatId, string startDate, string endDate, ClaimsPrincipal user = null, string search = null);
+        Task<IEnumerable<Payment>> GetAllBankPaymentsByDateRange(Guid formatId, string startDate, string endDate, Guid conceptId, ClaimsPrincipal user = null);
+        Task<object> GetAllBankPaymentsTreasuryDatatable(Guid formatId, string startDate, string endDate, ClaimsPrincipal user = null, string search = null);
+        Task SaveChanges();
+        Task<bool> WereProceduresPaid(string userId);
+        Task<bool> WereOtherProceduresPaid(string userId);
+        Task<List<Payment>> NotPaidProcedures();
+        Task<List<Payment>> GetByUserProcedures(List<UserProcedure> userProcedures);
+        Task CreateEnrollmentConceptsJob(Guid term);
+        Task<DataTablesStructs.ReturnedData<object>> GetPhantomPaymentsDataTable(DataTablesStructs.SentParameters sentParamters, string searchValue);
+        Task<List<Payment>> GetInvoiceByPettyCashIdV2(Guid id);
+        Task<object> GetStudentEnrollmentPaymentsDatatable(Guid studentId);
+        //Task UpdateStudentEnrollmentPayments(Guid studentId);
+        Task DeleteDirectedCourseStudentPayments(Guid directedCourseStudentId);
+        Task InsertDirectedCourseStudentPayment(Guid directedCourseStudentId, string UserId);
+        Task<List<IncomeReceiptTemplate>> GetIncomeReceiptReportData(DateTime start, DateTime end, int? type = null);
+        
+        Task<DateTime?> GetLastBankBatchDate();
+        Task<DateTime?> GetLastBankBatchDate(Guid formatId);
+        Task<List<DateTime>> GetAllBankPaymentDates();
+        Task<List<DateTime>> GetAllBankPaymentDates(Guid formatId);
+        Task<bool> AnyWithDateOperationAndTotal(DateTime datetime, string sequence, decimal amount);
+        Task<bool> AnyWithDateOperationAndTotalExternal(DateTime datetime, string sequence, decimal amount);
+        Task<Payment> GetByDateOperationAndTotal(DateTime datetime, string sequence, decimal amount);
+        Task<Payment> GetPhantomPaymentByVoucher(DateTime date, string voucher, decimal amount);
+        Task<Payment> GetPhantomPaymentByVoucher(string voucher, DateTime date);
+        Task<List<Payment>> GetPhantomPaymentByDocument(string document);
+        Task ValidateUsedPayments(List<Payment> payments);
+        Task<DataTablesStructs.ReturnedData<object>> GetPaymentByUserDatatable(DataTablesStructs.SentParameters sentParameters, string UserId, int? status = null, string searchValue = null);
+        Task GenerateStudentReentryPayments(Guid studentId);
+        Task<List<Payment>> GetPaymentsByUser(string userId, byte? status, Guid? conceptId);
+        Task UpdateStudentEnrollmentPayments(Guid studentId);
+
+        Task<DataTablesStructs.ReturnedData<object>> GetExoneratedPaymentsToUserDatatable(DataTablesStructs.SentParameters sentParameters, string userName, string searchValue = null);
+        Task GenerateStudentEnrollmentPayments();
+        Task<List<Payment>> GetPaymentsByClientId(Guid clientId, byte? status);
+        Task<DataTablesStructs.ReturnedData<object>> GetBankLoadDatatableReport(int year);
+        Task<object> GetBankLoadFullCalendar(int year, int month);
+        Task<object> GetBankLoadYearsSelect2();
+        Task<DataTablesStructs.ReturnedData<object>> GetConceptIncomePaymentDatatableReport(DataTablesStructs.SentParameters sentParameters, string searchValue = null, DateTime? startDate = null, DateTime? endDate = null, string userId = null);
+        Task<decimal> GetConceptIncomePaymentDatatableReportTotalAmount(string search, DateTime? startDate = null, DateTime? endDate = null, string userId = null);
+        Task<DataTablesStructs.ReturnedData<object>> GetStudentPaymentDatatable(DataTablesStructs.SentParameters sentParameters, DateTime? startDate = null, DateTime? endDate = null, Guid? conceptId = null, ClaimsPrincipal user = null, byte? type = null, string search = null);
+        Task<List<StudentPaymentTemplate>> GetStudentPaymentData(DateTime? startDate = null, DateTime? endDate = null, Guid? conceptId = null, ClaimsPrincipal user = null, byte? type = null, string search = null);
+        Task<DataTablesStructs.ReturnedData<object>> GetPaymentsDetailedByCashierDatatable(DataTablesStructs.SentParameters sentParameters, DateTime? startDate, DateTime? endDate, string cashierId);
+        Task<List<PaymentsDetailedTemplate>> GetPaymentsDetailedByCashierTemplate(DateTime? startDate, DateTime? endDate, string cashierId);
+        Task<bool> AnyByEntityId(Guid entityId);
+        Task<Payment> GetPaymentByOperationCodeToValidateProcedure(string userId, DateTime date, string operationCodeB, decimal amount, bool exactAmount = true);
+        Task<DataTablesStructs.ReturnedData<object>> GetUnusedPaymentsDatatable(DataTablesStructs.SentParameters parameters, string userId, decimal? minAmount, Guid? conceptId = null);
+        Task<DataTablesStructs.ReturnedData<object>> GetPaymentReportDatatableData(DataTablesStructs.SentParameters sentParameters, DateTime? startDate = null, DateTime? endDate = null, byte type = 0, Guid? formatId = null, string userId = null);
+        Task<List<PaymentReportTemplate>> GetPaymentReportData(DateTime? startDate = null, DateTime? endDate = null, byte type = 0, Guid? formatId = null, string userId = null);
+
+        Task<DataTablesStructs.ReturnedData<object>> GetExoneratedEnrollmentPaymentsDatatableData(DataTablesStructs.SentParameters sentParameters, Guid termId, Guid? careerId = null, int? academicYear = null, string searchValue = null);
+        Task<List<StudentPaymentTemplate>> GetExoneratedEnrollmentPaymentsData(Guid termId, Guid? careerId = null, int? academicYear = null, string searchValue = null);
+        Task<DataTablesStructs.ReturnedData<object>> GetExoneratedPaymentsDatatableData(DataTablesStructs.SentParameters sentParameters, Guid termId, Guid? careerId = null, byte? type = null, string searchValue = null);
+        Task<List<StudentPaymentTemplate>> GetExoneratedPaymentsData(Guid termId, Guid? careerId = null, byte? type = null, string searchValue = null);
+        Task<List<IncomeReceiptTemplate>> GetClassifierReportData(DateTime start, DateTime end, int? type = null, bool publicSector = false);
+        Task<IncomeReceiptTemplate> GetClassifierReportDataRange(DateTime start, DateTime end, int? type = null, bool publicSector = false);
+        Task<DataTablesStructs.ReturnedData<object>> GetPostulantPaymentDatatable(DataTablesStructs.SentParameters sentParameters, Guid applicationTermId, Guid? careerId, Guid? admissionTypeId);
+        Task<List<PostulantPaymentTemplate>> GetPostulantPaymentData(Guid applicationTermId, Guid? careerId, Guid? admissionTypeId);
+        Task<object> GetCashierDailyIncomeDatatableData(DateTime date, string userId);
+        Task<CashierDailyIncomeTemplate> GetCashierDailyIncomeData(DateTime date, string userId);
+    }
+}

@@ -1,0 +1,189 @@
+﻿body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body:before {
+  content: "";
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;  
+  opacity: .5; 
+  z-index: -1;
+  background: url("../../../images/unam/shield.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position-y: 100px;
+}
+
+.institution-title {
+    letter-spacing: -0.8px;
+    word-spacing: 0.8px;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.area-title {
+    letter-spacing: -0.8px;
+    word-spacing: 0.5px;
+    text-decoration: none;
+    font-variant: normal;
+    font-size: 19px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 300;
+}
+
+.main-header {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.title-logo-container {
+    position: relative;
+    width: 100%;
+    height: 120px;
+}
+
+.logo-container {
+    float: left;
+    position: relative;
+    text-align: left;
+    vertical-align: text-top;
+}
+
+.code {
+    float: right;
+    position: relative;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.title-container {
+    position: relative;
+}
+
+.title {
+    font-size: 25px;
+    letter-spacing: -0.8px;
+    word-spacing: 0.8px;
+    text-align: center;
+    font-weight: 700;
+    font-variant: normal;
+    text-transform: uppercase;
+    font-size: 25px;
+    padding: 0px 10% 0px 10%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.sub-title {
+    text-decoration: underline;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.label {
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+
+.sm-label {
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.sm-text {
+    font-size: 14px;
+}
+
+td.fit, th.fit {
+    width: 1% !important;
+    white-space: nowrap !important;
+}
+
+td.nowrap {
+    white-space: nowrap;
+}
+
+.normal-padding {
+    padding: 4px 16px 4px 16px !important;
+}
+
+.small-padding {
+    padding: 2px 8px 2px 8px !important;
+}
+
+td.center {
+    text-align: center;
+}
+
+.rows-group {
+    border: 1px solid black;
+}
+
+.highlight {
+    border: 1px solid black;
+}
+
+td.underline {
+    border-bottom: 10px solid black;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+}
+
+table.main-table {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.main-table thead {
+    display: table-header-group;
+}
+
+.main-table tfoot {
+    display: table-row-group;
+}
+
+.main-table tr {
+    page-break-inside: avoid;
+}
+
+.outlined {
+    border: 1px solid black;
+}
+
+.rectangle {
+    border-radius: 8px;
+    width: 15px;
+    height: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.boldWord {
+    font-weight: bold;
+}

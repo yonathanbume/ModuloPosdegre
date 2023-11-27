@@ -1,0 +1,241 @@
+﻿@model AKDEMIC.INTRANET.Areas.CareerDirector.Models.StudentInformation.GeneralDataViewModel
+
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Datos del Estudiante
+            </h3>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<form id="edit-form" class="m-form m-form--state m-form--fit" asp-action="_GeneralData" asp-controller="StudentInformation" asp-area="Academic" method="POST">
+    <div class="m-portlet__body">
+        <div class="m-form__content">
+            <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                <div class="m-alert__icon">
+                    <i class="la la-warning"></i>
+                </div>
+                <div id="alert-text" class="m-alert__text">
+                    @ViewBag.ErrorMessage
+                </div>
+                <div class="m-alert__close">
+                    <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <input hidden asp-for="Id" />
+        <input hidden value="@Model.SelectedCareer" id="CareerId" />
+        <input hidden value="@Model.FacultyId" id="FacultyIdValue" />
+
+        <div class="m-card-profile">
+            <div class="m-card-profile__title">
+                Foto
+            </div>
+            <div class="m-card-profile__pic">
+                <div class="m-card-profile__pic-wrapper">
+                    @if (Model != null)
+                    {
+                        <img id="current-picture" src="@(string.IsNullOrEmpty(Model.PictureUrl) ? "/images/demo/user.png" : Model.PictureUrl)" alt="" />
+                    }
+                    else
+                    {
+                        <img id="current-picture" src="/images/demo/user.png" alt="" />
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="m-card-profile__details">
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6 mx-auto">
+                    <div class="custom-file">
+                        <input asp-for="Picture" class="custom-file-input" accept="image/*" lang="es" />
+                        <label class="custom-file-label" for="Picture">
+                            Seleccione un archivo
+                        </label>
+                    </div>
+                    <span asp-validation-for="Picture" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-lg-12">
+                <label asp-for="Name" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Name" class="form-control m-input" placeholder="Nombres" required pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="PaternalSurname" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="PaternalSurname" class="form-control m-input" placeholder="Apellido Paterno" required pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="PaternalSurname" class="text-danger"></span>
+            </div>
+
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="MaternalSurname" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="MaternalSurname" class="form-control m-input" placeholder="Apellido Materno" pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="MaternalSurname" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="UserName" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="UserName" class="form-control m-input" placeholder="Usuario" type="text" pattern="^[\w\-\.\_]+$" required />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-user"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="m-form__group-sub col-lg-6">
+                <label class="form-control-label">Dni</label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Dni" class="form-control m-input" placeholder="DNI" type="text" pattern="^[0-9]*$" required minlength="8" maxlength="8" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Dni" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="Email" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Email" class="form-control m-input" placeholder="Correo electrónico" type="email" required />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="so socicon-mail"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="Sex" class="form-control-label"></label>
+                <div class="m-radio-inline">
+                    @foreach (var g in ConstantHelpers.SEX.VALUES)
+                    {
+                    <label class="m-radio m-radio--solid m-radio--brand">
+                        @if (Model.Sex.Equals(g.Key))
+                        {
+                            <input id="sex_@g.Key" asp-for="Sex" type="radio" required value="@g.Key" checked />
+                        }
+                        else
+                        {
+                            <input id="sex_@g.Key" asp-for="Sex" type="radio" required value="@g.Key"/>
+                        }
+                        @g.Value
+                        <span></span>
+                    </label>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="PhoneNumber" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="PhoneNumber" class="form-control m-input" placeholder="Teléfono" required pattern="^[1-9][0-9]{6,9}$" minlength="7" maxlength="9" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-phone"></i>
+                        </span>
+                    </span>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="BirthDate" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="BirthDate" class="form-control m-input" readonly placeholder="Fecha de Nacimiento" required />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-calendar"></i>
+                        </span>
+                    </span>
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-lg-12">
+                <label asp-for="Address" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Address" class="form-control m-input" placeholder="Dirección" required />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-home"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="FacultyId" class="form-control-label"></label>
+                <select asp-for="FacultyId" class="form-control m-input m-select2 select2-faculties" required> </select>
+                <span asp-validation-for="FacultyId" class="text-danger"></span>
+            </div>
+            <div class="m-form__group-sub col-lg-6">
+                <label asp-for="SelectedCareer" class="form-control-label"></label>
+                <select asp-for="SelectedCareer" class="form-control m-input m-select2 select2-careers" required> </select>
+                <span asp-validation-for="SelectedCareer" class="text-danger"></span>
+            </div>
+        </div>
+
+        <input id="StudentCareer" name="StudentCareer" asp-for="SelectedCareer" hidden />
+    </div>
+
+    <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+        <div class="m-form__actions">
+            <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                <span>
+                    <i class="la la-save"></i>
+                    &nbsp;&nbsp;
+                    <span>
+                        Guardar
+                    </span>
+                </span>
+            </button>
+        </div>
+    </div>
+</form>

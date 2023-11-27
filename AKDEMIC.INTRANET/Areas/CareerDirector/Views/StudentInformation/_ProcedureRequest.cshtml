@@ -1,0 +1,208 @@
+﻿@model Guid
+
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Solicitud de tr&aacute;mites
+            </h3>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="m-portlet__body m-portlet__body-options">
+    @*<input id="Id" value="@Model" hidden/>*@
+    <div class="row nav" role="tablist">
+        @*<div class="col-md-3">
+                <a href="javascript:void(0)" class="student-option-block user-procedures" data-toggle="modal" data-target="#request-evaluation-modal">
+                    <img src="~/images/areas/academic/studentinformation/student-information-3.png" />
+                    <span>Evaluaci&oacute;n Extraordinaria</span>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="javascript:void(0)" class="student-option-block reservation-request">
+                    <img src="~/images/areas/academic/studentinformation/student-information-8.png" />
+                    <span>Reserva de Matr&iacute;cula</span>
+                </a>
+            </div>*@
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block program-request" data-toggle="modal" data-target="#request-program-modal">
+                <img src="~/images/areas/academic/studentinformation/student-information-3.png" />
+                <span>Cambio Especialidad</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="request-evaluation-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                <h5 class="modal-title">
+                    Evaluaci&oacute;n Extraordinaria
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>*@
+            <form id="evaluation-request-form" asp-action="EvaluationRequest" asp-area="Academic" asp-controller="StudentInformation">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="evaluation-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="evaluation_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Curso</label>
+                        <select id="evaluationCourseSelect" name="CourseId" class="form-control m-select2"></select>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label d-block">Estado</label>
+                            <input name="IsApproved" type="checkbox" value="true" data-switch="true" checked="checked" data-on-text="Aprobado"
+                                   data-off-text="Desaprob." data-on-color="success" data-off-color="danger">
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Nota Final</label>
+                            <input name="Grade" type="number" class="form-control m-input" placeholder="Nota" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Observaciones</label>
+                        <textarea name="Observations" class="form-control m-input disable-resize"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="request-reservation-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Reserva de Matr&iacute;cula
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="evaluation-request-form" asp-action="EvaluationRequest" asp-area="Academic" asp-controller="StudentInformation">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="evaluation-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="evaluation_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Curso</label>
+                        <select id="evaluationCourseSelect" name="CourseId" class="form-control m-select2"></select>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label d-block">Estado</label>
+                            <input name="IsApproved" type="checkbox" value="true" data-switch="true" checked="checked" data-on-text="Aprobado"
+                                   data-off-text="Desaprob." data-on-color="success" data-off-color="danger">
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Nota Final</label>
+                            <input name="Grade" type="number" class="form-control m-input" placeholder="Nota" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Observaciones</label>
+                        <textarea name="Observations" class="form-control m-input disable-resize"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="request-program-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Cambio de especialidad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="program-request-form" asp-action="ChangeAcademicProgramRequest" asp-area="CareerDirector" asp-controller="StudentInformation" asp-route-id="@Model">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="program-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="program_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione una especialidad</label>
+                        <select id="academicProgramSelect" name="AcademicProgramId" class="form-control m-select2"></select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

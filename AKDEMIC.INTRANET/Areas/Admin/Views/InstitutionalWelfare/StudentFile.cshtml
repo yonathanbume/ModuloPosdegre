@@ -1,0 +1,1520 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.InstitutionalWelfareViewModels
+@model StudentInformationsViewModel
+@{
+    ViewData["Title"] = "Bienestar Institucional";
+    ViewBag.SubTitle = "Ficha del estudiante";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Bienestar institucional" , Url = Url.Action("Index","InstitutionalWelfare") },
+new BreadcrumbViewData { Name = "Fichas"} };
+
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon">
+                        <i class="flaticon-users"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="complete_tabs">
+
+
+        <ul class="nav nav-pills nav-justified" style="list-style-type: none;
+    background-color: white;">
+            <li class="active" style="background: white;border: 1px solid white;padding: 10px;text-decoration: none !important;width:185px; height:117px; text-align:center; display:table-cell;">
+                <a href="#tab1" data-toggle="tab" class="step" style="text-decoration: none !important;">
+                    <span class="number" style="width:auto!important;height: auto!important;display:  block;/* font-size: 60px; */text-align:  center;"> <i class="flaticon-profile" style="font-size: xx-large;font-size: 48px;"></i></span>
+                    <span class="desc">
+                        Datos Personales
+                    </span>
+                </a>
+            </li>
+            <li style="background: white;border: 1px solid white;padding: 10px;text-decoration: none !important;width:185px; height:117px; text-align:center;display:table-cell;">
+                <a href="#tab_antecedentes" data-toggle="tab" class="step" style="
+                text-decoration: none !important;">
+                    <span class="number" style="width:auto!important;height: auto!important;display:  block;/* font-size: 60px; */text-align:  center;"> <i class="flaticon-analytics" style="font-size: xx-large;font-size: 48px;"></i></span>
+                    <span class="desc" style="text-align: center">
+                        Antecedentes Académicos
+                    </span>
+                </a>
+            </li>
+            <li style="background: white;border: 1px solid white;padding: 10px;text-decoration: none !important;width:185px; height:117px; text-align:center;display:table-cell;">
+                <a href="#tab3" data-toggle="tab" class="step" style="
+                text-decoration: none !important;">
+                    <span class="number" style="width:auto!important;height: auto!important;display:  block;/* font-size: 60px; */text-align:  center;"> <i class="flaticon-coins" style="font-size: xx-large;font-size: 48px;"></i></span>
+                    <span class="desc" style="text-align: center">
+                        Economia
+                    </span>
+                </a>
+            </li>
+            <li style="background: white;border: 1px solid white;padding: 10px;text-decoration: none !important;width:185px; height:117px; text-align:center;display:table-cell;">
+                <a href="#tab2" data-toggle="tab" class="step" style="
+                text-decoration: none !important;">
+                    <span class="number" style="width:auto!important;height: auto!important;display:  block;/* font-size: 60px; */text-align:  center;"> <i class="flaticon-plus" style="font-size: xx-large;font-size: 48px;"></i></span>
+                    <span class="desc" style="text-align: center">
+                        Salud
+                    </span>
+                </a>
+            </li>
+            <li style="background: white;border: 1px solid white;padding: 10px;text-decoration: none !important;width:185px; height:117px; text-align:center;display:table-cell;">
+                <a href="#tab_alimentacion" data-toggle="tab" class="step" style="
+                text-decoration: none !important;">
+                    <span class="number" style="width:auto!important;height: auto!important;display:  block;/* font-size: 60px; */text-align:  center;"> <i class="flaticon-folder" style="font-size: xx-large;font-size: 48px;"></i></span>
+                    <span class="desc" style="text-align: center">
+                        Alimentación
+                    </span>
+                </a>
+            </li>
+            <li style="background: white;border: 1px solid white;padding: 10px;text-decoration: none !important; width:185px; height:117px; text-align:center;display:table-cell;">
+                <a href="#tab4" data-toggle="tab" class="step" style="
+                    text-decoration: none !important;">
+                    <span class="number" style="width:auto!important;height: auto!important;display:  block;/* font-size: 60px; */text-align:  center;"> <i class="flaticon-home" style="font-size: xx-large;font-size: 48px;"></i></span>
+                    <span class="desc" style="text-align: center">
+                        Vivienda
+                    </span>
+                </a>
+            </li>
+           
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1" style="">
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                DATOS PERSONALES DEL ESTUDIANTE
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <form class="m-form m-form--fit m-form" id="form_datos_personales" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group">
+                        <label style="font-size:larger;" class="control-label"><b>IDENTIFICACIÓN :</b></label>
+                        <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-control-label">Nombre</label>
+                                        <input asp-for="Name" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-control-label">Apellido Paterno</label>
+                                        <input asp-for="PaternalSurname" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-control-label">Apellido Materno</label>
+                                        <input asp-for="MaternalSurname" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-control-label">DNI</label>
+                                        <input asp-for="DNI" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="form-control-label">Código</label>
+                                        <input asp-for="UserName" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-control-label">Escuela profesional</label>
+                                        <input asp-for="Career" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="form-control-label">Ciclo</label>
+                                        <input asp-for="CurrentAcademicYear" type="number" class="form-control m-input" disabled>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-control-label">F.Nacimiento</label>
+                                        <input asp-for="Birthdate" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="form-control-label">Edad</label>
+                                        <input asp-for="Age" type="text" class="form-control m-input" disabled>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <label class="control-label">Sexo</label>
+                                        <select asp-for="Sex" class="form-control select2" id="sex">
+                                            @foreach (var item in AKDEMIC.CORE.Helpers.ConstantHelpers.SEX.VALUES)
+                                            {
+                                                <option value="@((int)item.Key)">@(item.Value)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Estado Civil</label>
+                                        <select asp-for="CivilStatus" class="form-control select2" id="e_civil">
+                                            @foreach (var item in ConstantHelpers.CIVIL_STATUS.VALUES)
+                                            {
+                                                <option value="@((int)item.Key)">@(item.Value)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">E-mail</label>
+                                        <input asp-for="Email" type="email" class="form-control m-input" disabled>
+                                    </div>
+
+
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label style="font-size:larger;" class="control-label"><b>DIRECCION DOMICILIARIA :</b></label>
+                        <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                            <div class="form-group m-form__group">
+                                <label style="font-size:larger;" class="control-label"><b>DOMICILIO DE ORIGEN</b></label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="form-control-label">Domicilio</label>
+                                        <input asp-for="OriginAddress" type="text" class="form-control m-input">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="control-label">Teléfono</label>
+                                        <input asp-for="OriginPhoneNumber" type="text" class="form-control m-input">
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-control-label">Departamento</label>
+                                        <select class="form-control m-input" name="originDepartmentId" id="originDepartmentId">  </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-control-label">Provincia</label>
+                                        <select class="form-control m-select2" name="originProvinceId" id="originProvinceId"></select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-control-label">Distrito</label>
+                                        <select class="form-control m-select2" name="originDistrictId" id="originDistrictId"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group">
+
+                                <label style="font-size:larger;" class="control-label"><b>DOMICILIO ACTUAL</b></label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="form-control-label">Domicilio</label>
+                                        <input asp-for="CurrentAddress" type="text" class="form-control m-input">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="control-label">Teléfono</label>
+                                        <input asp-for="CurrentPhoneNumber" type="text" class="form-control m-input">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-control-label">Departamento</label>
+                                        <select class="form-control m-input" name="currentDepartmentId" id="currentDepartmentId">  </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-control-label">Provincia</label>
+                                        <select class="form-control m-select2" name="currentProvinceId" id="currentProvinceId"></select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-control-label">Distrito</label>
+                                        <select class="form-control m-select2" name="currentDistrictId" id="currentDistrictId"></select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label style="font-size:larger;" class="control-label"><b>EN CASO DE EMERGENCIA COMUNICAR A :</b></label>
+                        <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-control-label">Apellidos y Nombres</label>
+                                        <input asp-for="FullNameExternalPerson" type="text" class="form-control m-input" />
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">Domicilio</label>
+                                        <input asp-for="AddressExternalPerson" type="text" class="form-control m-input" />
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <label class="control-label">Correo electrónico</label>
+                                        <input asp-for="EmailExternalPerson" type="text" class="form-control m-input" />
+
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="col-md-3">
+                                        <label class="control-label">Celular</label>
+                                        <input asp-for="PhoneExternalPerson" type="text" class="form-control m-input" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button id="btnSavePersonalInformation" type="submit" class="btn btn-primary">
+                                            Guardar
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="tab_antecedentes" class="tab-pane">
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                ANTECEDENTES ACADÉMICOS
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <form class="m-form m-form--fit m-form" id="form_antecedentes_academicos" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Colegio de Procedencia</label>
+                                <input asp-for="OriginSchool" type="text" class="form-control m-input">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">Lugar</label>
+                                <input asp-for="OriginSchoolPlace" type="text" class="form-control m-input" />
+                            </div>
+                            <div class="col-md-3">
+
+                                <label class="control-label">Tipo de Colegio</label>
+                                <select asp-for="SchoolType" class="form-control select2">
+                                    @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_TYPE_SCHOOL.TYPE_SCHOOL)
+                                    {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                    }
+                                </select>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">Preparación universitaria</label>
+                                <select asp-for="UniversityPreparationId" class="form-control select2">
+                                    @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_UNIVERSITY_PREPARATION.UNIVERSITY_PREPARATION)
+                                    {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <button id="btnAcademicBackground" type="submit" class="btn btn-primary">
+                                        Guardar
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="tab2" style="">
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                SALUD
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                <form class="m-form m-form--fit m-form" id="form_salud" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group">
+                        <label class="control-label" style="font-size:18px;"><b>1. DE LA FAMILIA</b></label>
+                        <div class="m-datatable-family-health"></div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="control-label" style="font-size:18px;"><b>2. DEL ESTUDIANTE</b></label>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">¿ Padece de alguna enfermedad ?</label>
+                                <select asp-for="IsSick" class="form-control" tabindex="1">
+                                    @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.HEALTH_PARENT_SICK.PARENT_SICK)
+                                    {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="control-label">Tipo de enfermedad</label>
+                                <input asp-for="TypeParentIllness" type="text" class="form-control m-input">
+                            </div>
+                            <div class="col-md-3">
+                                @*revisar*@
+                                <label class="control-label">¿ Tiene seguro de salud ?</label>
+                                <select asp-for="HaveInsurance" class="form-control" tabindex="1">
+                                    @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.TYPE_INSURANCE.VALUES)
+                                    {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">¿Cuál es?</label>
+                                <select asp-for="InsuranceDescription" class="form-control" tabindex="1">
+                                    @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.HEALTH.TYPE_INSURANCE.VALUES)
+                                    {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group m-form__group">
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <button id="btnSaveHealthInformation" type="submit" class="btn btn-primary">
+                                        Guardar
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane" id="tab_alimentacion" style="">
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                ALIMENTACIÓN
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="m-form m-form--fit m-form" id="form_alimentacion" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="row">
+
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="control-label" style="font-size:18px;"><b>¿DÓNDE DESAYUNA ?</b></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="BreakfastHome" type="checkbox" /> Casa
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="BreakfastPension" type="checkbox" /> Pensión
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="BreakfastRelativeHome" type="checkbox" /> Casa de parientes
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="BreakfastOther" type="checkbox" /> Otros
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group m-form__group">
+                        <label class="control-label" style="font-size:18px;"><b>¿DÓNDE ALMUERZA ?</b></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="LunchHome" type="checkbox" /> Casa
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="LunchPension" type="checkbox" /> Pensión
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="LunchRelativeHome" type="checkbox" /> Casa de parientes
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="LunchOther" type="checkbox" /> Otros
+                                <span></span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="form-group m-form__group">
+                        <label class="control-label" style="font-size:18px;"><b>¿DÓNDE CENA ?</b></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="DinnerHome" type="checkbox" /> Casa
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="DinnerPension" type="checkbox" /> Pensión
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="DinnerRelativeHome" type="checkbox" /> Casa de parientes
+                                <span></span>
+                            </label>
+                            <label class="m-checkbox">
+                                <input asp-for="DinnerOther" type="checkbox" /> Otros
+                                <span></span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group">
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <button id="btnSaveFeedingInformation" type="submit" class="btn btn-primary">
+                                        Guardar
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        <div id="tab3" class="tab-pane">
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                ECONOMÍA
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="m-form m-form--fit m-form" id="form_economia" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group">
+                        <label class="control-label" style="font-size:18px;"><b>1. DE LA FAMILIA</b></label>
+                        <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="control-label">¿Quien sostiene el hogar ?</label>
+                                    <select asp-for="PrincipalPerson" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_PRINCIPAL_PERSON.PRINCIPAL_PERSON)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom:10px;" class="form-group m-form__group " id="IsFather">
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label style="font-size:larger;" class="control-label"><b>OCUPACIÓN DE QUIEN SOSTIENE EL HOGAR DEL PADRE - TUTOR</b></label>
+                                    <br />
+                                    <label class="control-label">Modalidad de ingreso económico</label>
+                                    <select asp-for="EconomicMethodFatherTutor" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_ECONOMIC_METHOD.ECONOMIC_METHOD)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <br />
+                                            <label for=""><b>A. DEPENDIENTE</b></label>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Sector</label>
+                                                    <select asp-for="DSectorFatherTutor" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_SECTOR.D_SECTOR)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Condición laboral</label>
+                                                    <select asp-for="DWorkConditionFatherTutor" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_WORK_CONDITION.D_WORK_CONDITION)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Especificar actividad</label>
+                                                    <input asp-for="DEspecificActivityFatherTutor" class="form-control m-input" type="text" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Desocupado</label>
+                                                    <select asp-for="DBusyFatherTutor" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_BUSY.BUSY)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <br />
+                                            <label for=""><b>B. INDEPENDIENTE</b></label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Sector</label>
+                                                    <select asp-for="ISectorFatherTutor" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_SECTOR.I_SECTOR)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Condición laboral</label>
+                                                    <select asp-for="IWorkConditionFatherTutor" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_WORK_CONDITION.I_WORK_CONDITION)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Especificar actividad</label>
+                                                    <input asp-for="IEspecificActivityFatherTutor" class="form-control m-input" type="text" />
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom:10px;" class="form-group m-form__group " id="IsMother">
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label style="font-size:larger;" class="control-label"><b>OCUPACIÓN DE QUIEN SOSTIENE EL HOGAR DE LA MADRE</b></label>
+                                    <br />
+                                    <label class="control-label">Modalidad de ingreso económico</label>
+                                    <select asp-for="EconomicMethodMother" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_ECONOMIC_METHOD.ECONOMIC_METHOD)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <br />
+                                            <label for=""><b>A. DEPENDIENTE</b></label>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Sector</label>
+                                                    <select asp-for="DSectorMother" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_SECTOR.D_SECTOR)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Condición laboral</label>
+                                                    <select asp-for="DWorkConditionMother" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_D_WORK_CONDITION.D_WORK_CONDITION)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Especificar actividad</label>
+                                                    <input asp-for="DEspecificActivityMother" class="form-control m-input" type="text" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Desocupado</label>
+                                                    <select asp-for="DBusyMother" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_BUSY.BUSY)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <br />
+                                            <label for=""><b>B. INDEPENDIENTE</b></label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Sector</label>
+                                                    <select asp-for="ISectorMother" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_SECTOR.I_SECTOR)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Condición laboral</label>
+                                                    <select asp-for="IWorkConditionMother" class="form-control" tabindex="1">
+                                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_I_WORK_CONDITION.I_WORK_CONDITION)
+                                                        {
+                                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Especificar actividad</label>
+                                                    <input asp-for="IEspecificActivityMother" class="form-control m-input" type="text" />
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label style="font-size:larger;" class="control-label"><b>INGRESO ECONÓMICO FAMILIAR (GASTOS)</b></label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="control-label">Alimentación</label>
+                                            <input asp-for="EconomicExpensesFeeding" class="form-control m-input" type="number" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Servicios básicos</label>
+                                            <input asp-for="EconomicExpensesBasicServices" class="form-control m-input" type="number" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Educación</label>
+                                            <input asp-for="EconomicExpensesEducation" class="form-control m-input" type="number" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Otros</label>
+                                            <input asp-for="EconomicExpensesOthers" class="form-control m-input" type="number" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label style="font-size:larger;" class="control-label"><b>INGRESO ECONÓMICO FAMILIAR</b></label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="control-label">Remuneración del padre</label>
+                                            <input asp-for="FatherRemuneration" class="form-control m-input amt" type="number" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Remuneración de la madre</label>
+                                            <input asp-for="MotherRemuneration" class="form-control m-input amt" type="number" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Ingreso del estudiante</label>
+                                            <input asp-for="StudentRemuneration" class="form-control m-input amt" type="number" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Otros ingresos</label>
+                                            <input asp-for="OtherRemuneration" class="form-control m-input amt" type="number" />
+
+                                        </div>
+
+                                        @*<div class="col-md-2">
+                                                <label class="control-label">¿Dónde? </label>
+                                                <input asp-for="RemunerationLocation" class="form-control m-input" type="text" />
+                                            </div>*@
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Total ingreso familiar </label>
+                                            <input asp-for="TotalRemuneration" class="form-control m-input" type="number" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="control-label" style="font-size:18px;"><b>2. DEL ESTUDIANTE</b></label>
+                        <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label">Dependencia económica del estudiante</label>
+                                    <select asp-for="StudentDependency" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_DEPENDENCY.STUDENT_DEPENDENCY)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Vivienda del estudiante</label>
+                                    <select asp-for="StudentCoexistence" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_COEXISTENCE.STUDENT_COEXISTENCE)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Riesgo familiar</label>
+                                    <select asp-for="FamilyRisk" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_STUDENT_RISK.STUDENT_RISK)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                        <div class="form-group m-form__group">
+                            <label style="font-size:larger;" class="control-label"><b>TRABAJO DEL ESTUDIANTE</b></label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label">Dedicación a</label>
+                                    <select asp-for="StudentWorkDedication" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_WORK_DEDICATION.VALUES)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Especifique la actividad</label>
+                                    <input asp-for="StudentWorkDescription" type="text" class="form-control m-input" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Condición laboral</label>
+                                    <select asp-for="StudentWorkCondition" class="form-control" tabindex="1">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.ECONOMY.ECONOMY_WORK_CONDITION.VALUES)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                        <br />
+                        <div class="form-group m-form__group">
+                            
+                               
+                            <div class="m-checkbox-list">
+                                <label style="font-size:larger;  margin-right: 18px;" class="control-label"><b>PERSONA A QUIEN AUTORIZA BRINDAR INFORMACIÓN ACADÉMICA Y SOCIOECONÓMICA</b></label>
+                                <label class="m-checkbox" style="display: inline;">
+                                    <input asp-for="AuthorizeCheck" type="checkbox" value="true">
+                                    <span></span>
+                                </label>
+                            </div>
+
+                            <br />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label">Apellidos y Nombres</label>
+                                    <input asp-for="AuthorizedPersonFullName" type="text" class="form-control m-input authorize" disabled />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Domicilio</label>
+                                    <input asp-for="AuthorizedPersonAddress" type="text" class="form-control m-input authorize" disabled />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Celular</label>
+                                    <input asp-for="AuthorizedPersonPhone" type="text" class="form-control m-input authorize" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <button id="btnSaveEconomy" type="submit" class="btn btn-primary">
+                                        Guardar
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+                <br />
+                <br />
+                <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                    <div class="m-portlet__body">
+                        <label style="font-size:larger; margin-right:10px;" class="control-label"><b>COMPOSICIÓN FAMILIAR</b></label>
+                        <button id="btn-view-studentfamily-modal" class="btn btn-success btn-sm" style="margin-bottom:5px;">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="m-datatable" id="studentFamily-datatable"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane" id="tab4" style="">
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                VIVIENDA
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                <form class="m-form m-form--fit m-form" id="form_vivienda" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group">
+                        <label style="font-size:larger;" class="control-label"><b>DE LA FAMILIA DEL ESTUDIANTE</b></label>
+
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <label class="control-label">Tenencia</label>
+                                    <select asp-for="Tenure" class="form-control select2" id="tenencia">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TENURE.TENURE)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Tipo de construcción</label>
+                                    <select asp-for="ContructionType" class="form-control" data-placeholder="No" tabindex="1" id="zona">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_CONSTRUCTION_TYPE.CONSTRUCTION_TYPE)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label">Tipo de Vivienda</label>
+                                    <select asp-for="ZoneType" class="form-control select2" id="tipovivienda">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TYPE.TYPE)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <label class="control-label">Estructura</label>
+                                    <select asp-for="BuildType" class="form-control select2" id="estructura">
+                                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_TYPEBUILD.TYPEBUILD)
+                                        {
+                                            <option value="@((int)item.Key)">@(item.Value)</option>
+                                        }
+                                    </select>
+
+                                </div>
+                                <div class="col-md-4">
+
+                                    <label class="control-label">Otro</label>
+                                    <input asp-for="OtherTypeLivingPlace" type="text" id="otravivienda" class="form-control" placeholder="">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label style="font-size:larger;" class="control-label"><b>ESTRUCTURA DE VIVIENDA (PRECISAR CANTIDAD)</b></label>
+
+                                    <div class="row">
+
+                                        <div class="col-md-2">
+                                            <label class="control-label">N° de pisos</label>
+                                            <input asp-for="NumberFloors" type="number" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label">N° de dormitorios</label>
+                                            <input asp-for="NumberRooms" type="number" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label">Cocina</label>
+                                            <input asp-for="NumberKitchen" type="number" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label">Baño</label>
+                                            <input asp-for="NumberBathroom" type="number" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label">Sala</label>
+                                            <input asp-for="NumberLivingRoom" type="number" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label">Comedor</label>
+                                            <input asp-for="NumberDinningRoom" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label">Servicios</label>
+                                    <div class="m-checkbox-inline">
+                                        <label class="m-checkbox">
+                                            <input asp-for="Water" type="checkbox" id="sagua"> Agua
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Drain" type="checkbox" id="sdesague"> Desague
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="LivingPlacePhone" type="checkbox" id="stelefono"> Teléfono
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Light" type="checkbox" id="light"> Luz
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Internet" type="checkbox" id="sinternet"> Internet
+                                            <span></span>
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label">Equipamiento</label>
+                                    <div class="m-checkbox-inline">
+                                        <label class="m-checkbox">
+                                            <input asp-for="TV" type="checkbox"> T.V Color
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="HasPhone" type="checkbox"> Telefono
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Radio" type="checkbox"> Radio
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Stereo" type="checkbox"> Equipo de Sonido
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Iron" type="checkbox"> Plancha
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="EquipPhone" type="checkbox"> Celular
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Laptop" type="checkbox"> Laptop
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Closet" type="checkbox"> Ropero
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="Fridge" type="checkbox"> Refrigerador
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="PersonalLibrary" type="checkbox"> Biblioteca personal
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input asp-for="EquipComputer" type="checkbox"> Computadora
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group m-form__group">
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <button id="btnSaveLivingPlaceInformation" type="submit" class="btn btn-primary">
+                                        Guardar
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="model_add_studentfamily" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar familiar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="create_student_family" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Nombre*</label>
+                            <input type="text" name="Name" class="form-control m-input" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Paterno*</label>
+                            <input type="text" name="PaternalName" class="form-control m-input" required />
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Materno*</label>
+                            <input type="text" name="MaternalName" class="form-control m-input" required />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>F.Nacimiento*</label>
+                            <input type="text" name="Birthday" class="form-control m-input Birthday" required />
+                        </div>
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>Parentesco*</label>
+                            <select id="RelationshipInt" name="RelationshipInt" class="form-control" data-placeholder="No" tabindex="1">
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.RELATIONSHIPS.TYPE)
+                                {
+                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>Estado Civil*</label>
+                            <select id="CivilStatusInt" name="CivilStatusInt" class="form-control" data-placeholder="No" tabindex="1" required>
+                                @foreach (var item in ConstantHelpers.CIVIL_STATUS.VALUES)
+                                {
+                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Grado de instrucción*</label>
+                            <select id="DegreeInstructionInt" name="DegreeInstructionInt" class="form-control" data-placeholder="No" tabindex="1">
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.CERTIFICATES.TYPE)
+                                {
+                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Titulo/maestria*</label>
+                            <input type="text" name="Certificated" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Ocupación*</label>
+                            <input type="text" name="Occupation" class="form-control m-input" required />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Centro laboral y/o estudios*</label>
+                            <input type="text" name="WorkCenter" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Localidad*</label>
+                            <input type="text" name="Location" class="form-control m-input" required />
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input type="submit" class="btn btn-primary " value="Guardar" />
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="model_edit_studentfamily" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar familiar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_student_family" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Nombre*</label>
+                            <input type="text" name="Name" class="form-control m-input" required />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Paterno*</label>
+                            <input type="text" name="PaternalName" class="form-control m-input" required />
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Materno*</label>
+                            <input type="text" name="MaternalName" class="form-control m-input" required />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>F.Nacimiento*</label>
+                            <input type="text" name="Birthday" class="form-control m-input Birthday" required />
+                        </div>
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>Parentesco*</label>
+                            <select id="RelationshipInt" name="RelationshipInt" class="form-control" data-placeholder="No" tabindex="1" required>
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.RELATIONSHIPS.TYPE)
+                                {
+                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>Estado Civil*</label>
+                            <select id="CivilStatusInt" name="CivilStatusInt" class="form-control" data-placeholder="No" tabindex="1" required>
+                                @foreach (var item in ConstantHelpers.CIVIL_STATUS.VALUES)
+                                {
+                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Grado de instrucción*</label>
+                            <select id="DegreeInstructionInt" name="DegreeInstructionInt" class="form-control" data-placeholder="No" tabindex="1" required>
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.CERTIFICATES.TYPE)
+                                {
+                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Titulo/maestria*</label>
+                            <input type="text" name="Certificated" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Ocupación*</label>
+                            <input type="text" name="Occupation" class="form-control m-input" required />
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Centro laboral y/o estudios*</label>
+                            <input type="text" name="WorkCenter" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>Localidad*</label>
+                            <input type="text" name="Location" class="form-control m-input" required />
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input type="submit" class="btn btn-primary" value="Guardar" />
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="model_edit_studentfamily_health" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar familiar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_student_family_health" method="post">
+                    <input asp-for="Id" type="hidden" name="Id" />
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Nombre*</label>
+                            <input type="text" name="Name" class="form-control m-input" required disabled />
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Paterno*</label>
+                            <input type="text" name="PaternalName" class="form-control m-input" required disabled />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Materno*</label>
+                            <input type="text" name="MaternalName" class="form-control m-input" required disabled />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Tipo de enfermedad *</label>
+                            <input type="text"  name="DiseaseType" class="form-control m-input"  />
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">     
+                            @*<input type="hidden" name="IsSick" value="0">*@                     
+                            <div class="m-checkbox-list">
+                                <label class="m-checkbox">
+                                    <input name="IsSick2" id="isSick2" type="checkbox" value="true"> ¿Está enfermo?
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input type="checkbox" id="SurgicalIntervention2"   name="SurgicalIntervention2" value="true"> ¿Tiene intervenciones quirúrgicas?
+                                    <span></span>
+                                </label>
+                            </div>                  
+
+                        </div>
+
+                    </div>                 
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input type="submit" class="btn btn-primary " value="Guardar" />
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+
+        var currentDistrictId = '@Model.CurrentDistrictId';
+        var currentProvinceId = '@Model.CurrentProvinceId';
+        var currentDepartmentId = '@Model.CurrentDepartmentId';
+        var originDistrictId = '@Model.OriginDistrictId';
+        var originProvinceId = '@Model.OriginProvinceId';
+        var originDepartmentId = '@Model.OriginDepartmentId';
+        @*var AdmissionTypeId = '@Model.AdmissionTypeId';*@
+        @*var isdisabled = '@Model.ParentSick';*@
+        @*var PrincipalPerson = '@Model.PrincipalPerson';*@
+
+    </script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/institutionalwelfare/index_student_information.js"></script>
+}

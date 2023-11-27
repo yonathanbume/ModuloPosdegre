@@ -1,0 +1,241 @@
+﻿@using AKDEMIC.REPOSITORY.Repositories.Degree.Templates
+
+@model FormatRegisterTemplate
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Formato de registro</title>
+</head>
+
+<body>
+    <table class="main-table">
+        <thead>
+            <tr >
+                <th colspan="2">
+                    <div class="header-univ-logo">
+                        <img src="@Model.Logo" />
+                    </div>
+                    <div class="header-photo">
+                        <div class="user-photo">
+                        </div>
+                    </div>
+                    <div class="header">
+                        <p class="title">@GeneralHelpers.GetInstitutionName().ToUpper() - @GeneralHelpers.GetInstitutionLocation().ToUpper()</p>
+                        <p class="title">REGISTRO DE GRADOS Y TÍTULOS</p>
+                        <p class="sub-title">Jr. Maynas Nº 179 - Tarapoto - Perú Telf.(042) 52 2544</p>
+                        <p class="sub-title">E_mail:Gradosytitutlos@unsm.edu.com</p>
+                        <p class="sub-title">www.unsm.edu.pe</p>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td height="5px"></td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td width="12%" style="text-align:left; font-weight:bold;">FACULTAD:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.Faculty</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2"> 
+                    <table>
+                        <tr>
+                            <td width="38%" style="text-align:left; font-weight:bold;">ESCUELA ACADÉMICA PROFESIONAL:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.Career</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td width="12%" style="text-align:left; font-weight:bold;">NOMBRES:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.Name</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td>
+                    <table>
+                        <tr>
+                            <td width="28%" style="text-align:left; font-weight:bold;">APELLIDO PATERNO:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.PaternalSurname</td>
+                        </tr>
+                    </table>
+                </td>
+                <td rowspan="4" width="180px">
+                    <div style="margin-left:15px !important;  border: 1px solid black; height:200px;">
+
+                    </div>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td>
+                    <table>
+                        <tr>
+                            <td width="28%" style="text-align:left; font-weight:bold;">APELLIDO MATERNO:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.MaternalSurname</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td>
+                    <table>
+                        <tr>
+                            <td width="50%" style="text-align:left; font-weight:bold;">TIPO DE DOCUMENTO DE IDENTIDAD:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">DNI</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td>
+                    <table>
+                        <tr>
+                            <td width="55%" style="text-align:left; font-weight:bold;">NÚMERO DE DOCUMENTO DE IDENTIDAD:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.DNI</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2" style="text-align:left; font-weight:bold;">
+                    GRADO ACADÉMICO Y/O TITULO PROFESIONAL
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:left; border-bottom:1px solid black;">@Model.AcademicDegreeDenomination</td>
+            </tr>
+            <tr style="height:30px !important;">
+                <td colspan="2" style="text-align:left; border-bottom:1px solid black;"></td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td width="32%" style="text-align:left; font-weight:bold;">FECHA DEL ACTO ACADÉMICO:</td>
+                            <td width="20%" style="border-bottom:1px solid black; text-align:left;">@Model.OriginDiplomatDate</td>
+                            <td width="28%" style="text-align:left; font-weight:bold;">TIPO DE ACTO ACADÉMICO:</td>
+                            <td width="15%" style="border-bottom:1px solid black; text-align:left;">@Model.GradeType</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td style="text-align:left; font-weight:bold;" width="53%">FECHA DEL ACUERDO DE CONSEJO UNIVERSTARIO:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.ResolutionDateByUniversityCouncil</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td style="text-align:left; font-weight:bold;" width="28%">NÚMERO DE RESOLUCIÓN:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;" width="22%">@Model.Resolution</td>
+                            <td style="text-align:left; font-weight:bold;" width="30%">FECHA DE LA RESOLUCIÓN:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;" width="20%">@Model.ResolutionDateByUniversityCouncil</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td width="15%" style="text-align:left; font-weight:bold;">AUTORIDAD 1:</td>
+                            <td width="50%" style="border-bottom:1px solid black; text-align:left;">@Model.ManagingDirector - @Model.ManagingDirectorFullName</td>
+                            <td width="24%" style="text-align:left; font-weight:bold;">FECHA DE EXPEDICIÓN:</td>
+                            <td width="16%" style="border-bottom:1px solid black; text-align:left;">@Model.OriginDiplomatDate</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td width="15%" style="text-align:left; font-weight:bold;">AUTORIDAD 2:</td>
+                            <td width="50%" style="border-bottom:1px solid black; text-align:left;">@Model.GeneralSecretary - @Model.GeneralSecretaryFullName</td>
+                            <td width="25%" style="text-align:left; font-weight:bold;">NÚMERO DE REGISTRO:</td>
+                            <td width="15%" style="border-bottom:1px solid black; text-align:left;">@Model.RegistryNumber</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td width="15%" style="text-align:left; font-weight:bold;">AUTORIDAD 3:</td>
+                            <td width="50%" style="border-bottom:1px solid black; text-align:left;">@Model.AcademicResponsible - @Model.AcademicResponsibleFullName</td>
+                            <td width="20%" style="text-align:left; font-weight:bold;">NÚMERO DE LIBRO:</td>
+                            <td width="20%" style="border-bottom:1px solid black; text-align:left;">@Model.Book</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:50px !important;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td style="text-align:left; font-weight:bold;" width="25%">NÚMERO DE DIPLOMA:</td>
+                            <td style="border-bottom:1px solid black; text-align:left;">@Model.DiplomaNum</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="table-signature">
+        <tr>
+            <td width="10%">&emsp;</td>
+            <td width="30%" style="height:100px !important; border-bottom:2px solid;">&emsp;</td>
+            <td width="20%">&emsp;</td>
+            <td width="30%" style="border-bottom:2px solid;">&emsp;</td>
+            <td width="10%">&emsp;</td>
+        </tr>
+        <tr>
+            <td>&emsp;</td>
+            <td style="font-size:15px !important;">RECTOR</td>
+            <td>&emsp;</td>
+            <td style="font-size:15px !important;">DECANO</td>
+            <td>&emsp;</td>
+        </tr>
+    </table>
+
+    <table class="table-signature">
+        <tr>
+            <td width="10%">&emsp;</td>
+            <td width="30%" style="height:100px !important; border-bottom:2px solid;">&emsp;</td>
+            <td width="20%">&emsp;</td>
+            <td width="30%" style="border-bottom:2px solid;">&emsp;</td>
+            <td width="10%">&emsp;</td>
+        </tr>
+        <tr>
+            <td>&emsp;</td>
+            <td style="font-size:15px !important;">SECRETARIO GENERAL</t>
+            <td>&emsp;</td>
+            <td style="font-size:15px !important;">INTERESADO</td>
+            <td>&emsp;</td>
+        </tr>
+    </table>
+</body>
+</html>

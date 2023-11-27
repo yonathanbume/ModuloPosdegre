@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Registro de Notas";
+    ViewData["Breadcrumbs"] = new[] {
+            new BreadcrumbViewData { Name = "Registro de Notas", Controller = null, Action = null}
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de grupos
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <a asp-controller="GradeCorrection" asp-action="Index" asp-route-area="Teacher" class="btn btn-primary btn-sm m-btn  m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-edit"></i>
+                        <span>Correcci&oacute;n de Notas</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Periodo Académico:</label>
+                                <select id="select_term" class="m-select2"></select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable" id="ajax_data"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    var AuxiliaryEvaluationReport = @(ViewBag.AuxiliaryEvaluationReport?"true":"false")
+</script>
+<script src="~/js/areas/teacher/grade/index.js" asp-append-version="true"></script>
+}

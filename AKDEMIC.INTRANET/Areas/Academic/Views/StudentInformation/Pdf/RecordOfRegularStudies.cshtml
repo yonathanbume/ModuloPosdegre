@@ -1,0 +1,87 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.RecordOfRegularStudiesViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="~/css/views/pdf/recordofregularstudies.css" rel="stylesheet" />
+</head>
+
+<body>
+    @*<div class="document-header">
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" />
+        <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+
+        <div class="cleared">
+        <div class="company-name">
+        @GeneralHelpers.GetInstitutionName().ToUpper()
+        </div>
+        <div class="area-name center">
+        @Model.University.HeaderOffice.ToUpper()
+        </div>
+        <div class="office-name center">
+        @Model.University.Office.ToUpper()
+        </div>
+        </div>
+
+        </div>*@
+
+    <div class="cited-text" style="font-size:13px;margin-bottom:-16px;padding-bottom:0px">
+        "@Model.University.YearInformation.ToUpper()"
+    </div>
+    <div class="center record-name">
+        @if (string.IsNullOrEmpty(Model.CustomTitle))
+        {
+            @Html.Raw("CONSTANCIA DE ESTUDIOS REGULARES")
+        }
+        else
+        {
+            @Html.Raw(Model.CustomTitle)
+        }
+    </div>
+
+
+    <div class="double-border">
+        @*<img class="student-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />*@
+        <div class="student-image right" style="border:1px dotted lightgray; height:178px; width:150px;font-size:8px"></div>
+        <p class="subscriber-text">
+            @Model.University.Sender.ToUpper() DE LA @(GeneralHelpers.GetInstitutionName().ToUpper())
+        </p>
+        <br />
+        <div class="register-text">HACE CONSTAR</div>
+        <br />
+        @if (string.IsNullOrEmpty(Model.CustomContent))
+        {
+            <p style="text-align:justify;line-height : 25px; text-rendering:geometricPrecision ;">
+                Que, @(Model.StudentSex == ConstantHelpers.SEX.MALE ? "el Sr." : "la Srta.") <b>@Model.StudentName, </b> con C&oacute;digo de Matr&iacute;cula N° <b>@Model.EnrollmentNumber,</b> de la Facultad de <b>@Model.Faculty, </b> Escuela Profesional de <b>@Model.Career, </b>es estudiante y registra su matr&iacute;cula
+                en el AÑO ACADEMICO <b>@Model.IncomeYear,</b> cursando el <b>@Model.Semester.ToUpper() SEMESTRE</b> del Sistema Curricular flexible por competencias, siendo su condici&oacute;n como estudiante @Model.StudentCondition
+            </p>
+            @*<p style="text-align:justify;line-height : 25px; text-rendering:geometricPrecision ;">
+                Que, @(Model.StudentSex == ConstantHelpers.SEX.MALE ? "el Sr." : "la Srta.") <b>@Model.StudentName,</b> estudiante en la Facultad de <b>@Model.Faculty,</b> Carrera de <b>@Model.Career,</b> con C&oacute;digo de Matr&iacute;cula N° <b>@Model.EnrollmentNumber,</b>
+                @(Model.StudentSex == ConstantHelpers.SEX.MALE ? "el interesado" : "la interesada") registra su matr&iacute;cula en el Año Acad&eacute;mico <b>@Model.IncomeYear,</b> cursando el <b>@Model.Semester.ToUpper() SEMESTRE</b> del Sistema Curricular Flexible por Competencias, siendo su condici&oacute;n
+                como estudiante @Model.StudentCondition.
+                </p>*@
+            <p style="text-align:justify;line-height : 25px;">
+                Asi consta en los documentos oficiales que obran en esta Oficina, a los que me remito, en caso necesario.
+            </p>
+            <p style="text-align:justify;line-height : 25px;">
+                Se expide la presente a solicitud @(Model.StudentSex == ConstantHelpers.SEX.MALE ? "del" : "de la") interesad@(Model.StudentSex == ConstantHelpers.SEX.MALE ? "o" : "a") para los fines que estime conveniente.
+            </p>
+        }
+        else
+        {
+            @Html.Raw(Model.CustomContent)
+        }
+
+    </div>
+    @*<div style="width:100%; text-align:start">
+        <img style="width:100px; height:100px !important;" src="@Model.ImageQR" />
+        </div>*@
+    @*<div class="document-footer" style="text-align:right"><div class="pull-right">C&Oacute;DIGO:@Model.PageCode</div></div>*@
+    <div class="document-footer" style="text-align:right;margin-top:20px"><div class="">@Model.Location, @Model.Date</div></div>
+</body>
+
+</html>

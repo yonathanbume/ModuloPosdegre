@@ -1,0 +1,142 @@
+﻿/*@font-face {
+    src: url(../../../fonts/unfv/Arial.ttf);
+    font-style: normal;
+    font-weight: normal;
+    font-family: ar;
+}
+
+@font-face {
+    src: url(../../../fonts/unfv/Arial-bold.ttf);
+    font-style: normal;
+    font-weight: bold;
+    font-family: ar;
+}
+
+@font-face {
+    src: url('../../../fonts/unfv/TimesNewRoman.ttf');
+    font-style: normal;
+    font-weight: normal;
+    font-family: tnr;
+}
+
+@font-face {
+    src: url('../../../fonts/unfv/TimesNewRoman-bold.ttf');
+    font-style: normal;
+    font-weight: bold;
+    font-family: tnr;
+}*/
+
+.first-section{
+    text-align:center;
+    font-weight:bold;
+}
+
+    .first-section .header-1{
+        font-family:Arial;
+        font-size:14px;
+    }
+
+    .first-section .nation-name {
+        font-family: Arial;
+        font-size: 17px;
+    }
+
+.university-name{
+    font-family:'Times New Roman';
+    font-size:50px;
+}
+
+.description{
+    font-family:'Times New Roman';
+    font-size:20px;
+}
+
+.name-des {
+    font-family: 'Times New Roman';
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.text-center{
+    text-align:center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.pl-3{
+    padding-left:10px;
+}
+
+.signature_div{
+    font-family:'Times New Roman';
+    font-size:20px;
+    font-weight:bold;
+}
+
+
+.second-page{
+    font-family:Arial;
+}
+
+/*.adobe-arabic-bold-italic-font {
+    font-family: nos2;
+}
+
+.tiranti-font {
+    font-family: nos3;
+  }
+
+.text-custom-container {
+    margin-bottom:5px;
+    margin-top:2px;
+    text-align: center;
+}
+
+.big-font-size {
+    font-size: 43px;
+}
+
+.medium-font-size {
+    font-size: 35px;
+}
+
+.espacio-firma {
+    width: 100%;
+    height: 125px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    border-style: solid;
+    border-color: black;
+    border-width: 2.5px;
+    width: 100%;
+}
+
+td {
+
+    border-right: 2.5px solid black;
+    border-left: 2.5px solid black;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    text-align: left;
+    padding: 8px;
+}
+
+.header-cell {
+    border: 2.5px solid black;
+}
+
+.fotter-cell {
+    border-bottom: 2.5px solid black;
+}
+
+
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+*/

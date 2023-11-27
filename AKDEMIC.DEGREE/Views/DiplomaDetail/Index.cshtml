@@ -1,0 +1,106 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Detalle del diploma
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <table id="table-1" class="table table-bordered m-table">
+                <tr>
+                    <td style="text-align: center;" colspan="2">INSCRITO EN LA OFICINA DE GRADOS Y TITULOS</td>
+                </tr>
+                <tr>
+                    <td>Libro</td>
+                    <td>@Model.Book</td>
+                </tr>
+                <tr>
+                    <td>Folio</td>
+                    <td>@Model.Foil</td>
+                </tr>
+                <tr>
+                    <td>Registro N°</td>
+                    <td>@Model.RegisterNumber</td>
+                </tr>
+                <tr>
+                    <td>N&uacute;mero de diploma</td>
+                    <td>@Model.DiplomaNumber</td>
+                </tr>
+            </table>
+            <div style="width:100%;height:50px"></div>
+            <table id="table-2" class="table table-bordered m-table">
+                <tr>
+                    <td style="text-align: center;" colspan="2">INFORMACI&Oacute;N DE OBTENCI&Oacute;N DEL DIPLOMA</td>
+                </tr>
+                <tr>
+                    <td>C&oacute;digo de la Universidad</td>
+                    <td>@Model.UniversityCode</td>
+                </tr>
+                <tr>
+                    <td>Tipo de Documento</td>
+                    <td>@Model.DocumentType</td>
+                </tr>
+                <tr>
+                    <td>N&uacute;mero de Documento</td>
+                    <td>@Model.DocumentNumber</td>
+                </tr>
+                <tr>
+                    <td>Abreviatura Grado/T&iacute;tulo</td>
+                    <td>@Model.GradeAbrev</td>
+                </tr>
+                <tr>
+                    <td>Facultad</td>
+                    <td>@Model.Faculty</td>
+                </tr>
+                <tr>
+                    <td>Carrera Profesional Acreditada</td>
+                    <td>@Model.Career</td>
+                </tr>
+                <tr>
+                    <td>Programa de Estudios</td>
+                    <td>@Model.AcademicProgram</td>
+                </tr>
+                <tr>
+                    <td>Grado Academico</td>
+                    <td>Bachiller en @Model.AcademicProgram</td>
+                </tr>
+                <tr>
+                    <td>Modalidad de Obtenci&oacute;n</td>
+                    <td>@Model.GradeModalityGain</td>
+                </tr>
+                <tr>
+                    <td>Modalidad de Estudios</td>
+                    <td>@Model.StudentModality</td>
+                </tr>
+                <tr>
+                    <td>Fecha de Consejo Universitario</td>
+                    <td>@Model.UniversitaryDate</td>
+                </tr>
+                <tr>
+                    <td>Resoluci&oacute;n Rectoral</td>
+                    <td>@Model.ResolutionNumber</td>
+                </tr>
+                <tr>
+                    <td>Fecha de Resoluci&oacute;n Rectoral</td>
+                    <td>@Model.ResoultionRectorDate</td>
+                </tr>
+                <tr>
+                    <td>Tipo de Emisi&oacute;n</td>
+                    <td>@Model.EmittedDiplomaType</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/views/diploma-detail/index.js"></script>
+
+}

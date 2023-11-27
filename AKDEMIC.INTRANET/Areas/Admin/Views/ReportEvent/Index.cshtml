@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Eventos";
+    ViewData["SubTitle"] = "Eventos realizados";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Comunidad",  Action = "Community" , Controller = "IntranetReport", Area = "Report" },
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <a asp-controller="IntranetReport" asp-area="Report" asp-action="Community" class="btn btn-primary m-btn m-btn--icon m-btn--icon-only"><i class="la la-arrow-left"></i></a>
+                        &nbsp;
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table class="table table-hover table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>    
+    <script src="~/js/areas/admin/report_event/index.js"></script>
+}

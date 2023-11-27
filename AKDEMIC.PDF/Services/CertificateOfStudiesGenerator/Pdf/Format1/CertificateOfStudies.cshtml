@@ -1,0 +1,413 @@
+﻿@model AKDEMIC.PDF.Services.CertificateOfStudiesGenerator.Models.CertificateOfStudiesModel
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@using AKDEMIC.CORE.Extensions;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Certificado de Estudios</title>
+    <style>
+        *{
+            font-weight:bold !important;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+     /*   table > tbody > tr {
+            page-break-inside: avoid !important;
+        }*/
+
+        .header-emblem {
+            float: right;
+            padding-left: 80px;
+        }
+
+            .header-emblem img {
+                height: 100px !important;
+                visibility: hidden;
+            }
+
+        .header-univ-logo {
+            float: left;
+            padding-right: 80px;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+                visibility: hidden;
+            }
+
+        .header {
+            font-weight: 600;
+            /*color: #0f128b;*/
+            text-align: center;
+        }
+
+            .header .university-title {
+                font-size: 27px !important;
+                margin: 2px !important;
+                visibility: hidden;
+            }
+
+            .header .header-title {
+                font-size: 30px !important;
+                margin: 2px !important;
+            }
+
+            .header .subheader-title {
+                font-size: 18px !important;
+                margin: 2px !important;
+            }
+
+        .container-details {
+            width: 100% !important;
+            font-weight: normal;
+            text-align: left;
+            font-size: 16px !important;
+        }
+
+            .container-details .table-general-detail {
+                margin-top:2px !important;
+                width: 100%;
+            }
+
+                .container-details .table-general-detail td {
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+
+            .container-details .table-course-detail {
+                width: 25%;
+                font-size: 12px !important;
+                float: right;
+            }
+
+        .report-name {
+            font-size: 28px !important;
+            font-weight: bold;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        table tbody {
+            border: 1px solid;
+        }
+
+        .bordered-header {
+            text-align: center;
+            padding: 2px !important;
+            font-size: 14px !important;
+            border: 1px solid;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 18px !important;
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+        }
+
+        .cicle-header {
+            font-size: 16px !important;
+            text-align: center !important;
+            font-weigth: bold;
+            text-decoration: underline;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-bottom: 1px solid transparent;
+        }
+
+        .location {
+            text-align: right;
+            /*color: red;*/
+            height: 50px !important;
+            border: 0px !important;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 12px !important;
+            height: 30px !important;
+            width: 5%;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 13px !important;
+                border: 1px solid black;
+                padding: 3px !important;
+            }
+
+        .red {
+            color: red !important;
+        }
+
+        .blue {
+            color: blue !important;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <tbody style="border:0px !important;">
+            <tr>
+                <th colspan="5" style="height:2.5cm !important;">
+                </th>
+            </tr>
+            @if (!string.IsNullOrEmpty(Model.UserProcedureCode))
+            {
+                <tr>
+                    <th colspan="5" style="text-align:right;">
+                        Nº @Model.UserProcedureCode
+                    </th>
+                </tr>
+            }
+            <tr>
+                <th colspan="5">
+                    <div class="header">
+                        <p class="header-title">CERTIFICADO DE ESTUDIOS</p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="5">
+                    <div class="header">
+                        <p class="subheader-title">La Dirección de Asuntos Académicos de la @GeneralHelpers.GetInstitutionName()</p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="5">
+                    <div class="container-details">
+                        <table class="table-general-detail">
+                            <tbody>
+                                <tr class="report-name">
+                                    <td colspan="4">Certifica:</td>
+                                </tr>
+                                <tr>
+                                    <td>Que don(ña):</td>
+                                    <td class="bold">@Model.Student.FullName</td>
+                                    <td>con código de matrícula</td>
+                                    <td class="bold">@Model.Student.UserName</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table-general-detail">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">ha realizado estudios en la Facultad de </td>
+                                    <td class="bold">@Model.Student.Faculty</td>
+                                    <td>Escuela Profesional</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table-general-detail">
+                            <tbody>
+                                <tr>
+                                    <td width="5%">de</td>
+                                    <td class="bold">@Model.Student.Career</td>
+                                    <td>habiendo aprobado los siguientes cursos:</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th style="height:1px !important;"> &emsp;</th>
+            </tr>
+            <tr class="bordered-header">
+                <th rowspan="2" class="bordered-header">ASIGNATURAS</th>
+                <th rowspan="2" class="bordered-header" width="80px">CRÉDITOS</th>
+
+                <th colspan="2" class="bordered-header">CALIFICACIONES</th>
+                <th rowspan="2" class="bordered-header" width="100px">AÑO</th>
+            </tr>
+            <tr>
+                <th colspan="1" class="bordered-header">Nº</th>
+                <th colspan="1" class="bordered-header">LETRAS</th>
+            </tr>
+
+            @foreach (var ayc in Model.AcademicYearCourses)
+            {
+                if (ayc.Courses.Any())
+                {
+                    <tr>
+                        <td class="bordered-detail cicle-header">@ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS[ayc.AcademicYear] CICLO</td>
+                        <td class="bordered-detail"></td>
+                        <td class="bordered-detail"></td>
+                        <td class="bordered-detail"></td>
+                        <td class="bordered-detail"></td>
+                    </tr>
+
+                    @foreach (var item in ayc.Courses)
+                    {
+                        <tr>
+                            <td class="bordered-detail">@item.Name </td>
+                            <td class="bordered-detail center">@item.Credits</td>
+                            <td class="bordered-detail center">@item.Grade</td>
+                            <td class="bordered-detail">@item.GradeText.ToUpper()</td>
+                            @if (item.Validated)
+                            {
+                                <td class="bordered-detail center">*</td>
+                            }
+                            else
+                            {
+                                <td class="bordered-detail center">@item.Term</td>
+                            }
+                        </tr>
+                    }
+                }
+            }
+
+            <tr>
+                <td colspan="5" style="border:1px solid;">
+                    <table width="100%">
+                        <tr>
+                            <td width="33%"><strong>Cred. Oblig.:</strong> @Model.AcademicYearCourses.Sum(x=>x.Courses.Where(y=>!y.IsElective).Sum(y=>y.Credits))</td>
+                            <td width="33%"><strong>Cred. Elec.:</strong> @Model.AcademicYearCourses.Sum(x=>x.Courses.Where(y=>y.IsElective).Sum(y=>y.Credits))</td>
+                            @if (Model.AcademicYearCourses.Sum(x => x.Courses.Sum(y => y.Credits)) == 0)
+                            {
+                                <td width="33%" style="text-align:right !important;"><strong>Prom. Cred. Aprob.:</strong> 0.000</td>
+                            }
+                            else
+                            {
+                                <td width="33%" style="text-align:right !important;"><strong>Prom. Cred. Aprob.:</strong> @Math.Round(Model.AcademicYearCourses.Sum(x=>x.Courses.Sum(y=>y.Credits * y.Grade))/Model.AcademicYearCourses.Sum(x=>x.Courses.Sum(y=>y.Credits)),3)</td>
+                            }
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="5" style="border:1px solid;">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <strong>Observación:</strong> (E) CURSO ELECTIVO.
+
+                                @if (Model.Student.StudentObservations.Any(y => y.Type == ConstantHelpers.OBSERVATION_TYPES.RECOGNITION))
+                                {
+                                    <span style="color:blue !important;">
+                                        @Html.Raw(", *: ") @string.Join(", ",Model.Student.StudentObservations.Where(y=>y.Type == ConstantHelpers.OBSERVATION_TYPES.RECOGNITION).Select(y=> $"Cursos convalidados con {y.Observation}").ToList())
+                                    </span>
+                                }
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="5" style="border:1px solid;">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                Asi consta en los Libros y Actas de Examen de esta Universidad a los que me remito en caso necesario
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right !important;">
+                                @{
+                                    var today = DateTime.UtcNow.ToDefaultTimeZone();
+                                }
+
+                                @GeneralHelpers.GetInstitutionLocation() @today.Day de @ConstantHelpers.MONTHS.VALUES[today.Month] del @today.Year
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%">
+                        <tr>
+                            <td width="15%">
+                                <div style="height:3.5cm !important; width:130px !important; border:1px solid;">
+                                </div>
+                            </td>
+                            <td>
+                                <table width="100%">
+                                    <tr>
+                                        <td style="border-top:1px solid; text-align:center !important; font-size:12px !important;" width="45%">
+                                            @if (!string.IsNullOrEmpty(Model.University.AcademicRecordSigning))
+                                            {
+                                                @Model.University.AcademicRecordSigning <br />
+                                            }
+                                            Director de Asuntos Académicos
+                                        </td>
+                                        <td width="10%">
+                                            &emsp;
+                                        </td>
+                                        <td style="border-top:1px solid; text-align:center !important; font-size:12px !important;" width="45%">
+                                            @if (!string.IsNullOrEmpty(Model.University.DeanFullName))
+                                            {
+                                                @Model.University.DeanFullName  <br />
+                                            }
+                                            Decano
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

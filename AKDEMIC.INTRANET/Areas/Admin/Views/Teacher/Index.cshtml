@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Gestión de Docentes";
+    ViewBag.SubTitle = "Listado de Docentes";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+<style>
+    .dz-upload {
+        display: block;
+        background-color: darkblue;
+        height: 10px;
+        width: 0%;
+    }
+</style>
+
+ 
+<!-- Upload preview template begin -->
+<div id="preview-template" style="display: none;">
+    <div class="dz-preview dz-file-preview" style="display:inline-block;margin:10px;">
+        <div class="dz-details">
+            <div class="dz-size" data-dz-size></div>
+            <div class="dz-filename label label-primary">
+                <span data-dz-name></span>
+            </div>
+            <img data-dz-thumbnail />
+        </div>
+
+        <div class="dz-error-message label label-danger" style="display:none;clear:both;">
+            <span data-dz-errormessage></span>
+        </div>
+        <div data-dz-remove class="btn btn-default removePicFromAlbum" title="Entfernen">
+            <span class="glyphicon glyphicon-remove center-block" aria-hidden="true">Remove file</span>
+        </div>
+        <br />
+        <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width:100px;">
+            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+        </div>
+    </div>
+</div>
+<!-- Upload preview template end -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label class="form-control-label">Departamento Académico</label>
+                                <select id="academicDepartmentId" class="form-control academicDepartment-select">
+                                    <option value="0" selected>Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por Nombre o DNI..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <a asp-action="Add" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo Docente</span>
+                            </span>
+                        </a>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table id="data-table" class="table table-hover table-striped table-bordered"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/teacher/index.js"></script>
+    <script src="~/js/jquery-ajax-unobtrusive.min.js"></script>
+}

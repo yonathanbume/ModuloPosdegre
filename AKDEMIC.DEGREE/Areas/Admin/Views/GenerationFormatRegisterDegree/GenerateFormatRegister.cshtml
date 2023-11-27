@@ -1,0 +1,76 @@
+﻿@using AKDEMIC.REPOSITORY.Repositories.Degree.Templates
+
+@model ListFormatRegisterTemplate
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Formato de registro</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    @foreach (var item in Model.LstFormatRegisterTemplate)
+    {
+        <div style="width:100%; font-size:15px;height: 400px; margin-bottom: 150px;">
+            <div style=" border-style: solid; border-width: 1px; width:60%; float: left; height: 100%;">
+                <div style="font-family:'Times New Roman';text-align:center;border-bottom-style: solid; border-width: 1px; font-size:20px;">
+                    <b>Registro de @(item.GradeTypeInt == ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR ? "Grado Académico" : "Título Profesional")</b>
+                </div>
+                <div style="margin-top:5px;">
+                    Con el registro N.°<b style="font-family:'Times New Roman'"><u>@(String.IsNullOrEmpty(item.RegistryNumber) ? "" : item.RegistryNumber.ToUpper())</u></b>, en el Libro N.°<b style="font-family:'Times New Roman'"><u>@(String.IsNullOrEmpty(item.Book) ? "" : item.Book.ToUpper())</u></b>, Folio N.°<b style="font-family:'Times New Roman'"><u>@(String.IsNullOrEmpty(item.Folio) ? "" : item.Folio.ToUpper())</u></b>
+                    de registro de grados académicos, se registra @(item.GradeTypeInt == ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR ? "el Grado Académico de" : "el Título Profesional de"):
+                </div>
+                <div style="text-align:center;font-family:Arial;font-size:18px;margin-top:5px;">
+                    @*<b>@(String.IsNullOrEmpty(item.GradeType) ? "" : item.GradeType)  en @(String.IsNullOrEmpty(item.Career) ? "" : item.Career.ToLower())</b>*@
+                    <b>@(String.IsNullOrEmpty(item.AcademicDegreeDenomination) ? "" : item.AcademicDegreeDenomination) </b>
+                </div>
+                <div>
+                    De don(ña)
+                </div>
+                <div style="text-align:center;font-family:Calibri;font-size:25px;">
+                    <b>@item.FullName</b>
+                </div>
+                <div style="margin-top:5px;">
+                    Aprobado, por la Facultad de <b style="font-family:'Times New Roman'"><u> @(String.IsNullOrEmpty(item.Faculty) ? "" : item.Faculty.ToUpper())</u></b>, <u><b>Programa de Estudios de @item.Career.ToLower()</b></u>  de la @item.University, en
+                    Consejo de Facultad de fecha: <b><u>@(String.IsNullOrEmpty(item.FacultyCouncilDate) ? "" : item.FacultyCouncilDate)</u></b>, Ratificado y Conferido por el Consejo Universitario en sesión: <u><b>@(String.IsNullOrEmpty(item.UniversityCouncilType) ? "" : item.UniversityCouncilType.ToLower())</b></u>
+                    del <b><u>@(String.IsNullOrEmpty(item.UniversityCouncilDate) ? "" : item.UniversityCouncilDate)</u></b> y de conformidad con la Resolución Rectoral N° <b><u>@(String.IsNullOrEmpty(item.Resolution) ? "" : item.Resolution.ToUpper())</u></b>.
+                </div>
+                <div style="width:100%; margin-top:10px;">
+                    <div style="width:50%; text-align:left; margin-top:5px;display:inline-block">
+                        N° de diploma:<u>@(String.IsNullOrEmpty(item.DiplomaNum) ? "" : $"{item.DiplomaNum:0000}")</u>
+                    </div>
+                    <div style="width:48%; text-align:right;display:inline-block">
+                        @GeneralHelpers.GetInstitutionLocation(), @ConstantHelpers.WEEKDAY.VALUES[(int)DateTime.Now.DayOfWeek] @DateTime.Now.Day.ToString() de @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.Now.Month] del @DateTime.Now.Year.
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:25px;">
+                    ________________________
+                    <br />
+                    @(String.IsNullOrEmpty(item.GeneralSecretaryFullName) ? "" : item.GeneralSecretaryFullName)
+                    <br />
+                    Secretario General - @GeneralHelpers.GetInstitutionAbbreviation()
+                </div>
+
+            </div>
+            <div style=" border-style: solid; border-width: 1px; width:39%; height: 100%;float: left;">
+                <div style="text-align:center"><img src='@(item.Image)' width="150" height="150" /></div>
+                <div style="text-align:center; margin-top:20px;">
+                    ______________________<br />
+                    Firma del interesado(a)
+                </div>
+                <div style="margin-top:10px;text-align:center">DNI: <b>@item.DNI</b></div>
+                <div style="text-align:center;margin-top:15px;">Fecha: ____/____/____</div>
+                <div style="text-align:center;margin-top:5px;">
+                    Huella digital
+                </div>
+            </div>
+
+        </div>
+    }
+
+</body>
+</html>

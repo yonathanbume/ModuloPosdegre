@@ -1,0 +1,100 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.CurriculumViewModels
+@model List<CurriculumViewModel>
+@{
+    ViewData["Title"] = "Plan de estudios";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Malla curricular" }
+};
+}
+@section Styles{
+<link href="~/css/areas/student/curriculum/mallacurricular.css" rel="stylesheet" />    
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Plan Curricular
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin::Section-->
+            @foreach (var item1 in Model.GroupBy(x => new { x.Cycle }))
+    {
+        <div class="m-section">
+            <div class="m-section__content table-responsive">
+                <h5> Ciclo @item1.Key.Cycle</h5>
+                <table class="table table-bordered m-table m-table--border-metal">
+                    <thead style="background-color:#363636; color:white;">
+                        <tr class="allign-left">
+                            <th>Código</th>
+                            <th>Asignatura</th>
+                            <th>Créditos</th>
+                            <th>HP</th>
+                            <th>HS</th>
+                            <th>HT</th>
+                            <th>HV</th>
+                            <th>Pre Requisitos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Where(x => x.Cycle == item1.Key.Cycle))
+                {
+
+                    <tr class="allign-left">
+                        <td class="width-lg" style="text-align:left; width:85px;">@item.CodeCourse</td>
+                        <td class="width-xlg">@item.NameCourse</td>
+                        <td class="width-m">@item.Credits.ToString("0.0")</td>
+                        <td class="width-sm">@item.PracticalHours</td>
+                        <td class="width-sm">@item.SeminarHours</td>
+                        <td class="width-sm">@item.TheoreticalHours</td>
+                        <td class="width-sm">@item.VirtualHours</td>
+                        <td>
+
+                            @if (item.Requisites.Count == 0)
+                                {
+                                @("No tiene requisitos")
+                                }
+                            else
+                            {
+                                @foreach(var r in item.Requisites)
+                                {
+                                    @(r.Name + "")
+                                }
+
+                            }
+                        </td>
+                    </tr>
+        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+}
+        <div class="m-widget14__legend">
+            <div class="m-widget14__legend">
+                <span class="m-widget14__legend-bullet"></span>
+                <span class="m-widget14__legend-text ">*HP: Horas Prácticas</span>
+            </div>
+            <div class="m-widget14__legend">
+                <span class="m-widget14__legend-bullet"></span>
+                <span class="m-widget14__legend-text ">*HS: Horas Seminario</span>
+            </div>
+            <div class="m-widget14__legend">
+                <span class="m-widget14__legend-bullet"></span>
+                <span class="m-widget14__legend-text ">*HT: Horas Teóricas</span>
+            </div>
+            <div class="m-widget14__legend">
+                <span class="m-widget14__legend-bullet"></span>
+                <span class="m-widget14__legend-text ">*HV: Horas Virtuales</span>
+            </div>
+
+        </div>
+        </div>         
+       
+    </div>    
+</div>

@@ -1,0 +1,122 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.EventViewModels
+@model EventViewModel
+
+
+<div class="row">
+    <div class="m-card-profile" style="width:100%">
+        <div class="m-card-profile__title">
+            Foto
+        </div>
+        <div class="m-card-user" style="margin:auto">
+            <div class="m-card-profile">
+                <img id="current-picture" style="width:50%;height:100%;" src="@(string.IsNullOrEmpty(Model.Path)?"/images/default-banner.jpg": $"/imagenes/{Model.Path}")" />
+            </div>
+        </div>
+        <div class="m-card-profile__details">
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6 mx-auto">
+                    <div class="custom-file">
+                        <input asp-for="File" type="file" class="custom-file-input" placeholder="Documento" accept="image/jpg, image/jpeg, image/png">
+                        <label class="custom-file-label">Seleccione archivo</label>
+                    </div>
+                    <label><b>Sólo se permite archivos de tipo .jpg, .png, .jpeg</b></label>
+                    </br>
+                    <label>Tama&ntilde;o máximo del archivo: 20MB  </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" asp-for="Id" value="@Model.Id" class="e-id-entity"/>
+<div class=" row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" id="eName" class="form-control m-input">
+        <span asp-validation-for="Name" class="form-control-feedback"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control m-input" required></textarea>
+        <span asp-validation-for="Description" class="form-control-feedback"></span>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="Place"></label>
+        <input asp-for="Place" class="form-control m-input" required />
+        <span asp-validation-for="Place" class="form-control-feedback"></span>
+    </div>
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="Cost"></label>
+        <input asp-for="Cost" type="text" class="form-control m-input" required />
+        <span asp-validation-for="Cost" class="form-control-feedback"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="Type"></label>
+        <select asp-for="Type" class="form-control" required>
+            @foreach (var type in Model.EventTypes)
+            {
+                <option value="@type.Id">@type.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="EventDate"></label>
+        <input asp-for="EventDate" id="cEventDate" class="form-control m-input" required />
+        <span asp-validation-for="EventDate" class="form-control-feedback"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="RegistrationStartDate"></label>
+        <input asp-for="RegistrationStartDate" id="cRegistrationStartDate" class="form-control m-input" required />
+        <span asp-validation-for="RegistrationStartDate" class="form-control-feedback"></span>
+    </div>
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="RegistrationEndDate"></label>
+        <input asp-for="RegistrationEndDate" id="cRegistrationEndDate" class="form-control m-input" required />
+        <span asp-validation-for="RegistrationEndDate" class="form-control-feedback"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group m-form__group col-lg-6">
+        <input type="hidden" id="SelectedRoles2" value="@Model.SelectedRoles2" />
+        <label asp-for="SelectedRoles" class="form-control-label"></label>
+        <select asp-for="SelectedRoles" class="form-control m-input m-select2 select2-roles" multiple required></select>
+        <span asp-validation-for="SelectedRoles" class="text-danger"></span>
+    </div>
+    <div class="form-group m-form__group col-lg-6">
+        <label asp-for="UrlVideo"></label>
+        <input asp-for="UrlVideo" class="form-control m-input"/>
+        <span asp-validation-for="UrlVideo" class="form-control-feedback"></span>
+    </div>
+</div>
+
+<div class="form-group mt-3">
+    <div class="form-group row">
+        <div class="form-group m-form__group col-lg-12">
+            <button type="button" data-toggle="modal" data-target="#modal_file" class="btn btn-primary m-btn m-btn--icon">
+                <span>
+                    <i class="la la-plus"></i>
+                    <span>Agregar Archivo</span>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+<table id="table_files" class="table table-striped"></table>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+    <button type="submit" class="btn btn-primary btn-submit add"> Guardar </button>
+</div>

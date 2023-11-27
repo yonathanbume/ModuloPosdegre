@@ -1,0 +1,27 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "services": {
+    "pide": {
+      "methods": {
+        "rest": {
+          "query": {
+            "url": "http://181.176.223.32:1337/consultar.php"
+          }
+        },
+        "soap": {
+          "query": {
+            "url": "http://181.176.223.32:1337/consultar2.php"
+          },
+          "wsdl": "http://181.176.223.32:1337/consultar3.php"
+        }
+      }
+    }
+  }
+}

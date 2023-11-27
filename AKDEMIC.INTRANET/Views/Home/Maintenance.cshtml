@@ -1,0 +1,34 @@
+﻿@{
+
+    Layout = "~/Views/Shared/Templates/Login/_Layout.cshtml";
+}
+
+@*<h3>Mantenimiento</h3>
+
+<p>Si usted ha ingresado a esta vista, por favor eliminar el cache de su navegador. Posterior a esto acceder a traves del siguiente link</p>
+
+<a href="/inicio" class="btn btn-primary"> Inicio </a>*@
+
+
+<div class="m-login__wrapper">
+    <div class="form">
+        <a href="#">
+            <img class="logo" src="~/images/themes/@GeneralHelpers.GetTheme()/logo.png">
+        </a>
+        <h1>@AKDEMIC.INTRANET.Helpers.ConstantHelpers.Project.NAME.ToUpper()</h1>
+        <h5>Mantenimiento</h5>
+        <label>
+            @*Si usted ha ingresado a esta vista, por favor eliminar el cache de su navegador. Posterior a esto acceder a traves del siguiente link*@
+
+            Si tienes problemas con el acceso al <b>sistema</b> desde un navegador <b>Chrome</b> en tu computadora, sigue el siguiente paso:
+        </label>
+
+        <ul>
+            <li> Eliminar los datos de navegación desde google chrome (chrome://settings/clearBrowserData)</li>
+        </ul>
+
+        <div class="group">
+            <a href="/inicio" class="btn button-submit">INICIO</a>
+        </div>
+    </div>
+</div>

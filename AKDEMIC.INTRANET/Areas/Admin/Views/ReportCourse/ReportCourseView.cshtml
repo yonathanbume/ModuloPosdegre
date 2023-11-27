@@ -1,0 +1,90 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.Report_courseViewModels
+@model ReportCourseViewModel
+@{
+    ViewData["Title"] = "Detalle de asistencia por curso";
+    ViewData["SubTitle"] = "Detalle por estudiante";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de cursos" , Area="Admin",Controller="ReportCourse", Action="Index" },
+new BreadcrumbViewData { Name = "Listado de estudiantes" }
+};
+    ViewData["BackUrl"] = Url.Action("Index", "ReportCourse", new { area = "Admin" });
+}
+    <div class="m-content">
+        <input asp-for="IdCourseTerm" type="hidden" />
+        <input asp-for="Id" type="hidden" />
+        <div class="m-portlet m-portlet--responsive-mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Información del curso
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label><b>Curso: </b></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <label>@Model.Name</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label><b>C&oacute;digo: </b></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>@Model.Code</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label><b>Cr&eacute;ditos: </b></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <label>@Model.Credits</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label><b>Secci&oacute;n: </b></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>@Model.Section</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label><b>Docente: </b></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <label>@Model.Teachers</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label><b>Cant. Clases: </b></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>@Model.TotalClasses</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet m-portlet--responsive-mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            @ViewData["SubTitle"]
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <table class="table table-striped table-bordered" id="report-datatable"></table>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script asp-append-version="true" src="~/js/areas/admin/report_course/detail.js"></script>
+}

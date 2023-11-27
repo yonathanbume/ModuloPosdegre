@@ -1,0 +1,232 @@
+﻿@using AKDEMIC.DEGREE.Areas.Admin.Models.RegistryPatternViewModels;
+@model RegistryPatternViewModel
+@{
+    ViewBag.Title = "Registro de Diploma";
+    ViewBag.SubTitle = "Detalle del Diploma";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Lista de diplomas" , Url = Url.Action("Index","Diploma") },
+new BreadcrumbViewData { Name = (string)ViewBag.Title}
+};
+}
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <form id="update-form">
+                <input asp-for="Id" type="hidden">
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label >Universidad :</label>
+                        <input class="form-control m-input" placeholder="Nombre de la Universidad" value="@(ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value])" disabled>
+                    </div>
+
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="FacultyName">Facultad :</label>
+                        <input asp-for="FacultyName" class="form-control m-input" placeholder="Facultad" disabled>
+                    </div>
+
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="CareerName">Escuela Profesional :</label>
+                        <input asp-for="CareerName" class="form-control m-input" placeholder="Carrera" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="PostGraduateSchool">Escuela de Postgrado:</label>
+                        <input asp-for="PostGraduateSchool" class="form-control m-input" placeholder="Nombre de la escuela de postgrado" maxlength="500" disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="AcademicDegreeDenomination">Denominación del grado académico o título profesional:</label>
+                        <input asp-for="AcademicDegreeDenomination" class="form-control m-input" placeholder="Denominación del grado académico" maxlength="500" disabled>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="PaternalSurname">Apellido Paterno:</label>
+                        <input asp-for="PaternalSurname" class="form-control m-input" placeholder="Apellido Paterno completo" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="MaternalSurname">Apellido Materno:</label>
+                        <input asp-for="MaternalSurname" class="form-control m-input" placeholder="Apellido Materno completo" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="StudentName">Nombres:</label>
+                        <input asp-for="StudentName" class="form-control m-input" placeholder="Nombres completos" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="ManagingDirector">Rector Director/Rector:</label>
+                        <input asp-for="ManagingDirector" class="form-control m-input" placeholder="Nombre del cargo" maxlength="500" disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="ManagingDirectorFullName">Nombre Director/Rector:</label>
+                        <input asp-for="ManagingDirectorFullName" class="form-control m-input" placeholder="Nombre completo" maxlength="500" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="GeneralSecretary">Secretario General:</label>
+                        <input asp-for="GeneralSecretary" class="form-control m-input" placeholder="Consignar el cargo del secretario general que firma el diploma" maxlength="500" disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="GeneralSecretaryFullName">Nombres y Apellidos:</label>
+                        <input asp-for="GeneralSecretaryFullName" class="form-control m-input" placeholder="Consignar el mombre completo del secretario general" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="AcademicResponsible">Decano/Director de Postgrado/Responsable Académico:</label>
+                        <input asp-for="AcademicResponsible" class="form-control m-input" placeholder="Consignar el cargo del decano , director de postrgrado o responsable académico" maxlength="500" disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="AcademicResponsibleFullName">Nombres y Apellidos:</label>
+                        <input asp-for="AcademicResponsibleFullName" class="form-control m-input" placeholder="Consignar el mombre completo del decano" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="UniversityCode">Código de la universidad:</label>
+                        <input asp-for="UniversityCode" class="form-control m-input" placeholder="Código de la universidad,institución o escuela" disabled>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="DocumentType">Tipo de Documento:</label>
+                        <select asp-for="DocumentType" class="form-control" disabled>
+                            @foreach (var item in ConstantHelpers.DOCUMENT_TYPES.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="DNI">N&uacute;mero de Documento:</label>
+                        <input asp-for="DNI" class="form-control m-input" placeholder="Número de Documento" maxlength="11" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"> 
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="ObtainingDegreeModality">Modalidad de obtención del grado o t&iacute;tulo:</label>
+                        <select asp-for="ObtainingDegreeModality" class="form-control" disabled>
+                            @foreach (var item in ConstantHelpers.DEGREE_OBTENTION_MOD.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="StudyModality">Modalidad de Estudios:</label> 
+                        <select asp-for="StudyModality" class="form-control" disabled>
+                            @foreach (var item in ConstantHelpers.STUDY_MODALITY.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="OriginDegreeCountry">País de procedencia del grado o título:</label>
+                        <input asp-for="OriginDegreeCountry" class="form-control m-input" placeholder="País de procedencia del grado o título" maxlength="500" disabled>
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="OriginDegreeUniversity">Universidad de procedencia del grado o título revalidado:</label>
+                        <input asp-for="OriginDegreeUniversity" class="form-control m-input" placeholder="Universidad de procedencia del grado o título revalidado" maxlength="500" disabled>
+                    </div>
+                   
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="AcademicDegreeDenomination">Denominaci&oacute;n del grado o título revalidado:</label> 
+                        <input asp-for="AcademicDegreeDenomination" class="form-control m-input" placeholder="Denominaci&oacute;n del grado o título revalidado" maxlength="500" disabled>
+
+                    </div>
+                    <div class="col-md-6 m-form__group-sub">
+                        <label asp-for="GradeAbbreviation">Abreviatura Grado/T&Iacute;tulo:</label>
+                        <input asp-for="GradeAbbreviation" class="form-control m-input" placeholder="Abreviatura Grado/Título" disabled>
+                    </div> 
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="ResolutionNumber">Número de resolución:</label>
+                        <input asp-for="ResolutionNumber" class="form-control m-input" placeholder="Número de resolución" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="ResolutionDateByUniversityCouncil">Fecha de resolución de consejo  universitario:</label>
+                        <input asp-for="ResolutionDateByUniversityCouncil" class="form-control m-input" placeholder="Fecha de resolución de consejo  universitario" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="OriginDiplomatDate">Fecha del diploma original:</label>
+                        <input asp-for="OriginDiplomatDate" class="form-control m-input" placeholder="Fecha del diploma original" disabled>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DuplicateDiplomatDate">Fecha del diploma duplicado:</label>
+                        <input asp-for="DuplicateDiplomatDate" class="form-control m-input" placeholder="Fecha del diploma duplicado" maxlength="500" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="DiplomatNumber">Número diploma:</label>
+                        <input asp-for="DiplomatNumber" class="form-control m-input" placeholder="Número diploma" maxlength="500" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="EmissionTypeOfDiplomat">Tipo de emisión del diploma:</label>                        
+                        <select asp-for="EmissionTypeOfDiplomat" class="form-control m-input" disabled>
+                            @foreach (var item in ConstantHelpers.EMISION_TYPE_OF_DIPLOMAT.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="BookCode">Libro:</label>
+                        <input asp-for="BookCode" class="form-control m-input" placeholder="Código del libro del grado o título" maxlength="100" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="FolioCode">Folio:</label>
+                        <input asp-for="FolioCode" class="form-control m-input" placeholder="Código del folio del grado o título" maxlength="100" disabled>
+                    </div>
+                    <div class="col-md-4 m-form__group-sub">
+                        <label asp-for="RegistryNumber">Registro:</label>
+                        <input asp-for="RegistryNumber" class="form-control m-input" placeholder="Número de registro del grado o título" disabled>
+                    </div>
+                </div>
+                @*<div style="text-align: right;">
+                    <input type="submit" value="Guardar" class="btn btn-primary" /> 
+                </div>*@
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/diploma/create.js"></script>
+}

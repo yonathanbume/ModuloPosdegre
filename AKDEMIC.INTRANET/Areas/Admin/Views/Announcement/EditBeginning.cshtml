@@ -1,0 +1,185 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.AnnouncementViewModels.BeginningAnnouncementViewModel
+@{
+    ViewData["Title"] = "Editar Anuncio Por Sistema";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Inicio", Controller = "Home", Action = "Index" },
+new BreadcrumbViewData {Name="Gestión de Anuncios Por Sistema", Controller="Announcement", Action="Beginning", Area="Admin"},
+new BreadcrumbViewData {Name="Editar", Controller=null, Action=null},
+};
+}
+@section Styles {
+    <link href="~/assets/css/cropper/cropper.css" rel="stylesheet" />
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">@ViewData["Title"]</h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <form id="add-form">
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-6">
+                            <label asp-for="Title">T&iacute;tulo:</label>
+                            <input type="text" asp-for="Title" class="form-control m-input" required />
+                        </div>
+                        <div class="form-group m-form__group col-md-6">
+                            <label asp-for="Type">Tipo:</label>
+                            <select asp-for="Type" class="form-control m-input" required>
+                                @foreach (var item in ConstantHelpers.ANNOUNCEMENT.TYPE.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-6">
+                            <label asp-for="System">Sistema:</label>
+                            <select asp-for="System" class="form-control m-input" required>
+                                <option value="0">Todos</option>
+                                @foreach (var item in ConstantHelpers.ANNOUNCEMENT.SYSTEM.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-md-6">
+                            <label asp-for="AppearsIn">Aparece en:</label>
+                            <select asp-for="AppearsIn" class="form-control m-input" required>
+                                @foreach (var item in ConstantHelpers.ANNOUNCEMENT.APPEARS_IN.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-6">
+                            <label asp-for="StartDate">Fecha Inicio</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input asp-for="StartDate" class="form-control m-input" placeholder="Fecha inicio" required />
+                                <span class="m-input-icon__icon m-input-icon__icon--right">
+                                    <span>
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </span>
+                                <span for="StartDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group col-md-6">
+                            <label asp-for="EndDate">Fecha Fin</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input asp-for="EndDate" class="form-control m-input" placeholder="Fecha fin" required />
+                                <span class="m-input-icon__icon m-input-icon__icon--right">
+                                    <span>
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </span>
+                                <span for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row @(Model.AppearsIn == ConstantHelpers.ANNOUNCEMENT.APPEARS_IN.HOME ? "" : "d-none")" id="div_roles">
+                        <div class="form-group m-form__group col-md-12">
+                            <label asp-for="Roles">Roles:</label>
+                            <select asp-for="Roles" class="form-control m-input" multiple></select>
+                            <input type="hidden" value="@(string.Join(",",Model.Roles))" id="Roles_input" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label asp-for="Description">Descripci&oacute;n:</label>
+                            <textarea class="form-control m-input" rows="5" asp-for="Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-6">
+                            <label for="ImgOrVid">Imagen o video:</label>
+                            <select id="ImgOrVid" asp-for="ImgOrVid" class="form-control m-input" required>
+                                @foreach (var item in ConstantHelpers.ANNOUNCEMENT.IMAGE_OR_VIDEO.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="youtube-div">
+                        <div class="form-group m-form__group">
+                            <label asp-for="YoutubeUrl">Url de YouTube:</label>
+                            <input type="text" asp-for="YoutubeUrl" class="form-control m-input" />
+                        </div>
+                    </div>
+                    <div class="image-div">
+                        <div class="form-group m-form__group">
+                            <div class="m-form__group-sub">
+                                <label for="Image" class="form-control-label">Im&aacute;gen</label>
+                                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                {
+                                    <img style="width:100%" src="/imagenes/@Model.ImageUrl" />
+                                }
+                                <div class="custom-file">
+                                    <input id="Image" name="Image" class="form-control m-input custom-file-input" type="file" accept="image/*" />
+                                    <label class="custom-file-label selected" for="PhotoUrl">
+                                        @if (string.IsNullOrEmpty(Model.ImageUrl))
+                                        {
+                                            @("Seleccione Archivo")
+                                        }
+                                        else
+                                        {
+                                            @("Reemplazar Archivo")
+                                        }
+                                    </label>
+                                </div>
+                                <span for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="form-group m-form__group">
+                            <div class="m-form__group-sub">
+                                <label for="File" class="form-control-label">Archivo</label>
+                                <div class="custom-file">
+                                    <input name="File" class="form-control m-input custom-file-input" type="file" />
+                                    <label class="custom-file-label selected" for="File">
+                                        @if (string.IsNullOrEmpty(Model.FileUrl))
+                                        {
+                                            @("Seleccione Archivo")
+                                        }
+                                        else
+                                        {
+                                            @("Reemplazar Archivo")
+                                        }
+                                    </label>
+                                </div>
+                                <span for="File" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/lib/cropper/cropper.js"></script>
+    <script src="~/js/areas/admin/announcement/editbeginning.js" asp-append-version="true"></script>
+}

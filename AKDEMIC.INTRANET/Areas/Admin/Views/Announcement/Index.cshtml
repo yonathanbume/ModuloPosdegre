@@ -1,0 +1,59 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.AnnouncementViewModels
+@model AnnouncementViewModel
+@{
+    ViewBag.Title = "Banners";
+    ViewBag.SubTitle = "Listado de Banners";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewBag.Title }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button class="btn btn-primary m-btn m-btn--air m-btn--icon" onclick="announcement.datatable.load.addform()">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo Banner</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="ajax_data" class="m-datatable"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/announcement/index.js"></script>
+    <script src="~/js/modules/form.js"></script>
+}

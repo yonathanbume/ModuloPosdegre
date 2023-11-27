@@ -1,0 +1,140 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.SubstituteExamViewModels.SectionSubstituteExamViewModel
+@{
+    ViewBag.Title = "Listado Estudiantes";
+    ViewBag.SubTitle = "Listado de Estudiantes";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Gestion de Examen Sustitutorio", Controller = "SubstituteExam", Action = "Index", Area="Admin"},
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+<input type="hidden" id="Id" value="@Model.id" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <a href="/admin/examen-sustitutorio/estudiantes/@Model.id/pdf" target="_blank" class="btn btn-primary" id="btn-pdf">
+                    <span>
+                        <i class="fa fa-file-pdf"></i>
+                    </span>
+                    PDF
+                </a>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-1 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Plan/Código</label>
+                                <input asp-for="code" class="m-input form-control" disabled />
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Nombre de Curso</label>
+                                <input asp-for="name" class="m-input form-control" disabled />
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Ciclo</label>
+                                <input asp-for="academicYear" class="m-input form-control" disabled />
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Escuela Profesional</label>
+                                <input asp-for="career" class="m-input form-control" disabled />
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Grupo</label>
+                                <input asp-for="group" class="m-input form-control" disabled />
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Docentes</label>
+                                <input asp-for="teachers" class="m-input form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-8"></div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <div class="form-group m-form__group">
+                                    <label>&emsp;</label>
+                                    <div class="m-input m-input-icon m-input-icon--left">
+                                        <button class="btn btn-primary btn-update-students btn-block">
+                                            <i class="la la-edit"></i>
+                                            Actualizar Estudiantes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="students-datatable table table-hover table-striped table-bordered" id="ajax_data">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                        <th>Nota</th>
+                        <th>
+                            @*<span class="m-switch">
+                                    <label>
+                                        <input type="checkbox" id="example-select-all" name="select_all">
+                                        <span></span>
+                                    </label>
+                                </span>*@
+                            @*<input name="select_all" value="1" id="example-select-all" type="checkbox" />*@
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            @*<div class="m-datatable" id="ajax_data"></div>*@
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_save_grade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Asignar Nota</h5>
+            </div>
+            <form id="form_save_grade">
+                <input type="hidden" name="Id" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group ">
+                        <label class="form-control-label">Nota</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input name="Score" class="form-control" type="text" placeholder="Ingresar nota..." required step="1" max="20" min="0"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-save" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/substite-exam/students.js" asp-append-version="true"></script>
+}
+

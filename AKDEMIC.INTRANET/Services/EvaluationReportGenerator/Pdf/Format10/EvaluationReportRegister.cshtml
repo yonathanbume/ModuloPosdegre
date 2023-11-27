@@ -1,0 +1,407 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@using AKDEMIC.CORE.Extensions;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+    var colspan = 6 + Model.Course.Evaluations.Count() + Model.Course.CourseUnits.Count();
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>ACTA DE EVALUACIÓN FINAL</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .footer-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-univ-logo {
+            float: left;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+
+        .header {
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+            .header .university-title {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-title2 {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                font-weight: normal !important;
+            }
+
+            .header .resolution-title {
+                font-size: 15px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .office-title {
+                font-size: 11px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                font-size: 18px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+
+        .table-general-detail {
+            width: 100%;
+            text-align: left;
+            font-weight: normal;
+            font-size: 13px !important;
+        }
+
+            .table-general-detail td {
+                padding: 0px !important;
+                padding-top: 3px !important;
+                padding-bottom: 0px !important;
+                margin: 0px !important;
+            }
+
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            font-size: 13px !important;
+            font-weight: bold;
+            border: 1px solid;
+            background-color: lightgray;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 20px !important;
+            border: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 11px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="@colspan">
+                    <table class="table-general-detail">
+                        <tr>
+                            <td>@DateTime.UtcNow.ToLocalDateTimeFormat()</td>
+                            <td colspan="2">Registro de Evaluación</td>
+                        </tr>
+                        <tr>
+                            <td class="bold">@ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value].ToUpper()</td>
+                            <td style="text-align:right;">Fecha: @Model.BasicInformation.DateByConfiguration.ToLocalDateTimeFormat()</td>
+                            <td style="text-align:right;">Usuario: @Model.UserLoggedIn</td>
+                        </tr>
+                        <tr>
+                            @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNAJMA)
+                            {
+                                <td>ANDAHUAYLAS</td>
+                            }
+                            else
+                            {
+                                <td>-</td>
+                            }
+                            <td style="text-align:right;" colspan="2">Semestre: @Model.Term.Name</td>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="@colspan">
+                    <div style="height:10px"></div>
+                    <div class="header">
+                        <p class="header-title">
+                            REGISTRO DE EVALUACIÓN
+                        </p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="@colspan">
+                    <table class="table-general-detail">
+                        <tbody>
+                            <tr>
+                                <td class="bold" width="15%">Sede</td>
+                                <td>:</td>
+                                @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNAJMA)
+                                {
+                                    <td>ANDAHUAYLAS</td>
+                                }
+                                else
+                                {
+                                    <td>-</td>
+                                }
+
+                                <td class="bold">Semestre</td>
+                                <td>:</td>
+                                <td>@Model.Term.Name</td>
+                            </tr>
+                            <tr>
+                                <td class="bold">Escuela</td>
+                                <td>:</td>
+                                <td>@Model.Course.Career.Name</td>
+
+                                <td class="bold">Curricula</td>
+                                <td>:</td>
+                                <td>@Model.Course.Curriculum</td>
+                            </tr>
+                            <tr>
+                                <td class="bold">Curso</td>
+                                <td>:</td>
+                                <td>@Model.Course.Name</td>
+
+                                <td class="bold">Sección</td>
+                                <td>:</td>
+                                <td>@Model.Course.Section.Code</td>
+                            </tr>
+                            <tr>
+                                <td class="bold">H. teoría</td>
+                                <td>:</td>
+                                <td>@Model.Course.TheoreticalHours</td>
+
+                                <td class="bold">H. práctica</td>
+                                <td>:</td>
+                                <td>@Model.Course.PracticalHours</td>
+                            </tr>
+                            <tr>
+                                <td class="bold">Créditos</td>
+                                <td>:</td>
+                                <td>@Model.Course.Credits</td>
+
+                                <td class="bold">Nro. Unidades</td>
+                                <td>:</td>
+                                <td>@Model.Course.CourseUnits.Count()</td>
+                            </tr>
+
+                            <tr>
+                                <td class="bold">Docente</td>
+                                <td>:</td>
+                                <td>@Model.Course.Section.Teacher</td>
+
+                                <td class="bold">Ciclo</td>
+                                <td>:</td>
+                                <td>@Model.Course.AcademicYear</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th height="10px">
+
+                </th>
+            </tr>
+            <tr class="bordered-header">
+                <th rowspan="3" width="5%" class="bordered-header">Nro.</th>
+                <th rowspan="3" class="bordered-header">Código</th>
+                <th rowspan="3" class="bordered-header">Apellidos y Nombres</th>
+
+                <th colspan="@(Model.Course.Evaluations.Count() + Model.Course.CourseUnits.Count())" class="bordered-header">EVALUACIONES POR UNIDADES</th>
+
+                <th rowspan="3" class="bordered-header">PU</th>
+                <th rowspan="3" class="bordered-header">EA</th>
+                <th rowspan="3" class="bordered-header">NF</th>
+            </tr>
+
+            <tr class="bordered-header">
+                @if (Model.Course.EvaluationByUnits)
+                {
+                    @for (int i = 0; i < Model.Course.CourseUnits.Count(); i++)
+                    {
+                        <th colspan="@(Model.Course.Evaluations.Where(x=>x.CourseUnitId == Model.Course.CourseUnits[i].Id).Count()+1)" class="bordered-header">UNIDAD @(i+1)</th>
+                    }
+                }
+                else
+                {
+                    <th colspan="3" class="bordered-header">SIN UNIDADES ASIGNADAS</th>
+
+                }
+            </tr>
+
+            <tr>
+                @for (int i = 0; i < Model.Course.CourseUnits.Count(); i++)
+                {
+                    var evaluations = Model.Course.Evaluations.Where(x => x.CourseUnitId == Model.Course.CourseUnits[i].Id).ToList();
+
+                    foreach (var item in evaluations)
+                    {
+                        <th class="bordered-header">
+                            @item.Name
+                        </th>
+                    }
+
+                    <th class="bordered-header">P</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Course.Section.Students.Count(); i++)
+            {
+                <tr class="bordered-detail">
+                    <td class="bordered-detail center">@((i+1))</td>
+                    <td class="bordered-detail center">@Model.Course.Section.Students[i].UserName</td>
+                    <td class="bordered-detail">@Model.Course.Section.Students[i].FullName</td>
+
+                    @foreach (var courseUnit in Model.Course.CourseUnits)
+                    {
+                        var evaluations = Model.Course.Evaluations.Where(x => x.CourseUnitId == courseUnit.Id).ToList();
+
+                        @foreach (var evaluation in evaluations)
+                        {
+                            <td class="bordered-detail center">@(!Model.Course.Section.Students[i].Grades.Any(y=>y.EvaluationId == evaluation.Id) ? "-" : Model.Course.Section.Students[i].Grades.Where(x=>x.EvaluationId == evaluation.Id).Select(x=>x.Value).FirstOrDefault().ToString())</td>
+                        }
+
+                        <td class="bordered-detail center bold">@Model.Course.Section.Students[i].Averages.Where(x => x.Id == courseUnit.Id).Select(x => x.Average).FirstOrDefault()</td>
+                    }
+
+                    @if (Model.Course.Section.Students[i].HasSusti)
+                    {
+                        <td class="bordered-detail center bold">@Model.Course.Section.Students[i].GradeBeforeSusti</td>
+                        <td class="bordered-detail center bold">@Model.Course.Section.Students[i].FinalGrade</td>
+                    }
+                    else
+                    {
+                        <td class="bordered-detail center bold">@Model.Course.Section.Students[i].FinalGrade</td>
+                        <td class="bordered-detail center"></td>
+                    }
+
+                    <td class="bordered-detail center bold">@Model.Course.Section.Students[i].FinalGrade</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

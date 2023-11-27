@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = "Reporte de Estudiantes",  Action = "Student" , Controller = "IntranetReport", Area = "Report" },
+    new BreadcrumbViewData {Name="Registro de acceso al sistema", Controller=null, Action=null},
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <a asp-controller="IntranetReport" asp-area="Report" asp-action="Student" class="btn btn-primary m-btn m-btn--icon m-btn--icon-only"><i class="la la-arrow-left"></i></a>
+                    &nbsp;
+                    <h3 class="m-portlet__head-text">Registro de acceso al sistema</h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <label>Tipo:</label>
+                                    <select id="roleTypeSelect" class="m-select2">
+                                        <option value="0">Todos</option>
+                                        <option value="1">Alumnos</option>
+                                        <option value="2">Egresados</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3  m--margin-top-25">
+                                <label>Fecha inicio</label>
+                                <div class="m-input">
+                                    <input type="text" class="form-control m-input" id="startDate" placeholder="Fecha inicio">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3  m--margin-top-25">
+                                <label>Fecha fin</label>
+                                <div class="m-input">
+                                    <input type="text" class="form-control m-input" id="finalDate" placeholder="Fecha fin">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3  m--margin-top-25">
+                                <label>&emsp;</label>
+                                <div class="m-input">
+                                    <button id="btnsearch" type="button" class="m-btn btn btn-primary"><i class="la la-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="tbl-data"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/js/areas/report/accesssystemreport/index.js" asp-append-version="true"></script>
+}

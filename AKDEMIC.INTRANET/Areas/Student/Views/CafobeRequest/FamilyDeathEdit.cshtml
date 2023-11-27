@@ -1,0 +1,38 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.CafobeRequestViewModels
+@model FamilyDeathViewModel
+@{
+    ViewData["Title"] = "Cafobe";
+    ViewData["SubTitle"] = "Editar Solicitud por Defunción";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData {Name="Cafobe",Action="Index", Controller="CafobeRequest",Area="Student"},
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+
+};
+    ViewData["BackUrl"] = Url.Action("Index", "Cafobe", new { area = "Student" });
+}
+<div class="m-content">
+    <input id="Id" type="hidden" value="@Model" />
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <form id="create-form" enctype="multipart/form-data" asp-controller="CafobeRequest" asp-action="UpdateFamilyDeath">
+                @await Html.PartialAsync("FamilyDeathForms/_FamilyDeathEditForm", Model);
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/css/views/cafobe/add.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/js/areas/student/cafoberequest/familydeathedit.js" type="text/javascript"></script>
+}

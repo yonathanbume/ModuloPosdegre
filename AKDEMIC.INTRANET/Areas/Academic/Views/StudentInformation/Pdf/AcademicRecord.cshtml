@@ -1,0 +1,161 @@
+﻿ @model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.AcademicRecordViewModel
+@*@model AKDEMIC.INTRANET.ViewModels.TestViewModels.AcademicRecordViewModel*@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="~/css/views/pdf/academicRecord.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="document-header">
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo.png" />
+
+        <div class="cleared">
+            <div class="area-name center">
+                FORMACION MAGISTRAL
+            </div>
+            <div class="office-name center">
+                RECORD ACADEMICO PARA PROCESO DE TITULACION
+            </div>
+            <div class="detail-office">
+                Oficio M&uacute;ltiple 021-2000-DINFOCAD/FOO<br />DRE-03 de Marzo @DateTime.Now.Year.
+            </div>
+        </div>
+    </div>
+    <div class="document-body">
+        <table>
+            <tr>
+                <td style="padding:8px;">ESTUDIANTE</td>
+                <td><strong>@Model.Student</strong></td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">&emsp;</td>
+                <td>Apellidos y Nombres</td>
+            </tr>
+        </table>
+
+        <table style="margin-top:35px;">
+            <tr>
+                <td style="padding:8px;">N° CODIGO MATRICULA : </td>
+                <td><strong>@Model.EnrollmentCode</strong></td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">INGRESANTE EN EL AÑO</td>
+                <td><strong>@Model.StartYear</strong></td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">ESPECIALIDAD</td>
+                <td><strong>@Model.Speciality</strong></td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">FECHA DE INICIO DE ESTUDIOS (SEMESTRE)</td>
+                <td><strong>@Model.StartDateSemester</strong></td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">FECHA DE CONCLUSI&Oacute;N DE ESTUDIOS</td>
+                <td><strong>@Model.GraduatedDateSemester</strong></td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">REALIZO SUS ESTUDIOS EN FORMA REGULAR</td>
+                <td><strong>@Model.RegularStudies</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:8px;">
+                    FUE DESAPROBADO EN <strong>@Model.DisapprovedCourses</strong> CURSO(S)
+                    &emsp;&emsp;RECUPERO <strong>@Model.RecoveredCourses</strong> CURSO(S)
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">ACUMULO</td>
+                <td><strong>@Model.Average</strong> DE PROMEDIO</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:8px;"><strong>EXPLIQUE:</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:8px;">&emsp;
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:8px;">&emsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:8px;">&emsp;</td>
+            </tr>
+
+        </table>
+
+        <h3><u>SI EL ESTUDIANTE NO REALIZO ESTUDIOS EN LA MISMA INSTITUCIÓN:</u></h3>
+        <table>
+            <tr>
+                <td style="padding:8px;">INSTITUCI&Oacute;N DE ORIGEN &emsp;&emsp; - </td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">FECHA DE EXAMEN DE AMISI&Oacute;N  &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">FECHA DE INICIO DE LABORES DEL I SEMESTRE &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">RESOLUCI&Oacute;N DE TRASLADO</td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">RESOLUCI&Oacute;N DE CONVALIDACI&Oacute;N DE ORIGEN &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">SE UBICO EN EL &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">COMPLEMENTO CURSOS EN LA INSTITUCI&Oacute;N DE ORIGEN &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td style="padding:8px;">COMPLEMENTO CURSOS EN ESTA INSTITUCI&Oacute;N &emsp;&emsp; -</td>
+            </tr>
+        </table>
+
+        <h3><u>SI EL ESTUDIANTE INTERRUMPIO ESTUDIOS</u></h3>
+        <table>
+            <tr>
+                <td colspan="3" style="padding:8px;">MOTIVO &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding:8px;">TIEMPO &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="padding:8px;">R.D. DE AUTORIZACI&Oacute;N DE REINICIO DE EST. &emsp;&emsp; -</td>
+                <td colspan="2" style="padding:8px;">FECHA &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding:8px;">R.O. DE CONVALIDACI&Oacute;N DE CURSOS POR CAMBIO DE PLAN DE ESTUDIOS &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding:8px;">FECHA &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding:8px;">SEMESTRE EN QUE DEJO ESTUDIOS &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding:8px;">SEMESTRE EN EL QUE SE LE UBICO AL REINICAR ESTUDIOS &emsp;&emsp; -</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="padding:8px;">FUE DESAPROBADO EN -</td>
+                <td colspan="1">CURSOS RECUPERO -</td>
+                <td colspan="1">CURSOS</td>
+            </tr>
+        </table>
+    </div>
+    <div style="width:100%; text-align:start">
+        <img style="width:100px; height:100px !important;" src="@Model.ImageQR" />
+        <div style="display:inline-block; float:right;margin-top:40px">
+            <div class="document-footer" style="text-align:right"><div class="pull-right">C&Oacute;DIGO:@Model.PageCode</div></div>
+            <div class="document-footer" style="text-align:right"><div class="">@Model.Location, @Model.Date</div></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

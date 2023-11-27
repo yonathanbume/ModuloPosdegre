@@ -1,0 +1,284 @@
+﻿
+@{
+    ViewData["Title"] = "Reportes";
+    ViewData["SubTitle"] = "Reportes Gráficos-Totalizados";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+
+}
+<style>
+    svg > g > g:last-child {
+        pointer-events: none
+    }
+</style>
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Reportes Gráficos Totalizados
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> Hombres vs Mujeres </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_man_woman" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;">N°Estudiantes por Preparación Universitaria </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div id="chart_div_report_university_preparation" style="width:100%; min-height:250px"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-12">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;">N°Estudiantes por Escuela </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div id="chart_div_report_student_career" style="width:100%; min-height:250px"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Modalidad de Ingreso </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_modality_type" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Rango de Edades </strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_age_ranges" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Dependencia Económica</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_dependency_economic" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por tipo de colegio de procedencia</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_schooltype" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por nivel de estudio</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_level_education" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes según su Estado Civil</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_civil_status" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes según quien sostiene el hogar</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_principal_person" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Ingreso Familiar</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_total_remuneration" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Convivencia</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_student_coexistence" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Riesgo Familiar</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_family_risk" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Tenencia de Vivienda</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_Student_Tenure" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Vivienda</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_Student_ZoneType" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Construcción de Vivienda</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_Student_Construction_Type" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Estructura de Vivienda</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_Student_BuildType" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row col-12">
+                <div class="col-6">
+                    <div class="m-section">
+                        <span class="m-section__sub">
+                            <strong style="font-size:medium;"> N°Estudiantes por Tipo de Condición de Vivienda</strong>
+                        </span>
+                        <div class="m-section__content">
+                            <div>
+                                <div id="chart_div_report_Student_Construction_Condition" style="width:100%;min-height:250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-section">
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script src="~/js/areas/admin/graphics_totalized_report/index.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+}
+

@@ -1,0 +1,16 @@
+﻿body {
+}
+
+.m-timeline-3 .m-timeline-3__item .m-timeline-3__item-time {
+    font-size: 1rem;
+    width: 5rem;
+}
+
+.m-timeline-3 .m-timeline-3__item:before {
+    left: 6rem;
+}
+
+.m-timeline-3 .m-timeline-3__item .m-timeline-3__item-desc {
+    padding-left: 8rem;
+    display: block;
+}

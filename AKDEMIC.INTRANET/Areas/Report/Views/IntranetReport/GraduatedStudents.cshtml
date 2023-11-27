@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Reportes de Estudiantes Egresados y por Egresar";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Controller = "IntranetReport", Action = "Student", Area = "Report", Name = "Reporte de Estudiantes" },
+    new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+    };
+}
+
+@section Styles {
+    <style>
+        a {
+            text-decoration: none !important;
+        }
+
+            a:hover .m-portlet {
+                box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.7);
+            }
+
+            a i {
+                font-size: 120px;
+            }
+    </style>
+}
+
+<div class="m-content">
+    <h4 class="text-center">@ViewData["Title"].ToString().ToUpper()</h4>
+    <br />
+    <div class="row">
+        @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD))
+        {
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="GraduatedStudent" asp-area="Report">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estudiantes egresados</h4>
+                            <span>Listado de estudiantes egresados</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="GraduatedStudent" asp-area="Admin">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Egresados por periodo y escuela profesional</h4>
+                            <span>N&uacute;mero de egresados por periodo y escuela profesional</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="FutureGraduatedStudent" asp-area="Report">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estudiantes por egresar</h4>
+                            <span>Relaci&oacute;n de estudiantes por egresar seg&uacute;n escuela profesional, plan de estudio e historial de notas</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('a').hover(
+            function () {
+                $(this).children(":first").children(":first").addClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-primary');
+            },
+            function () {
+                $(this).children(":first").children(":first").removeClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-primary');
+            }
+        )
+    </script>
+}

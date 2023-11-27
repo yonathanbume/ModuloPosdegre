@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewData["Title"] = "Eventos";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewBag.Title }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Categoria</label>
+                                <select id="select_eventtype" class="m-select2 select2-eventtype">
+                                    <option value="@Guid.Empty" selected>Todas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table id="table-events" style="width:100%;">
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detail_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-widget19__content">
+                    <div class="m-widget19__header">
+                        <div class="m-widget19__stats">
+                            <span class="event-name"></span>
+                            <br />
+                            <span class="m-widget19__number m--font-brand">
+                                <i class="flaticon-calendar-2"></i>
+                            </span>
+                            <span class="m-widget19__comment event-date">
+
+                            </span>
+                            <div style="text-align: center;">
+                                <img src="" style=" max-width: 300px; height: auto;" class="event-image">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-widget19__body">
+                        <br />
+                        <label> Inscripciones: </label>
+                        <span class="event-range">
+                        </span>
+                        <br />
+                        <label>
+                            <br />
+                            <label>Tipo de evento:</label>
+                            <span class="event-type"></span>
+                        </label>
+                        <br />
+                        <label>Creado por:</label>
+                        <span class="event-creator"></span>
+                        <br />
+                        <label>Descripción:</label>
+                        <span class="event-description"></span>
+                        <br />
+                        <div class="url_container d-none">
+                            <label>Video:</label>
+                            <a href="javascript:;" class="m-link m--font-boldest event-urlvideo"></a>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <table id="table_files" class="table table-striped"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/css/views/eventinscription/index.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/js/views/eventinscription/index.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,207 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+
+@{
+    Layout = null;
+}
+
+<div class="A4">
+    <div class="script-font text-custom-container big-font-size">
+        El Consejo Universitario Confiere el Grado Académico de:
+    </div>
+    <div class="old-english-font text-custom-container big-font-size">
+        @*Bachiller en @Model.AcademicProgram*@
+        @Model.AcademicDegreeDenomination
+    </div>
+    <div class="script-font text-custom-container big-font-size">
+        a:
+    </div>
+    <div class="old-english-font text-custom-container big-font-size">
+        @Model.StudentName
+    </div>
+    <div class="old-english-font text-custom-container big-font-size">
+        @Model.StudentPaternalSurName @Model.StudentMaternalSurName
+    </div>
+    <div class="script-font text-custom-container medium-font-size">
+        quien despu&eacute;s de haber cumplido con los requisitos exigidos por la
+    </div>
+    <div class="script-font text-custom-container medium-font-size">
+        Facultad de:
+    </div>
+    <div class="old-english-font text-custom-container medium-font-size">
+        @Model.Faculty
+    </div>
+    <div class="script-font text-custom-container medium-font-size">
+        Escuela Profesional de:
+    </div>
+    <div class="old-english-font text-custom-container medium-font-size">
+        @Model.Career
+    </div>
+    <div class="script-font text-custom-container medium-font-size">
+        Expedido y Firmado
+    </div>
+    <div class="script-font text-custom-container medium-font-size">
+        @AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], @Model.FormatedDate
+    </div>
+    <div class="espacio-firma"></div>
+    <div style="width:100%">
+        <div style="width:50%;display:inline-block;float:left">
+            <div class="text-custom-container" style="float:right;margin-right:150px;border-top: 1px solid;width:250px">
+                @Model.Rector
+                <label style="display:block">
+                    Rector
+                </label>
+            </div>
+        </div>
+        <div style="width:50%;display:inline-block;float:right">
+            <div class="text-custom-container" style="float:left;margin-left:150px;border-top: 1px solid;width:250px">
+                @Model.Dean
+                <label style="display:block">
+                    Decano
+                </label>
+            </div>
+        </div>
+    </div>
+   
+    <div class="espacio-firma"></div>
+    <div>
+        <div style="width:100%;display:inline-block;">
+            <div class="text-custom-container" style="margin:auto;border-top: 1px solid;width:250px">
+                @Model.GeneralSecretary
+                <label style="display:block">
+                    Secretario General
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="A4" style=" padding-top:3px;">
+    @*<div style="margin-top:-45px;">
+        </div>*@  
+
+
+    <div style="width:100%; padding-bottom:25px;">
+        @*<div style="width: 90.6%;display:inline-block;">*@
+        <div style="width: 82%;display:inline-block;float:left">
+            <table>
+                <tr>
+                    <td style="text-align: center;border: 2.5px solid black;" colspan="2"><b> INSCRITO EN LA OFICINA DE GRADOS Y TÍTULOS </b></td>
+
+                </tr>
+                <tr>
+                    <td style="border-right: 2.5px solid black;padding-left:2.5px;width:50%;"><b>Libro</b></td>
+                    <td style="padding-left:3px;">@Model.Book</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 2.5px solid black;padding-left:2.5px;width:50%;"><b>Folio</b></td>
+                    <td style="padding-left:3px;">@Model.Foil</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 2.5px solid black;padding-left:2.5px;width:50%;"><b>Registro N°</b></td>
+                    <td style="padding-left:3px;">@Model.RegisterNumber</td>
+                </tr>
+                <tr class="fotter-cell">
+                    <td style="border-right: 2.5px solid black;padding-left:2.5px;width:50%;"><b>N&uacute;mero de diploma</b></td>
+                    <td style="padding-left:3px;">@Model.DiplomaNumber</td>
+                </tr>
+            </table>
+        </div>
+        @*<div style="width: 8.5%;display:inline-block;float:right">
+            <img src="@Model.QRCode">
+        </div>*@
+       
+        <img src="@Model.QRCode" style="width:auto; height:135px;margin-top:-9px;margin-right:-6px;float:right">
+    </div>
+
+    
+    <table>
+        <tr>
+            <td style="text-align: center;border: 2.5px solid black;" colspan="2"><b>INFORMACI&Oacute;N DE OBTENCI&Oacute;N DEL DIPLOMA</b></td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"> <b>C&oacute;digo de la Universidad</b></td>
+            <td style="padding-left:3px;">@Model.UniversityCode</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"> <b> Tipo de Documento </b></td>
+            <td style="padding-left:3px;">@Model.DocumentType</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b> N&uacute;mero de Documento</b></td>
+            <td style="padding-left:3px;">@Model.DocumentNumber</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Abreviatura Grado/T&iacute;tulo</b></td>
+            <td style="padding-left:3px;">@Model.GradeAbrev</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Facultad</b></td>
+            <td style="padding-left:3px;">@Model.Faculty</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Carrera Profesional @(Model.IsAccredited == true ? "Acreditada": "") </b></td>
+            <td style="padding-left:3px;">@Model.Career</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Programa de Estudios</b></td>
+            <td style="padding-left:3px;">@Model.AcademicProgram</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Grado Acad&eacute;mico</b></td>
+            <td style="padding-left:3px;">Bachiller en @Model.AcademicDegreeDenomination</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Modalidad de Obtenci&oacute;n</b></td>
+            <td style="padding-left:3px;">@Model.GradeModalityGain</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Modalidad de Estudios</b></td>
+            <td style="padding-left:3px;">@Model.StudentModality</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Fecha de Consejo Universitario</b></td>
+            <td style="padding-left:3px;">@Model.UniversitaryDate</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Resoluci&oacute;n Rectoral</b></td>
+            <td style="padding-left:3px;">@Model.ResolutionNumber</td>
+        </tr>
+        <tr>
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Fecha de Resoluci&oacute;n Rectoral</b></td>
+            <td style="padding-left:3px;">@Model.ResoultionRectorDate</td>
+        </tr>
+        <tr style="border-bottom: 2.5px solid black;">
+            <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Tipo de Emisi&oacute;n del diploma</b></td>
+            <td style="padding-left:3px;">@Model.EmittedDiplomaType</td>
+        </tr>
+        @if (@Model.EmittedDiplomaType == ConstantHelpers.EMISION_TYPE_OF_DIPLOMAT.DUPLICATE)
+        {
+            <tr style="border-bottom: 2.5px solid black;">
+                <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Fecha del diploma duplicado</b></td>
+                <td style="padding-left:3px;">@Model.DuplicatedDiplomaDate</td>
+            </tr>
+        }
+        else
+        {
+            <tr style="border-bottom: 2.5px solid black;">
+                <td style="border-right: 2.5px solid black;padding-left:2.5px;"><b>Fecha del diploma original</b></td>
+                <td style="padding-left:3px;">@Model.OriginalDiplomaDate</td>
+            </tr>
+        }
+
+    </table>
+    <div class="espacio-firma"></div>
+    <div>
+        <div style="width:100%;display:inline-block;">
+            <div class="text-custom-container" style="margin:auto;border-top: 1px solid;width:250px">
+                @Model.GeneralSecretary
+                <label style="display:block">
+                    Secretario General
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,138 @@
+﻿@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    Layout = null;
+    var institutionName = GeneralHelpers.GetInstitutionAbbreviation();
+}
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus @institutionName</title>
+    <link href="~/images/themes/@GeneralHelpers.GetTheme()/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="~/lib/bootstrap4/css/bootstrap.min.css">
+    <link href="~/css/themes/@GeneralHelpers.GetTheme()/campus.css" rel="stylesheet" type="text/css" />
+    <style>
+        .img-responsive:after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+}
+    </style>
+</head>
+<body>
+    <div class="main-ak-container">
+        <div class="ak-container" style="background-image: url(/images/login/campus/background.png)">
+            <div class="middle-ak-container">
+                <div class="p-0">
+                    <div class="ak-row">
+                        <section class="panel panel-with-borders panel-with-sidebar sidebar-large container" style="background-color:#fff !important;">
+                            <div class="panel-sidebar">
+                                <div class="row">
+                                    <div class="col-md-7 container-ak-brand">
+                                        <div class="align-self-center text-center w-100">
+                                            <img class="img-responsive logo" src="~/images/themes/@GeneralHelpers.GetTheme()/campus.svg">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 login">
+                                        @if (ConstantHelpers.GENERAL.Institution.Value != ConstantHelpers.Institution.UNJBG)
+                                        {
+                                            <div class="app-icon">
+                                                <img src="~/images/login/campus/@GeneralHelpers.GetTheme()/intranet.svg" />
+                                            </div>
+                                        }
+                                        <div class="login-form-container">
+                                            <h4>Bienvenido al Campus Virtual</h4>
+                                            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" asp-action="Login" asp-controller="Account">
+                                                <div asp-validation-summary="All" class="text-danger" style="font-weight: 500;"></div>
+                                                <div class="group">
+                                                    <input asp-for="UserName" placeholder="Usuario" name="username" autocomplete="off" />
+                                                    <img class="ico" src="~/images/login/user.svg" />
+                                                    <div class="bar"></div>
+                                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                                </div>
+                                                <div class="group">
+                                                    <input asp-for="Password" type="password" placeholder="Contraseña" name="password" autocomplete="off" />
+                                                    <i class="fa fa-eye"></i>
+                                                    <img class="ico" src="~/images/login/pass.svg" />
+                                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                                    <div class="bar"></div>
+                                                </div>
+                                                <div class="group">
+                                                    <button id="m_login_signin_submit" class="btn button-submit">
+                                                        Iniciar Sesi&oacute;n
+                                                    </button>
+                                                    <div class="text-center">
+                                                        <a class="forget-password-label" asp-controller="Account" asp-action="ForgotPassword">¿No puedes acceder a tu cuenta?</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding-right: 15px; padding-left: 15px;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <br/>
+                                        <div class="row">
+                                            @for (byte i = 0; i < ViewBag.Systems.Count; i++)
+                                            {
+                                                var url = $"{GeneralHelpers.GetTheme()}/{ViewBag.Systems[i]}.svg";
+                                                var urlSite = $"https://sigau-{ViewBag.Systems[i]}.azurewebsites.net/";
+
+                                                if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNJBG)
+                                                {
+                                                    urlSite = $"http://{ViewBag.Systems[i]}.unjbg.edu.pe/";
+                                                }
+                                                else if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNAMAD)
+                                                {
+                                                    urlSite = $"http://{ViewBag.Systems[i]}.unamad.edu.pe/";
+                                                }
+                                                <div class="col-md-20 col-sm-4 col-6 text-center campus-item" onclick="window.open('@urlSite', '_blank')">
+                                                    <img class="img-responsive" src="~/images/login/campus/@url">
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="inside-bottom-header">
+                                        <a class="title-header" href="http://enchufate.pe/" target="_blank">
+                                            Portal
+                                        </a>
+                                        <span class="separator-dot"></span>
+                                        <a class="title-header" href="#" target="_blank">
+                                            Brochure digital
+                                        </a>
+                                    </div>
+                                    <div class="inside-footer" style="padding-bottom: 40px;">
+                                        <a href="http://enchufate.pe/" target="_blank">
+                                            <img class="img-footer" src="~/images/login/campus/footer.svg">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="footer">
+                        <a href="http://enchufate.pe/" target="_blank">
+                            <img class="img-footer" src="~/images/login/campus/footer.svg">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var img = document.getElementsByClassName("img-responsive");
+        for (var i = 0; i < img.length; i++) {
+            img[i].addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+            })
+        }
+    </script>
+</body>
+</html>

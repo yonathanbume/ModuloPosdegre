@@ -1,0 +1,397 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.PdfViewModels.AcademicRecordV2PdfViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Record Académico</title>
+
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .footer-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        tbody {
+            font-size: 12px !important;
+        }
+
+        .header {
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+            .header .university-title {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-title2 {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                font-weight: normal !important;
+            }
+
+            .header .resolution-title {
+                font-size: 15px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .office-title {
+                font-size: 11px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                font-size: 18px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+
+        .table-general-detail {
+            width: 100%;
+            text-align: left;
+            font-weight: normal;
+        }
+
+            .table-general-detail td {
+                padding: 0px !important;
+                padding-top: 3px !important;
+                padding-bottom: 0px !important;
+                margin: 0px !important;
+            }
+
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 4px !important;
+            font-size: 15px !important;
+            font-weight: bold;
+            border: 1px solid;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 20px !important;
+            border: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 11px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+
+        .custom-border {
+            border-left: 1px solid;
+            border-right: 1px solid;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
+        }
+
+        .custom-border-top {
+            border-top: 1px solid;
+        }
+
+        .custom-border-bottom {
+            border-bottom: 1px solid;
+        }
+
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="9">
+                    <table class="table-general-detail">
+                        <tr>
+                            <td style="font-size:20px !important; font-weight:bold !important; text-align:center !important;" colspan="9">
+                                @AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.Names[AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value].ToUpper()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:12px !important; text-align:center !important;" colspan="9">
+                                DIRECCIÓN DE SERVICIOS ACADÉMICOS Y REGISTRO CENTRAL
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold !important; font-size:24px !important; text-align:center !important; padding-top:5px !important; padding-bottom:5px !important;" colspan="9">
+                                RECORD ACADÉMICO
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                CAR. PROF.
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.Career.ToUpper()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                CÓDIGO
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.UserName.ToUpper()
+                            </td>
+                            <td>
+                                APELLIDOS Y NOMBRES
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.FullName.ToUpper()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                RÉGIMEN
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                FLEXIBLE
+                            </td>
+                            <td>
+                                CURRÍCULA
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.Curriculum.ToUpper()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                SEDE
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.Campus
+                            </td>
+                            <td>
+                                MODALIDAD DE ESTUDIO
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                PRESENCIAL
+                            </td>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size:12px !important;" rowspan="2" class="custom-border">N°</th>
+                <th style="font-size:12px !important;" rowspan="2" class="custom-border">CÓDIGO</th>
+                <th style="font-size:12px !important;" rowspan="2" class="custom-border"></th>
+                <th style="font-size:12px !important;" rowspan="2" class="custom-border">PERIODO ACADÉMICO</th>
+                <th style="font-size:12px !important;" rowspan="1" class="custom-border-top" colspan="2">EVAL. FINAL</th>
+                <th style="font-size:12px !important;" rowspan="2" class="custom-border">CRE</th>
+                <th style="font-size:12px !important;" rowspan="2" class="custom-border">TIPO ACTA</th>
+                <th style="font-size:12px !important;" rowspan="2" class="custom-border">MAT</th>
+            </tr>
+            <tr>
+                <th style="font-size:12px !important;" colspan="1" class="custom-border-bottom">Nota</th>
+                <th style="font-size:12px !important;" colspan="1" class="custom-border-bottom">Fecha</th>
+            </tr>
+        </thead>
+        <tbody @*style="border:1px solid !important;"*@>
+            @{
+                int index = 0;
+            }
+            @foreach (var ayc in Model.AcademicYears)
+            {
+                <tr>
+                    <td colspan="5"> &emsp; &emsp; <strong>Semestre:</strong> @(ayc.AcademicYear == 1 ? "PRIMERO" : AKDEMIC.CORE.Helpers.ConstantHelpers.ACADEMIC_YEAR.TEXT[ayc.AcademicYear].ToUpper())</td>
+                </tr>
+                @foreach (var item in ayc.AcademicHistories)
+                {
+                    index++;
+                    <tr>
+                        <td style="text-align:center; font-size:10px !important;">@index</td>
+                        <td style="padding-left:5px !important; font-size:10px !important;">@item.CourseCode</td>
+                        <td>@item.CourseName</td>
+                        <td style="text-align:center; font-size:10px !important;">(@item.Term)</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Grade</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Date</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Credits</td>
+                        @*<td style="text-align:center; font-size:10px !important;">@ConstantHelpers.AcademicHistory.Types.VALUES[item.AcademicHistoryType]</td>*@
+                        <td style="text-align:center; font-size:10px !important;">@item.Observation</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Try</td>
+                    </tr>
+                }
+                <tr>
+                    <td style="text-align:center;font-weight:bold;font-size:12px !important;" colspan="8">Promedio Acumulado: &emsp; &emsp; &emsp; @ayc.AccumulatedAverage  &emsp; &emsp; &emsp;  @ayc.AccumulatedAverageFormula &emsp; &emsp; &emsp; Promedio Semestre: &emsp; &emsp; &emsp; @ayc.SemesterAverage &emsp; &emsp; &emsp; @ayc.SemesterAverageFormula</td>
+                </tr>
+            }
+
+            <tr style="text-align:center !important;">
+                <td style="padding-top:35px !important;" colspan="9"><strong>ACTIVIDADES CO/EXTRA CURRICULARES/ELECTIVOS COMPLEMENTARIOS</strong></td>
+            </tr>
+
+
+            @foreach (var activity in Model.ExtracurricularAreas)
+            {
+                <tr>
+                    <td colspan="5"> &emsp; &emsp; <strong>Semestre:</strong> @activity.Name</td>
+                </tr>
+
+                @foreach (var item in activity.Activities)
+                {
+                    index++;
+                    <tr>
+                        <td style="text-align:center; font-size:10px !important;">@index</td>
+                        <td style="padding-left:5px !important; font-size:10px !important;">@item.Code</td>
+                        <td>@item.Name</td>
+                        <td style="text-align:center; font-size:10px !important;">(@item.Term)</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Grade</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Date</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Credits</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Type</td>
+                        <td style="text-align:center; font-size:10px !important;">@item.Try</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td style="text-align:center;font-weight:bold;font-size:12px !important;" colspan="8">Promedio Acumulado: &emsp; &emsp; &emsp; 0.000  &emsp; &emsp; &emsp;  -- &emsp; &emsp; &emsp; Promedio Semestre: &emsp; &emsp; &emsp; 0.000 &emsp; &emsp; &emsp; @(activity.Activities.Where(x => x.Grade.HasValue).Sum(x => x.Grade))/@(activity.Activities.Sum(x => x.Credits)) </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot style="font-size:12px !important; font-weight:bold !important;">
+            <tr>
+                <td colspan="8" style="text-align:left !important;">
+                    CREDITOS APROBADOS: @Model.TotalApprovedCredits
+                </td>
+            </tr>
+
+        </tfoot>
+    </table>
+</body>
+</html>
+
+
+

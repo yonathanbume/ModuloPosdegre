@@ -1,0 +1,87 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.AnnouncementViewModels
+@model AnnouncementViewModel
+@{
+    ViewBag.Title = "Detalles del banner";
+    ViewBag.SubTitle = "Datos del banner";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "banners" , Url = Url.Action("Index","Announcement") },
+new BreadcrumbViewData { Name = (string)ViewBag.Title}
+};
+    ViewData["BackUrl"] = Url.Action("Index", "Announcement", new { area = "Admin" });
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Subtitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form class="m-form m-form--state m-form--fit" id="details-form">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-12">
+                        <label class="form-control-label" for="Fields_Name">Titulo</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Title" class="form-control m-input" disabled>
+                        </div>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Fields.Name" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-12">
+                        <label class="form-control-label">Descripción</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <textarea asp-for="Description" class="form-control m-input" disabled></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-md-6">
+                    <div class="form-group m-form__group row">
+                        <label class="form-control-label">Fecha de inicio</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="StartDate" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group m-form__group row">
+                        <label class="form-control-label">Fecha de fin</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="EndDate" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-12">
+                    <label class="form-control-label">Roles</label>
+
+                    <select asp-for="SelectedRoles" class="form-control m-input m-select2 select2-roles" multiple disabled></select>
+
+                </div>
+            </div>
+            <div class="m-card-profile">
+                <div class="m-card-profile__title">
+                    Foto
+                </div>
+                <div class="m-card-user" style="width:100%;">
+                    <div class="m-card-profile" style="text-align:center;">
+                        <img id="current-picture" src="@(string.IsNullOrEmpty(Model.Pathfile) ? "/images/default-banner.jpg" : Model.Pathfile)" style="width:1000px;" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var Roles = JSON.parse('@Json.Serialize(Model.SelectedRoles)');
+    </script>
+    <script src="~/js/areas/admin/announcement/detail.js"></script>
+}

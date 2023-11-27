@@ -1,0 +1,474 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.GradeViewModels.ActaScoresViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <style>
+        body {
+            font-family: "Calibri";
+            font-size: 13px;
+        }
+
+        h1 {
+            margin-bottom: 5px !important;
+            font-size: 28px;
+        }
+
+        h2 {
+            margin: 0px;
+            font-size: 18px;
+        }
+
+        img {
+            top: 0;
+            left: 0;
+            max-height: 60px;
+        }
+
+        header {
+            width: 100%;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+
+        th {
+            page-break-inside: avoid;
+        }
+
+        tbody .bordered {
+            border: 1px solid black;
+            padding: 3px 3px !important;
+        }
+
+        .headerformat .bordered {
+            border: 1px solid black;
+            padding: 3px 3px !important;
+        }
+
+        .headerformat .unbordered {
+            border: 0px;
+            padding: 3px 3px !important;
+        }
+
+        th {
+            font-weight: normal;
+            text-align: left;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .bold {
+            font-weight: bold;
+            background-color: lightgray;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .header2 {
+            font-size: 10px;
+            padding: 3px 0px !important;
+        }
+
+        .header > th, td {
+            border: 1px solid black;
+            padding: 5px 3px !important;
+        }
+
+        .td-header {
+            border: none;
+            padding: 0px !important;
+        }
+
+        .detail-header {
+            font-size: 11px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .footer {
+            font-size: 15px;
+            text-align: center;
+            font-style: italic;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-bottom: -6px;
+        }
+
+        .thd {
+            border: 1px solid black;
+            padding: 5px;
+            font-size: 13px;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .border {
+            border: 1px solid black !important;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    @{
+        var colspan = 2;
+        colspan += ((int)Model?.BasicInformation?.CourseUnits) * 2;
+    }
+    @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+    {
+        var evals = Model?.BasicInformation?.CourseUnitsList[i - 1]?.Evaluations?.ToList();
+        colspan += (evals.Count() + 1);
+    }
+    <table>
+        <thead class="headerformat" style="height:100px;">
+            <tr>
+                <th colspan="@(colspan+2)">
+                    <table>
+                        <tbody>
+                            <tr class="unbordered" style="height:100px;">
+                                <th colspan="1" style="text-align: center;padding: 0px 20px;">
+                                    <img style="top: 0; left: 0; height: 100px;width:auto" src="@Model.Img" />
+                                </th>
+                                <th colspan="@colspan">
+                                    <div class="unk-header center" style="font-size:18px;">
+                                        <p style="margin:0px;text-transform: uppercase" class="negrita">@GeneralHelpers.GetInstitutionName()</p>
+                                        <p style="margin:0px;" class="negrita">ACTA DE NOTAS</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr class="unbordered" style="">
+                                <th colspan="@(colspan)">
+                                    <table class="header">
+                                        <tbody>
+                                            <tr>
+                                                <td class="bold" style="width:9%">DOCENTE:</td>
+                                                <td colspan="3">@Model.BasicInformation.Teacher</td>
+                                                <td class="bold">SEMESTRE ACADEMICO:</td>
+                                                <td>@Model.BasicInformation.Term</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bold">CURSO:</td>
+                                                <td style="width:45%">@Model.BasicInformation.Course</td>
+                                                <td class="bold" style="width:11%;">CREDITOS:</td>
+                                                <td style="width:6%;">@Model.BasicInformation.Credits</td>
+                                                <td class="bold" style="width:18%">CICLO DEL CURSO:</td>
+                                                <td>@Model.BasicInformation.Cycle</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bold">ESCUELA:</td>
+                                                <td>@Model.BasicInformation.Career</td>
+                                                <td class="bold">SEDE:</td>
+                                                <td>@Model.BasicInformation.Sede</td>
+                                                <td class="bold">SECCION:</td>
+                                                <td>@Model.BasicInformation.Section</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <br />
+                                    <br />
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+            </tr>
+            @* PRIMER PARCIAL  *@
+            <tr>
+                <th rowspan="3" class="border bold center">Nro</th>
+                <th rowspan="3" class="border bold center">Código</th>
+                <th rowspan="3" class="border bold center">Apellidos y Nombres</th>
+                @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                {
+                    var evals = Model?.BasicInformation?.CourseUnitsList[i - 1]?.Evaluations?.ToList();
+                    //var evals = Model.Evaluations?.Where(x => x.CourseUnitId == Model?.BasicInformation?.CourseUnitsList[i - 1].Id).ToList();
+                    <th class="border bold center" colspan="@(evals.Count() + 1)">@AKDEMIC.INTRANET.Helpers.ConstantHelpers.SEQUENCEORDER.NAMES[i] PARCIAL</th>
+                }
+                @* primer *@
+                <th rowspan="2" colspan="@((int)Model?.BasicInformation?.CourseUnits)" class="border bold center">PROMEDIOS PARCIALES</th>
+                @* pp *@
+                <th rowspan="2" colspan="2" class="border bold center">PROMEDIO FINAL</th>
+            </tr>
+
+            <tr>
+                @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                {
+                    var evals = Model?.BasicInformation?.CourseUnitsList[i - 1]?.Evaluations?.ToList();
+                    @for (int j = 1; j <= evals.Count(); j++)
+                    {
+                        <th rowspan="1" colspan="1" class="border bold center">@j</th>
+                    }
+                    <th rowspan="2" colspan="1" class="border bold center">@i° <br />Prom <br />Parc</th>
+                }
+                @* primer *@
+                @* pp *@
+            </tr>
+
+            <tr>
+                @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                {
+                    var evals = Model?.BasicInformation?.CourseUnitsList[i - 1]?.Evaluations?.ToList();
+                    @foreach (var item in evals)
+                    {
+                        <th rowspan="1" colspan="1" class="border bold center">@item.Name</th>
+                    }
+                }
+                @* pp *@
+                @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                {
+                    <th class="border bold center" style="max-width:50px !important; font-size:10px;">@i° PP</th>
+                }
+                @* pf *@
+                <th rowspan="1" colspan="1" class="border bold center">Nro</th>
+                <th rowspan="1" colspan="1" class="border bold center">Letras</th>
+            </tr>
+            @* PRIMER PARCIAL  *@
+        </thead>
+        <tbody class="">
+            @for (var i = 0; i < Model.Rows.Count; i++)
+            {
+                var partialaverageslist = new List<decimal>();
+                <tr>
+                    <th class="thd">@Model.Rows[i].Order</th>
+                    <th class="thd" style="border-right:0px !important;">@Model.Rows[i].Code</th>
+                    <th class="thd" style="border-right:0px !important;">@Model.Rows[i].Surnames , @Model.Rows[i].Names</th>
+                    @for (int j = 1; j <= Model?.BasicInformation?.CourseUnits; j++)
+                    {
+                        var evals = Model?.BasicInformation?.CourseUnitsList[j - 1]?.Evaluations?.ToList();
+                        var countt = 1;
+                        var unitPercentage = 0M;
+                        var validcount = 0;
+                        if (evals.Count() > 0)
+                        {
+                            var average = 0M;
+
+                            @foreach (var item in evals)
+                            {
+                                unitPercentage += item != null ? item.Percentage : 0;
+                                var grade = item?.Grades?.FirstOrDefault(x => x.StudentSectionId == Model.Rows[i].StudentSectionId);
+                                if (grade != null)
+                                {
+                                    average  += (grade.Value * item.Percentage);
+                                    validcount++;
+
+                                    if (grade.Value < Model?.BasicInformation?.MinGrade)
+                                    {
+                                        <th class="red thd">@grade.Value.ToString("0.00")</th>
+                                    }
+                                    else
+                                    {
+                                        <th class="thd">@grade.Value.ToString("0.00")</th>
+                                    }
+                                }
+                                else
+                                {
+                                    <th class="thd">-</th>
+                                }
+
+                                if (evals.Count() == countt)
+                                {
+                                    if (validcount > 0 && unitPercentage > 0)
+                                    {
+                                        var averageTotal = (average / unitPercentage);
+                                        partialaverageslist.Add(averageTotal);
+                                        if (averageTotal < Model.BasicInformation.MinGrade)
+                                        {
+                                            <th class="red thd">@(averageTotal.ToString("0.00"))</th>
+                                        }
+                                        else
+                                        {
+                                            <th class="thd">@(averageTotal.ToString("0.00"))</th>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        partialaverageslist.Add(0);
+                                        <th class="red thd">0.00</th>
+                                    }
+                                }
+                                countt++;
+                            }
+                        }
+                        else
+                        {
+                            partialaverageslist.Add(21);
+                            <th class="thd">-</th>
+                        }
+                    }
+                    @* aaaaaaaaaa *@
+                    @for (int v = 0; v < Model?.BasicInformation?.CourseUnits; v++)
+                    {
+                        @if (partialaverageslist.Count() > 0)
+                        {
+                            @if (partialaverageslist[v] < Model.Approbed)
+                            {
+                                <th class="red thd">@partialaverageslist[v].ToString("0.00")</th>
+                            }
+                            else
+                            {
+                                if (partialaverageslist[v] == 21 || partialaverageslist[v] == null)
+                                {
+                                    <th class="thd" style="font-weight:bold;">-</th>
+                                }
+                                else
+                                {
+                                    <th class="thd" style="font-weight:bold;">@partialaverageslist[v].ToString("0.00")</th>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <th class="thd">-</th>
+                        }
+                    }
+                    @if (Model.Rows[i].StudentStatus != ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN)
+                    {
+                        if (Model.Rows[i].FinalEvaluationNumber < Model.Approbed)
+                        {
+                            <th class="red thd">@Model.Rows[i].FinalEvaluation @(Model.Rows[i].HasSusti ? "(SUSTI)" : "")</th>
+                            <th class="red thd">@Model.Rows[i].FinalEvaluationText</th>
+                        }
+                        else
+                        {
+                            <th class="thd" style="font-weight:bold;">@Model.Rows[i].FinalEvaluation  @(Model.Rows[i].HasSusti ? "(SUSTI)" : "")</th>
+                            <th class="thd">@Model.Rows[i].FinalEvaluationText</th>
+                        }
+                    }
+                    else
+                    {
+                        <th class="red thd">R</th>
+                        <th class="red thd">RETIRADO</th>
+                    }
+                </tr>
+            }
+            @if (Model.Rows.Count == 0)
+            {
+                <tr class="" style="border:1px solid black !important">
+                    <th class="center" colspan="@colspan">No hay estudiantes en la sección </th>
+                </tr>
+            }
+
+            <tr style="border:unset !important">
+                <th colspan="2" style="border:unset !important">
+                    <br /><br />
+                    <table>
+                        <tr>
+                            <td><b>Resumen</b></td>
+                            <td># Estudiantes</td>
+                            <td>Porcentual</td>
+                        </tr>
+                        <tr>
+                            <td><b>Matriculados</b></td>
+                            <td>@Model.Rows.Count()</td>
+                            <td>@((Model.Rows.Count() * 100 > 0) ? (Model.Rows.Count() * 100 / Model.Rows.Count()) : 0)%</td>
+                        </tr>
+                        <tr>
+                            <td><b>Aprobados</b></td>
+                            @{
+                                var app = (Model.Rows.Count(x => x.FinalEvaluationNumber >= Model.Approbed));
+                            }
+                            <td>@app</td>
+                            <td>@((app * 100) > 0 ? (app * 100) / Model.Rows.Count() : 0)%</td>
+                        </tr>
+                        <tr>
+                            <td><b>Desaprobados</b></td>
+                            @{
+                                var disapp = (Model.Rows.Count(x => x.FinalEvaluationNumber < Model.Approbed && x.StudentStatus != ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN));
+                            }
+                            <td>@disapp</td>
+                            <td>@((disapp * 100) > 0 ? (disapp * 100) / Model.Rows.Count() : 0)%</td>
+                        </tr>
+                        @*<tr>
+                                <td><b>No rindió</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>*@
+                        <tr>
+                            <td><b>Retirados</b></td>
+                            @{
+                                var ret = (Model.Rows.Count(x => x.StudentStatus == ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN));
+                            }
+                            <td>@ret</td>
+                            <td>@((ret * 100) > 0 ? (ret * 100) / Model.Rows.Count() : 0)%</td>
+                        </tr>
+                    </table>
+                </th>
+                <th colspan="@colspan" style="border:unset !important">
+                    <table>
+                        <tr class="center">
+                            <td>
+                                SUPERVISIÓN
+                            </td>
+                            @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                            {
+                                var evals = Model?.BasicInformation?.CourseUnitsList[i - 1]?.Evaluations?.ToList();
+                                <td>@AKDEMIC.INTRANET.Helpers.ConstantHelpers.SEQUENCEORDER.NAMES[i] PARCIAL</td>
+                            }
+                        </tr>
+                        <tr class="center">
+                            <td>
+                                Formula
+                            </td>
+                            @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                            {
+                                var evals = Model?.BasicInformation?.CourseUnitsList[i - 1]?.Evaluations?.ToList();
+                                var formulatext = "";
+                                @foreach (var item in evals)
+                                {
+                                    formulatext += "(" + item.Name + "*" + (item.Percentage / 100M).ToString("0.00") + ") + ";
+                                }
+                                formulatext = formulatext.TrimEnd('+');
+                                <td>@formulatext</td>
+                            }
+                        </tr>
+                        <tr class="center">
+                            <td>Firma Docente</td>
+                            @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                            {
+                                <td></td>
+                            }
+                        </tr>
+                        <tr class="center">
+                            <td>V.B. Jefe Dpto</td>
+                            @for (int i = 1; i <= Model?.BasicInformation?.CourseUnits; i++)
+                            {
+                                <td></td>
+                            }
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

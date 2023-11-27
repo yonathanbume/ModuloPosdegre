@@ -1,0 +1,325 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.PdfViewModels.AcademicSitutationViewModel
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+        body {
+            font-family: Calibri;
+        }
+
+        .document-header {
+            text-align: center;
+            height: auto;
+            width: 100%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Calibri;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+            /*margin-block-start: 0 !important;
+            margin-block-end: 0 !important;*/
+        }
+
+        .institution-title {
+            font-weight: bold;
+            font-size: x-large;
+            text-transform: uppercase;
+        }
+
+        h3.area-title1 {
+            font-weight: 600;
+            font-size: larger;
+            margin-top: 3px !important;
+        }
+
+        h3.area-title2 {
+            font-weight: 600;
+            font-size: medium;
+        }
+
+        .logo-container {
+            float: left;
+            width: 70px;
+            position: absolute;
+        }
+
+        .document-title {
+            margin-left: 50px;
+        }
+
+        .logo-container2 {
+            float: right;
+            width: 100px;
+            margin-top: -200px;
+            margin-left: 20px;
+            /*position: absolute;*/
+            /*top: 5px;*/
+            /*left: 5px;*/
+        }
+
+        .logo2 {
+            width: 100%;
+            height: auto;
+        }
+
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+
+        .barcode {
+            width: 100%;
+        }
+
+        .barcode-object {
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td, th {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            padding-top: 6px !important;
+            padding-bottom: 6px !important;
+        }
+
+        .wrap {
+            width: 5%;
+            white-space: nowrap;
+        }
+
+        .student-info {
+            margin-top: 5px;
+        }
+
+        .student-info-title {
+            text-transform: uppercase;
+            font-size: xx-large;
+            text-align: center;
+            margin-left: 5px;
+            font-weight: normal;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .student-info-table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            width: 100%;
+        }
+
+            .student-info-table td {
+                border: 1px solid black;
+            }
+
+            .student-info-table .label {
+                background-color: lightgray;
+                font-size: 11px;
+            }
+
+            .student-info-table td {
+                font-size: 11px;
+            }
+
+        .academic-history {
+            margin-top: 5px;
+        }
+
+        .academic-history-title {
+            font-size: large;
+            text-transform: uppercase;
+            margin-left: 5px;
+            font-weight: normal;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .academic-history-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .academic-history-table th {
+                background-color: lightgray;
+                font-weight: lighter;
+            }
+
+            .academic-history-table td, .academic-history-table th {
+                border: 1px solid black;
+            }
+
+            .academic-history-table td {
+                font-size: small;
+            }
+
+            .academic-history-table tr {
+                page-break-inside: avoid;
+            }
+
+            .academic-history-table tfoot {
+                display: table-row-group; /* fix: footer repeat each page */
+            }
+
+        .director-signature {
+            margin-top: 10px;
+        }
+
+        td.center {
+            text-align: center;
+        }
+
+        .academic-history-footer {
+            font-size: small;
+            text-transform: uppercase;
+        }
+
+            .academic-history-footer td {
+                border: 0;
+                padding-left: 5px;
+            }
+
+        .director-signature {
+            margin-top: 200px;
+            border-top: 2px solid black;
+            text-align: center;
+            width: 30%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .signature-text {
+            text-align: center;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .signature-text p {
+                font-size: x-small;
+                margin-block-start: 0;
+                margin-block-end: 0;
+            }
+
+        .document-footer {
+            font-style: italic;
+            font-size: medium;
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+        table > tr {
+            page-break-inside: avoid;
+        }
+
+        .transparenttd {
+            border-color: transparent;
+            background-color: white;
+            color: transparent
+        }
+
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="document-header">
+        <div class="logo-container">
+            @if (string.IsNullOrEmpty(Model.ImagePathLogo))
+            {
+                <img class="logo" src="~/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+            }
+            else
+            {
+                <img class="logo" src="@Model.ImagePathLogo" />
+            }
+        </div>
+
+        <div class="document-title">
+            <h1 class="institution-title">@GeneralHelpers.GetInstitutionName()</h1>
+            @*<h3 class="area-title1">FACULTAD DE @Model.StudentInfo.Faculty.ToUpper()</h3>*@
+            @*<h3 class="area-title2">ESCUELA PROFESIONAL DE @Model.StudentInfo.CareerName.ToUpper()</h3>*@
+            @*<h3 class="area-title2">@Model.Today</h3>*@
+        </div>
+
+    </header>
+    <div class="student-info">
+        <h3 class="student-info-title">SITUACI&Oacute;N ACAD&Eacute;MICA</h3>
+        <br />
+        <table class="student-info-table">
+            <tr>
+                <td colspan="2" class="label">N&Uacute;MERO DE MATR&Iacute;CULA</td>
+                <td colspan="3" class="label">APELLIDOS Y NOMBRES</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="">@Model.StudentUsername</td>
+                <td colspan="3" class="">@Model.Student</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="label">ESCUELA PROFESIONAL / ESPECIALIDAD</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="">@Model.Career @(string.IsNullOrEmpty(Model.AcademicProgram) ? "" : $"/{Model.AcademicProgram}")</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="label">PROMEDIO SEMESTRAL</td>
+                <td colspan="3" class="label">PROMEDIO PONDERADO</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="">@Math.Round(Model.WeightedFinalGrade,2,MidpointRounding.AwayFromZero)</td>
+                <td colspan="3" class="">@Math.Round(Model.CumulativeWeightedFinalGrade,2,MidpointRounding.AwayFromZero)</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="label">CRED. APROBADOS OBLIG.</td>
+                <td colspan="3" class="label">CRED. APROBADOS ELECT.</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="">@Model.RequiredApprovedCredits / @Model.RequiredCredits</td>
+                <td colspan="3" class="">@Model.ElectiveApprovedCredits / @Model.ElectiveCredits </td>
+            </tr>
+        </table>
+    </div>
+    <div class="academic-history" style="margin-top:20px;">
+
+        <table class="academic-history-table">
+            <thead>
+                <tr>
+                    <th style="font-size:11px;">CICLO</th>
+                    <th style="font-size:11px;">CÓDIGO</th>
+                    <th style="font-size:11px;">CURSO</th>
+                    <th style="font-size:11px;">CRÉDITOS</th>
+                    <th style="font-size:11px;">NOTA</th>
+                    <th style="font-size:11px;">SEMESTRE</th>
+                    <th style="font-size:11px;">ESTADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Details)
+                {
+                    <tr>
+                        <td style="text-align:center;">@item.AcademicYear</td>
+                        <td style="text-align:center;">@item.CourseCode</td>
+                        <td style="text-align:left;">@item.Course</td>
+                        <td style="text-align:center;">@item.Credits</td>
+                        <td style="text-align:center;">@item.FinalGrade</td>
+                        <td style="text-align:center;">@item.Semester</td>
+                        <td style="text-align:center;">@item.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

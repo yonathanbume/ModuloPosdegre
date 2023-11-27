@@ -1,0 +1,41 @@
+﻿@model List<SelectListItem>
+
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Historial de notas
+            </h3>         
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="m-portlet__body" id="courses-block">
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="m-alert m-alert--icon alert alert-danger" role="alert">
+            <div class="m-alert__icon">
+                <i class="la la-warning"></i>
+            </div>
+            <div id="error-text" class="m-alert__text">
+                &nbsp;No posee historial de cursos matriculados
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row m--margin-bottom-50">
+            <div class="col-md-4">
+                <label>Periodo: &emsp;</label>
+                <select id="select-term" asp-items="@Model" class="form-control"></select>
+            </div>
+        </div>
+        <div id="enrolled-courses-container"></div>
+    }
+</div>

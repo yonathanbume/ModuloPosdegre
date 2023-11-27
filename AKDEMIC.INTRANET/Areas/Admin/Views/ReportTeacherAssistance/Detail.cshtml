@@ -1,0 +1,107 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.ReportTeacherAssistanceViewModels
+@model TeacherViewModel
+@{
+    ViewData["Title"] = "Reporte de asistencia";
+    ViewData["SubTitle"] = "Secciones del periodo";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de docentes" , Area="Admin",Controller="ReportTeacherAssistance", Action="Index" },
+        new BreadcrumbViewData{ Name = "Reporte de asistencia"}
+};
+    ViewData["BackUrl"] = Url.Action("Index", "ReportTeacherAssistance", new { area = "Admin" });
+}
+
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/areas/teacher/classschedule/index.css" type="text/css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div class="m-content">
+    <input asp-for="TeacherId" type="hidden" />
+    @*<input asp-for="ActiveTerm" type="hidden" />*@
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información del Docente
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <label>Periodo:  </label>
+                <div class="dropdown bootstrap-select m--align-left">
+                    <select id="select2-terms" class="m-select2"> </select>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Nombre: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Name</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>C&oacute;digo: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.UserName</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Departamento Acad&eacute;mico: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.AcademicDepartment</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button type="button" id="show_schedule" class="btn btn-primary btn-sm m-btn m-btn--custom">Ver Horario</button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table class="table table-striped table-bordered" id="data-datatable"></table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal_calendar">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel">
+                    Horario del Docente
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-calendar__container" id="schedule">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/reportteacherassistance/report_details.js" asp-append-version="true"></script>
+}

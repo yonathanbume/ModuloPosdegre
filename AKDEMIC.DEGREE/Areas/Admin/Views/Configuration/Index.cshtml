@@ -1,0 +1,614 @@
+﻿@model AKDEMIC.DEGREE.Areas.Admin.Models.ConfigurationViewModels.ConfigurationViewModel
+@{
+    ViewData["Title"] = "Configuración del sistema";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+};
+}
+<div class="m-content">
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-2"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Advertencia</strong> Las variables de configuración mostradas son utilizadas en las distintas funcionalidades.
+            <br />Los cambios realizados se aplicar&aacute;n de manera instantanea en el sistema.
+        </div>
+        <div class="m-alert__close">
+        </div>
+    </div>
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información del sistema
+                    </h3>
+                </div>
+            </div>
+        </div>
+        @if (Model.StaticTypeSystemIntegrated)
+        {
+            <form id="configForm" class="m-form m-form--state" asp-action="UpdateConfigurations" asp-controller="Configuration" asp-area="Admin">
+                <div class="m-portlet__body">
+                    <div class="m-form__section m-form__section--first">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">1. Configuraci&oacute;n de trámites TUPA de grados y títulos:</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">1.1 TUPA para el grado de bachiller</h3>
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.TupaStaticTypeBachelor == ConstantHelpers.Configuration.BachelorTypeConfiguration.TUPA.AUTOMATIC)
+                                                {
+                                                    <input type="radio" asp-for="TupaStaticTypeBachelor" value="1" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="TupaStaticTypeBachelor" value="1" />
+                                                }
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>TUPA para bachiller automático</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="TupaBachelorAutomaticInput" value="@Model.TupaBachelorAutomatic" />
+                                                El costo por el grado de bachiller será fijo en base al siguiente trámite:
+                                                <select class="form-control" asp-for="TupaBachelorAutomatic"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.TupaStaticTypeBachelor == ConstantHelpers.Configuration.BachelorTypeConfiguration.TUPA.BY_REQUEST)
+                                                {
+                                                    <input type="radio" asp-for="TupaStaticTypeBachelor" value="2" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="TupaStaticTypeBachelor" value="2" />
+                                                }
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>TUPA para bachiller por solicitud</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="TupaBachelorRequestedInput" value="@Model.TupaBachelorRequested" />
+                                                El costo por el grado de bachiller será fijo en base al siguiente trámite:
+                                                <select class="form-control" asp-for="TupaBachelorRequested"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">1.2 TUPA para el grado de título profesional</h3>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span>
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>TUPA para el grado de título profesional por sustentanción de tesis </label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="TupaTitleDegreeSupportTesisInput" value="@Model.TupaTitleDegreeSupportTesis" />
+                                                El costo por título profesional será fijo en base al siguiente trámite:
+                                                <select class="form-control" asp-for="TupaTitleDegreeSupportTesis"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span>
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>TUPA para el grado de título profesional por experiencia profesional</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="TupaTitleDegreeProfessionalExperienceInput" value="@Model.TupaTitleDegreeProfessionalExperience" />
+                                                El costo por título profesional será fijo en base al siguiente trámite:
+                                                <select class="form-control" asp-for="TupaTitleDegreeProfessionalExperience"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span>
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>TUPA para el grado de título profesional por examen de suficiencia </label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="TupaTitleDegreeSufficiencyExamInput" value="@Model.TupaTitleDegreeSufficiencyExam" />
+                                                El costo por título profesional será fijo en base al siguiente trámite:
+                                                <select class="form-control" asp-for="TupaTitleDegreeSufficiencyExam"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="m-form__section m-form__section--first">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">2. Configuraci&oacute;n de procedimiento para la creación del registro de padr&oacute;n:</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="m-form__heading">
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.MethodTypeRegistryPatternCreation)
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="true" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="true" />
+                                                }
+                                                <span></span>
+                                            </span>
+                                        </span>
+
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Procedimiento por requisitos</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                La creación del padrón de registro se realizará previo al llenado de los requisitos
+                                            </span>
+                                        </span>
+
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.MethodTypeRegistryPatternCreation == false)
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="false" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="false" />
+                                                }
+                                                <span></span>
+                                            </span>
+
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Procedimiento por informes</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+
+                                                La creación del padrón de registro se realizará previo al llenado de los informes correspondientes
+
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                         <div class="m-form__section m-form__section--first">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">3. Configuración del Sistema:</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-12 m-form__group-sub">
+                                <label asp-for="DegreeLoginBackgroundImage"></label>
+                                <div class="custom-file">
+                                    <input asp-for="DegreeLoginBackgroundImage" class="custom-file-input" accept="image/*" lang="es" type="file" autocomplete="off">
+                                    <label class="custom-file-label" for="DocumentLogoPath">
+                                        Seleccione un archivo
+                                    </label>
+                                </div>
+                                @if (!string.IsNullOrEmpty(Model.DegreeLoginBackgroundImagePath))
+                                {
+                                    <span class="m-form__help">Descargue la imagen actual <a href="/archivos/@Model.DegreeLoginBackgroundImagePath" target="_blank">aqu&iacute;</a></span>
+                                }
+                            </div>
+                        </div>
+                </div>
+                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions--solid">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-6 m--align-right">
+                                <button type="submit" class="btn btn-primary m-btn m-btn--icon btn-submit">
+                                    <span>
+                                        <i class="la la-archive"></i>
+                                        <span>Guardar cambios</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+        else
+        {
+            <form id="configForm" class="m-form m-form--state" asp-action="UpdateConfigurations" asp-controller="Configuration" asp-area="Admin">
+                <div class="m-portlet__body">
+                    <div class="m-form__section m-form__section--first">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">1. Configuraci&oacute;n de conceptos de grados y títulos:</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">1.1 Concepto para el grado de bachiller</h3>
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.ConceptStaticTypeBachelor == ConstantHelpers.Configuration.BachelorTypeConfiguration.CONCEPT.AUTOMATIC)
+                                                {
+                                                    <input type="radio" asp-for="ConceptStaticTypeBachelor" value="1" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="ConceptStaticTypeBachelor" value="1" />
+                                                }
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Concepto para bachiller automático</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="ConceptBachelorAutomaticInput" value="@Model.ConceptBachelorAutomatic" />
+                                                El costo por el grado de bachiller será fijo en base al siguiente concepto:
+                                                <select class="form-control" asp-for="ConceptBachelorAutomatic"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.ConceptStaticTypeBachelor == ConstantHelpers.Configuration.BachelorTypeConfiguration.CONCEPT.BY_REQUEST)
+                                                {
+                                                    <input type="radio" asp-for="ConceptStaticTypeBachelor" value="2" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="ConceptStaticTypeBachelor" value="2" />
+                                                }
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Concepto para bachiller por solicitud</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="ConceptBachelorRequestedInput" value="@Model.ConceptBachelorRequested" />
+                                                El costo por el grado de bachiller será fijo en base al siguiente concepto:
+                                                <select class="form-control" asp-for="ConceptBachelorRequested"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">1.2 Concepto para el grado de título profesional</h3>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span>
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Concepto para el grado de título profesional por sustentanción de tesis</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="ConceptTitleDegreeSupportTesisInput" value="@Model.ConceptTitleDegreeSupportTesis" />
+                                                El costo por título profesional será fijo en base al siguiente concepto:
+                                                <select class="form-control" asp-for="ConceptTitleDegreeSupportTesis"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span>
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Concepto para el grado de título profesional por experiencia profesional</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="ConceptTitleDegreeProfessionalExperienceInput" value="@Model.ConceptTitleDegreeProfessionalExperience" />
+                                                El costo por título profesional será fijo en base al siguiente concepto:
+                                                <select class="form-control" asp-for="ConceptTitleDegreeProfessionalExperience"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span>
+                                                <span></span>
+                                            </span>
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Concepto para el grado de título profesional por examen de suficiencia </label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                <input type="hidden" id="ConceptTitleDegreeSufficiencyExamInput" value="@Model.ConceptTitleDegreeSufficiencyExam" />
+                                                El costo por título profesional será fijo en base al siguiente concepto:
+                                                <select class="form-control" asp-for="ConceptTitleDegreeSufficiencyExam"></select>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="m-form__section m-form__section--first">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">2. Configuraci&oacute;n de procedimiento para la creación del registro de padr&oacute;n:</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="m-form__heading">
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.MethodTypeRegistryPatternCreation)
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="true" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="true" />
+                                                }
+                                                <span></span>
+                                            </span>
+                                        </span>
+
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Procedimiento por requisitos</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+                                                La creación del padrón de registro se realizará previo al llenado de los requisitos
+                                            </span>
+                                        </span>
+
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="m-option">
+                                        <span class="m-option__control">
+                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                @if (Model.MethodTypeRegistryPatternCreation == false)
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="false" checked="" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" asp-for="MethodTypeRegistryPatternCreation" value="false" />
+                                                }
+                                                <span></span>
+                                            </span>
+
+                                        </span>
+                                        <span class="m-option__label">
+                                            <span class="m-option__head">
+                                                <span class="m-option__title">
+                                                    <label>Procedimiento por informes</label>
+                                                </span>
+                                                <span class="m-option__focus">
+
+                                                </span>
+                                            </span>
+                                            <span class="m-option__body">
+
+                                                La creación del padrón de registro se realizará previo al llenado de los informes correspondientes
+
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                   
+                    </div>
+
+                         <div class="m-form__section m-form__section--first">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">3. Configuración del Sistema:</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-12 m-form__group-sub">
+                                <label asp-for="DegreeLoginBackgroundImage"></label>
+                                <div class="custom-file">
+                                    <input asp-for="DegreeLoginBackgroundImage" class="custom-file-input" accept="image/*" lang="es" type="file" autocomplete="off">
+                                    <label class="custom-file-label" for="DocumentLogoPath">
+                                        Seleccione un archivo
+                                    </label>
+                                </div>
+                                @if (!string.IsNullOrEmpty(Model.DegreeLoginBackgroundImagePath))
+                                {
+                                    <span class="m-form__help">Descargue la imagen actual <a href="/archivos/@Model.DegreeLoginBackgroundImagePath" target="_blank">aqu&iacute;</a></span>
+                                }
+                            </div>
+                        </div>
+                </div>
+                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions--solid">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-6 m--align-right">
+                                <button type="submit" class="btn btn-primary m-btn m-btn--icon btn-submit">
+                                    <span>
+                                        <i class="la la-archive"></i>
+                                        <span>Guardar cambios</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        }
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+<script>
+    var IsIntegrated = @(Model.StaticTypeSystemIntegrated.ToString().ToLower());
+</script>
+<script src="~/js/areas/admin/configuration/index.js" asp-append-version="true"></script>
+}

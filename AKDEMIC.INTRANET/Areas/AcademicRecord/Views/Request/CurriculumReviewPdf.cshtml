@@ -1,0 +1,505 @@
+﻿@using AKDEMIC.CORE.Extensions;
+@using Microsoft.AspNetCore.Hosting;
+
+@inject IWebHostEnvironment _webHostEnvironment
+
+@model AKDEMIC.INTRANET.Areas.AcademicRecord.Models.Request.CurriculumReviewPDFViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>REVISIÓN CURRICULAR</title>
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .footer-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-univ-logo {
+            float: left;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+
+        .header {
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+            .header .university-title {
+                font-size: 20px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-title2 {
+                font-size: 16px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+                font-weight: bold !important;
+            }
+
+            .header .university-title3 {
+                font-size: 15px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .resolution-title {
+                font-size: 15px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .office-title {
+                font-size: 11px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                font-size: 15px !important;
+                margin: 0px !important;
+                font-weight: bold !important;
+                padding: 0px !important;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+        .header-extra-info {
+            margin-top: 20px !important;
+            text-align: left !important;
+        }
+
+            .header-extra-info p {
+                font-size: 16px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+        .header-extra-second {
+            margin-top: 70px !important;
+            text-align: right !important;
+        }
+
+            .header-extra-second p {
+                font-size: 16px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+
+        .table-general-detail {
+            width: 100%;
+            text-align: left;
+            font-weight: normal;
+            font-size: 15px !important;
+        }
+
+            .table-general-detail td {
+                padding: 0px !important;
+                padding-top: 6px !important;
+                padding-bottom: 0px !important;
+                margin: 0px !important;
+            }
+
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            padding-bottom: 5px !important;
+            font-size: 14px !important;
+            font-weight: bold;
+            background-color: rgba(232, 235, 247, 0.8);
+        }
+
+        .bordered-detail {
+            font-size: 14px !important;
+            height: 20px !important;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 11px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+
+        .blue {
+            color: #000080 !important;
+        }
+
+        .red {
+            color: red !important;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+
+        <tbody>
+
+            <tr>
+                <th colspan="6">
+                    <table style="width:100% !important;">
+                        <tr>
+                            <th>
+                                <div class="header">
+                                    <p class="university-title">@AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                                    <p class="university-title2">@Model.Header</p>
+                                    <p class="university-title2">@Model.SubHeader</p>
+                                    <p class="university-title2">REVISIÓN CURRICULAR</p>
+                                </div>
+                            </th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6">
+                    <div style="height:10px"></div>
+                    <div class="header">
+                        <p class="header-title">
+                            PLAN DE ESTUDIOS @Model.Curriculum
+                            <br />
+                            @Model.Career
+                            <br />
+                            @Model.Faculty
+                        </p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6">
+                    <table class="table-general-detail">
+                        <tbody>
+                            <tr>
+                                <td width="15%">Apellidos y Nombres:</td>
+                                <td>@Model.FullName</td>
+                            </tr>
+                            <tr>
+                                <td>Código/DNI:</td>
+                                <td>@Model.UserName / @Model.Document</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+            </tr>
+
+            <tr class="bordered-detail">
+                <td COLScolspan="6" style="font-weight:bold; text-decoration:underline;">1.Obligatorias</td>
+            </tr>
+
+            <tr class="bordered-detail">
+                <td COLScolspan="6">&emsp;</td>
+            </tr>
+
+            <tr class="bordered-header">
+                <th class="bordered-header">Código</th>
+                <th class="bordered-header">Asignaturas</th>
+                <th class="bordered-header">CicloCur</th>
+                <th class="bordered-header">Crédito</th>
+                <th class="bordered-header">Semestre</th>
+                <th class="bordered-header">Nota</th>
+            </tr>
+            @foreach (var course in Model.Courses.Where(y => !y.IsElective))
+            {
+
+                <tr class="bordered-detail">
+                    <td class="bordered-detail">@course.Code </td>
+                    <td class="bordered-detail">@course.Name @(course.Validated ? "(Convalidado)" : "")</td>
+                    <td class="bordered-detail" style="text-align:center">@course.AcademicYear</td>
+                    <td class="bordered-detail" style="text-align:center">@course.Credits</td>
+                    <td class="bordered-detail" style="text-align:center">@course.Term</td>
+                    <td class="bordered-detail" style="text-align:center">@course.Grade</td>
+                </tr>
+            }
+
+            <tr class="bordered-detail">
+                <td COLScolspan="6" style="font-weight:bold; text-decoration:underline;">2.Electivas</td>
+            </tr>
+
+            <tr class="bordered-detail">
+                <td COLScolspan="6">&emsp;</td>
+            </tr>
+
+            <tr class="bordered-header">
+                <th class="bordered-header">Código</th>
+                <th class="bordered-header">Asignaturas</th>
+                <th class="bordered-header">CicloCur</th>
+                <th class="bordered-header">Crédito</th>
+                <th class="bordered-header">Semestre</th>
+                <th class="bordered-header">Nota</th>
+            </tr>
+
+            @foreach (var course in Model.Courses.Where(y => y.IsElective))
+            {
+
+                <tr class="bordered-detail">
+                    <td class="bordered-detail">@course.Code</td>
+                    <td class="bordered-detail">@course.Name @(course.Validated? "(Convalidado)" : "")</td>
+                    <td class="bordered-detail" style="text-align:center">@course.AcademicYear</td>
+                    <td class="bordered-detail" style="text-align:center">@course.Credits</td>
+                    <td class="bordered-detail" style="text-align:center">@course.Term</td>
+                    <td class="bordered-detail" style="text-align:center">@course.Grade</td>
+                </tr>
+            }
+
+            <tr class="bordered-detail">
+                <td COLScolspan="6">&emsp;</td>
+            </tr>
+
+            <tr>
+                <td colspan="6">
+                    <table style="width:100% !important; font-size:14px !important; text-align:left !important; font-weight:normal;">
+                        <tr>
+                            <td colspan="3">
+                                CRÉDITOS REQUERIDOS
+                            </td>
+                            <td>
+                                &emsp;
+                            </td>
+                            <td colspan="3">
+                                CRÉDITOS APROBADOS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:30px !important;">
+                                OBLIGATORIOS
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.RequiredCredits
+                            </td>
+                            <td width="50%">
+                                &emsp;
+                            </td>
+                            <td style="padding-left:30px !important;">
+                                OBLIGATORIOS
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.Courses.Where(y=>y.Approved && !y.IsElective).Sum(y=>y.Credits)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:30px !important;">
+                                ELECTIVOS
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.RequiredCreditsElective
+                            </td>
+                            <td width="50%">
+                                &emsp;
+                            </td>
+                            <td style="padding-left:30px !important;">
+                                ELECTIVOS
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.Courses.Where(y=>y.Approved && y.IsElective).Sum(y=>y.Credits)
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &emsp;
+                </td>
+            </tr>
+            <tr>
+                <th colspan="6">
+                    <table style="width:40% !important; font-size:14px !important; text-align:left !important; font-weight:normal;">
+                        <tr>
+                            <td colspan="3">RESUMEN CARRERA</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:30px !important;">
+                                EXIGENCIA CURRICULAR
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @(Model.RequiredCredits + Model.RequiredCreditsElective)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:30px !important;">
+                                TOTAL CRÉDITOS APROBADOS
+                            </td>
+                            <td>
+                                :
+                            </td>
+                            <td>
+                                @Model.Courses.Where(y=>y.Approved).Sum(y=>y.Credits)
+                            </td>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align:right; font-weight:normal;">
+                    @ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value], @DateTime.UtcNow.ToLocalDateFormat()
+                </th>
+            </tr>
+            <tr>
+                <td height="100px">
+                    &emsp;
+                </td>
+            </tr>
+            <tr>
+                <th colspan="6">
+                    <table width="100%" style="font-weight:normal !important;">
+                        <tr>
+                            <th width="20%">
+                                &emsp;
+                            </th>
+
+                            <th style="border-top:1px solid black;">
+                                Validación Curricular y Gestión de Carnet Universitario
+                            </th>
+
+                            <th width="10%">
+                                &emsp;
+                            </th>
+
+                            <th style="border-top:1px solid black;">
+                                Jefe de la Oficina General de Registros y Asuntos Académicos
+                            </th>
+
+                            <th width="20%">
+                                &emsp;
+                            </th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,224 @@
+﻿@inject AKDEMIC.SERVICE.Services.Generals.Interfaces.IConfigurationService _configurationService
+@{
+    var MethodTypeRegistryPatternCreation = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.DegreeManagement.METHOD_TYPE_REGISTRY_PATTERN_CREATION));
+}
+<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.DEGREE_ADMIN))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Home" asp-action="Index">
+            <a asp-controller="Home" asp-action="Index" asp-route-area="" class="m-menu__link ">
+                <i class="m-menu__link-icon la la-home"></i>
+                <span class="m-menu__link-text">
+                    Inicio
+                </span>
+            </a>
+        </li>
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ForeignUniversityOrigin" asp-action="Index">
+            <a asp-controller="ForeignUniversityOrigin" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-2"></i>
+                <span class="m-menu__link-text">
+                    Gestión de Origen de Universidades Extranjeras
+                </span>
+            </a>
+        </li>
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ProjectDirector" asp-action="Index">
+            <a asp-controller="ProjectDirector" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-user"></i>
+                <span class="m-menu__link-text">
+                    Directores de Proyecto
+                </span>
+            </a>
+        </li>
+
+        @if (MethodTypeRegistryPatternCreation)
+        {
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DegreeRequirement" asp-action="Index">
+                <a asp-controller="DegreeRequirement" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-folder-2"></i>
+                    <span class="m-menu__link-text">
+                        Gestión de Requerimientos
+                    </span>
+                </a>
+            </li>
+
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ValidationDegreeRequirement" asp-action="Index">
+                <a asp-controller="ValidationDegreeRequirement" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-folder-2"></i>
+                    <span class="m-menu__link-text">
+                        Solicitud de grado por requisitos
+                    </span>
+                </a>
+            </li>
+        }
+
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="RegistryPattern" asp-action="Index">
+            <a asp-controller="RegistryPattern" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-2"></i>
+                <span class="m-menu__link-text">
+                    Gestión del padr&oacute;n de registro
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GenerateRelationDegree" asp-action="Index">
+            <a asp-controller="GenerateRelationDegree" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-3"></i>
+                <span class="m-menu__link-text">
+                    Generación de relación de grados, títulos y diplomas
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="RegistryPatternReview" asp-action="Index">
+            <a asp-controller="RegistryPatternReview" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-3"></i>
+                <span class="m-menu__link-text">
+                    Gestión de aprobación para la emisión de grados y títulos
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GenerationFormatRegisterDegree" asp-action="Index">
+            <a asp-controller="GenerationFormatRegisterDegree" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-3"></i>
+                <span class="m-menu__link-text">
+                    Generación de formatos de registro
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Diploma" asp-action="Index">
+            <a asp-controller="Diploma" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-2"></i>
+                <span class="m-menu__link-text">
+                    Gestión de diplomas
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DiplomaDelivery" asp-action="Index">
+            <a asp-controller="DiplomaDelivery" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-2"></i>
+                <span class="m-menu__link-text">
+                    Entrega de diplomas
+                </span>
+            </a>
+        </li>
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="HistoricalRegistryPattern">
+            <a asp-controller="HistoricalRegistryPattern" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-layers"></i>
+                <span class="m-menu__link-text">
+                    Historial de padrones
+                </span>
+            </a>
+        </li>
+
+
+        @if (ConstantHelpers.GENERAL.Authentication.SSO_ENABLED)
+        {
+            <li class="m-menu__item " aria-haspopup="true">
+                <a href="@GeneralHelpers.GetApplicationRoute(ConstantHelpers.Solution.Intranet, false)admin/estudiantes-egresados" target="_blank" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-background"></i>
+                    <span class="m-menu__link-text">
+                        Reporte de estudiantes a egresar
+                    </span>
+                </a>
+            </li>
+        }
+
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeReport" asp-action="Index">
+            <a asp-controller="GradeReport" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-3"></i>
+                <span class="m-menu__link-text">
+                    Informes de grados y títulos
+                </span>
+            </a>
+        </li>
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Home" asp-action="Index">
+            <a asp-controller="Home" asp-action="Index" asp-route-area="" class="m-menu__link ">
+                <i class="m-menu__link-icon la la-home"></i>
+                <span class="m-menu__link-text">
+                    Inicio
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR) || User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.DEGREE_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-3"></i>
+                <span class="m-menu__link-text">
+                    Reportes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Reportes
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelor" asp-action="Index">
+                        <a asp-controller="ReportBachelor" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Reporte de cantidad de estudiantes bachilleres y titulados
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index">
+                        <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Reporte de estudiantes egresados que no han solicitado el Bachiller
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportTitleByModality" asp-action="Index">
+                        <a asp-controller="ReportTitleByModality" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Reporte de cantidad de estudiantes titulado según modalidad
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item" aria-haspopup="true" is-active-route asp-controller="AccessSystemReport" asp-action="Index">
+                        <a asp-area="Admin" asp-controller="AccessSystemReport" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Reporte de accesos al sistema
+                            </span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.DEGREE_ADMIN))
+                    {
+                        <li class="m-menu__item" aria-haspopup="true" is-active-route asp-controller="GraduatedStudent" asp-area="Report">
+                            <a asp-area="Report" asp-controller="GraduatedStudent" asp-action="Index" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-share"></i>
+                                <span class="m-menu__link-text">
+                                    Reporte de estudiantes egresados
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+
+    }
+</ul>

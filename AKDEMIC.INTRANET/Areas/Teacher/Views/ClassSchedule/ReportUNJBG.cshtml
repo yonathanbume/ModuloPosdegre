@@ -1,0 +1,388 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.ClassScheduleViewModels.AcademicChargeViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 11px;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teacherInfo {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .firstTeacherInfo {
+            width: 45%;
+            display: inline-block;
+        }
+
+        .truelabel {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .truelabel2 {
+            width: 110px;
+            display: inline-block;
+        }
+
+        .truelabel3 {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .secondTeacherInfo {
+            width: 54%;
+            display: inline-block;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+        }
+
+        .border {
+            border: 1px solid black;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+
+        .table_detail {
+            font-size: 8px !important;
+        }
+
+            .table_detail td {
+                padding: 4px !important;
+            }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr style="height:100px">
+                <th colspan="1" style="text-align: left;padding: 0px 20px;">
+                    <p style="margin:0px;text-transform: uppercase" class="negrita">@GeneralHelpers.GetInstitutionName() - @GeneralHelpers.GetInstitutionLocation()</p>
+                    <P style="margin:0px;font-weight: 600;letter-spacing: -0.5px;">DIRECCIÓN ACADÉMICA DE ACTIVIDADES Y DE SERVICIOS ACADÉMICOS</P>
+                </th>
+                <th colspan="14"></th>
+            </tr>
+            <tr>
+                <th colspan="14">
+                    <div class="unk-header" style="font-size:14px;">
+                        <p style="margin:0px;" class="negrita">PLAN INDIVIDUAL DE TRABAJO DOCENTE</p>
+                        <p style="margin:0px;" class="negrita">PERIODO ACADÉMICO: @Model.term </p>
+                        @*<p style="margin:0px;text-align:left" class="negrita">Código:&emsp;</p>
+                        <p style="margin:0px;text-align:left" class="negrita">Apellidos y Nombres:&emsp;@Model.teacherName</p>
+                        <p style="margin:0px;text-align:left" class="negrita">Escuela :&emsp;@(string.IsNullOrEmpty(Model.careerTeacher) ? "-" : Model.careerTeacher)</p>
+                        <p style="margin:0px;text-align:left" class="negrita">Condición:&emsp;@Model.condition</p>*@
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="negrita left">Código: </th>
+                            <td class="left">@Model.teachercode</td>
+                            <td class="negrita left" colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <th class="negrita left">Apellidos y Nombres:</th>
+                            <td class="left">@Model.teacherName</td>
+                            <th class="negrita left"> Nivel: </th>
+                            <td class="left">@Model.dedication</td>
+                            <th class="negrita left"> Facultad: </th>
+                            <td class="left">@Model.facultyTeacher</td>
+                        </tr>
+                        <tr>
+                            <th class="negrita left">Título:</th>
+                            <td class="left">@Model.TeacherTitle</td>
+                            <th class="negrita left"> Horas: </th>
+                            <td class="left">@Model.totalHoras.ToString("0.00")</td>
+                            <th class="negrita left"> Escuela: </th>
+                            <td class="left">@Model.careerTeacher</td>
+                        </tr>
+                        <tr>
+                            <th class="negrita left">@(string.IsNullOrEmpty(Model.HighestAcademicDegree) ? "" : Model.HighestAcademicDegree)</th>
+                            <td class="left">@Model.HighestAcademicDegreeDescription</td>
+                            <th class="negrita left"> Condición: </th>
+                            <td class="left">@Model.condition</td>
+                            <th class="negrita left"> Dpto./Área: </th>
+                            <td class="left">@Model.academicDepartment</td>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <br />
+    <table class="table_detail">
+        <thead>
+            <tr>
+                <td colspan="18" class="negrita" style="text-align:left">I. CARGA LECTIVA</td>
+            </tr>
+            <tr>
+                <th rowspan="2" class="border negrita">N°</th>
+                <th rowspan="2" class="border negrita">CÓDIGO</th>
+                <th rowspan="2" class="border negrita">ASIGNATURA</th>
+                <th rowspan="2" class="border negrita">REG.</th>
+                <th rowspan="2" class="border negrita">E.P./ <br />FAC.</th>
+                <th colspan="4" class="border negrita">HORAS</th>
+                <th rowspan="2" class="border negrita"> AULA<br />N°</th>
+                <th rowspan="2" class="border negrita"> GRUPO<br />N°</th>
+                <th rowspan="2" class="border negrita"> N°<br />ALUM</th>
+                <th colspan="6" class="border negrita">HORARIO</th>
+            </tr>
+            <tr>
+                <th class="border negrita">T</th>
+                <th class="border negrita">P</th>
+                <th class="border negrita">S</th>
+                <th class="border negrita">Total</th>
+                <th class="border negrita">LUNES</th>
+                <th class="border negrita">MARTES</th>
+                <th class="border negrita">MIÉRCOLES</th>
+                <th class="border negrita">JUEVES</th>
+                <th class="border negrita">VIERNES</th>
+                <th class="border negrita">SÁBADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var index = 1;
+            }
+            @for (int i = 0; i < Model.Sections.Count(); i++)
+            {
+                <tr>
+                    <td colspan="2" class="center negrita">@Model.Sections[i].CourseCode</td>
+                    <td class="left">@Model.Sections[i].CourseName</td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center">@Model.Sections[i].hourTeoric</td>
+                    <td class="center">@Model.Sections[i].hourPractice</td>
+                    <td class="center">0</td>
+                    <td class="center negrita">@Model.Sections[i].totalHours</td>
+                    <td class="center">@Model.Sections[i].classroom</td>
+                    <td class="center">@Model.Sections[i].section</td>
+                    <td class="center negrita">@Model.Sections[i].students</td>
+                    <td class="center" colspan="6"></td>
+                </tr>
+                @foreach (var item in Model.Sections[i].ClassSchedules)
+                {
+                    <tr>
+                        <td class="right">@index</td>
+                        <td colspan="4"></td>
+                        <td colspan="3" class="center">@(ConstantHelpers.SESSION_TYPE.VALUES.ContainsKey(item.SessionType) ? ConstantHelpers.SESSION_TYPE.VALUES[item.SessionType] : "-")</td>
+                        <td class="center">@item.TotalHours.ToString("0.00")</td>
+                        <td class=""></td>
+                        <td class="right">@(string.IsNullOrEmpty(item.SectionGroup) ? "-" : item.SectionGroup)</td>
+                        <td class="right">@(string.IsNullOrEmpty(item.SectionGroup) ? Model.Sections[i].students : item.SectionGroupStudentsCount.ToString())</td>
+
+                        <td class="center">
+                            @if (item.WeekDay == ConstantHelpers.WEEKDAY.MONDAY)
+                            {
+                                @Html.Raw(item.TimeText)
+                            }
+                        </td>
+                        <td class="center">
+                            @if (item.WeekDay == ConstantHelpers.WEEKDAY.TUESDAY)
+                            {
+                                @Html.Raw(item.TimeText)
+                            }
+                        </td>
+                        <td class="center">
+                            @if (item.WeekDay == ConstantHelpers.WEEKDAY.WEDNESDAY)
+                            {
+                                @Html.Raw(item.TimeText)
+                            }
+                        </td>
+                        <td class="center">
+                            @if (item.WeekDay == ConstantHelpers.WEEKDAY.THURSDAY)
+                            {
+                                @Html.Raw(item.TimeText)
+                            }
+                        </td>
+                        <td class="center">
+                            @if (item.WeekDay == ConstantHelpers.WEEKDAY.FRIDAY)
+                            {
+                                @Html.Raw(item.TimeText)
+                            }
+                        </td>
+                        <td class="center">
+                            @if (item.WeekDay == ConstantHelpers.WEEKDAY.SATURDAY)
+                            {
+                                @Html.Raw(item.TimeText)
+                            }
+                        </td>
+                        @{
+                            index++;
+                        }
+                    </tr>
+                }
+            }
+            @if (!Model.Sections.Any())
+            {
+                <tr>
+                    <td colspan="18" class="center">No se encontraron registros</td>
+                </tr>
+
+            }
+            <tr>
+                <td colspan="5" class="center negrita border">TOTAL CARGA LECTIVA (I)</td>
+                <td colspan="4" class="center border negrita right">@Model.Sections.Sum(x => Convert.ToDecimal(x.totalHours)).ToString("0.00")</td>
+                <td colspan="9" class="center"></td>
+            </tr>
+            <tr>
+                <td colspan="18">&emsp;</td>
+            </tr>
+            <tr>
+                <td colspan="18" class="negrita" style="text-align:left">II. COMPLEMENTO CARGA LECTIVA</td>
+            </tr>
+
+            @{
+                var comp = Model.NonActivities.Where(x => x.Category == AKDEMIC.INTRANET.Helpers.ConstantHelpers.TEACHING_LOAD.CATEGORY.COMPLEMENTARY).ToList();
+            }
+            @for (var i = 0; i < comp.Count(); i++)
+            {
+                <tr>
+                    <td style="border-left:1px solid; @(i == 0 ? "border-top:1px solid;" : "")"></td>
+                    <td class="left" style="border-bottom:0.5px solid" colspan="4">@comp[i].Name</td>
+                    <td class="center" style="border-bottom:0.5px solid" colspan="4">@Convert.ToDouble(comp[i].Hours).ToString("0.00")</td>
+                    <td class="center" colspan="3"></td>
+                    <td class="center">@Html.Raw(comp[i].MondayRange)</td>
+                    <td class="center">@Html.Raw(comp[i].TuesdayRange)</td>
+                    <td class="center">@Html.Raw(comp[i].WednesdayRange)</td>
+                    <td class="center">@Html.Raw(comp[i].ThursdayRange)</td>
+                    <td class="center">@Html.Raw(comp[i].FridayRange)</td>
+                    <td style="border-right:1px solid;" class="center">@Html.Raw(comp[i].SaturdayRange)</td>
+                </tr>
+            }
+
+            <tr>
+                <td colspan="5" style="border-left:1px solid; border-bottom:1px solid; @(comp.Count()==0?"border-top:1px solid;":"")" class="negrita">Total Complemento Carga Lectiva (II)</td>
+                <td colspan="4" style="border-bottom:1px solid;" class="center negrita">@comp.Sum(x => Convert.ToDouble(x.Hours)).ToString("0.00")</td>
+                <td colspan="9" style="border-right:1px solid; border-bottom:1px solid;"></td>
+            </tr>
+            <tr>
+                <td class="negrita center border" colspan="9">T = Teoría &emsp; &emsp; P = Práctica &emsp; &emsp; S = Seminario</td>
+            </tr>
+            <tr>
+                <td class="negrita left border" colspan="5">CARGA LECTIVA MÁS COMPLEMENTO CARGA LECTIVA (I+II)</td>
+                <td class="negrita center border" colspan="4">@((comp.Sum(x => Convert.ToDouble(x.Hours)) + Model.Sections.Sum(x => Convert.ToDouble(x.totalHours))).ToString("0.00"))</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="table_detail">
+        <thead>
+            <tr>
+                <th colspan="8" class="negrita" style="text-align:left">III. CARGA NO LECTIVA</th>
+            </tr>
+            <tr>
+                <th rowspan="2" class="negrita border">ACTIVIDAD</th>
+                <th rowspan="2" class="negrita border">RESOLUCIÓN</th>
+                <th rowspan="2" class="negrita border">UBICACIÓN</th>
+                <th rowspan="2" class="negrita border">HORAS</th>
+                <th rowspan="2" class="negrita border">INICIO</th>
+                <th rowspan="2" class="negrita border">TÉRMINO</th>
+                <th colspan="6" class="negrita border">HORARIO</th>
+            </tr>
+            <tr>
+                <th class="negrita border">LUNES</th>
+                <th class="negrita border">MARTES</th>
+                <th class="negrita border">MIÉRCOLES</th>
+                <th class="negrita border">JUEVES</th>
+                <th class="negrita border">VIERNES</th>
+                <th class="negrita border">SÁBADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var nonlec = Model.NonActivities.Where(x => x.Category == AKDEMIC.INTRANET.Helpers.ConstantHelpers.TEACHING_LOAD.CATEGORY.ACTIVITIES).ToList();
+                var groupNonActivites = nonlec.GroupBy(x => x.TeachingLoadTypeId).ToList();
+            }
+
+            @foreach (var key in groupNonActivites)
+            {
+                <tr>
+                    <td class="border negrita" colspan="12">@key.Select(x=>x.Unit).FirstOrDefault()</td>
+                </tr>
+                @foreach (var item in key)
+                {
+                    <tr>
+                        <td class="border left" style="border-right:0px !important;">@item.Name</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@item.Resolution</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@item.Location</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@Convert.ToDouble(item.Hours).ToString("0.00")</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@item.StartDate</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@item.EndDate</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@Html.Raw(item.MondayRange)</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@Html.Raw(item.TuesdayRange)</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@Html.Raw(item.WednesdayRange)</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@Html.Raw(item.ThursdayRange)</td>
+                        <td class="border center" style="border-left:0px !important; border-right:0px !important;">@Html.Raw(item.FridayRange)</td>
+                        <td class="border center" style="border-left:0px !important;">@Html.Raw(item.SaturdayRange)</td>
+                    </tr>
+                }
+            }
+
+            @if (!nonlec.Any())
+            {
+                <tr>
+                    <td colspan="12" class="center">No se encontraron registros</td>
+                </tr>
+            }
+            <tr>
+                <td class="border negrita" colspan="3">TOTAL CARGA NO LECTIVA (III)</td>
+                <td class="border negrita center">@nonlec.Sum(x => Convert.ToDouble(x.Hours)).ToString("0.00")</td>
+                <td class=" negrita" colspan="7"></td>
+            </tr>
+            <tr>
+                <td class="border negrita" colspan="3">TOTAL HORAS DOCENTE I+II+III (SEMANAL/MENSUAL)</td>
+                <td class="border negrita center">@(Model.totalHoras.ToString("0.00"))</td>
+                <td class=" negrita" colspan="7"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+

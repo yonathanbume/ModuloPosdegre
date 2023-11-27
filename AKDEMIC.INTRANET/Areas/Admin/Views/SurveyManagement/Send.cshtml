@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewData["Title"] = "Enviar Encuesta";
+    var surveyId = ViewBag.SurveyId;
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Gestión de encuestas", Controller = "SurveyManagement", Action = "Index", Area = "Admin" },
+new BreadcrumbViewData { Name = "Editar", Controller="SurveyManagement", Url="/admin/gestion-encuestas/editar/"+surveyId },
+new BreadcrumbViewData { Name = "Enviar"}
+};
+}
+
+<input id="SurveyId" value="@surveyId" hidden/>
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Enviar Encuesta
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn btn-primary btn-sm m-btn m-btn--icon btn-custom-send" title="Enviar solo seleccionados">
+                            <span>
+                                <i class="la la-edit"></i>
+                                <span>Enviar Seleccionados</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        <button class="btn btn-primary btn-sm m-btn m-btn--icon btn-send" title="Enviar encuesta por filtros">
+                            <span>
+                                <i class="la la-edit"></i>
+                                <span>Enviar Por Filtros</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4" id="academicDepartmentsContainer" style="display:none">
+                                <label>Departamentos Académicos</label>
+                                <select id="academicDepartments" class="form-control m-select2 select2-academicDepartments">
+                                    <option value="0" selected>Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4" id="facultiesContainer" style="display:none">
+                                <label>Facultades</label>
+                                <select id="faculties" class="form-control m-select2 select2-faculties">
+                                    <option value="0" selected>Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4" id="careersContainer" style="display:none">
+                                <label>Escuelas</label>
+                                <select id="careers" class="form-control m-select2 select2-careers">
+                                    <option value="0" selected>Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4" id="specialtiesContainer" style="display:none">
+                                <label>Especialidades</label>
+                                <select id="specialties" class="form-control m-select2 select2-specialties">
+                                    <option value="0" selected>Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Rol</label>
+                                <select id="roles" class="form-control m-select2 select2-roles">
+                                    <option value="0" selected>Administrativos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4" id="onlyEnrolledContainer" style="display:none">
+                                <div class="m-input-icon m-input-icon--right">
+                                    <label style="display:block">Solo Matriculados</label>
+                                    <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                        <input type="checkbox" id="onlyEnrolled" value="true" autocomplete="off">
+                                        Sí
+                                        <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4" id="academicYearsContainer" style="display:none">
+                                <label>Ciclo</label>
+                                <select id="academicYears" class="form-control m-bootstrap-select m_selectpicker" multiple>
+                                    @for (int i = 1; i < 15; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>                           
+                            <div class="form-group m-form__group col-xl-4">
+                                <label style="display:block">&emsp;</label>
+                                <button id="btn-apply" class="btn btn-primary ladda-button" data-style="slide-down" autocomplete="off">
+                                    <span class="ladda-label">Aplicar</span>
+                                    <span class="ladda-spinner"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                N&uacute;mero de Usuarios Seleccionados: 
+                <div id="tableinfo" style="display:inline-block"></div>
+            </div>
+            <table class="table table-striped table-bordered" id="users_table"></table>
+        </div>
+    </div>
+</div>
+@section Scripts{ 
+    <script src="~/js/areas/admin/surveymanagement/send.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,60 @@
+﻿@model IList<AKDEMIC.INTRANET.ViewModels.AcademicSummaryViewModels.StudentTermViewModel>
+@{
+    int counter = 0;
+}
+
+<div class="m-portlet m-portlet--responsive-mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Periodos Matriculados
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <button class="m-portlet__nav-link btn m-btn m-btn--pill m-btn--air btn-danger btn-export">
+                        <i class="la la-file-pdf-o"></i>
+                        Exportar a PDF
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+
+        @if (Model.Any())
+        {
+
+            foreach (var item in Model)
+            {
+                <div class="m-accordion m-accordion--default m-accordion--solid" id="@("m-accordion_" + counter)" role="tablist">
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head" role="tab" data-toggle="collapse" href="@("#m-accordion_" + counter + "_body")">
+                            <span class="m-accordion__item-icon">
+                                <i class="flaticon-book"></i>
+                            </span>
+                            <span class="m-accordion__item-title">
+                                @string.Format("{0} - {1}", item.TermName, item.CareerName)
+                            </span>
+                            <span class="m-accordion__item-mode"></span>
+                        </div>
+                        <div id="@("m-accordion_" + counter + "_body")" class="m-accordion__item-body collapse show" role="tabpanel" data-parent="@("#m-accordion_" + counter)">
+                            <div class="m-accordion__item-content">
+                                @await Component.InvokeAsync("AcademicSummaryDetail", item)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                ++counter;
+            }
+        }
+        else
+        {
+            <p class="text-center">El estudiante no cuenta con periodos matriculados.</p>
+        }
+    </div>
+</div>

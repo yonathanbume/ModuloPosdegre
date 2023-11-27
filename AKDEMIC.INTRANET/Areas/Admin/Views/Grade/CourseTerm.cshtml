@@ -1,0 +1,108 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.GradeViewModels
+@model CourseTermViewModelV2
+
+@{
+    ViewData["Title"] = "Detalle del Curso";
+
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Listado de Cursos" ,Area="Admin",Controller="Grade", Action="DeleteGrades" },
+    new BreadcrumbViewData { Name = "Detalle del Curso" }
+    };
+}
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/areas/teacher/classschedule/index.css" type="text/css" rel="stylesheet" asp-append-version="true" />
+
+}
+@if (Model is null)
+{
+    <div class="m-content">
+        <div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="m-alert__icon">
+                <i class="la la-warning"></i>
+            </div>
+            <div class="m-alert__text">
+                <strong>Información!</strong> El curso no tiene secciones aperturadas.
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="m-content">
+        <input asp-for="CourseTermId" type="hidden" />
+
+        <div class="m-portlet m-portlet--responsive-mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Detalles del Curso
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label><b>Curso: </b></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <label>@Model.Course</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label><b>Periodo: </b></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>@Model.Term</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label><b>Escuela Profesional: </b></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <label>@Model.Career</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label><b>Plan de Estudio: </b></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>@Model.Curriculum</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label><b>Secciones Habilitadas: </b></label>
+                    </div>
+                    <div class="col-sm-5">
+                        <select class="m-select2" id="section_select"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="m-portlet m-portlet--responsive-mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Evaluaciones
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div id="container_evaluations"></div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        <script src="~/js/areas/admin/grade/courseterm.js" asp-append-version="true"></script>
+    }
+}
+
+

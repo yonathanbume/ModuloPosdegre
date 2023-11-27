@@ -1,0 +1,280 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@using AKDEMIC.CORE.Extensions;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+    for (int i = 0; i < 20; i++)
+    {
+        Model.Course.Section.Students.Add(Model.Course.Section.Students[0]);
+    }
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>ACTA OFICIAL DE NOTAS</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-univ-logo {
+            float: left;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+
+   .header {
+            font-weight: 600;
+        }
+
+            .header .university-title {
+                font-size: 11px !important;
+            }
+
+            .header .resolution-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .office-title {
+                font-size: 11px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                padding-left:410px !important;
+                font-size: 35px !important;
+            }
+
+
+
+  .table-general-detail {
+            width: 100%;
+            padding-top:5px !important;
+            text-align: left;
+            font-weight: normal;
+            font-size: 16px !important;
+        }
+
+            .table-general-detail td {
+                padding: 2px !important;
+                padding-top: 2px !important;
+                padding-bottom: 2px !important;
+                margin: 0px !important;
+            }
+
+        .report-name {
+            font-size: 19px !important;
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            font-size: 14px !important;
+            font-weight: normal;
+            border: 1px solid;
+            background-color: lightgray;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 20px !important;
+            border: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 14px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            margin-bottom: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+
+        /*        table, th, td {
+            border: 1px solid red;
+        }*/
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="7" height="90px">
+
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7">
+                    <div class="header">
+                        <p class="header-title">
+                            @Model.Term.Name
+                        </p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7">
+                    <table class="table-general-detail">
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="padding-left:135px !important;">@Model.Course.Code - @Model.Course.Name</td>
+                                <td colspan="3" style="padding-left:105px !important;">@Model.Course.Section.Teacher</td>
+                            </tr>
+                            <tr>
+                                <td width="150px">Ciclo Asignatura</td>
+                                <td width="20px">:</td>
+                                <td width="455px">@Model.Course.AcademicYear</td>
+
+                                <td width="160px">Facultad</td>
+                                <td width="20px">:</td>
+                                <td>@Model.Course.Career.Faculty</td>
+                            </tr>
+                            <tr>
+                                <td>Créditos</td>
+                                <td>:</td>
+                                <td>@Model.Course.Credits</td>
+
+                                <td>Escuela Profesional</td>
+                                <td>:</td>
+                                <td>@Model.Course.Career.Name</td>
+                            </tr>
+                            <tr>
+                                <td>Modalidad</td>
+                                <td>:</td>
+                                <td colspan="4">@(ConstantHelpers.Intranet.EvaluationReportType.NAMES.ContainsKey(Model.BasicInformation.Type) ? ConstantHelpers.Intranet.EvaluationReportType.NAMES[Model.BasicInformation.Type].ToUpper() : "")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+            </tr>
+
+            <tr class="bordered-header">
+                <th rowspan="2" class="bordered-header">Nº</th>
+                <th rowspan="2" class="bordered-header">C&Oacute;DIGO</th>
+                <th rowspan="2" class="bordered-header">APELLIDOS Y NOMBRES</th>
+                <th rowspan="2" class="bordered-header">ASISTENCIA <br /> % </th>
+                <th colspan="2" class="bordered-header" height="50px">PROMEDIO FINAL</th>
+                <th rowspan="2" class="bordered-header">OBSERVACI&Oacute;N</th>
+            </tr>
+
+            <tr class="bordered-header">
+                <th class="bordered-header">Nros</th>
+                <th class="bordered-header">Letras</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @for (int i = 0; i < Model.Course.Section.Students.Count(); i++)
+            {
+                <tr class="bordered-detail">
+                    <td class="bordered-detail center">@(i+1)</td>
+                    <td class="bordered-detail center">@Model.Course.Section.Students[i].UserName</td>
+                    <td class="bordered-detail">@Model.Course.Section.Students[i].FullName</td>
+                    <td class="bordered-detail center">@Model.Course.Section.Students[i].AttendancePercentage.ToString("0.00")%</td>
+                    <td class="bordered-detail center">@Model.Course.Section.Students[i].FinalGrade.ToString("00")</td>
+                    <td class="bordered-detail center">@Model.Course.Section.Students[i].FinalGradeText</td>
+                    <td class="bordered-detail center">@Model.Course.Section.Students[i].StatusText.ToUpper()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

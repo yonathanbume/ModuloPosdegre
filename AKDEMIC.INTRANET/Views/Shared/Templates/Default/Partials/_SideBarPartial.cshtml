@@ -1,0 +1,2238 @@
+﻿@inject AKDEMIC.SERVICE.Services.Generals.Interfaces.IConfigurationService _configurationService
+@{
+    var enableTupa = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.DocumentaryProcedureManagement.ENABLE_TUPA));
+    var enableStudentGradeCorrectionRequest = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.ENABLE_STUDENT_GRADE_CORRECTION_REQUEST));
+
+    var enabled_extraordinary_evaluation = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.ENABLED_EXTRAORDINARY_EVALUATION));
+    var enabled_grade_recovery = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.ENABLED_GRADE_RECOVERY));
+    var enabled_substitute_exam = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.ENABLED_SUBSTITUTE_EXAM));
+    var enabled_deferred_exam = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.ENABLED_DEFERRED_EXAM));
+
+    var careerDirectorGradeCorrection = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.CAREER_DIRECTOR_GRADE_CORRECTION));
+    var academicDepartmentGradeCorrection = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.IntranetManagement.ACADEMIC_DEPARTMENT_GRADE_CORRECTION));
+
+}
+
+<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Home" asp-action="Index">
+        <a asp-controller="Home" asp-action="Index" asp-route-area="" class="m-menu__link ">
+            <i class="m-menu__link-icon la la-home"></i>
+            <span class="m-menu__link-text">
+                Inicio
+            </span>
+        </a>
+    </li>
+    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="VisualizationRecord" asp-area="CareerDirector">
+            <a asp-controller="VisualizationRecord" asp-action="Index" asp-route-area="CareerDirector" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-1"></i>
+                <span class="m-menu__link-text">
+                    Visualizador de actas
+                </span>
+            </a>
+        </li>
+
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-share"></i>
+                <span class="m-menu__link-text">
+                    &Aacute;rea Extracurricular
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                &Aacute;rea Extracurricular
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularArea" asp-area="Admin">
+                        <a asp-action="Index" asp-controller="ExtracurricularArea" asp-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gestión de Áreas
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularActivities" asp-area="Admin">
+                        <a asp-action="Index" asp-controller="ExtracurricularActivities" asp-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Actividades Extracurriculares
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularActivitiesStudent" asp-area="Admin">
+                        <a asp-action="Index" asp-controller="ExtracurricularActivitiesStudent" asp-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Registrar Actividades de Estudiantes
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) ||
+    User.IsInRole(ConstantHelpers.ROLES.DEAN) ||
+    User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY) ||
+    User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) ||
+    User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR) ||
+    User.IsInRole(ConstantHelpers.ROLES.PASSWORD_EDITOR) ||
+    User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT) ||
+    User.IsInRole(ConstantHelpers.ROLES.CERTIFICATION) ||
+    User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-profile-1"></i>
+                <span class="m-menu__link-text">
+                    Sobre Estudiantes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Sobre Estudiantes
+                            </span>
+                        </span>
+                    </li>
+
+                    @if (!User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentInformation" asp-area="Academic">
+                            <a asp-controller="StudentInformation" asp-action="Index" asp-area="Academic" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Informaci&oacute;n del Estudiante
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR))
+                    {
+                        @if (ConstantHelpers.GENERAL.Institution.Value != ConstantHelpers.Institution.UNJBG)
+                        {
+                            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GraduatedStudent" asp-area="Admin">
+                                <a asp-controller="GraduatedStudent" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Estudiantes Egresados
+                                    </span>
+                                </a>
+                            </li>
+                        }
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtraordinaryEvaluation" asp-area="Admin">
+                            <a asp-controller="ExtraordinaryEvaluation" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Gesti&oacute;n de Evaluaci&oacute;n Extraordinaria
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.DEAN) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR))
+                    {
+                        @if (!User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR))
+                        {
+                            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="UnbeatenStudent" asp-area="CareerDirector">
+                                <a asp-controller="UnbeatenStudent" asp-action="Index" asp-area="CareerDirector" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Estudiantes Invictos
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Rankings
+                                </span>
+                                <i class="m-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+                            <div class="m-menu__submenu " m-hidden-height="80" style="display: none; overflow: hidden;">
+                                <span class="m-menu__arrow"></span>
+                                <ul class="m-menu__subnav">
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking">
+                                        <a asp-area="CareerDirector" asp-controller="Ranking" asp-action="NewStudents" asp-route-area="CareerDirector" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Ingresantes por Escuela Profesional y Periodo de Ingreso-Egreso
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking">
+                                        <a asp-area="CareerDirector" asp-controller="Ranking" asp-action="Graduateds" asp-route-area="CareerDirector" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Egresados por Escuela Profesional y Periodo de Ingreso-Egreso
+                                            </span>
+                                        </a>
+                                    </li>
+                                    @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking" asp-area="CareerDirector">
+                            <a asp-area="CareerDirector" asp-controller="Ranking" asp-action="MeritTable" asp-route-area="CareerDirector" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                            Cuadro de M&eacute;rito
+                            </span>
+                            </a>
+                            </li>*@
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking" asp-area="CareerDirector">
+                                        <a asp-area="CareerDirector" asp-controller="Ranking" asp-action="StudentRankingForCredits" asp-route-area="CareerDirector" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Ranking de Estudiantes para N&uacute;mero de Cr&eacute;ditos
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    }
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="MeritChart" asp-area="Report">
+                            <a asp-controller="MeritChart" asp-action="Index" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Cuadro de M&eacute;rito
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.VICERRECTOR) || User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.DEAN) || User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-profile-1"></i>
+                <span class="m-menu__link-text">
+                    Reportes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Reportes
+                            </span>
+                        </span>
+                    </li>
+
+                    @if (!User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR))
+                    {
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Student" asp-route-area="Report">
+                            <a asp-area="Report" asp-controller="IntranetReport" asp-action="Student" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Reporte de Estudiantes
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (!User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Teacher" asp-route-area="Report">
+                            <a asp-area="Report" asp-controller="IntranetReport" asp-action="Teacher" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Reporte de Docentes
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+
+                    @if (
+                   User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) ||
+                   User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY) ||
+                   User.IsInRole(ConstantHelpers.ROLES.DEAN) ||
+                   User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Community" asp-route-area="Report">
+                            <a asp-area="Report" asp-controller="IntranetReport" asp-action="Community" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Comunidad
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.TEACHERS))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ClassSchedule" asp-area="Teacher">
+            <a asp-area="Teacher" asp-controller="ClassSchedule" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-calendar-3"></i>
+                <span class="m-menu__link-text">
+                    Horario
+                </span>
+            </a>
+        </li>
+
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-1"></i>
+                <span class="m-menu__link-text">
+                    Asistencia
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Asistencia
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true" is-active-route asp-controller="StudentAssistance" asp-area="Teacher">
+                        <a asp-action="Index" asp-controller="StudentAssistance" asp-area="Teacher" asp-route-area="Teacher" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Registrar Asistencia
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AssistControl" asp-area="Teacher">
+                        <a asp-controller="AssistControl" asp-action="Index" asp-area="Teacher" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Asistencia Estudiantes
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentAbsenceJustification" asp-area="Teacher">
+                        <a asp-controller="StudentAbsenceJustification" asp-action="Index" asp-area="Teacher" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Justificación Inasistencias
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ClassReschedule" asp-area="Teacher">
+                        <a asp-controller="ClassReschedule" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reprogramaci&oacute;n de Clases
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Grade" asp-area="Teacher">
+            <a asp-controller="Grade" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-1"></i>
+                <span class="m-menu__link-text">
+                    Notas
+                </span>
+            </a>
+        </li>
+
+        @if (enabled_substitute_exam || enabled_grade_recovery || enabled_extraordinary_evaluation || enabled_deferred_exam)
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-edit"></i>
+                    <span class="m-menu__link-text">
+                        Examen Especial
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        @if (enabled_extraordinary_evaluation)
+                        {
+                            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtraordinaryEvaluation" asp-area="Teacher">
+                                <a asp-controller="ExtraordinaryEvaluation" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Evaluaci&oacute;n Extraordinaria
+                                    </span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (enabled_grade_recovery)
+                        {
+                            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeRecovery" asp-area="Teacher">
+                                <a asp-controller="GradeRecovery" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Examen de Recuperaci&oacute;n de Notas
+                                    </span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (enabled_substitute_exam)
+                        {
+
+                            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="SubstituteExamRequest" asp-area="Teacher">
+                                <a asp-controller="SubstituteExamRequest" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Solicitudes de Sustitutorios
+                                    </span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (enabled_deferred_exam)
+                        {
+
+                            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DeferredExam" asp-area="Teacher">
+                                <a asp-controller="DeferredExam" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Examenes Aplazados
+                                    </span>
+                                </a>
+                            </li>
+                        }
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="CorrectionExam" asp-area="Teacher">
+                            <a asp-controller="CorrectionExam" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Subsanación Especial
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR))
+        {
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ClassReschedule" asp-area="Admin">
+                <a asp-controller="ClassReschedule" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-list-1"></i>
+                    <span class="m-menu__link-text">
+                        Solicitudes de Reprogramaci&oacute;n de Clases
+                    </span>
+                </a>
+            </li>
+        }
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Community">
+            <a asp-controller="Community" asp-action="Index" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-info"></i>
+                <span class="m-menu__link-text" style="word-break:normal !important;">
+                    Comunidad
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR))
+    {
+        @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) && academicDepartmentGradeCorrection)
+        {
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeCorrection" asp-area="Admin">
+                <a asp-controller="GradeCorrection" asp-action="Index" asp-area="Admin" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-edit"></i>
+                    <span class="m-menu__link-text" style="word-break:normal !important;">
+                        Corrección de Notas
+                    </span>
+                </a>
+            </li>
+        }
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && careerDirectorGradeCorrection)
+        {
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeCorrection" asp-area="Admin">
+                <a asp-controller="GradeCorrection" asp-action="Index" asp-area="Admin" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-edit"></i>
+                    <span class="m-menu__link-text" style="word-break:normal !important;">
+                        Corrección de Notas
+                    </span>
+                </a>
+            </li>
+        }
+
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-calendar-3"></i>
+                <span class="m-menu__link-text">
+                    Horario de Clases
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Horario de Clases
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="WeekClassSchedule">
+                        <a asp-area="Student" asp-controller="WeekClassSchedule" asp-action="Index" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Horario de la Semana
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ClassSchedule">
+                        <a asp-area="Student" asp-controller="ClassSchedule" asp-action="Index" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Horario del Ciclo
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-piggy-bank"></i>
+                <span class="m-menu__link-text">
+                    Pagos
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Pagos
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="PaymentHistory">
+                        <a asp-action="Index" asp-controller="PaymentHistory" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Historial
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="PendingDebt">
+                        <a asp-action="Index" asp-controller="PendingDebt" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Deudas
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="MyRequest">
+                        <a asp-action="Index" asp-controller="MyRequest" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Mis Solicitudes
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-info"></i>
+                <span class="m-menu__link-text">
+                    Info. Acad&eacute;mica
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Info. Acad&eacute;mica
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Grade">
+                        <a asp-action="Index" asp-controller="Grade" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Notas
+                            </span>
+                        </a>
+                    </li>
+                    @if (enableStudentGradeCorrectionRequest)
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeCorrection">
+                            <a asp-action="Index" asp-controller="GradeCorrection" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Corrección de Notas
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Curriculum" asp-area="Student">
+                        <a asp-controller="Curriculum" asp-action="Index" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Plan de estudios
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Absences">
+                        <a asp-controller="Absences" asp-action="Index" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Inasistencias
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="CurriculumProgress">
+                        <a asp-controller="CurriculumProgress" asp-action="Index" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Situaci&oacute;n Acad&eacute;mica
+                            </span>
+                        </a>
+                    </li>
+
+                    @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNTUMBES)
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AcademicSummary">
+                            <a asp-controller="AcademicSummary" asp-action="Index" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Historial Académico
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Forum">
+            <a asp-action="Index" asp-controller="Forum" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-clipboard"></i>
+                <span class="m-menu__link-text">
+                    Foro
+                </span>
+            </a>
+        </li>
+
+        @if (
+       ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.Akdemic ||
+       ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNCP ||
+       ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNJBG
+       )
+        {
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentPortfolio" asp-area="Student">
+                <a asp-action="Index" asp-controller="StudentPortfolio" asp-area="Student" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-clipboard"></i>
+                    <span class="m-menu__link-text">
+                        Portafolio
+                    </span>
+                </a>
+            </li>
+        }
+
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-info"></i>
+                <span class="m-menu__link-text">
+                    Encuestas
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Encuestas
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="SurveyUser">
+                        <a asp-action="Index" asp-controller="SurveyUser" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Encuestas asignadas
+                            </span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="PerformanceEvaluation">
+                            <a asp-action="Index" asp-controller="PerformanceEvaluation" asp-area="Student" asp-route-area="Student" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Evaluación al docente
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+
+        @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNCP)
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-interface-1"></i>
+                    <span class="m-menu__link-text">
+                        Cafobe
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    Cafobe
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="CafobeRequest">
+                            <a asp-area="Student" asp-controller="CafobeRequest" asp-action="Index" asp-route-area="Student" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Solicitud de Apoyo Económico
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="CafobeRequestDetail">
+                            <a asp-area="Student" asp-controller="CafobeRequestDetail" asp-action="Index" asp-route-area="Student" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Rendición de cuenta
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+        }
+
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.DEGREE_ADMIN))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map"></i>
+                <span class="m-menu__link-text">
+                    Gesti&oacute;n del Administrador
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n del Administrador
+                            </span>
+                        </span>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DeanFaculty" asp-area="Admin">
+                        <a asp-controller="DeanFaculty" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n de decanos
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="UniversityAuthority" asp-area="Admin">
+                        <a asp-controller="UniversityAuthority" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n de autoridades
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GraduatedStudent" asp-area="Admin">
+            <a asp-controller="GraduatedStudent" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit"></i>
+                <span class="m-menu__link-text">
+                    Estudiantes A Egresar
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map"></i>
+                <span class="m-menu__link-text">
+                    Gesti&oacute;n del Administrador
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n del Administrador
+                            </span>
+                        </span>
+                    </li>
+
+                    @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Permission" asp-area="Admin">
+                <a asp-controller="Permission" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Gestionar Roles
+                </span>
+                </a>
+                </li>*@
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DeanFaculty" asp-area="Admin">
+                        <a asp-controller="DeanFaculty" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n de decanos
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="UniversityAuthority" asp-area="Admin">
+                        <a asp-controller="UniversityAuthority" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n de autoridades
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Holiday" asp-area="Admin">
+                        <a asp-controller="Holiday" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n de feriados
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExamWeek" asp-area="Admin">
+                        <a asp-controller="ExamWeek" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n de Semanas de Examen
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="YearInformation" asp-area="Admin">
+                        <a asp-controller="YearInformation" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Gesti&oacute;n de Años
+                            </span>
+                        </a>
+                    </li>
+
+                    @if (
+                   ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.Akdemic ||
+                   ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNCP ||
+                   ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNJBG
+                   )
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentPortfolioType" asp-area="Admin">
+                            <a asp-controller="StudentPortfolioType" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Tipos de Portafolio Estudiante
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DuplicateVirtualClassroom" asp-area="Admin">
+                <a asp-controller="DuplicateVirtualClassroom" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Gesti&oacute;n de contenido duplicado en Aula Virtual
+                </span>
+                </a>
+                </li>*@
+                    <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">Gestionar Usuarios</span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+                        <div class="m-menu__submenu " m-hidden-height="80" style="display: none; overflow: hidden;">
+                            <span class="m-menu__arrow"></span>
+                            <ul class="m-menu__subnav">
+                                <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Student">
+                                    <a asp-area="Admin" asp-controller="Student" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                        <span class="m-menu__link-text">
+                                            Estudiantes
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Teacher">
+                                    <a asp-area="Admin" asp-controller="Teacher" asp-action="Index" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                        <span class="m-menu__link-text">
+                                            Docentes
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="User">
+                                    <a asp-area="Admin" asp-controller="User" asp-action="Index" asp-route-area="Teacher" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                        <span class="m-menu__link-text">
+                                            Administrativos
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Permission">
+                                    <a asp-area="Admin" asp-controller="Permission" asp-action="Admins" asp-route-area="Admin" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                        <span class="m-menu__link-text">
+                                            Administradores
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExternalUser">
+                                    <a asp-area="Admin" asp-controller="ExternalUser" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                        <span class="m-menu__link-text">
+                                            Externos
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN)
+    || User.IsInRole(ConstantHelpers.ROLES.DEBT_MANAGER))
+    {
+        @if (ConstantHelpers.GENERAL.Institution.Value != ConstantHelpers.Institution.UNJBG)
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-profile-1"></i>
+                    <span class="m-menu__link-text">
+                        Sobre Finanzas
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    Sobre Finanzas
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DebtManagement" asp-area="Admin">
+                            <a asp-controller="DebtManagement" asp-action="Index" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Gestor de Deudas
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF))
+    {
+        @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD))
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-users"></i>
+                    <span class="m-menu__link-text">
+                        Gesti&oacute;n del Personal
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    Gesti&oacute;n del Personal
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Staff" asp-action="Users">
+                            <a asp-controller="Staff" asp-action="Users" asp-area="AcademicRecord" asp-route-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Asignación de Rol Registro Académico
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Staff" asp-action="Index">
+                            <a asp-controller="Staff" asp-action="Index" asp-area="AcademicRecord" asp-route-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Asignaci&oacute;n de Departamentos Acad&eacute;micos
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-profile-1"></i>
+                <span class="m-menu__link-text">
+                    Sobre Estudiantes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Sobre Estudiantes
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentInformation" asp-area="Academic">
+                        <a asp-controller="StudentInformation" asp-action="Index" asp-area="Academic" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Informaci&oacute;n del Estudiante
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="LockedOutStudent" asp-area="Admin">
+                        <a asp-controller="LockedOutStudent" asp-action="Index" asp-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Estudiantes Bloqueados
+                            </span>
+                        </a>
+                    </li>
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GraduatedStudent" asp-area="Admin">
+                            <a asp-controller="GraduatedStudent" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Estudiantes A Egresar
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF) || User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Student" asp-area="AcademicRecord">
+                            <a asp-controller="Student" asp-action="Index" asp-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Listado de Estudiantes
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Request" asp-area="AcademicRecord">
+                            <a asp-controller="Request" asp-action="Index" asp-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Solicitud de Tr&aacute;mites
+                                </span>
+                            </a>
+                        </li>
+
+                        @*       <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DocumentFormat" asp-area="Admin">
+                <a asp-controller="DocumentFormat" asp-action="Index" asp-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Crear Constancias
+                </span>
+                </a>
+                </li>*@
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Student" asp-area="Request">
+                            <a asp-controller="Request" asp-action="GenerateDocument" asp-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Generar Documentos
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AcademicSituation">
+                <a asp-controller="AcademicSituation" asp-action="Index" asp-area="Admin" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Situaci&oacute;n Acad&eacute;mica
+                </span>
+                </a>
+                </li>*@
+
+                    @if (!User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+                    {
+                        @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Constancy">
+                <a asp-controller="Constancy" asp-action="Index" asp-area="Academic" asp-route-area="Academic" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Solicitud de Tr&aacute;mite
+                </span>
+                </a>
+                </li>*@
+                    }
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Curriculum">
+                        <a asp-controller="Curriculum" asp-action="Index" asp-area="Admin" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Plan de Estudios
+                            </span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+                    {
+                        @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Grade" asp-area="Admin">
+                <a asp-action="Index" asp-controller="Grade" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Calificaciones
+                </span>
+                </a>
+                </li>*@
+
+                        @if (ConstantHelpers.GENERAL.Institution.Value != ConstantHelpers.Institution.UNJBG)
+                        {
+                            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentGradeReport" asp-area="Admin">
+                                <a asp-action="Index" asp-controller="StudentGradeReport" asp-route-area="Admin" class="m-menu__link ">
+                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Estad&iacute;stica de Notas
+                                    </span>
+                                </a>
+                            </li>
+                        }
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="EnrollmentReservation" asp-area="Admin">
+                            <a asp-controller="EnrollmentReservation" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Reserva de Matrícula
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="SpecialEvaluation" asp-area="Admin">
+                            <a asp-controller="SpecialEvaluation" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Evaluaciones Especiales
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Seguimiento del Estudiante
+                                </span>
+                                <i class="m-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+                            <div class="m-menu__submenu " m-hidden-height="80" style="display: none; overflow: hidden;">
+                                <span class="m-menu__arrow"></span>
+                                <ul class="m-menu__subnav">
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="InstitutionalWelfare">
+                                        <a asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Bienestar Institucional
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportStudentPersonalDate">
+                                        <a asp-area="Admin" asp-controller="ReportStudentPersonalDate" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Reporte de estudiantes por Datos Personales
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="TotalizedReport">
+                                        <a asp-area="Admin" asp-controller="TotalizedReport" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Reportes Totalizados
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GraphicsTotalizedReport">
+                                        <a asp-area="Admin" asp-controller="GraphicsTotalizedReport" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Reportes Gráficas de Totalizados
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="UnbeatenStudent" asp-area="Academic">
+                            <a asp-controller="UnbeatenStudent" asp-action="Index" asp-area="Academic" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Estudiantes Invictos
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (!User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF))
+                    {
+                        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Rankings
+                                </span>
+                                <i class="m-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+                            <div class="m-menu__submenu " m-hidden-height="80" style="display: none; overflow: hidden;">
+                                <span class="m-menu__arrow"></span>
+                                <ul class="m-menu__subnav">
+
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking">
+                                        <a asp-area="Admin" asp-controller="Ranking" asp-action="NewStudents" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Ingresantes por Escuela Profesional y Periodo de Ingreso-Egreso
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking">
+                                        <a asp-area="Admin" asp-controller="Ranking" asp-action="Graduateds" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Egresados por Escuela Profesional y Periodo de Ingreso-Egreso
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking" asp-area="Admin">
+                                        <a asp-area="Admin" asp-controller="Ranking" asp-action="StudentRankingForCredits" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Ranking de Estudiantes para N&uacute;mero de Cr&eacute;ditos
+                                            </span>
+                                        </a>
+                                    </li>
+                                    @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Ranking" asp-area="Admin">
+                            <a asp-area="Admin" asp-controller="Ranking" asp-action="MeritTable" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                            Cuadro de M&eacute;rito
+                            </span>
+                            </a>
+                            </li>*@
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="MeritChart" asp-area="Report">
+                            <a asp-controller="MeritChart" asp-action="Index" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Cuadro de M&eacute;rito
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-folder"></i>
+                <span class="m-menu__link-text">
+                    Sobre Docentes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Sobre Docentes
+                            </span>
+                        </span>
+                    </li>
+                    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Teacher" asp-area="AcademicRecord">
+                            <a asp-action="Index" asp-controller="Teacher" asp-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Listado de Docentes
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Workload" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="Workload" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Carga Lectiva
+                                </span>
+                            </a>
+                        </li>
+                        @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="InstitutionalAlert">
+                <a asp-controller="InstitutionalAlert" asp-action="Index" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Alertas Institucionales
+                </span>
+                </a>
+                </li>*@
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ClassReschedule" asp-area="Admin">
+                            <a asp-controller="ClassReschedule" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Reprogramaci&oacute;n de Clases
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ClassroomSchedule">
+                            <a asp-area="Admin" asp-controller="ClassroomSchedule" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Horario Aulas
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeCorrection" asp-area="Admin">
+                            <a asp-controller="GradeCorrection" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Correcci&oacute;n de Notas
+                                </span>
+                            </a>
+                        </li>
+                        @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeRegistration" asp-area="Academic">
+                <a asp-controller="GradeRegistration" asp-action="Index" asp-route-area="Academic" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Cumplimiento Registro Notas
+                </span>
+                </a>
+                </li>*@
+                    }
+
+                    @if ((User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF)))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-action="EvaluationReport" asp-controller="EvaluationReport" asp-area="Admin">
+                            <a asp-controller="EvaluationReport" asp-action="EvaluationReport" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Generaci&oacute;n de Actas
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if (!User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+                    {
+
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-action="Search" asp-controller="EvaluationReport" asp-area="Admin">
+                            <a asp-controller="EvaluationReport" asp-action="Search" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Buscador de Actas
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (!User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="EvaluationReport" asp-area="Academic">
+                            <a asp-controller="EvaluationReport" asp-action="Index" asp-route-area="Academic" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Recepci&oacute;n de Actas
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+        @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-time-2"></i>
+                    <span class="m-menu__link-text">
+                        Asistencias e Inasistencias
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    Asistencias e Inasistencias
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AbsenceJustification">
+                            <a asp-area="" asp-controller="AbsenceJustification" asp-action="Index" asp-route-area="" class="m-menu__link">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Justificaci&oacute;n de Inasistencias
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Gesti&oacute;n de Justificaciones de Inasistencias
+                                </span>
+                                <i class="m-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+                            <div class="m-menu__submenu " m-hidden-height="80" style="display: none; overflow: hidden;">
+                                <span class="m-menu__arrow"></span>
+                                <ul class="m-menu__subnav">
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentAbsenceJustification">
+                                        <a asp-area="Admin" asp-controller="StudentAbsenceJustification" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Estudiantes
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="UserAbsenceJustification">
+                                        <a asp-area="Admin" asp-controller="UserAbsenceJustification" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Personal
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="UserAssistance" asp-area="Admin">
+                            <a asp-area="Admin" asp-controller="UserAssistance" asp-action="Index" class="m-menu__link">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Asistencia del Personal
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+        }
+        @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF))
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-background"></i>
+                    <span class="m-menu__link-text">
+                        Grados y títulos
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    Grados y títulos
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GradeReport">
+                            <a asp-controller="GradeReport" asp-action="Index" asp-area="AcademicRecord" asp-route-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Informes de grado
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="TitleReport">
+                            <a asp-controller="TitleReport" asp-action="Index" asp-area="AcademicRecord" asp-route-area="AcademicRecord" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Informes de títulos
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-graphic-2"></i>
+                <span class="m-menu__link-text">
+                    Reportes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Reportes
+                            </span>
+                        </span>
+                    </li>
+
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Student" asp-route-area="Report">
+                        <a asp-area="Report" asp-controller="IntranetReport" asp-action="Student" asp-route-area="Report" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reporte de Estudiantes
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Teacher" asp-route-area="Report">
+                        <a asp-area="Report" asp-controller="IntranetReport" asp-action="Teacher" asp-route-area="Report" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reporte de Docentes
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Community" asp-route-area="Report">
+                        <a asp-area="Report" asp-controller="IntranetReport" asp-action="Community" asp-route-area="Report" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Comunidad
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                    <span class="m-menu__link-text">
+                        Acerca de Anuncios y Eventos
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    Acerca de Anuncios y Eventos
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-controller="TutoringAnnouncement">
+                            <a asp-area="Admin" asp-controller="TutoringAnnouncement" asp-action="Index" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Comunicados
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Announcement" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="Announcement" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Banners
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Announcement" asp-area="Admin">
+                            <a asp-action="Beginning" asp-controller="Announcement" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Anuncios por Sistema
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Announcement" asp-area="Admin">
+                            <a asp-action="UserAnnouncement" asp-controller="Announcement" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Anuncios por Usuarios
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Event" asp-area="Admin">
+                            <a asp-controller="Event" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Eventos
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="EventType" asp-area="Admin">
+                            <a asp-controller="EventType" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Tipo de Eventos
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="EventInscription">
+                            <a asp-action="Index" asp-controller="EventInscription" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Inscripcion Eventos
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-users"></i>
+                    <span class="m-menu__link-text">
+                        Comunidad
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    Comunidad
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="SurveyManagement" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="SurveyManagement" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Gesti&oacute;n de Encuestas
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Forum" asp-area="Admin">
+                            <a asp-controller="Forum" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Categor&iacute;as del foro
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Forum" asp-area="">
+                            <a asp-action="Index" asp-controller="Forum" asp-route-area="" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Foro
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-share"></i>
+                    <span class="m-menu__link-text">
+                        &Aacute;rea Extracurricular
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                            <span class="m-menu__link">
+                                <span class="m-menu__link-text">
+                                    &Aacute;rea Extracurricular
+                                </span>
+                            </span>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularArea" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="ExtracurricularArea" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Gestión de Áreas
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularActivities" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="ExtracurricularActivities" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Actividades Extracurriculares
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularActivitiesStudent" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="ExtracurricularActivitiesStudent" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Registrar Actividades de Estudiantes
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularCourse" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="ExtracurricularCourse" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Cursos Extracurriculares
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularCourseGroup" asp-area="Admin">
+                            <a asp-action="Index" asp-controller="ExtracurricularCourseGroup" asp-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Gesti&oacute;n de Grupos
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+        }
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.CERTIFICATION))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="EvaluationReport" asp-area="Admin">
+            <a asp-controller="EvaluationReport" asp-action="Search" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit"></i>
+                <span class="m-menu__link-text">
+                    Buscador de Actas
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.Identity.IsAuthenticated && !User.IsInRole(ConstantHelpers.ROLES.STUDENTS) && !User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE) && !User.IsInRole(ConstantHelpers.ROLES.TEACHERS) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_ASSISTANT) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) && !User.IsInRole(ConstantHelpers.ROLES.SECTION_MANAGER) && !User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.DEAN) && !User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY)
+    && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COUNTER) && !User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES) && !User.IsInRole(ConstantHelpers.ROLES.PASSWORD_EDITOR))
+    {
+        @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY) && ConstantHelpers.GENERAL.Institution.Value != ConstantHelpers.Institution.UNJBG)
+        {
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="SubstituteExam" asp-area="Admin">
+                <a asp-controller="SubstituteExam" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-list-1"></i>
+                    <span class="m-menu__link-text">
+                        Gesti&oacute;n de Examen Sustitutorio
+                    </span>
+                </a>
+            </li>
+        }
+
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AbsenceJustification">
+            <a asp-area="" asp-controller="AbsenceJustification" asp-action="Index" asp-route-area="" class="m-menu__link">
+                <i class="m-menu__link-icon flaticon-list-1"></i>
+                <span class="m-menu__link-text">
+                    Justificaci&oacute;n de Inasistencias
+                </span>
+            </a>
+        </li>
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentInformation" asp-area="Academic">
+            <a asp-controller="StudentInformation" asp-action="Index" asp-area="Academic" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-users"></i>
+                <span class="m-menu__link-text">
+                    Informaci&oacute;n del Estudiante
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.ADMISSION))
+    {
+        @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AcademicSituation">
+    <a asp-area="Admission" asp-controller="AcademicSituation" asp-action="Index" asp-route-area="" class="m-menu__link">
+    <i class="m-menu__link-icon flaticon-statistics"></i>
+    <span class="m-menu__link-text">
+    Situaci&oacute;n Acad&eacute;mica
+    </span>
+    </a>
+    </li>*@
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.INSTITUTIONAL_WELFARE))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-share"></i>
+                <span class="m-menu__link-text">
+                    Seguimiento del Estudiante
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Seguimiento del Estudiante
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="InstitutionalWelfare">
+                        <a asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Bienestar Institucional
+                            </span>
+                        </a>
+                    </li>
+                    @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportExistStudentInformation">
+                <a asp-area="Admin" asp-controller="ReportExistStudentInformation" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                Reporte de fichas existentes por estudiante
+                </span>
+                </a>
+                </li>*@
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportStudentPersonalDate">
+                        <a asp-area="Admin" asp-controller="ReportStudentPersonalDate" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reporte de estudiantes por Datos Personales
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="TotalizedReport">
+                        <a asp-area="Admin" asp-controller="TotalizedReport" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reportes Totalizados
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GraphicsTotalizedReport">
+                        <a asp-area="Admin" asp-controller="GraphicsTotalizedReport" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reportes Gráficas de Totalizados
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-share"></i>
+                <span class="m-menu__link-text">
+                    Reporte de alertas
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Reporte de alertas
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportAlertDependency">
+                        <a asp-area="Admin" asp-controller="ReportAlertDependency" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reporte de cantidad de alertas por dependencia
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportAlertAtended">
+                        <a asp-area="Admin" asp-controller="ReportAlertAtended" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reporte de cantidad de alertas atendidas
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportAlertDate">
+                        <a asp-area="Admin" asp-controller="ReportAlertDate" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reporte de cantidad de alertas por fechas
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+
+    @if (User.Identity.IsAuthenticated && !User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) && !User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) && !User.IsInRole(ConstantHelpers.ROLES.SECTION_MANAGER) && !User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.DEAN) && !User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY)
+    && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COUNTER) && !User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES) && !User.IsInRole(ConstantHelpers.ROLES.PASSWORD_EDITOR) && !User.IsInRole(ConstantHelpers.ROLES.TEACHERS))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="EventInscription">
+            <a asp-action="Index" asp-controller="EventInscription" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-1"></i>
+                <span class="m-menu__link-text">
+                    Inscripcion Eventos
+                </span>
+            </a>
+        </li>
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_ASSISTANT))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AcademicAssistant">
+            <a asp-controller="AcademicAssistant" asp-action="Index" asp-area="AcademicAssistant" asp-route-area="AcademicAssistant" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-statistics"></i>
+                <span class="m-menu__link-text">
+                    Asistente Académico
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS) && ConstantHelpers.GENERAL.Institution.Value != ConstantHelpers.Institution.UNJBG)
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-share"></i>
+                <span class="m-menu__link-text">
+                    &Aacute;rea Extracurricular
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                &Aacute;rea Extracurricular
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularCourse" asp-area="Student">
+                        <a asp-action="Index" asp-controller="ExtracurricularCourse" asp-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-list-1"></i>
+                            <span class="m-menu__link-text">
+                                Cursos Extraacadémicos
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ExtracurricularCourseStudent" asp-area="Student">
+                        <a asp-action="Index" asp-controller="ExtracurricularCourseStudent" asp-area="Student" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-list-1"></i>
+                            <span class="m-menu__link-text">
+                                Mis Cursos
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.DEAN) || User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-share"></i>
+                <span class="m-menu__link-text">
+                    Gestionar Usuarios
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Gestionar Usuarios
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Student">
+                        <a asp-area="Admin" asp-controller="Student" asp-action="Index" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Estudiantes
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        @*<li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="AcademicSituation">
+    <a asp-area="Admin" asp-controller="AcademicSituation" asp-action="Index" asp-route-area="" class="m-menu__link">
+    <i class="m-menu__link-icon flaticon-statistics"></i>
+    <span class="m-menu__link-text">
+    Situaci&oacute;n Acad&eacute;mica
+    </span>
+    </a>
+    </li>*@
+
+    }
+    @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COUNTER))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" is-active-menu asp-area="AcademicCounter" asp-controller="Request">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-line-graph"></i>
+                <span class="m-menu__link-text">
+                    Solicitudes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Solicitudes
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Request">
+                        <a asp-area="AcademicCounter" asp-controller="Request" asp-action="Index" asp-route-area="AcademicCounter" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Solicitud de Trámite
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+
+    @if (enableTupa)
+    {
+        @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS) || User.IsInRole(ConstantHelpers.ROLES.TEACHERS))
+        {
+            @*<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+    <a href="javascript:;" class="m-menu__link m-menu__toggle">
+    <i class="m-menu__link-icon flaticon-interface-1"></i>
+    <span class="m-menu__link-text">
+    Tr&aacute;mites
+    </span>
+    <i class="m-menu__ver-arrow la la-angle-right"></i>
+    </a>
+    <div class="m-menu__submenu ">
+    <span class="m-menu__arrow"></span>
+    <ul class="m-menu__subnav">
+    <li class="m-menu__item" aria-haspopup="true" is-active-route asp-controller="UserProcedure">
+    <a asp-controller="UserProcedure" asp-action="Index" class="m-menu__link ">
+    <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+    <span class="m-menu__link-text">
+    Tr&aacute;mites TUPA
+    </span>
+    </a>
+    </li>
+    </ul>
+    </div>
+    </li>*@
+
+            @*     <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="UserProcedure">
+    <a asp-action="Index" asp-controller="UserProcedure" class="m-menu__link ">
+    <i class="m-menu__link-icon flaticon-interface-1"></i>
+    <span class="m-menu__link-text">
+    Tr&aacute;mites
+    </span>
+    </a>
+    </li>*@
+
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Procedure">
+                <a asp-action="Index" asp-controller="Procedure" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-interface-1"></i>
+                    <span class="m-menu__link-text">
+                        Tr&aacute;mites
+                    </span>
+                </a>
+            </li>
+        }
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="MeritChart" asp-area="Report">
+            <a asp-controller="MeritChart" asp-action="Index" asp-route-area="Report" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                    Cuadro de M&eacute;rito
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES) || User.IsInRole(ConstantHelpers.ROLES.INSTITUTIONAL_WELFARE))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-profile-1"></i>
+                <span class="m-menu__link-text">
+                    Reportes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Reportes
+                            </span>
+                        </span>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Student" asp-route-area="Report">
+                        <a asp-area="Report" asp-controller="IntranetReport" asp-action="Student" asp-route-area="Report" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Reporte de Estudiantes
+                            </span>
+                        </a>
+                    </li>
+
+                    @if (User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Teacher" asp-route-area="Report">
+                            <a asp-area="Report" asp-controller="IntranetReport" asp-action="Teacher" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Reporte de Docentes
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-controller="IntranetReport" asp-action="Community" asp-route-area="Report">
+                            <a asp-area="Report" asp-controller="IntranetReport" asp-action="Community" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Comunidad
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+    }
+
+
+    @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR_GENERAL))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentInformation" asp-area="Academic">
+            <a asp-controller="StudentInformation" asp-action="Index" asp-area="Academic" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                    Sobre Estudiantes
+                </span>
+            </a>
+        </li>
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="StudentAverageFinalGrade" asp-area="Report">
+            <a asp-controller="StudentAverageFinalGrade" asp-action="Index" asp-area="Report" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">
+                    Reporte de promedio ponderado aritmético de estudiantes
+                </span>
+            </a>
+        </li>
+    }
+</ul>

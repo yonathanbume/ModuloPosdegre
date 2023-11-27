@@ -1,0 +1,59 @@
+﻿
+/* Generally, you should put CSS in a separate file, but for the purpose of this post, I'm including it in the style tag. */
+
+.m-portlet.m-portlet--primary.m-portlet--head-solid-bg .m-portlet__head {
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+}
+
+.custom-table {
+    text-align: center;
+    font-family: Poppins;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+thead th {
+    /*border: 1px solid white;*/
+    /*color: white;*/
+    border: 1px solid dotted;
+    
+}
+
+.thmodifiqued {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+   
+    
+}
+tbody tr {
+    height:50px;
+}
+
+td, th {
+    border: 1px solid #e3892a;
+}
+.resize {
+    width:50px;
+}
+
+    /* Can't eliminate the spacing no matter what I try */
+th:first-child {
+    height: 140px;
+}
+
+    th:not(:first-child) {
+        height: 10px;
+
+    }
+
+    td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+        width: 10px;
+    }
+
+

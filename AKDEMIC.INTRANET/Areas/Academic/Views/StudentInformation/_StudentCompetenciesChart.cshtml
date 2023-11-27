@@ -1,0 +1,291 @@
+﻿@model List<AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.StudentStatisticsCompetenciesViewModel>
+
+@{
+    var generalCompetenciesTotal = Model.Where(x => x.Type == ConstantHelpers.COMPETENCIE.GENERAL).Sum(y => y.Details.Count());
+    var generalCompetenciesApproved = Model.Where(x => x.Type == ConstantHelpers.COMPETENCIE.GENERAL).Sum(y => y.Details.Where(y => y.Approved.HasValue && y.Approved.Value).Count());
+    var generalCompetenciesProgress = generalCompetenciesTotal == 0 ? 0 : Math.Round(((decimal)generalCompetenciesApproved * 100M / generalCompetenciesTotal), 2, MidpointRounding.AwayFromZero);
+
+    var specificCompetenciesTotal = Model.Where(x => x.Type == ConstantHelpers.COMPETENCIE.SPECIFIC).Sum(y => y.Details.Count());
+    var specificCompetenciesApproved = Model.Where(x => x.Type == ConstantHelpers.COMPETENCIE.SPECIFIC).Sum(y => y.Details.Where(y => y.Approved.HasValue && y.Approved.Value).Count());
+    var specificCompetenciesProgress = specificCompetenciesTotal == 0 ? 0 : Math.Round(((decimal)specificCompetenciesApproved * 100M / specificCompetenciesTotal), 2, MidpointRounding.AwayFromZero);
+
+}
+
+<div class="row">
+    <div class="col-8">
+        <div class="m-portlet m-portlet--tabs">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-tools">
+                    <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#student_informacion_general_competencies_chart" role="tab">
+                                Competencias Generales
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#student_informacion_specific_competencies_chart" role="tab">
+                                Competencias Espec&iacute;ficas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="student_informacion_general_competencies_chart" role="tabpanel">
+                        <div class="row">
+                            @foreach (var competencie in Model.Where(x => x.Type == ConstantHelpers.COMPETENCIE.GENERAL))
+                            {
+                                <div class="col-4" style="height:250px !important;">
+                                    <div class="competencies-chart-container" id="@competencie.CompetencieId">
+                                        <input type="hidden" name="Average" value="@competencie.Average" />
+                                        <input type="hidden" name="Name" value="@competencie.Competencie" />
+                                        <input type="hidden" name="CompetencieId" value="@competencie.CompetencieId" />
+                                        <input type="hidden" name="Level" value="@competencie.Level" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="student_informacion_specific_competencies_chart" role="tabpanel">
+                        <div class="row">
+                            @foreach (var competencie in Model.Where(x => x.Type == ConstantHelpers.COMPETENCIE.SPECIFIC))
+                            {
+                                <div class="col-4" style="height:250px !important;">
+                                    <div class="competencies-chart-container" id="@competencie.CompetencieId">
+                                        <input type="hidden" name="Average" value="@competencie.Average" />
+                                        <input type="hidden" name="Name" value="@competencie.Competencie" />
+                                        <input type="hidden" name="CompetencieId" value="@competencie.CompetencieId" />
+                                        <input type="hidden" name="Level" value="@competencie.Level" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="m-portlet m-portlet--rounded">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Avance General
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row" id="general_competencies_chart_progress" style="height:300px !important">
+
+                </div>
+
+                <div class="row" id="specific_competencies_chart_progress" style="height:300px !important">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    var chartContainers = $(".competencies-chart-container");
+    var gaugeOptions = {
+        chart: {
+            type: 'solidgauge'
+        },
+        title: null,
+        pane: {
+            center: ['50%', '40%'],
+            size: '50%',
+            startAngle: -90,
+            endAngle: 90,
+            background: {
+                backgroundColor:
+                    Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                innerRadius: '60%',
+                outerRadius: '100%',
+                shape: 'arc'
+            }
+        },
+        exporting: {
+            enabled: false
+        },
+
+        tooltip: {
+            enabled: false
+        },
+        yAxis: {
+            stops: [
+                [0, '#00BDFF'],
+                [1, '#2c2e4a'],
+            ],
+            lineWidth: 0,
+            tickWidth: 0,
+            minorTickInterval: null,
+            tickAmount: 2,
+            title: {
+                y: -70
+            },
+            labels: {
+                y: 16
+            }
+        },
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    y: 5,
+                    borderWidth: 0,
+                    useHTML: true
+                }
+            }
+        }
+    };
+
+    $.each(chartContainers, function (i, v) {
+        var name = $(v).find("[name='Name']").val();
+        var average = parseFloat($(v).find("[name='Average']").val());
+        var competencieId = $(v).find("[name='CompetencieId']").val();
+        var level = $(v).find("[name='Level']").val();
+
+        Highcharts.chart(`${competencieId}`, Highcharts.merge(gaugeOptions, {
+            yAxis: {
+                min: 0,
+                max: 20,
+                title: {
+                    text: name
+                }
+            },
+
+            credits: {
+                enabled: false
+            },
+
+            series: [{
+                name: 'Speed',
+                data: [average],
+                dataLabels: {
+                    format:
+                        '<div style="text-align:center">' +
+                        '<span style="font-size:25px">{y}</span><br/>' +
+                        `<span style="font-size:12px;opacity:0.4">${level}</span>` +
+                        '</div>'
+                },
+                tooltip: {
+                    valueSuffix: level
+                }
+            }]
+
+        }));
+    })
+
+    var generalProgress = parseFloat(@generalCompetenciesProgress);
+    var specificProgress = parseFloat(@specificCompetenciesProgress);
+
+    var optionsProgress = {
+        chart: {
+            type: 'solidgauge'
+        },
+        title: null,
+        pane: {
+            center: ['50%', '10%'],
+            size: '80%',
+            startAngle: 0,
+            endAngle: 360,
+            background: {
+                backgroundColor:
+                    Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                innerRadius: '60%',
+                outerRadius: '100%',
+                shape: 'arc'
+            }
+        },
+        exporting: {
+            enabled: false
+        },
+        tooltip: {
+            enabled: false
+        },
+        yAxis: {
+            stops: [
+                [0, '#00BDFF'],
+                [1, '#2c2e4a'],
+            ],
+            lineWidth: 0,
+            tickWidth: 0,
+            minorTickInterval: null,
+            tickAmount: 0,
+            title: {
+                y: -75
+            },
+            labels: {
+                y: 0
+            }
+        },
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    y: 5,
+                    borderWidth: 0,
+                    useHTML: true
+                }
+            }
+        }
+    };
+
+    Highcharts.chart(`general_competencies_chart_progress`, Highcharts.merge(optionsProgress, {
+        yAxis: {
+            min: 0,
+            max: 100,
+            title: {
+                text: "Competencias Generales"
+            }
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: [{
+            data: [generalProgress],
+            dataLabels: {
+                format:
+                    '<div style="text-align:center; margin-top: -28px !important;">' +
+                    '<span style="font-size:25px;">{y}%</span><br/>' +
+                    '</div>'
+            }
+        }]
+
+    }));
+
+
+    Highcharts.chart(`specific_competencies_chart_progress`, Highcharts.merge(optionsProgress, {
+        yAxis: {
+            min: 0,
+            max: 100,
+            title: {
+                text: "Competencias Específicas"
+            }
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: [{
+            data: [specificProgress],
+            dataLabels: {
+                format:
+                    '<div style="text-align:center; margin-top: -28px !important;">' +
+                    '<span style="font-size:25px;">{y}%</span><br/>' +
+                    '</div>'
+            },
+        }]
+
+    }));
+
+</script>

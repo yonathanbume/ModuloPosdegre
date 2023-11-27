@@ -1,0 +1,98 @@
+﻿@model Guid
+@{
+    ViewData["Title"] = "Reporte de aprobados y desaprobados";
+    ViewData["SubTitle"] = "Reporte estadístico y lista de estudiantes";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+    ViewData["BackUrl"] = Url.Action("Index", "ReportTutorial", new { area = "Admin" });
+}
+<div class="m-content">
+    <input type="hidden" id="Id" value="@Model" />
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Reporte estadístico y lista de estudiantes
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon">
+                                        <i class="flaticon-graph"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Reportes estadísticos
+                                    </h3>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="m-portlet__body" style="display: flex; flex-flow: row wrap;  justify-content: center;  align-items: center;  text-align: center;">
+                            <div id="chart_div_report_assistance_tutorial"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon">
+                                        <i class="flaticon-list-1"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Lista de estudiantes
+                                    </h3>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-form--label-align-right m--margin-bottom-10">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-8 order-2 order-xl-1">
+                                        <div class="row">
+                                            <div class="form-group m-form__group col-xl-6">
+                                                <label>&emsp;</label>
+                                                <div class="m-input m-input-icon m-input-icon--left">
+                                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                        <span><i class="la la-search"></i></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="m-datatable"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>    
+    <script src="~/js/areas/admin/report_tutorial/detail.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+}
+
+

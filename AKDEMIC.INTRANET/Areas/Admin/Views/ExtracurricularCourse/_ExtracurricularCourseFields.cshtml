@@ -1,0 +1,30 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.ExtracurricularCourseViewModels.ExtracurricularCourseViewModel
+<input type="hidden" asp-for="Id">
+<div class="form-group row">
+    <div class="m-form__group-sub col-md-4">
+        <label asp-for="Code"></label>
+        <input asp-for="Code" class="form-control m-input" autocomplete="off" required maxlength="20" />
+    </div>
+    <div class="m-form__group-sub col-md-4">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control m-input decimal" required min="0" step="0.1" type="number" />
+    </div>
+    <div class="m-form__group-sub col-md-4">
+        <label asp-for="Credits"></label>
+        <input asp-for="Credits" class="form-control m-input" required min="0">
+    </div>
+</div>
+<div class="form-group m-form__group ">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control m-input letters" autocomplete="off" required maxlength="100" />
+    </div>
+<div class="form-group m-form__group ">
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control m-input" autocomplete="off" required maxlength="400" style="resize:none;" rows="4"></textarea>
+</div>
+<div class="form-group m-form__group ">
+    <label asp-for="AreaId"></label>
+    <select asp-for="AreaId" class="form-control m-select2" required>
+        <option></option>
+    </select>
+</div>

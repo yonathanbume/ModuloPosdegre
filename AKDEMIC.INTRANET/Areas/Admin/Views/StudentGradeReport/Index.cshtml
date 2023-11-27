@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Estadística de Notas";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+<div class="m-content">
+    <div class="alert alert-brand m-alert m-alert--icon m-alert--air m-alert--square m--margin-bottom-30" role="alert">
+        <div class="m-alert__icon">
+            <i class="la la-warning"></i>
+        </div>
+        <div class="m-alert__text">
+            No se muestra informaci&oacute;n de Periodos Acad&eacute;micos inactivos.
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--tab">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Reporte por Facultad y Escuela
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Periodo académico</label>
+                    <select id="term-filter-1" class="m-input m-select2 select2-terms"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Facultad</label>
+                    <select id="faculty-filter-1" class="m-input m-select2 select2-faculties"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Escuela profesional</label>
+                    <select id="career-filter-1" class="m-input m-select2 select2-careers"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Programa académico</label>
+                    <select id="program-filter-1" class="m-input m-select2 select2-program"></select>
+                </div>
+            </div>
+
+            <div id="load" style="width: 100%; min-height: 500px;" class="mx-auto m--margin-top-10">
+                <div class="text-center" style="padding-top:200px;">
+                    <button id="btnLoad" type="button" class="btn btn-light" name="load" value="" style="background-color:#8781d2; color:white">Cargando </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="btn btn-primary pull-right save-pdf" data-id="1" id="">
+                        <span>
+                            <i class="fa fa-file-pdf"></i>
+                            PDF
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div id="chart-filter-1" style="width: 100%; min-height: 500px;" class="mx-auto m--margin-top-10">
+                @*<div id="columnchart_material_1"></div>*@
+                <div id="columnchart_material_1" style="width: 100%; height: 500px;" class="mx-auto m--margin-top-10"></div>
+
+                <div class="text-center">
+                    <div id='png'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--tab">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Reporte por Curso
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Periodo académico</label>
+                    <select id="term-filter-2" class="m-input m-select2 select2-terms"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Facultad</label>
+                    <select id="faculty-filter-2" class="m-input m-select2 select2-faculties"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Escuela profesional</label>
+                    <select id="career-filter-2" class="m-input m-select2 select2-careers"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Planes</label>
+                    <select id="curriculums-filter-2" class="m-input m-select2 select2-curriculums"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label">Curso</label>
+                    <select id="course-filter-2" class="m-input m-select2 select2-courses"></select>
+                </div>
+            </div>
+
+            <div id="load-2" style="width: 100%; min-height: 500px;" class="mx-auto m--margin-top-10">
+                <div class="text-center" style="padding-top:200px;">
+                    <button id="btnLoad-2" type="button" class="btn btn-light" name="load" value="" style="background-color:#8781d2; color:white">Cargando </button>
+                </div>
+            </div>
+            <div id='graph-images-1' style='display:none'></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="btn btn-primary pull-right save-pdf" data-id="2" id="">
+                        <span>
+                            <i class="fa fa-file-pdf"></i>
+                            PDF
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div id="columnchart_material_2" style="width: 100%; height: 500px;" class="mx-auto m--margin-top-10"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script type="text/javascript" src="~/js/areas/admin/studentgradereport/index.js"></script>
+}

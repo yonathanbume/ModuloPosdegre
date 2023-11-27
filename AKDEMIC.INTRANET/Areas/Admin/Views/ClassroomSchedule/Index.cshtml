@@ -1,0 +1,128 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.ClassroomScheduleViewModels
+@model AKDEMIC.INTRANET.Areas.Admin.Models.ClassroomScheduleViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Horario de Aulas";
+    ViewData["SubTitle"] = string.Format("Horario de Aulas para el Periodo {0} (Del {1} al {2})", Model.Term.Name, Model.Term.ClassStartDate.ToShortDateString(), Model.Term.ClassEndDate.ToShortDateString());
+}
+
+
+@section Styles {
+<link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" />
+<link href="~/css/areas/admin/classroomschedule/index.css" type="text/css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button id="export_excel" class="btn btn-primary m-btn  m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-file-excel-o"></i>
+                        <span>Excel</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center form-group m-form__group">
+                    <div class="col-sm-auto m-form__label"> Seleccione un Aula: </div>
+                    <div class="col-sm-3 m-form__control">
+                        <select class="form-control m-select2 select2-campuses"></select>
+                    </div>
+                    <div class="col-sm-3 m-form__control">
+                        <select class="form-control m-select2 select2-buildings"></select>
+                    </div>
+                    <div class="col-sm-3 m-form__control">
+                        <select class="form-control m-select2 select2-classrooms"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-calendar__container">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-detail" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="modal-title">
+                    Detalle de Clase
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-12">
+                            <label class="form-control-label">Curso</label>
+                            <input id="DetailCourse" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Secci&oacute;n</label>
+                            <input id="DetailSection" class="form-control m-input" disabled />
+                        </div>
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Día</label>
+                            <input id="DetailDate" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Empieza</label>
+                            <input id="DetailStart" class="form-control m-input" disabled />
+                        </div>
+                        <div class="m-form__group-sub col-md-6">
+                            <label class="form-control-label">Termina</label>
+                            <input id="DetailEnd" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-12">
+                            <label class="form-control-label">Aula</label>
+                            <input id="DetailClassroom" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-12">
+                            <label class="form-control-label">Tipo</label>
+                            <input id="DetailType" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-md-12">
+                            <label class="form-control-label">Profesor(es)</label>
+                            <textarea id="DetailTeachers" class="form-control m-input" disabled></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+<script src="~/js/areas/admin/classroomschedule/index.js" asp-append-version="true"></script>
+}
+
+

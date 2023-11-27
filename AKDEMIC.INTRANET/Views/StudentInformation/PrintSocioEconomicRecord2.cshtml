@@ -1,0 +1,70 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.StudentInformationViewModels.IndexViewModel;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="~/css/areas/student/studentinformation/printsocioeconomicrecord.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="document-header">
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" />
+        <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+
+        <div class="cleared" style="padding:5px">
+            <div class="company-name" style="margin:0px; padding:5px;">
+                <b> @GeneralHelpers.GetInstitutionName().ToUpper()</b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:5px;">
+                <b>UNIDAD BIENESTAR UNIVERSITARIO</b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:5px;">
+                <b> SERVICIO SOCIAL</b>
+            </div>
+        </div>
+
+    </div>
+    <div class="document-body">
+        <p style="text-align:center">@Model.YearInformation</p>
+        <p style="text-align:center">La Unidad de Bienestar Universitario otorga la presente:</p>
+
+        <h1 style="text-align:center"><b>CONSTANCIA</b></h1>
+        <br />
+        <table style="border: 1px solid black; border-collapse: collapse;margin:auto">
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">ESTUDIANTE</td>
+                <td style="border:1px solid black;padding:5px">@Model.Name</td>
+            </tr>
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">CODIGO UNIVERSITARIO</td>
+                <td style="border:1px solid black;padding:5px">@Model.UserName</td>
+            </tr>
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">FACULTAD</td>
+                <td style="border:1px solid black;padding:5px">@Model.Faculty</td>
+            </tr>
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">ESCUELA PROFESIONAL</td>
+                <td style="border:1px solid black;padding:5px">@Model.Career</td>
+            </tr>
+        </table>
+        <br />
+        <p style="text-align:center">Por haber culminado satisfactoriamente el registro de la FICHA SOCIOECON&Oacute;MICA a trav&eacute;s de la plataforma Virtual para el proceso de Matr&iacute;cula @Model.Term</p>
+        <br />
+        <br />
+        <h3 style="text-align:center">GRACIAS POR SU IMPORTANTE PARTICIPACI&Oacute;N</h3>
+        <br />
+        <br />
+        <div id="qrcode" style="text-align:center ">
+            <img src="@Model.QrImage" style="max-height:150px;" />
+        </div>
+        <br />
+        <br />
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["Title"] = "Asistencia docente y clases realizadas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Reporte de Docentes",  Action = "Teacher" , Controller = "IntranetReport", Area = "Report" },
+new BreadcrumbViewData { Name = "Asistencia docente y clases realizadas" }
+};
+}
+<div class="m-content">
+
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="la la-info-circle"></i>
+                            Reporte de Asistencia
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Reporte de Clases No Dictadas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="form-group m-form__group col-xl-3">
+                                        <label>Periodo Académico</label>
+                                        <select id="select_Term" class="m-select2">
+                                            <option value="0" disabled selected>Seleccione una Opcion</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group m-form__group col-xl-3">
+                                        <label>Departamento Académico</label>
+                                        <select id="select_academicDepartments" class="m-select2">
+                                            <option value="0" disabled selected>Seleccione una Opcion</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group m-form__group col-xl-3">
+                                        <label>Fecha Inicio</label>
+                                        <input class="form-control m-input" id="startDate">
+                                    </div>
+                                    <div class="form-group m-form__group col-xl-3">
+                                        <label>Fecha Fin</label>
+                                        <input class="form-control m-input" id="endDate">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group m-form__group col-xl-8">
+                                    </div>
+                                    <div class="form-group m-form__group col-xl-4 d-flex align-items-end justify-content-end">
+                                        <button id="btn_export_consolidated" class="btn btn-primary m-btn  m-btn m-btn--icon">
+                                            <span>
+                                                <i class="la la-file-excel-o"></i>
+                                                <span>Consolidado</span>
+                                            </span>
+                                        </button>
+                                        <button id="btn_export" class="btn ml-1 btn-primary m-btn  m-btn m-btn--icon">
+                                            <span>
+                                                <i class="la la-file-excel-o"></i>
+                                                <span>Detallado</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="form-group m-form__group col-xl-3">
+                                        <label>&emsp;</label>
+                                        <div class="m-input m-input-icon m-input-icon--left">
+                                            <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                <span><i class="la la-search"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered" id="data-table"></table>
+                </div>
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="form-group m-form__group col-xl-4">
+                                        <label>Periodo Académico</label>
+                                        <select id="select_Term_2" class="m-select2">
+                                            <option value="0" disabled selected>Seleccione una Opcion</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group m-form__group col-xl-4">
+                                        <label>Departamento Académico</label>
+                                        <select id="select_academicDepartments_2" class="m-select2">
+                                            <option value="0" disabled selected>Seleccione una Opcion</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group m-form__group col-xl-4">
+                                        <label>Fecha Fin</label>
+                                        <input class="form-control m-input" id="endDate_2" value="@DateTime.UtcNow.ToDefaultTimeZone().ToLocalDateFormat()">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group m-form__group col-xl-8">
+                                    </div>
+                                    <div class="form-group m-form__group col-xl-4 d-flex align-items-end justify-content-end">
+                                        <button id="btn_export_missing" class="btn btn-primary m-btn  m-btn m-btn--icon">
+                                            <span>
+                                                <i class="la la-file-excel-o"></i>
+                                                <span>Exportar</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="form-group m-form__group col-xl-3">
+                                        <label>&emsp;</label>
+                                        <div class="m-input m-input-icon m-input-icon--left">
+                                            <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search_2">
+                                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                <span><i class="la la-search"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered" id="missing-table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="detailed_missing_modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered" id="detailed_missing_table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/modules/form.js"></script>
+<script src="~/js/areas/admin/reportteacherassistance/index.js" asp-append-version="true"></script>
+}

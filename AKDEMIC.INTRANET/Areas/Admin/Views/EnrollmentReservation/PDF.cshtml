@@ -1,0 +1,147 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.EnrollmentReservationViewModels.EnrollmentReservationPDF
+
+@{
+    Layout = null;
+}
+
+<div style=" width: 100%; height: 100%;  display: grid; font-size:15px; font-family:Arial">
+
+    <table border="0" cellpadding="0" cellspacing="0" style="width:100%;font-size:15px;border:1px solid black; border-collapse: collapse;background-color:white; font-family:Arial;">
+        <tr>
+            <td style="width:100%;border:none;" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="width:100%;border:none;" align="center">
+                <b>RESERVA DE MATRÍCULA</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:100%;border:none;" align="center">
+                &nbsp;
+            </td>
+        </tr>
+
+    </table>
+   
+    <table border="0" cellpadding="0" cellspacing="0" style="width:100%;font-size:15px;border:1px solid black; border-collapse: collapse;background-color:white; font-family:Arial;">
+
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                ESTUDIANTE
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                :
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                <b>@Model.UserName - @Model.FullName @Model.Dni</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                PLAN
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                :
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                <b>@Model.Curriculum</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                ESPECIALIDAD
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                :
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                <b>@Model.AcademicProgram</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                MODALIDAD
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                :
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                <b>RESERVA DE MATRÍCULA</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                FECHA DE RESERVA
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                :
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                <b>@Model.Date</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                OBSERVACIÓN
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                :
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                <b>@Model.Observation</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:20%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:1%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+            <td style="width:88%;border:none;font-size:15px;">
+                &nbsp;
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+
+

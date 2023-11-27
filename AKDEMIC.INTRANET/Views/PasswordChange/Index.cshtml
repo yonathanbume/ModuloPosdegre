@@ -1,0 +1,42 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.PasswordChangeViewModels.UserViewModel
+@{
+    ViewData["Title"] = "Restablece tu contraseña";
+    Layout = "~/Views/Shared/Templates/Login/_Layout.cshtml";
+}
+
+<div class="m-login__wrapper">
+    <div class="form">
+        <a href="#">
+            <img class="logo" src="~/images/themes/@GeneralHelpers.GetTheme()/logo.png">
+        </a>
+        <p class="mt-5 h5">
+            Por motivo de seguridad rellenar el siguiente formulario para asignar su nueva contraseña.
+        </p>
+        <form id="change_password_form" asp-action="Update">
+            <div asp-validation-summary="All" class="text-danger mb-2" style="font-weight: 500;"></div>
+            <div class="group">
+                <input asp-for="NewPassword" type="password" placeholder="NUEVA CONTRASEÑA" required />
+                <i class="fa fa-eye"></i>
+                <img class="ico" src="~/images/login/pass.svg" />
+                <span asp-validation-for="NewPassword" class="text-danger"></span>
+                <div class="bar"></div>
+            </div>
+            <div class="group">
+                <input asp-for="ConfirmPassword" type="password" placeholder="CONFIRMAR CONTRASEÑA" required />
+                <i class="fa fa-eye"></i>
+                <img class="ico" src="~/images/login/pass.svg" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <div class="bar"></div>
+            </div>
+            <div class="group">
+                <button type="submit" class="btn button-submit" id="btn_submit_change_password">
+                    Cambiar contrase&ntilde;a
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/views/passwordchange/index.js" asp-append-version="true"></script>
+}

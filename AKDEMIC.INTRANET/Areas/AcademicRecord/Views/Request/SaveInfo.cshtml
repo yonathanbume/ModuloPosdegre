@@ -1,0 +1,301 @@
+﻿@model AKDEMIC.INTRANET.Areas.AcademicRecord.Models.Request.SaveRequestDataViewModel
+@{
+    ViewBag.Title = ConstantHelpers.RECORDS.VALUES[Model.Type];
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Listado de solicitudes",Action="Index",Controller="Request",Area="AcademicRecord"},
+    new BreadcrumbViewData { Name = ViewBag.Title }
+    };
+}
+<form id="main_form">
+    <input type="hidden" asp-for="Id"/>
+    <div class="m-content">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <p class="text-center">
+                    LA QUE SUSCRIBE, JEFA DE LA UNIDAD DE REGISTRO ACADÉMICO DE
+                    LA @ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value].ToUpper()
+                </p>
+                <p class="text-center">
+                    HACE CONSTAR
+                </p>
+                <p class="text-center">
+                    Que, el Sr. @Model.Student, con C&oacute;digo de Matr&iacute;cula N°
+                    @Model.Username; estudiante de la Facultad de @Model.Faculty -
+                    Escuela Profesional de @Model.Career, hasta el
+                </p>
+                <div class="row m-form__group m-form__group--inline">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4 m-form__control ">
+                        <input class="form-control m-input" asp-for="Semester" required />
+                    </div>
+                    <div class="col-4">
+                    </div>
+                </div>
+
+                <p class="text-center">
+                    realizados en esta Universidad, ha sido ubicado en el Cuadro de
+                    Méritos:
+                </p>
+                <div id="m_repeater_1" class="mt-5">
+                    <div class="form-group  m-form__group row">
+                        <div class="col-lg-12">
+                            <div data-repeater-item class="form-group m-form__group row align-items-center justify-content-center">
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                        <div class="m-form__control">
+                                            <label>SEMESTRE ACAD&Eacute;MICO</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                        <div class="m-form__control">
+                                            <label>ORDEN DE M&Eacute;RITO</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                        <div class="m-form__control">
+                                            <label>PROM. POND. SEMEST.</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                        <div class="m-form__control">
+                                            <label>CRED. APROB. SEMEST.</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                @if (Model.Type == ConstantHelpers.RECORDS.UPPERFIFTH)
+                                {
+                                    <div class="col-md-1">
+                                        <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                            <div class="m-form__control">
+                                                <label>TOTAL Nº QUINTO SUP.</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                }
+                                @if (Model.Type == ConstantHelpers.RECORDS.UPPERTHIRD)
+                                {
+                                    <div class="col-md-1">
+                                        <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                            <div class="m-form__control">
+                                                <label>TOTAL Nº QUINTO SUP.</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                }
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                        <div class="m-form__control">
+                                            <label>TOTAL Nº ESTUDIANTES</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                        <div class="m-form__control">
+                                            <label>OBSERV.</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline text-center m--font-boldest2">
+                                        <div class="m-form__control">
+                                            <label>&emsp;</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group  m-form__group row" id="m_repeater_1">
+                        <div data-repeater-list="" class="col-lg-12">
+                            <div data-repeater-item class="form-group m-form__group row align-items-center justify-content-center div_container_detail">
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__control">
+                                            <input type="text" class="form-control m-input" data-name="Term" required name="0" />
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__control">
+                                            <input type="number" class="form-control m-input" data-name="MeritOrder" required name="1" />
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__control">
+                                            <input type="number" class="form-control m-input" data-name="WeightedAverage" required name="2" />
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__control">
+                                            <input type="number" class="form-control m-input" data-name="ApprovedCredits" required name="3" />
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                @if (Model.Type == ConstantHelpers.RECORDS.UPPERFIFTH)
+                                {
+                                    <div class="col-md-1">
+                                        <div class="m-form__group m-form__group--inline">
+                                            <div class="m-form__control">
+                                                <input type="number" class="form-control m-input" data-name="UpperFifthTotalStudents" required name="3" />
+                                            </div>
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                }
+                                @if (Model.Type == ConstantHelpers.RECORDS.UPPERTHIRD)
+                                {
+                                    <div class="col-md-1">
+                                        <div class="m-form__group m-form__group--inline">
+                                            <div class="m-form__control">
+                                                <input type="number" class="form-control m-input" data-name="UpperThirdTotalStudents" required name="3" />
+                                            </div>
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                }
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__control">
+                                            <input type="number" class="form-control m-input" data-name="TotalStudents" required name="4" />
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__control">
+                                            <input class="form-control m-input" data-name="Observation" required name="5" />
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div data-repeater-delete="" class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill">
+                                        <span>
+                                            <i class="la la-trash-o"></i>
+                                            <span>Eliminar</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__group form-group row">
+                        <label class="col-lg-2 col-form-label"></label>
+                        <div class="col-lg-12 d-flex justify-content-center">
+                            <div data-repeater-create="" class="btn btn btn-sm btn-primary m-btn m-btn--icon m-btn--pill m-btn--wide">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Agregar</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (Model.Type == ConstantHelpers.RECORDS.MERITCHART)
+            {
+                <p class="text-center">
+                    El promedio ponderado acumulado del estudiante es de
+                </p>
+                <div class="row m-form__group m-form__group--inline">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4 m-form__control ">
+                        <input class="form-control m-input text-center" asp-for="WeightedAverageCumulative" required placeholder="0" value="" />
+                    </div>
+                    <div class="col-4">
+                    </div>
+                </div>
+                <p class="text-center text-justify mt-3">
+                    (Art. 16° del Reglamento de
+                    Elaboraci&oacute;n del Cuadro de M&eacute;ritos del Sistema Curricular Flexible por Competencia).
+                    Asi consta en los documentos oficiales que obran en esta Unidad a los que me remito en
+                    caso necesario.
+                    Se expide la presente, a solicitud escrita del interesado para los fines que estime
+                    conveniente.
+                </p>
+            }
+
+            @if (Model.Type == ConstantHelpers.RECORDS.UPPERFIFTH)
+            {
+                <p class="text-center">
+                    Perteneci&oacute; al QUINTO SUPERIOR en los Años Acad&eacute;micos.
+                </p>
+                <p class="text-center">
+                    Asi consta en los documentos oficiales que obran en esta Oficina a los que me remito en
+                    caso necesario.
+                </p>
+                <p class="text-center">
+                    Se expide la presente, a solicitud escrita del interesado para los fines que estime
+                    conveniente.
+                </p>
+            }
+
+            @if (Model.Type == ConstantHelpers.RECORDS.UPPERTHIRD)
+            {
+                <p class="text-center">
+                    Perteneci&oacute; al TERCIO SUPERIOR en los Años Acad&eacute;micos.
+                </p>
+                <p class="text-center">
+                    Asi consta en los documentos oficiales que obran en esta Oficina a los que me remito en
+                    caso necesario.
+                </p>
+                <p class="text-center">
+                    Se expide la presente, a solicitud escrita del interesado para los fines que estime
+                    conveniente.
+                </p>
+            }
+            <div class="m-portlet__foot">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 m--valign-middle">
+                        &emsp;
+                    </div>
+                    <div class="col-lg-6 m--align-right">
+                        <button type="submit" id="save_data" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script src="~/js/areas/academicrecord/request/saveinfo.js" asp-append-version="true"></script>
+}

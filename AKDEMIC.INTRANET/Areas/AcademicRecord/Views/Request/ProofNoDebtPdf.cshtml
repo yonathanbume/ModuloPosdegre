@@ -1,0 +1,64 @@
+﻿@using AKDEMIC.INTRANET.Areas.AcademicRecord.Models.Request
+@model ProofNoDebtViewModel
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="~/css/views/pdf/proofnodebt.css" rel="stylesheet" />
+    <style></style>
+</head>
+
+<body>
+    <div class="document-header">
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" />
+        <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+
+        <div class="cleared">
+            <div class="company-name">
+                @GeneralHelpers.GetInstitutionName().ToUpper()
+            </div>
+            <div class="area-name center">
+                @Model.University.HeaderOffice.ToUpper()
+            </div>
+            <div class="office-name center">
+                @Model.University.Office.ToUpper()
+            </div>
+            <div class="address-text">
+                @Model.University.Campus - Télefono @Model.University.PhoneNumber - @Model.University.Address - Página Web @Model.University.WebSite
+            </div>
+        </div>
+
+    </div>
+
+    <div class="center record-name">
+        CONSTANCIA DE NO ADEUDO
+    </div>
+
+
+    <div class="double-border">
+        <p class="subscriber-text">
+            @Model.University.Sender.ToUpper() DE LA @(GeneralHelpers.GetInstitutionName().ToUpper())
+        </p>
+        <br />
+        <div class="register-text">HACE CONSTAR</div>
+        <div>
+            <p style="text-align:justify;line-height : 25px; text-rendering:geometricPrecision ; padding-top:15px;">
+                Que, <b>@Model.FullName, </b> con C&oacute;digo de Universitario N° <b>@Model.UserName,</b> de la Facultad de <b>@Model.Faculty, </b> Escuela Profesional de <b>@Model.Career, no tiene adeudo</b>
+                alguno con la Universidad a la fecha.
+            </p>
+            <p style="text-align:justify;line-height : 25px;">
+                Se expide la presente a solicitud @(Model.StudentSex == ConstantHelpers.SEX.MALE ? "del" : "de la") interesad@(Model.StudentSex == ConstantHelpers.SEX.MALE ? "o" : "a") para los fines que estime conveniente.
+            </p>
+        </div>
+    </div>
+    @*<div style="width:100%; text-align:start">
+    <img style="width:100px; height:100px !important;" src="@Model.ImageQR" />
+    </div>*@
+    @*<div class="document-footer" style="text-align:right"><div class="pull-right">C&Oacute;DIGO:@Model.PageCode</div></div>*@
+    <div class="document-footer" style="text-align:right;margin-top:20px"><div class="">@Model.Location, @Model.Date</div></div>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+/.vs
+/.csproj
+**/obj
+**/bin
+**/AKDEMIC.REPOSITORY/Migrations/*
+

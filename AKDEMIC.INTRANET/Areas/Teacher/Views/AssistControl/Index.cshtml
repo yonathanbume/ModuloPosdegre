@@ -1,0 +1,46 @@
+﻿@model String
+@{
+    ViewData["Title"] = "Reporte de asistencia";
+    ViewData["SubTitle"] = "Lista de secciones";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+}
+<input id="Id" type="hidden" value="@Model" />
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de cursos
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Periodo Académico:</label>
+                                <select id="select_term" class="m-select2"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable-courses m_datatable"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+<script src="~/js/modules/form.js"></script>
+<script src="~/js/areas/teacher/assistcontrol/index.js" asp-append-version="true"></script>
+}

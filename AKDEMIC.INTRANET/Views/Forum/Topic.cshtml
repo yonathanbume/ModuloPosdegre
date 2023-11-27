@@ -1,0 +1,206 @@
+﻿@using AKDEMIC.ENTITIES.Models.Intranet;
+@using AKDEMIC.INTRANET.ViewModels.ForumViewModels;
+@using System.Web;
+@model TopicViewModel
+@{
+    var CategoryName = ViewBag.CategoryName;
+    var TopicTitle = ViewBag.TopicTitle;
+
+
+    ViewData["Title"] = TopicTitle;
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Foros", Url= Url.Action("Index","Forum") },
+new BreadcrumbViewData { Name = CategoryName,Url = Url.Action("Category", "Forum", new { id = ViewBag.CategoryId}) },
+new BreadcrumbViewData { Name = "Tema"}
+};
+
+    var mainPost = Model.Posts.Where(x => x.Level == 0).FirstOrDefault();
+
+}
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <!--begin::Portlet  main-head-sticky-portlet -->
+            <div class="m-portlet m-portlet--last m-portlet--head-lg m-portlet--responsive-mobile" id="main_portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-progress">
+
+                    </div>
+
+                    <div class="m-portlet__head-wrapper">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-user"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    @mainPost.Topic.Title <small>@mainPost.User.FullName</small>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            @if (!string.IsNullOrEmpty(mainPost.PathFile))
+                            {
+                                <a href="@mainPost.PathFile" class="btn btn-metal m-btn m-btn--icon m-btn--wide m-btn--md m--margin-right-10 btn-sm">
+                                    <span>
+                                        <i class="la la-download"></i>
+                                        <span>Archivo Adjunto</span>
+                                    </span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body px-5">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="m-messenger m-messenger--message-arrow m-messenger--skin-light">
+                                <div class="m-messenger__messages m-scrollable">
+                                    @foreach (var post in Model.Posts.Where(x => x.Level == 1).ToList())
+                                    {
+                                        <div class="m-messenger__wrapper">
+                                            <div class="m-messenger__message m-messenger__message--in">
+                                                <div class="m-messenger__message-no-pic m--bg-fill-danger">
+                                                    <span>@post.User.FullName.Substring(0, 1)</span>
+                                                </div>
+                                                <div class="m-messenger__message-body">
+                                                    <div class="m-messenger__message-arrow"></div>
+                                                    <div class="m-messenger__message-content">
+                                                        <div class="m-messenger__message-username">
+                                                            @post.User.FullName
+                                                        </div>
+                                                        <div class="m-messenger__message-text">
+                                                            @post.Message
+                                                        </div>
+                                                        @if (!string.IsNullOrEmpty(post.PathFile))
+                                                        {
+                                                            <div class="m-messenger__message-typing">
+                                                                ARCHIVO ADJUNTO : <a href="@post.PathFile"> <i class="la la-download"></i> @post.FileName</a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="m-messenger__message-thread-arrow">
+                                                    <button class="btn btn-outline-metal m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air message-reply-button" data-id="@post.Id" data-fullname="@post.User.FullName">
+                                                        <i class="la la-mail-reply"></i>
+                                                    </button>
+                                                </div>
+                                                @if (Model.Posts.Where(x => x.Level == 2 && x.PostCitedId == post.Id).Count() > 0)
+                                                {
+                                                    <div class="m-messenger__message-thread-arrow mt-2">
+                                                        <button class="btn btn-outline-metal m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air message-comments-toggler" data-toggle-id="@post.Id">
+                                                            <i class="la la-angle-down"></i>
+                                                        </button>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div data-parent="" class="message-comments-level-2 collapse @post.Id">
+                                            @foreach (var post2 in Model.Posts.Where(x => x.Level == 2 && x.PostCitedId == post.Id).ToList())
+                                            {
+                                                <div class="m-messenger__wrapper">
+                                                    <div class="m-messenger__message m-messenger__message--out">
+                                                        <div class="m-messenger__message-body">
+                                                            <div class="m-messenger__message-arrow"></div>
+                                                            <div class="m-messenger__message-content">
+                                                                <div class="m-messenger__message-username">
+                                                                    @post2.User.FullName
+                                                                </div>
+                                                                <div class="m-messenger__message-text">
+                                                                    @post2.Message
+                                                                </div>
+                                                                @if (!string.IsNullOrEmpty(post2.PathFile))
+                                                                {
+                                                                    <div class="m-messenger__message-typing">
+                                                                        ARCHIVO ADJUNTO : <a href="@post2.PathFile">@post2.FileName</a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                <div class="m-messenger__seperator"></div>
+                                <form id="new-post" action="@Url.Action("CreatePost", "Forum")" method="post" enctype="multipart/form-data">
+                                    <input name="TopicId" type="hidden" value="@Model.TopicId" />
+                                    <input id="PostCitedId" name="PostCitedId" type="hidden" />
+                                    <input type="file" class="custom-file-input" name="File" id="File" hidden />
+                                    <div>
+                                        <div class="m-portlet__head-caption collapse citation-div">
+                                            <div class="m-portlet__head-title d-flex" style="margin-bottom: 10px">
+                                                <span class="m-portlet__head-icon" style="margin-right: 10px">
+                                                    <i class="la la-mail-reply"></i>
+                                                </span>
+                                                <h6 class="m-portlet__head-text citation-target-container">
+                                                    <small class="citation-target"></small>
+                                                    <i class="la la-close delete-citation-target" style="font-size: 11px; cursor: pointer;"></i>
+                                                </h6>
+                                                <span class="m-portlet__head-icon" style="margin-left: 10px">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-messenger__form">
+                                        <div class="m-messenger__form-controls">
+                                            <input type="text" asp-for="Message" placeholder="Escriba aquí..." class="m-messenger__form-input" maxlength="1000">
+                                        </div>
+                                        <div class="m-messenger__form-tools">
+                                            <button type="button" class="btn btn-outline-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-sm fileselect-trigger">
+                                                <span class="m-badge m-badge--info d-none" style="position: absolute; top: -10px; right: -10px;">1</span>
+                                                <i class="la la-paperclip"></i>
+                                            </button>
+                                        </div>
+                                        <div class="m-messenger__form-tools">
+                                            <button type="submit" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-sm">
+                                                <i class="la la-send"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--end::Portlet-->
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/views/forum/topic.js" type="text/javascript"></script>
+}
+@section Styles{
+    <link href="~/css/views/forum/topic.css" rel="stylesheet" />
+}
+
+@functions {
+    public string FillPost(Post post)
+    {
+        string result = "";
+
+        while (post.PostCitedId != null)
+        {
+
+            result += "<div class='post-cited'>";
+            result += "<div class='post-cited-name'>";
+            result += post.PostCited.User.FullName;
+            result += "<span class='post-cited-date'>| Fecha:" + (String.Format("{0:d/M/yyyy}", post.PostCited.CreatedAt)) + "</span>";
+            result += "</div>";
+
+            result += FillPost(post.PostCited);
+            result += "<div class='post-cited-message'>";
+            result += post.PostCited.Message;
+            result += "</div>";
+            result += "</div>";
+            return result;
+        }
+        return result;
+    }
+}

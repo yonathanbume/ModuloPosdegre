@@ -1,0 +1,1371 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.InstitutionalWelfareViewModels.StudentInformationTermViewModel
+
+@{
+    ViewData["Title"] = "Bienestar Institucional";
+    ViewBag.SubTitle = "Ficha del alumno";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Bienestar institucional" , Url = Url.Action("Index","InstitutionalWelfare") },
+new BreadcrumbViewData { Name = "Ficha"} };
+
+}
+
+
+<input id="StudentId" value="@Model.StudentId" type="hidden" />
+<input id="TermId" value="@Model.TermId" type="hidden" />
+<div class="m-content">
+    <div class="m-portlet__body">
+        <ul class="nav nav-pills nav-fill" style="text-align:center; margin:0px;" role="tablist">
+
+            <li class="nav-item col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12" style="margin-left: 0;padding:0px;">
+                <a class="nav-link active" data-toggle="tab" href="#tab1">
+                    <i class="flaticon-profile" style="font-size: xx-large;font-size: 48px;display:block;"></i>
+                    <label>Datos Personales</label>
+                </a>
+            </li>
+
+            <li class="nav-item col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12" style="margin-left: 0;padding:0px;">
+                <a class="nav-link" data-toggle="tab" href="#tab2">
+                    <i class="flaticon-analytics" style="font-size: xx-large;font-size: 48px;display:block;"></i>
+                    <label>Antecedentes Académicos</label>
+                </a>
+            </li>
+
+            <li class="nav-item col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12" style="margin-left: 0;padding:0px;">
+                <a class="nav-link" data-toggle="tab" href="#tab3">
+                    <i class="flaticon-coins" style="font-size: xx-large;font-size: 48px;display:block;"></i>
+                    <label>Economía</label>
+                </a>
+            </li>
+
+
+            <li class="nav-item col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12" style="margin-left: 0;padding:0px;">
+                <a class="nav-link" data-toggle="tab" href="#tab4">
+                    <i class="flaticon-folder" style="font-size: xx-large;font-size: 48px;display:block;"></i>
+                    <label>Salud</label>
+                </a>
+            </li>
+
+
+            <li class="nav-item col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12" style="margin-left: 0;padding:0px;">
+                <a class="nav-link" data-toggle="tab" href="#tab5">
+                    <i class="flaticon-plus" style="font-size: xx-large;font-size: 48px;display:block;"></i>
+                    <label>Alimentación</label>
+                </a>
+            </li>
+
+            <li class="nav-item col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12" style="margin-left: 0;padding:0px;">
+                <a class="nav-link" data-toggle="tab" href="#tab6">
+                    <i class="flaticon-home" style="font-size: xx-large;font-size: 48px;display:block;"></i>
+                    <label>Vivienda</label>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab1" style="">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    DATOS PERSONALES DEL ESTUDIANTE
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="m-form m-form--fit m-form" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="PersonalInformationSave" id="form_personal_information" method="post">
+                        <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                        <input name="TermId" value="@Model.TermId" type="hidden" />
+                        <div class="form-group m-form__group">
+                            <label style="font-size:larger;" class="control-label"><b>IDENTIFICACIÓN :</b></label>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Código</label>
+                                            <input name="UserName" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Periodo Académico</label>
+                                            <input name="Term" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">DNI</label>
+                                            <input name="Dni" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Nombre</label>
+                                            <input name="Name" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Apellido Paterno</label>
+                                            <input name="PaternalSurname" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Apellido Materno</label>
+                                            <input name="MaternalSurname" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Facultad</label>
+                                            <input name="Faculty" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Escuela profesional</label>
+                                            <input name="Career" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Ciclo</label>
+                                            <input name="CurrentAcademicYear" type="number" class="form-control m-input" disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">F.Nacimiento</label>
+                                            <input name="Birthdate" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-control-label">Edad</label>
+                                            <input name="Age" type="text" class="form-control m-input" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">E-mail</label>
+                                            <input name="Email" type="email" class="form-control m-input" disabled>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label">Sexo</label>
+                                            <select name="Sex" class="form-control">
+                                                @foreach (var item in ConstantHelpers.SEX.VALUES)
+                                                {
+                                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Estado Civil</label>
+                                            <select name="CivilStatus" class="form-control">
+                                                @foreach (var item in ConstantHelpers.CIVIL_STATUS.VALUES)
+                                                {
+                                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label style="font-size:larger;" class="control-label"><b>DIRECCION DOMICILIARIA :</b></label>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                <div class="form-group m-form__group">
+                                    <label style="font-size:larger;" class="control-label"><b>DOMICILIO DE ORIGEN</b></label>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label class="form-control-label">Domicilio</label>
+                                            <input name="OriginAddress" type="text" class="form-control m-input">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Teléfono</label>
+                                            <input name="OriginPhoneNumber" type="text" class="form-control m-input">
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input id="OriginDepartmentIdDefault" value="@Model.OriginDepartmentIdDefault" hidden />
+                                            <label class="form-control-label">Departamento</label>
+                                            <select class="form-control m-input" name="OriginDepartmentId">
+                                                <option value="0" selected disabled>Selecciona un Departamento</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input id="OriginProvinceIdDefault" value="@Model.OriginProvinceIdDefault" hidden />
+                                            <label class="form-control-label">Provincia</label>
+                                            <select class="form-control m-input" name="OriginProvinceId">
+                                                <option value="0" selected disabled>Selecciona una Provincia</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input id="OriginDistrictIdDefault" value="@Model.OriginDistrictIdDefault" hidden />
+                                            <label class="form-control-label">Distrito</label>
+                                            <select class="form-control m-input" name="OriginDistrictId">
+                                                <option value="0" selected disabled>Selecciona una Distrito</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group">
+
+                                    <label style="font-size:larger;" class="control-label"><b>DOMICILIO ACTUAL</b></label>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label class="form-control-label">Domicilio</label>
+                                            <input name="CurrentAddress" type="text" class="form-control m-input">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Teléfono</label>
+                                            <input name="CurrentPhoneNumber" type="text" class="form-control m-input">
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input id="CurrentDepartmentIdDefault" value="@Model.CurrentDepartmentIdDefault" hidden />
+                                            <label class="form-control-label">Departamento</label>
+                                            <select class="form-control m-input" name="CurrentDepartmentId">
+                                                <option value="0" selected disabled>Selecciona un Departamento</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input id="CurrentProvinceIdDefault" value="@Model.CurrentProvinceIdDefault" hidden />
+                                            <label class="form-control-label">Provincia</label>
+                                            <select class="form-control m-input" name="CurrentProvinceId">
+                                                <option value="0" selected disabled>Selecciona una Provincia</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input id="CurrentDistrictIdDefault" value="@Model.CurrentDistrictIdDefault" hidden />
+                                            <label class="form-control-label">Distrito</label>
+                                            <select class="form-control m-input" name="CurrentDistrictId">
+                                                <option value="0" selected disabled>Selecciona un Distrito</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label style="font-size:larger;" class="control-label"><b>EN CASO DE EMERGENCIA COMUNICAR A :</b></label>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label class="form-control-label">Apellidos y Nombres</label>
+                                            <input name="FullNameExternalPerson" type="text" class="form-control m-input" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Celular</label>
+                                            <input name="PhoneExternalPerson" type="text" class="form-control m-input" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label class="control-label">Domicilio</label>
+                                            <input name="AddressExternalPerson" type="text" class="form-control m-input" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Correo electrónico</label>
+                                            <input name="EmailExternalPerson" type="text" class="form-control m-input" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <button id="btnSavePersonalInformation" type="submit" class="btn btn-primary">
+                                                Guardar
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="tab2" class="tab-pane">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    ANTECEDENTES ACADÉMICOS
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <form class="m-form m-form--fit m-form" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="AcademicBackgroundSave" id="form_academic_background" method="post">
+                            <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                            <input name="TermId" value="@Model.TermId" type="hidden" />
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label">Colegio de Procedencia</label>
+                                        <input name="OriginSchool" type="text" class="form-control m-input">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">Lugar</label>
+                                        <input name="OriginSchoolPlace" type="text" class="form-control m-input" />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label">Tipo de Colegio</label>
+                                        <select name="SchoolType" class="form-control m-input">
+                                            <option value="-1" selected disabled>Selecciona un Tipo de Colegio</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">Preparación universitaria</label>
+                                        <select name="UniversityPreparationId" class="form-control m-input">
+                                            <option value="-1" selected disabled>Selecciona una Preparación Universitaria</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <button id="btnAcademicBackground" type="submit" class="btn btn-primary">
+                                                Guardar
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div id="tab3" class="tab-pane">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    ECONOMÍA
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <form class="m-form m-form--fit" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="EconomySave" id="form_economy" method="post">
+                            <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                            <input name="TermId" value="@Model.TermId" type="hidden" />
+                            <div class="form-group m-form__group">
+                                <label class="control-label" style="font-size:18px;"><b>1. DE LA FAMILIA</b></label>
+                                <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="control-label">¿Quien sostiene el hogar ?</label>
+                                            <select name="PrincipalPerson" class="form-control">
+                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group " id="IsFather">
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label style="font-size:larger;" class="control-label"><b>OCUPACIÓN DE QUIEN SOSTIENE EL HOGAR DEL PADRE - TUTOR</b></label>
+                                            <br />
+                                            <label class="control-label">Modalidad de ingreso económico</label>
+                                            <select name="EconomicMethodFatherTutor" class="form-control">
+                                                <option value="-1" selected disabled>Selecciona una modalidad</option>
+                                            </select>
+
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <br />
+                                                    <label for=""><b>A. DEPENDIENTE</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Sector</label>
+                                                            <select name="DSectorFatherTutor" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona un Sector</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Condición laboral</label>
+                                                            <select name="DWorkConditionFatherTutor" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona una Condición Laboral</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Especificar actividad</label>
+                                                            <input name="DEspecificActivityFatherTutor" class="form-control m-input" type="text" />
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Desocupado</label>
+                                                            <select name="DBusyFatherTutor" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <br />
+                                                    <label for=""><b>B. INDEPENDIENTE</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">Sector</label>
+                                                            <select name="ISectorFatherTutor" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona un Sector</option>
+                                                            </select>
+
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">Condición laboral</label>
+                                                            <select name="IWorkConditionFatherTutor" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona una Condición laboral</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">Especificar actividad</label>
+                                                            <input name="IEspecificActivityFatherTutor" class="form-control m-input" type="text" />
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group " id="IsMother">
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label style="font-size:larger;" class="control-label"><b>OCUPACIÓN DE QUIEN SOSTIENE EL HOGAR DE LA MADRE</b></label>
+                                            <br />
+                                            <label class="control-label">Modalidad de ingreso económico</label>
+                                            <select name="EconomicMethodMother" class="form-control">
+                                                <option value="-1" selected disabled>Selecciona una modalidad</option>
+                                            </select>
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <br />
+                                                    <label for=""><b>A. DEPENDIENTE</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Sector</label>
+                                                            <select name="DSectorMother" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona un Sector</option>
+                                                            </select>
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Condición laboral</label>
+                                                            <select name="DWorkConditionMother" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona una Condición Laboral</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Especificar actividad</label>
+                                                            <input name="DEspecificActivityMother" class="form-control m-input" type="text" />
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Desocupado</label>
+                                                            <select name="DBusyMother" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <br />
+                                                    <label for=""><b>B. INDEPENDIENTE</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">Sector</label>
+                                                            <select name="ISectorMother" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona un Sector</option>
+                                                            </select>
+
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">Condición laboral</label>
+                                                            <select name="IWorkConditionMother" class="form-control">
+                                                                <option value="-1" selected disabled>Selecciona una Condición laboral</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">Especificar actividad</label>
+                                                            <input name="IEspecificActivityMother" class="form-control m-input" type="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label style="font-size:larger;" class="control-label"><b>INGRESO ECONÓMICO FAMILIAR (GASTOS)</b></label>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Alimentación</label>
+                                                    <input name="EconomicExpensesFeeding" class="form-control m-input" type="number" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Servicios básicos</label>
+                                                    <input name="EconomicExpensesBasicServices" class="form-control m-input" type="number" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Educación</label>
+                                                    <input name="EconomicExpensesEducation" class="form-control m-input" type="number" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Otros</label>
+                                                    <input name="EconomicExpensesOthers" class="form-control m-input" type="number" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label style="font-size:larger;" class="control-label"><b>INGRESO ECONÓMICO FAMILIAR</b></label>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Remuneración del padre</label>
+                                                    <input name="FatherRemuneration" class="form-control m-input amt" type="number" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Remuneración de la madre</label>
+                                                    <input name="MotherRemuneration" class="form-control m-input amt" type="number" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Ingreso del alumno</label>
+                                                    <input name="StudentRemuneration" class="form-control m-input amt" type="number" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Otros ingresos</label>
+                                                    <input name="OtherRemuneration" class="form-control m-input amt" type="number" />
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Total ingreso familiar </label>
+                                                    <input name="TotalRemuneration" class="form-control m-input" type="number" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group">
+                                <label class="control-label" style="font-size:18px;"><b>2. DEL ESTUDIANTE</b></label>
+                                <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label">Dependencia económica del estudiante</label>
+                                            <select name="StudentDependency" class="form-control">
+                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Vivienda del estudiante</label>
+                                            <select name="StudentCoexistence" class="form-control">
+                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Riesgo familiar</label>
+                                            <select name="FamilyRisk" class="form-control">
+                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                <div class="form-group m-form__group">
+                                    <label style="font-size:larger;" class="control-label"><b>TRABAJO DEL ESTUDIANTE</b></label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label">Dedicación a</label>
+                                            <select name="StudentWorkDedication" class="form-control">
+                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Especifique la actividad</label>
+                                            <input name="StudentWorkDescription" type="text" class="form-control m-input" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Condición laboral</label>
+                                            <select name="StudentWorkCondition" class="form-control" tabindex="1">
+                                                <option value="-1" selected disabled>Selecciona una opción</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding-bottom:10px;" class="form-group m-form__group ">
+                                <br />
+                                <div class="form-group m-form__group">
+                                    <div class="m-checkbox-list">
+                                        <label style="font-size:larger;  margin-right: 18px;" class="control-label"><b>PERSONA A QUIEN AUTORIZA BRINDAR INFORMACIÓN ACADÉMICA Y SOCIOECONÓMICA</b></label>
+                                        <label class="m-checkbox" style="display: inline;">
+                                            <input name="AuthorizeCheck" type="checkbox" value="true">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label">Apellidos y Nombres</label>
+                                            <input name="AuthorizedPersonFullName" type="text" class="form-control m-input authorize" disabled />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Domicilio</label>
+                                            <input name="AuthorizedPersonAddress" type="text" class="form-control m-input authorize" disabled />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Celular</label>
+                                            <input name="AuthorizedPersonPhone" type="text" class="form-control m-input authorize" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <button id="btnSaveEconomy" type="submit" class="btn btn-primary">
+                                                Guardar
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                        <br />
+                        <br />
+                        <div style="padding:5px 30px 5px 30px;">
+                            <label style="font-size:larger; margin-right:10px;" class="control-label"><b>COMPOSICIÓN FAMILIAR</b></label>
+                            <button type="button" data-toggle="modal" data-target="#model_add_studentfamily" class="btn btn-success btn-sm" style="margin-bottom:5px;">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <br />
+                            <br />
+                            <br />
+                            <table class="table table-striped table-bordered" id="studentFamily-datatable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab4" style="">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    SALUD
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--begin::Form-->
+                    <form class="m-form m-form--fit" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="HealthSave" id="form_health" method="post">
+                        <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                        <input name="TermId" value="@Model.TermId" type="hidden" />
+                        <div class="form-group m-form__group">
+                            <label class="control-label" style="font-size:18px;"><b>1. DE LA FAMILIA</b></label>
+                            <table class="table table-striped table-bordered" id="studentFamily-health-datatable"></table>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label class="control-label" style="font-size:18px;"><b>2. DEL ESTUDIANTE</b></label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="control-label">¿ Padece de alguna enfermedad ?</label>
+                                    <select name="IsSick" class="form-control">
+                                        <option value="-1" selected disabled>Selecciona una opción</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="control-label">Tipo de enfermedad</label>
+                                    <input name="TypeParentIllness" type="text" class="form-control m-input">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="control-label">¿ Tiene seguro de salud ?</label>
+                                    <select name="HaveInsurance" class="form-control">
+                                        <option value="-1" selected disabled>Selecciona una opción</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">¿Cuál es?</label>
+                                    <select name="InsuranceDescription" class="form-control">
+                                        <option value="-1" selected disabled>Selecciona una opción</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button id="btnSaveHealthInformation" type="submit" class="btn btn-primary">
+                                            Guardar
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab5" style="">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    ALIMENTACIÓN
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="m-form m-form--fit" id="form_feeding" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="FeedingSave" method="post">
+                        <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                        <input name="TermId" value="@Model.TermId" type="hidden" />
+                        <div class="form-group m-form__group">
+                            <label class="control-label" style="font-size:18px;"><b>¿DÓNDE DESAYUNA ?</b></label>
+                            <div class="m-checkbox-inline">
+                                <label class="m-checkbox">
+                                    <input name="BreakfastHome" type="checkbox" value="true" /> Casa
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="BreakfastPension" type="checkbox" value="true" /> Pensión
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="BreakfastRelativeHome" type="checkbox" value="true" /> Casa de parientes
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="BreakfastOther" type="checkbox" value="true" /> Otros
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group m-form__group">
+                            <label class="control-label" style="font-size:18px;"><b>¿DÓNDE ALMUERZA ?</b></label>
+                            <div class="m-checkbox-inline">
+                                <label class="m-checkbox">
+                                    <input name="LunchHome" type="checkbox" value="true" /> Casa
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="LunchPension" type="checkbox" value="true" /> Pensión
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="LunchRelativeHome" type="checkbox" value="true" /> Casa de parientes
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="LunchOther" type="checkbox" value="true" /> Otros
+                                    <span></span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="form-group m-form__group">
+                            <label class="control-label" style="font-size:18px;"><b>¿DÓNDE CENA ?</b></label>
+                            <div class="m-checkbox-inline">
+                                <label class="m-checkbox">
+                                    <input name="DinnerHome" type="checkbox" value="true" /> Casa
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="DinnerPension" type="checkbox" value="true" /> Pensión
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="DinnerRelativeHome" type="checkbox" value="true" /> Casa de parientes
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input name="DinnerOther" type="checkbox" value="true" /> Otros
+                                    <span></span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button id="btnSaveFeedingInformation" type="submit" class="btn btn-primary">
+                                            Guardar
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab6" style="">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    VIVIENDA
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--begin::Form-->
+                    <form class="m-form m-form--fit" id="form_living_place" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="LivingPlaceSave" method="post">
+                        <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                        <input name="TermId" value="@Model.TermId" type="hidden" />
+                        <div class="form-group m-form__group">
+                            <label style="font-size:larger;" class="control-label"><b>DE LA FAMILIA DEL ESTUDIANTE</b></label>
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label">Tenencia</label>
+                                        <select name="Tenure" class="form-control">
+                                            <option value="-1" selected disabled>Selecciona una opción</option>
+                                            @foreach (var item in ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TENURE.TENURE)
+                                            {
+                                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                            }
+                                        </select>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">Tipo de construcción</label>
+                                        <select name="ContructionType" class="form-control">
+                                            <option value="-1" selected disabled>Selecciona una opción</option>
+                                            @foreach (var item in ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_CONSTRUCTION_TYPE.CONSTRUCTION_TYPE)
+                                            {
+                                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Tipo de Vivienda</label>
+                                        <select name="ZoneType" class="form-control">
+                                            <option value="-1" selected disabled>Selecciona una opción</option>
+                                            @foreach (var item in ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVING_PLACE_TYPE.TYPE)
+                                            {
+                                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Estructura</label>
+                                        <select name="BuildType" class="form-control">
+                                            <option value="-1" selected disabled>Selecciona una opción</option>
+                                            @foreach (var item in ConstantHelpers.STUDENT_INFORMATION.LIVING_PLACE.LIVINGPLACE_TYPEBUILD.TYPEBUILD)
+                                            {
+                                                    <option value="@((int)item.Key)">@(item.Value)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Otro</label>
+                                        <input name="OtherTypeLivingPlace" type="text" class="form-control" placeholder="" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label style="font-size:larger;" class="control-label"><b>ESTRUCTURA DE VIVIENDA (PRECISAR CANTIDAD)</b></label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label class="control-label">N° de pisos</label>
+                                                <input name="NumberFloors" type="number" class="form-control" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="control-label">N° de dormitorios</label>
+                                                <input name="NumberRooms" type="number" class="form-control" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="control-label">Cocina</label>
+                                                <input name="NumberKitchen" type="number" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                                                                        <div class="col-md-4">
+                                                <label class="control-label">Baño</label>
+                                                <input name="NumberBathroom" type="number" class="form-control" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="control-label">Sala</label>
+                                                <input name="NumberLivingRoom" type="number" class="form-control" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="control-label">Comedor</label>
+                                                <input name="NumberDinningRoom" type="number" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Servicios</label>
+                                        <div class="m-checkbox-inline">
+                                            <label class="m-checkbox">
+                                                <input name="Water" type="checkbox" value="true"/> Agua
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Drain" type="checkbox" value="true"/> Desague
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="LivingPlacePhone" type="checkbox" value="true"/> Teléfono
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Light" type="checkbox" value="true"/>Luz
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Internet" type="checkbox" value="true" />Internet
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Equipamiento</label>
+                                        <div class="m-checkbox-inline">
+                                            <label class="m-checkbox">
+                                                <input name="TV" type="checkbox" value="true"/> T.V Color
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="HasPhone" type="checkbox" value="true"/> Telefono
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Radio" type="checkbox" value="true"/> Radio
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Stereo" type="checkbox" value="true"/> Equipo de Sonido
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Iron" type="checkbox" value="true"/> Plancha
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="EquipPhone" type="checkbox" value="true"/> Celular
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Laptop" type="checkbox" value="true"/> Laptop
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Closet" type="checkbox" value="true"/> Ropero
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="Fridge" type="checkbox" value="true"/> Refrigerador
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="PersonalLibrary" type="checkbox" value="true"/> Biblioteca personal
+                                                <span></span>
+                                            </label>
+                                            <label class="m-checkbox">
+                                                <input name="EquipComputer" type="checkbox" value="true" /> Computadora
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group m-form__group">
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button id="btnSaveLivingPlaceInformation" type="submit" class="btn btn-primary">
+                                            Guardar
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@*--Agregar Modal de Familiar--*@
+<div class="modal fade" id="model_add_studentfamily" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar familiar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="create_student_family" class="m-form m-form--state" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="AddStudentFamily" method="post">
+                    <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label class="required-form-label">Nombre</label>
+                            <input type="text" name="Name" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label class="required-form-label">Apellido Paterno</label>
+                            <input type="text" name="PaternalName" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label class="required-form-label">Apellido Materno</label>
+                            <input type="text" name="MaternalName" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">F.Nacimiento</label>
+                            <input type="text" name="Birthday" class="form-control m-input Birthday" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Parentesco</label>
+                            <select name="RelationshipInt" class="form-control" required>
+                                <option value="-1" selected disabled>Seleccione una opción</option>
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.RELATIONSHIPS.TYPE)
+                                {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Estado Civil</label>
+                            <select name="CivilStatusInt" class="form-control" required>
+                                <option value="-1" selected disabled>Seleccione una opción</option>
+                                @foreach (var item in ConstantHelpers.CIVIL_STATUS.VALUES)
+                                {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Grado de instrucción</label>
+                            <select name="DegreeInstructionInt" class="form-control" required>
+                                <option value="-1" selected disabled>Seleccione una opción</option>
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.CERTIFICATES.TYPE)
+                                {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Titulo/maestria</label>
+                            <input type="text" name="Certificated" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Ocupación</label>
+                            <input type="text" name="Occupation" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Centro laboral y/o estudios</label>
+                            <input type="text" name="WorkCenter" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Localidad</label>
+                            <input type="text" name="Location" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button id="btnAddStudentFamily" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="model_edit_studentfamily" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar familiar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--state" id="edit_student_family" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="EditStudentFamily" method="post">
+                    <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                    <input name="StudentFamilyId" type="hidden" />
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label class="required-form-label">Nombre</label>
+                            <input type="text" name="Name" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label class="required-form-label">Apellido Paterno</label>
+                            <input type="text" name="PaternalName" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label class="required-form-label">Apellido Materno</label>
+                            <input type="text" name="MaternalName" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">F.Nacimiento</label>
+                            <input type="text" name="Birthday" class="form-control m-input Birthday" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Parentesco</label>
+                            <select name="RelationshipInt" class="form-control" required>
+                                <option value="-1" selected disabled>Seleccione una opción</option>
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.RELATIONSHIPS.TYPE)
+                                {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Estado Civil</label>
+                            <select name="CivilStatusInt" class="form-control" required>
+                                <option value="-1" selected disabled>Seleccione una opción</option>
+                                @foreach (var item in ConstantHelpers.CIVIL_STATUS.VALUES)
+                                {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Grado de instrucción</label>
+                            <select name="DegreeInstructionInt" class="form-control" required>
+                                <option value="-1" selected disabled>Seleccione una opción</option>
+                                @foreach (var item in ConstantHelpers.STUDENT_FAMILY.CERTIFICATES.TYPE)
+                                {
+                                        <option value="@((int)item.Key)">@(item.Value)</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Titulo/maestria</label>
+                            <input type="text" name="Certificated" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Ocupación</label>
+                            <input type="text" name="Occupation" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Centro laboral y/o estudios</label>
+                            <input type="text" name="WorkCenter" class="form-control m-input" required />
+                        </div>
+                        <div class="col-md-6 m-form__group-sub">
+                            <label class="required-form-label">Localidad</label>
+                            <input type="text" name="Location" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button id="btnEditStudentFamily" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="model_edit_studentfamily_health" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar familiar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--state" id="edit_student_family_health" asp-area="Admin" asp-controller="InstitutionalWelfare" asp-action="EditStudentFamilyHealth" method="post">
+                    <input name="StudentId" value="@Model.StudentId" type="hidden" />
+                    <input name="StudentFamilyId" type="hidden" />
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Nombre</label>
+                            <input type="text" name="Name" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Paterno</label>
+                            <input type="text" name="PaternalName" class="form-control m-input" disabled />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Apellido Materno</label>
+                            <input type="text" name="MaternalName" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <label>Tipo de enfermedad</label>
+                            <input type="text" name="DiseaseType" class="form-control m-input" />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-md-12 m-form__group-sub">
+                            <div class="m-checkbox-list">
+                                <label class="m-checkbox">
+                                    <input name="IsSick" type="checkbox" value="true"> ¿Está enfermo?
+                                    <span></span>
+                                </label>
+                                <label class="m-checkbox">
+                                    <input type="checkbox" name="SurgicalIntervention" value="true"> ¿Tiene intervenciones quirúrgicas?
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button id="btnEditStudentFamilyHealth" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/institutionalwelfare/studentinformationterm.js" asp-append-version="true"></script>
+}

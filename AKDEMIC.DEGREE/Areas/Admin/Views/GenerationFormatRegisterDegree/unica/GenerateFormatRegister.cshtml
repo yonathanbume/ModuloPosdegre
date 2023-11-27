@@ -1,0 +1,277 @@
+﻿@using AKDEMIC.REPOSITORY.Repositories.Degree.Templates
+
+@model FormatRegisterTemplate
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Formato de registro</title>
+</head>
+
+<body>
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th colspan="5">
+                        <div class="header-univ-logo">
+                            <img src="@Model.Logo" />
+                        </div>
+                        <div class="header-photo">
+                            <div class="user-photo">
+                                FOTO
+                            </div>
+                        </div>
+                        <div class="header">
+                            <p>@GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                            <p>SECRETARIA GENERAL</p>
+                            <p>
+                                @if (Model.GradeTypeInt == ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE)
+                                {
+                                    @Html.Raw("REGISTRO DE TITULO PROFESIONAL")
+                                }
+                                else
+                                {
+                                    @Html.Raw("REGISTRO DE GRADO ACADÉMICO DE BACHILLER")
+                                }
+                            </p>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" height="5px"></td>
+                </tr>
+                <tr>
+                    <td class="border" height="40px" width="30%">@Model.PaternalSurname</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.MaternalSurname</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.Name</td>
+                </tr>
+                <tr>
+                    <td class="border bold">APELLIDO PATERNO</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">APELLIDO MATERNO</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">NOMBRES</td>
+                </tr>
+                <tr>
+                    <td height="40px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="border" height="40px" width="30%">@Model.Book</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.Folio</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.DiplomaNum</td>
+                </tr>
+                <tr>
+                    <td class="border bold">Nª DE LIBRO</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">Nª DE FOLIO</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">Nª DE TÍTULO</td>
+                </tr>
+                <tr>
+                    <td height="40px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="border" height="60px">
+                        @Model.AcademicDegreeDenomination
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" height="10px"></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="bold" style="text-align:left;">
+                        @if (Model.GradeTypeInt == ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE)
+                        {
+                            @Html.Raw("TITULO PROFESIONAL DE:")
+                        }
+                        else
+                        {
+                            @Html.Raw("GRADO ACAD&Eacute;MICO DE BACHILLER EN:");
+                        }
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" height="5px"></td>
+                </tr>
+
+                @if (Model.GradeTypeInt == ConstantHelpers.GRADE_INFORM.DegreeType.PROFESIONAL_TITLE)
+                {
+                    <tr>
+                        <td colspan="5" class="border" height="60px">
+                            &emsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" height="5px"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="bold" style="text-align:left;">
+                            ESPECIALIDAD
+                        </td>
+                    </tr>
+                }
+
+                <tr>
+                    <td colspan="5" height="20px"></td>
+                </tr>
+                <tr>
+                    <td class="border" height="40px" width="30%">@Model.FacultyCouncilDate</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.Resolution</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.UniversityCouncilDate</td>
+                </tr>
+                <tr>
+                    <td class="border bold">FECHA DE CONSEJO DE FACULTAD</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">RESOLUCI&Oacute;N DECANAL Nª</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">FECHA DE R.D.</td>
+                </tr>
+                <tr>
+                    <td height="20px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="border" height="40px" width="30%"></td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%"></td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%"></td>
+                </tr>
+                <tr>
+                    <td class="border bold">APROBADO EN SESI&Oacute;N DE CONSEJO</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">RESOLUCI&Oacute;N RECTORAL Nª</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">FECHA DE RESOLUCI&Oacute;N RECTORAL</td>
+                </tr>
+                <tr>
+                    <td height="20px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="border" height="60px">
+                        &emsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" height="5px"></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="bold" style="text-align:left;">
+                        DIRECCI&Oacute;N PERSONAL (Av./Jr./Calle/N&uacute;mero)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" height="5px"></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="border" height="60px">
+                        &emsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" height="10px"></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="bold" style="text-align:left;">
+                        (Urbanizaci&oacute;n/Distrito/Provincia/Dpto./Pa&iacute;s)
+                    </td>
+                </tr>
+                <tr>
+                    <td height="10px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="border" height="40px" width="30%">@Model.DNI</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.UserPhoneNumber</td>
+                    <td width="5%" style="border-top:2px solid white;">&emsp;</td>
+                    <td class="border" width="30%">@Model.DiplomaNum</td>
+                </tr>
+                <tr>
+                    <td class="border bold">L.E. O D.N.I.</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">TEL&Eacute;FONO</td>
+                    <td>&emsp;</td>
+                    <td class="border bold">Nª DIPLOMA</td>
+                </tr>
+                <tr>
+                    <td height="10px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="bold" style="text-align:left;">
+                        SE HACE ENTREGA DEL DIPLOMA RESPECTIVO, DANDO FE DE SU CONFORMIDAD
+                    </td>
+                </tr>
+                <tr>
+                    <td height="5px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="bold" style="text-align:left;">
+                        En Ica, a los @DateTime.UtcNow.ToDefaultTimeZone().Day.ToString("00") d&iacute;as del mes de @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.ToDefaultTimeZone().Month] del @(DateTime.UtcNow.ToDefaultTimeZone().Year).
+                    </td>
+                </tr>
+                <tr>
+                    <td height="10px"></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                    <td style="border-top:2px solid white;">&emsp;</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <table style="width:100%;">
+                            <tr>
+                                <td width="50%" style="border:1px solid;" height="150px"></td>
+                                <td width="10%"></td>
+                                <td width="30%" style="border:1px solid;"></td>
+                                <td width="10%"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold;">FIRMA</td>
+                                <td></td>
+                                <td style="font-weight:bold;">HUELLA DIGITAL</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</body>
+</html>

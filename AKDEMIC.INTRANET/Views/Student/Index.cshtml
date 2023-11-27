@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Gestión de Estudiantes";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Gestión de Estudiantes", Controller = null, Action = null }
+    };
+}
+
+<div class="m-content">
+    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+        <div class="row align-items-center">
+            <div class="col-xl-8 order-2 order-xl-1">
+                <div class="form-group m-form__group row align-items-center">
+                    <div class="col-md-4">
+                        <div class="m-input-icon m-input-icon--left">
+                            <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="search">
+                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                <span><i class="la la-search"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+            </div>
+        </div>
+    </div>
+    <div class="m-datatable" id="ajax_data"></div>
+</div>
+
+@section Scripts {
+    <script src="~/js/pages/student/index.js"></script>
+}

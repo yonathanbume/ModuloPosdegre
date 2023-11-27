@@ -1,0 +1,137 @@
+﻿@{
+    ViewData["Title"] = "Carga Lectiva";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Carga" }
+};
+}
+
+
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" />
+}
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+
+                    <div class="row">
+                        @*<label>Seleccione un docente</label>
+                                            <div class="input-group">
+                                                <input id="code_user" type="text" class="form-control" placeholder="Buscar...">
+                                <div class="input-group-append">
+                                    <button id="code_search" class="btn btn-primary" type="button"><i class="la la-search"></i></button>
+                                </div>
+                            <select class="form-control m-input m-select2 select2-teachers"></select>*@
+
+
+                        <div class="form-group col-md-4">
+                            <label class="form-control-label">Facultad</label>
+                            <select id="faculties" class="m-input m-select2 select2-faculties">
+                                <option value="0" selected>Todos</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="form-control-label">Departamento Académico</label>
+                            <select id="academicDepartments" class="m-input m-select2 select2-academicDepartment">
+                                <option value="0" disabled selected>Seleccione una Opción</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="form-control-label">Docente</label>
+                            <select id="teachers" class="m-input m-select2 select2-teachers"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Carga lectiva del docente
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button type="button" id="show_schedule" class="btn btn-primary btn-sm m-btn m-btn--custom">Ver Horario</button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m_datatable" id="workload_table"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="students_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel">
+                    Estudiantes registrados
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m_datatable" id="students_table"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="evaluations_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel">
+                    Evaluaciones registradas
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m_datatable" id="evaluations_table"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal_calendar">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel">
+                    Horario del Docente
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-calendar__container">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/areas/admin/workload/index.js"></script>
+}
+

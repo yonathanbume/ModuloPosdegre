@@ -1,0 +1,149 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.AcademicSummaryViewModels.RecordReportViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/css/pages/pdf/evaluationreport.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <img src="@Model.ImagePath" style="max-height: 80px;" />
+            </td>
+            <td>
+                <div class="title">@GeneralHelpers.GetInstitutionName().ToUpper()<br />RECORD ACAD&Eacute;MICO</div>
+            </td>
+        </tr>
+    </table>
+    <table>
+        @*<tr>
+            <td width="104px">
+                <img src="@Model.ImagePath" style="max-height: 60px;" />
+            </td>
+            <td>
+                <div class="title">@GeneralHelpers.GetInstitutionName().ToUpper()<br />RECORD ACAD&Eacute;MICO</div>
+            </td>
+        </tr>*@
+        @*<tr>
+            <td width="104px">
+                <img src="~/images/themes/unfv/logo.png" style="width:195px" />
+            </td>
+            <td>
+                <div class="title">UNIVERSIDAD NACIONAL FEDERICO VILLARREAL<br />RECORD ACAD&Eacute;MICO</div>
+            </td>
+        </tr>*@
+        @*<tr>
+            <td align="center">ACTA DE EVALUACIÓN</td>
+        </tr>*@
+        <tr>
+            <td colspan="2" height="140px">
+                <table>
+                    <tr>
+                        <td class="subtitle">ESTUDIANTE:</td>
+                        <td>@Model.StudentFullName </td>
+                        <td class="subtitle">C&Oacute;DIGO / DNI:</td>
+                        <td>@Model.StudentCode / @Model.StudentDni</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitle">FACULTAD:</td>
+                        <td>@Model.FacultyName</td>
+                        <td class="subtitle">ESCUELA PROF.:</td>
+                        <td>@Model.CareerName</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitle">PERIODO DE EMISI&Oacute;N:</td>
+                        <td>@Model.CurrentTerm</td>
+                        <td class="subtitle">FECHA DE EMISI&Oacute;N:</td>
+                        <td>@DateTime.UtcNow.ToLocalDateFormat()</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        @foreach (var term in Model.Terms)
+        {
+            <tr>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="subtitle">
+                                <strong>@term.TermName - @term.CareerName</strong>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" height="140px" valign="top">
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">CURSO</th>
+                                <th rowspan="2">NIVEL</th>
+                                <th rowspan="2">CR&Eacute;DITOS</th>
+                                <th colspan="2">PROMEDIO FINAL</th>
+                                <th rowspan="2">N&ordm; DE VECES</th>
+                            </tr>
+                            <tr>
+                                <th>NUM.</th>
+                                <th>LETRAS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in term.StudentSections)
+                            {
+                                <tr>
+                                    <td>@item.CourseName</td>
+                                    <td align="center">@item.AcademicYear</td>
+                                    <td align="center">@item.Credits.ToString("0.0")</td>
+                                    <td align="center" style="@(item.NotDisapproved ? string.Empty : "color:red;")">@item.FinalGrade</td>
+                                    <td align="center" style="@(item.NotDisapproved ? string.Empty : "color:red;")">@item.FinalGradeText</td>
+                                    <td align="center">@item.Try</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" height="120px" valign="top">
+                    <table class="list" style="table-layout:fixed;">
+                        <thead class="text-center">
+                            <tr>
+                                <th rowspan="2">Ciclo</th>
+                                <th colspan="2">Cr&eacute;ditos</th>
+                                <th colspan="2">Ponderado</th>
+                                <th colspan="2">M&eacute;rito</th>
+                            </tr>
+                            <tr>
+                                <th>Totales</th>
+                                <th>Aprobados</th>
+                                <th>Actual</th>
+                                <th>Acumulado</th>
+                                <th>&Oacute;rden</th>
+                                <th>Clasificaci&oacute;n</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <td align="center">@term.AcademicSummary.StudentAcademicYear</td>
+                                <td align="center">@term.AcademicSummary.TotalCredits</td>
+                                <td align="center">@term.AcademicSummary.ApprovedCredits.ToString("0.0")</td>
+                                <td align="center">@term.AcademicSummary.WeightedFinalGrade</td>
+                                <td align="center">@term.AcademicSummary.CumulativeWeightedFinalGrade</td>
+                                <td align="center">@term.AcademicSummary.Order</td>
+                                <td align="center">@term.AcademicSummary.MeritOrder</td>
+                            </tr>
+                            <tr class="text-center">
+                                <th>Observaciones</th>
+                                <td colspan="6" style="word-wrap: break-word; padding: 2px 5px;">@term.AcademicSummary.Observations</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

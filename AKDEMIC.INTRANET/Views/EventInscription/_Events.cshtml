@@ -1,0 +1,75 @@
+﻿@model List<AKDEMIC.INTRANET.ViewModels.EventViewModels.EventViewModel>
+
+@if (Model.Count > 0)
+{
+<div class="row">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <div class="col-6">
+            <div style="padding:15px">
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                    <div class="m-portlet__head m-portlet__head--fit">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-action" style="width:100%">
+                                <button type="button" class="btn btn-sm btn-brand btn-event-type" style="width:100%;background-color:@Model[i].EventTypeColor;">
+                                    @Model[i].EventTypeName
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="m-widget19">
+                            <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height:286px">
+                                @*<img src="@($"imagenes/{todraw[key].PathPicture}")" width="500" height="500">*@
+                                <img src="@($"imagenes/{Model[i].PathPicture}")">
+                                <h3 class="m-widget19__title m--font-light" style="display:block">@Model[i].EventName</h3>
+                                <div class="m-widget19__shadow" style="top: 50% !important"></div>
+                            </div>
+                            <div class="m-widget19__content">
+                                <div class="m-widget19__header">
+                                    <div class="m-widget19__stats">
+                                        <span class="m-widget19__number m--font-brand"><i class="flaticon-calendar-2"></i></span>
+                                        <span class="m-widget19__comment">@Model[i].EventDate</span>
+                                    </div>
+                                </div>
+                                <div class="m-widget19__body">
+                                    @{
+                                        var description = "";
+                                        if (Model[i].Description.Length > 120)
+                                        {
+                                            description = Model[i].Description.Substring(0, 120);
+                                            description += "...";
+                                        }
+                                    }
+                                    @description
+                                </div>
+                            </div>
+                            <div class="m-widget19__action">
+                                <button data-id="@Model[i].Id" type="button" class="btn  btn-secondary m-btn m-btn--custom btn-read-more" data-toggle="modal" data-target="#detail_modal">
+                                    Ver
+                                </button>
+
+                                @if (!Model[i].SignedUp)
+                                {
+                                    <button data-id="@Model[i].Id" type="button" class="btn  btn-success btn-inscription">
+                                        Inscribirse
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span>El usuario ya se encuentra inscrito </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+}
+else
+{
+    <div id="empty-events"><label class="empty-events-message">No existen eventos disponibles</label></div>
+}
+

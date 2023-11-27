@@ -1,0 +1,21 @@
+﻿@font-face {
+    src: url(../../../fonts/NimbusSanL-Reg.woff) format('woff');
+    font-family: 'NimbusSanL';
+}
+
+@font-face {
+    src: url(../../../fonts/NimbusSanL-Bol.woff) format('woff');
+    font-family: 'NimbusSanL';
+    font-weight: bold;
+}
+
+@font-face {
+    src: url(../../../fonts/DejaVuSansCondensed.woff) format('woff');
+    font-family: 'DejaVu Sans Condensed';
+}
+
+@font-face {
+    src: url(../../../fonts/DejaVuSansCondensed-Bold.woff) format('woff');
+    font-family: 'DejaVu Sans Condensed';
+    font-weight: bold;
+}

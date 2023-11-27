@@ -1,0 +1,86 @@
+﻿@{
+    @if ((bool)ViewBag.FromAccount)
+    {
+        Layout = "~/Views/Shared/Templates/Inscription/_Layout.cshtml";
+    }
+
+    ViewData["Title"] = "Evaluación de desempeño del docente";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+    };
+}
+
+@section Styles{
+    <style>
+        .custom-fa {
+            font-size: 2rem;
+        }
+
+        .fa-completed {
+            color: #2c2e4a;
+        }
+    </style>
+}
+
+<div class="@((bool)ViewBag.FromAccount? "mx-auto m--margin-top-30" : "")" style="@((bool)ViewBag.FromAccount? "width: 75%;" : "") ">
+    <div class="m-content">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            @ViewData["Title"]&emsp;
+                            <i class="d-none fa fa-check-circle custom-fa fa-completed" id="completed_check"></i>
+                        </h3>
+                    </div>
+                </div>
+                @if((bool)ViewBag.FromAccount)
+                {
+                    <div class="m-portlet__head-tools">
+                        <a asp-action="Logout" asp-controller="Account" asp-area="" class="btn btn-primary btn-sm m-btn m-btn--custom">Cerrar Sesi&oacute;n</a>
+                    </div>
+                }
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-form--label-align-right">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-2 order-xl-1">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-alert m-alert--icon alert alert-info m--hide" role="alert" id="datatable_msg">
+                    <div class="m-alert__icon">
+                        <i class="la la-info-circle"></i>
+                    </div>
+                    <div class="m-alert__text" id="datatable_msg_txt">
+                        Oh rayos! Ocurri&oacute; un error en el servidor
+                    </div>
+                    <div class="m-alert__close">
+                        <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <div id="alert_pending_surveys" class="d-none m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+                    <div class="m-alert__icon">
+                        <i class="flaticon-exclamation-1"></i>
+                        <span></span>
+                    </div>
+                    <div class="m-alert__text">
+                        <strong>Cantidad encuestas pendientes :  <span id="quantity_pending">0</span></strong>
+                    </div>
+                </div>
+
+                <table id="sections-datatable" class="table table-striped"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>var FromAccount = @ViewBag.FromAccount.ToString().ToLower()</script>
+    <script src="~/js/areas/student/performance-evaluation/index.js" asp-append-version="true"></script>
+}

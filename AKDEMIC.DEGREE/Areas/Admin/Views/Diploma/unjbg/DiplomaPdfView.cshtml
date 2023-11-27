@@ -1,0 +1,243 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+
+@{
+    Layout = null;
+}
+
+<div class="RENDER" style=" width: 100%; height: 100%;  display: grid; font-size:25px; font-family:Calibri">
+    <div style="height: auto;  margin: auto; text-align:justify">
+        Por cuanto, en sesión de fecha <u>@Model.UniveristaryDateDay</u> de <u >@Model.UniveristaryDateMonth.ToUpper()</u> de <u> @Model.UniveristaryDateYear</u>; el Consejo Universitario en
+        <br />
+        cumplimiento de las disposiciones legales vigentes, aprobó conferir el Grado Académico de @Model.GradeTypeDescription.ToUpper() en:
+        <br />
+        <br />
+        <div style="text-align:center;width:100%;border-bottom: 2px solid black; font-size:40px;">
+            @*<span><b> @Model.AcademicProgram.ToUpper()</b></span>*@
+            <span><b>  @Model.AcademicDegreeDenomination.ToUpper()</b></span>
+        </div>
+        <br />
+        <div style="width:4%;display:inline-block">
+            a:
+        </div>
+        <div style="text-align:center;width:95%;border-bottom: 2px solid black;display:inline-block;font-size:40px;">
+            <span><b>@Model.StudentName.ToUpper()</b></span>
+        </div>
+        POR TANTO: Se expide el presente Diploma para se le reconozca como  tal.
+        <br />
+        <div style="text-align:right">
+            Dado y firmado en la ciudad de Tacna, el <u>@Model.CurrentDay</u> de <u>@Model.CurrentMonth</u> de <u>@Model.CurrentYear</u>
+        </div>
+        <br />
+        <table border="0" cellpadding="0" cellspacing="0" style="width:70%;font-size:24px;border:none; border-collapse: collapse;background-color:white; font-family:Calibri;">
+            <tr>
+                <td style="width:40%;border:none;">
+                    FACULTAD
+                </td>
+                <td style="width:4%;border:none;">
+                    :
+                </td>
+                <td style="width:55%;border:none;">
+                    @Model.Faculty.ToUpper()
+                </td>
+            </tr>
+            <tr style="background-color:white; margin-top:2px;">
+                <td style="width:40%;border:none;">
+                    CARRERA PROFESIONAL
+                </td>
+                <td style="width:4%;border:none;">
+                    :
+                </td>
+                <td style="width:55%;border:none;">
+                    @Model.Career.ToUpper()
+                </td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%;font-size:24px;border:none;border-collapse: collapse;">
+            <tr style="border:none;">
+                <td style="text-align:center;width:33%;padding:30px;border:none;">
+                    <div style="border-top: 1px solid black;height: 2px;">
+                        Decano
+                    </div>
+                </td>
+                <td style="text-align:center;width:33%;padding:20px;border:none;">
+                    <div style="border-top: 1px solid black;height: 2px;">
+                        Rector
+                    </div>
+                </td>
+                <td style="text-align:center;width:33%;padding:30px;border:none;">
+                    <div style="border-top: 1px solid black;height: 2px;">
+                        Secretario General
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+<div style=" width: 100%; height: 100%;  display: grid; font-size:25px; font-family:Calibri">
+    <div style="text-align:left;">
+        <div>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%;font-size:12px;border:none;border-collapse: collapse;background-color:white;">
+
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            CÓDIGO UNIVERSIDAD
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.UniversityCode
+                        </td>
+                        <td rowspan="13" style="width:40%;border:none;">
+                            <div style="height:350px;border:1px solid black">
+                                <div style="margin-top:20px; text-align:center;">
+                                    <img src='@(Model.Shield)' width="50" height="50" />
+                                </div>
+                                <div style="padding:25px;line-height:20px;">
+                                    El secretario General de la Universidad Nacional Jorde Basadre Grohmann, que suscribe, CERTIFICA que este documento es auténtico,
+                                    ha sido expedido y suscrito por las autoridades competentes de la Universidad, cuyas firmas son igualmente auténticas.
+                                </div>
+                                <div style="text-align:center;padding:40px 35px;">
+                                    <div style="border-top: 1px solid black;height: 2px; padding:10px;">
+                                        SECRETARIO GENERAL
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            TIPO DE DOCUMENTO
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.DocumentType
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            ABREV. GRADO O TÍTULO
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.GradeAbrev
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            MODALIDAD DE OBTENCIÓN
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.GradeModalityGain
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            MODALIDAD DE ESTUDIOS
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.StudentModality
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            NÚMERO DE RESOLUCIÓN
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.ResolutionNumber
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            FECHA DE RESOLUCIÓN
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.ResoultionRectorDate
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            TIPO DE EMISIÓN
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.Faculty.ToUpper()
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            LIBRO
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.Book
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            FOLIO
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.Foil
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            REGISTRO
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            @Model.RegisterNumber
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td style="width:15%;border:none;">
+                            FECHA DE EMISIÓN DIPLOMA
+                        </td>
+                        <td style="width:4%;border:none;">
+                            :
+                        </td>
+                        <td style="width:40%;border:none;">
+                            -
+                        </td>
+                    </tr>               
+            </table>
+        </div>
+        <div style="text-align:right;">
+            <img src="@Model.QRCode">
+        </div>
+
+    </div>
+    
+
+</div>

@@ -1,0 +1,108 @@
+﻿@using AKDEMIC.INTRANET.Areas.Teacher.Models.ClassRescheduleViewModels;
+@model ClassRescheduleViewModel
+
+<div id="class-reschedule-modal-request" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-modal-label">
+                    Solicitud de Reprogramación de Clase
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="class-reschedule-modal-request-form" class="m-form m-form--label-align-right m-form--state" asp-action="CreateClassReschedule" asp-area="Teacher" asp-controller="ClassReschedule" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="class-reschedule-request-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="create_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label for="CourseId">Curso</label>
+                            <select name="CourseId" class="form-control m-input course-select2"></select>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label name="SectionId">Sección</label>
+                            <select name="SectionId" class="form-control m-input section-select2"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-8 m-form__group-sub">
+                            <label asp-for="ClassId" class="required-form-label">Clase</label>
+                            <select name="ClassId" class="form-control m-input class-select2" required></select>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label name="IsPermanent" class="d-block">¿Es Permanente?</label>
+                            <span class="m-switch m-switch--outline m-switch--icon m-switch--primary">
+                                <label>
+                                    <input type="checkbox" name="IsPermanent" value="true">
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="StartDate" class="required-form-label">Fecha</label>
+                            <div class="input-group">
+                                <input name="StartDate" type="text" class="form-control m-input start-date-datepicker" readonly required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="StartTime" class="required-form-label">Inicio</label>
+                            <div class="input-group">
+                                <input name="StartTime" type="text" class="form-control m-input start-time-timepicker" readonly required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label for="EndTime" class="required-form-label">Fin</label>
+                            <div class="input-group">
+                                <input name="EndTime" type="text" class="form-control m-input end-time-timepicker" readonly required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label asp-for="Justification" class="required-form-label">Justificación</label>
+                        <textarea name="Justification" class="form-control m-input disable-resize justification" maxlength="600" rows="6" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button  name="Submit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Enviar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

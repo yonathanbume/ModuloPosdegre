@@ -1,0 +1,373 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.CurriculumProgressViewModel
+@inject AKDEMIC.SERVICE.Services.Generals.Interfaces.IConfigurationService _configurationService
+
+@{
+    int isCareerDirector = 0;
+    var evaluationReportFormatDate = Convert.ToByte(await _configurationService.GetValueByKey(ConstantHelpers.Configuration.IntranetManagement.EVALUATION_REPORT_FORMAT_DATE));
+
+}
+@if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR))
+{
+    isCareerDirector = 1;
+}
+
+<input type="hidden" id="isCareerDirector" value="@isCareerDirector" />
+<input type="hidden" id="ahWthEvaluationReport" value="@((ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNSCH ) && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE) && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT) ? "true" : "false")" />
+
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Historial Acad&eacute;mico
+            </h3>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="m-portlet__body">
+
+    <div class="m-form--label-align-right m--margin-bottom-20">
+        <div class="row align-items-center">
+            <div class="col-xl-6 order-2 order-xl-1">
+            </div>
+            <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                @if (!User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE) && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT))
+                {
+                    <button type="button" class="btn btn-primary btn-sm m-btn m-btn--icon" data-toggle="modal" data-target="#academic_history_data_admission_modal">
+                        <span>
+                            <i class="la la-edit"></i>
+                            <span>Información para la impresión</span>
+                        </span>
+                    </button>
+                }
+
+                @if (!User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR) && !User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE) && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT))
+                {
+                    <button type="button" id="uploaddigital" class="btn btn-primary btn-sm m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-upload"></i>
+                            <span>Adjuntar Digital</span>
+                        </span>
+                    </button>
+                }
+
+                <button id="btn_curriculum_progress_pdf" data-id="@Model.Id" class="btn btn-primary btn-sm m-btn  m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-file-pdf-o"></i>
+                        <span>Imprimir</span>
+                    </span>
+                </button>
+
+                @*<a asp-action="CurriculumProgressPdf" asp-controller="StudentInformation" asp-area="Academic" asp-route-id="@Model.Id" class="btn btn-primary btn-sm m-btn m-btn--icon" target="_blank">
+                <span>
+                <i class="la la-file-pdf-o"></i>
+                <span>Imprimir</span>
+                </span>
+                </a>*@
+
+                <h5 class="mt-3">Cr&eacute;ditos Aprobados : @Model.TotalAppovedCredits</h5>
+                <h5 class="mt-3">Cursos Aprobados : @Model.TotalApprovedCourses</h5>
+                <div class="m-separator m-separator--dashed d-xl-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <input id="hasFile" value="@Model.HasFile" hidden />
+    <h5>Cursos obligatorios</h5>
+    <table class="table table-striped table-bordered" id="curriculum_table">
+        <thead>
+            <tr>
+                <th>Ciclo</th>
+                <th>Cod</th>
+                <th>Curso</th>
+                <th>Cred.</th>
+                <th>N° vec.</th>
+                <th>Nota</th>
+                <th>Semestre</th>
+                @if (
+                (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNSCH)
+                && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE)
+                && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT)
+                )
+                {
+                    <th>Acta</th>
+                    <th>Fec. Acta</th>
+                    <th>Opc.</th>
+                }
+            </tr>
+        </thead>
+    </table>
+
+    <br />
+    <br />
+
+    <h5>Cursos electivos</h5>
+    <table class="table table-striped table-bordered" id="elective_table">
+        <thead>
+            <tr>
+                <th>Ciclo</th>
+                <th>Cod.</th>
+                <th>Curso</th>
+                <th>Cred.</th>
+                <th>N° vec.</th>
+                <th>Nota</th>
+                <th>Semestre</th>
+                @if (
+                (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNSCH)
+                && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE)
+                && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT)
+                )
+                {
+                    <th>Acta</th>
+                    <th>Fec. Acta</th>
+                    <th>Opc.</th>
+                }
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<!--Start Modal Upload Digital File-->
+<div class="modal fade" id="uploaddigital-modal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="detail-label">
+                    Adjuntar Documento Digital
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="uploaddigital-form" asp-action="CurriculumDigitalUpload" asp-area="Academic" asp-controller="StudentInformation" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="uploaddigital_form_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="uploaddigital_form_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @*<div class="form-group m-form__group col-lg-12">
+                        <label class="form-control-label">Ubicaci&oacute;n f&iacute;sica</label>
+                        <input name="PhysicalLocation" class="form-control m-input" required autocomplete="off" />
+                        </div>*@
+                        <div class="form-group m-form__group col-lg-12">
+                            <label class="form-control-label">Archivo</label>
+                            <div class="custom-file">
+                                <input type="file" id="cp-document" name="CPDocument" class="custom-file-input cp-document-file" lang="es" accept="application/pdf, image/jpeg" />
+                                <label class="custom-file-label cp-document-file-label" for="cp-document">
+                                    Seleccione un archivo
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group m-from__group col-lg-12 d-none" id="uploaddigital_div_dowload_document">
+                            <label class="form-control-label">Documento Adjuntado : </label>
+                            <a href="#" target="_blank" class="m-link m--font-boldest">Descargar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="CPbtnSave" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="academic_history_data_admission_modal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="detail-label">
+                    Detalles de la Modalidad Ingreso para la Impresión
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="academic_history_data_admission_form" asp-action="AcademicHistoryAdmissionData" asp-area="Academic" asp-controller="StudentInformation" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="uploaddigital_form_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="uploaddigital_form_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label>Puntaje Obtenido</label>
+                            <input class="form-control m-input" name="Score" type="number" min="0" disabled required />
+                        </div>
+                        <div class="m-form__group-sub col-lg-12">
+                            <label>Posible puntaje obtenido</label>
+                            <input class="form-control m-input" name="PossibleScore" type="number" min="0" disabled required />
+                        </div>
+                        <div class="m-form__group-sub col-lg-12">
+                            <label>Orden</label>
+                            <input class="form-control m-input" name="Order" type="number" min="0" step="1" disabled required />
+                        </div>
+                        <div class="m-form__group-sub col-lg-12">
+                            <label>Total Estudiantes</label>
+                            <input class="form-control m-input" name="TotalStudents" type="number" min="0" step="1" disabled required />
+                        </div>
+                        <div class="m-form__group-sub col-lg-12">
+                            <label>Nro de Inscripci&oacute;n</label>
+                            <input class="form-control m-input" name="RegistrationNumber" type="text" disabled required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End Modal Upload Digital File-->
+
+<div id="equivalence-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Observaciones
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="equivalence-data" style="white-space: pre-line;">
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="evaluation_report_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Editar Acta Asignada
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="evaluation_report_form">
+                <div class="modal-body">
+                    <input type="hidden" name="AcademicHistoryId" />
+                    <input type="hidden" name="EvaluationReportId" />
+                    <div class="row">
+                        <div class="form-group m-form__group col-12">
+                            <label class="required-form-label">Periodo</label>
+                            <select class="form-control m-select2" name="TermId" required></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-from__group col-12">
+                            <label class="required-form-label">Cod. Acta</label>
+                            <div class="input-group">
+                                <input name="EvaluationReportCode" class="form-control m-input" />
+                                <div class="input-group-append">
+                                    <button title="Validar Código" class="btn btn-primary validate_evaluationrepot" type="button">Validar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @if (evaluationReportFormatDate == ConstantHelpers.Intranet.EvaluationReportConfigurationFormatDate.CreatedAt)
+                    {
+                        <div class="row">
+                            <div class="form-group m-form__group col-12">
+                                <label class="required-form-label">Fec. Emisión Acta</label>
+                                <input name="EvaluationReportCreatedAt" class="form-control m-input" disabled />
+                            </div>
+                        </div>
+                    }
+
+                    @if (evaluationReportFormatDate == ConstantHelpers.Intranet.EvaluationReportConfigurationFormatDate.ReceptionDate)
+                    {
+                        <div class="row">
+                            <div class="form-group m-form__group col-12">
+                                <label class="required-form-label">Fec. Recepción Acta</label>
+                                <input name="EvaluationReportReceptionDate" class="form-control m-input" disabled />
+                            </div>
+                        </div>
+                    }
+
+                    @if (evaluationReportFormatDate == ConstantHelpers.Intranet.EvaluationReportConfigurationFormatDate.LastGradePublished)
+                    {
+                        <div class="row">
+                            <div class="form-group m-form__group col-12">
+                                <label class="required-form-label">Fec. Última nota publicada</label>
+                                <input name="EvaluationReportLastGradePublished" class="form-control m-input" disabled />
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="form-group m-form__group col-12">
+                            <label class="required-form-label">Observaciones</label>
+                            <textarea class="form-control m-input" name="Observation" rows="4" placeholder="Ejemplo. POR:"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-12">
+                            <label class="form-control-label">Archivo</label>
+                            <div></div>
+                            <div class="custom-file">
+                                <input type="file" name="File" class="custom-file-input" accept="application/pdf" lang="es" />
+                                <label class="custom-file-label">
+                                    Seleccione un archivo
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

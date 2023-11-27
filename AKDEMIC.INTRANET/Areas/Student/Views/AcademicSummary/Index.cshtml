@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "Historial Académico";
+    ViewData["SubTitle1"] = "Información del Estudiante";
+    ViewData["SubTitle2"] = "Periodos Matriculados";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewData["Title"], Controller = null, Action = null}
+};
+}
+
+<div class="m-content">
+    <vc:student-summary student-id="null"></vc:student-summary>
+    <vc:academic-summary student-id="null"></vc:academic-summary>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/student/academicsummary/index.js"></script>
+}

@@ -1,0 +1,92 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.DeferredExamViewModels.DeferredExamViewModel
+@{
+    ViewBag.Title = "Listado de Estudiantes";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = "Examenes Aplazados", Controller = "DeferredExam", Action = "Index", Area="Teacher"},
+    new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+<input type="hidden" id="Id" value="@Model.Id" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-1 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-5">
+                                <label>Curso</label>
+                                <input asp-for="Course" class="m-input form-control" disabled />
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Grupo</label>
+                                <input asp-for="Section" class="m-input form-control" disabled />
+                            </div>
+                               <div class="form-group m-form__group col-xl-4">
+                                <label>Periodo Académico</label>
+                                <input asp-for="Term" class="m-input form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-8"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="students-datatable table table-hover table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_save_grade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Asignar Nota</h5>
+            </div>
+            <form id="form_save_grade">
+                <input type="hidden" name="Id" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label style="font-weight:500">Estudiante</label>
+                        <p id="StudentName"></p>
+                    </div>
+                    <div class="form-group m-form__group ">
+                        <label style="font-weight:500" class="form-control-label">Nota</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input name="Grade" class="form-control" type="text" placeholder="Ingresar nota..." required step="1" max="20" min="0" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-save" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/teacher/deferredexam/detail.js" asp-append-version="true"></script>
+}
+

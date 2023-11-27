@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Ranking de Graduados";
+    ViewBag.SubTitle = "Listado de Graduados por Escuela Profesional y Periodo de Ingreso-Egreso";
+    ViewBag.Breadcrumbs = new[] {
+        new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Periodo de Ingreso</label>
+                                <select class="form-control m-input m-select2 select2-terms" id="admission-term">
+                                    <option value="@Guid.Empty">Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Periodo de Egreso</label>
+                                <select class="form-control m-input m-select2 select2-terms" id="graduation-term">
+                                    @*<option value="@Guid.Empty">Todos</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Escuela</label>
+                                <select class="form-control m-input m-select2 select2-careers">
+                                    <option value="@Guid.Empty">Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Programa académico</label>
+                                <select class="form-control m-input m-select2 select2-academicPrograms">
+                                    <option value="@Guid.Empty">Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button class="btn btn-danger btn-report m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-file-pdf-o"></i>
+                                <span>Descargar Reporte</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="students-datatable table table-hover table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/careerdirector/ranking/graduateds.js"></script>
+}

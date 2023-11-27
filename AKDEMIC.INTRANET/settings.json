@@ -1,0 +1,32 @@
+﻿{
+  //REPORTS
+  "ReportSettings": {
+
+    //AcademicRecord/GradeReportController
+    "BachelorsDegreeHeaderText": "VICERRECTORADO ACADÉMICO",
+
+    //AcademicRecord/TitleReportController
+    "JobTitleHeaderText": "VICERRECTORADO ACADÉMICO",
+
+    //Academic/ConstancyController
+    "ReportGradesHeaderText": "VICERRECTORADO ACADÉMICO",
+
+    //Academic/StudentInformationController
+    "EnrollmentReportHeaderText": "VICERRECTORADO ACADÉMICO",
+    "BachelorsDegreeInfoHeaderText": "VICERRECTORADO ACADÉMICO",
+
+    //Admin/AcademicSituationController
+    "AcademicSituationReportFormat1HeaderText": "VICERRECTORADO ACADÉMICO",
+
+    //Teacher/ClassScheduleController
+    "AcademicChargeHeaderText": "VICERRECTORADO ACADÉMICO",
+
+    //Teacher/GradeController
+    "EvaluationReportHeaderText": "VICERRECTORADO ACADÉMICO",
+
+    //Teacher/SectionController
+    "SectionEnrolledReportPDF": "VICERRECTORADO ACADÉMICO"
+
+  }
+}
+

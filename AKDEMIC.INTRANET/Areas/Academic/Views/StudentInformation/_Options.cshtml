@@ -1,0 +1,242 @@
+﻿
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text"></h3>
+            <a asp-action="Index" asp-controller="StudentInformation" asp-area="Academic" class="btn btn-secondary m-btn m-btn--icon">
+                <span>
+                    <i class="la la-angle-left"></i>
+                    <span>Atr&aacute;s</span>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+    </div>
+</div>
+<div class="m-portlet__body m-portlet__body-options">
+    <div class="row nav" role="tablist">
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.PASSWORD_EDITOR))
+        {
+            <div class="col-md-3">
+                <a href="javascript:void(0)" class="student-option-block password">
+                    <img src="~/images/areas/academic/studentinformation/student-information-2.png" />
+                    <span>Cambiar Clave</span>
+                </a>
+            </div>
+        }
+        else
+        {
+            @if (!User.IsInRole(ConstantHelpers.ROLES.INSTITUTIONAL_WELFARE))
+            {
+
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block general-data">
+                        <img src="~/images/areas/academic/studentinformation/student-information-1.png" />
+                        <span>Datos Generales</span>
+                    </a>
+                </div>
+
+                @if (!User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE))
+                {
+                    <div class="col-md-3">
+                        <a href="javascript:void(0)" class="student-option-block user-procedures">
+                            <img src="~/images/areas/careerdirector/studentinformation/student-information-3.png" />
+                            <span>Tr&aacute;mites de Estudiante</span>
+                        </a>
+                    </div>
+                }
+
+                @if (!User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF) && !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR) && !User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE))
+                {
+                    <div class="col-md-3">
+                        <a href="javascript:void(0)" class="student-option-block password">
+                            <img src="~/images/areas/academic/studentinformation/student-information-2.png" />
+                            <span>Cambiar Clave</span>
+                        </a>
+                    </div>
+                }
+                @*<div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block user-procedures">
+                    <img src="~/images/areas/academic/studentinformation/student-information-3.png" />
+                    <span>Solicitudes del Estudiante</span>
+                    </a>
+                    </div>*@
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block enrollment">
+                        <img src="~/images/areas/academic/studentinformation/student-information-5.png" />
+                        <span>Ver Matr&iacute;culas </span>
+                    </a>
+                </div>
+                @if (!User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE))
+                {
+                    <div class="col-md-3">
+                        <a href="javascript:void(0)" class="student-option-block schedule">
+                            <img src="~/images/areas/academic/studentinformation/student-information-6.png" />
+                            <span>Horario del Estudiante</span>
+                        </a>
+                    </div>
+                }
+            }
+
+            @if (!User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE))
+            {
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block assistance-history">
+                        <img src="~/images/areas/academic/studentinformation/student-information-8.png" />
+                        <span>Registro de Asistencias</span>
+                    </a>
+                </div>
+            }
+
+            <div class="col-md-3">
+                <a href="javascript:void(0)" class="student-option-block academic-history academic-history">
+                    <img src="~/images/areas/academic/studentinformation/student-information-9.png" />
+                    <span>Historial de Notas</span>
+                </a>
+            </div>
+
+            @*<div class="col-md-3">
+                <a href="#" class="student-option-block">
+                <img src="~/images/areas/academic/studentinformation/student-information-7.png" />
+                <span>Cursos Faltantes</span>
+                </a>
+                </div>
+                <div class="col-md-3">
+                <a href="#" class="student-option-block">
+                <img src="~/images/areas/academic/studentinformation/student-information-8.png" />
+                <span>Cursos Disponibles</span>
+                </a>
+                </div>*@
+
+            <div class="col-md-3">
+                <a href="javascript:void(0)" class="student-option-block report-card">
+                    <img src="~/images/areas/academic/studentinformation/student-information-10.png" />
+                    <span>Notas por Periodo</span>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="javascript:void(0)" class="student-option-block curriculum-progress">
+                    <img src="~/images/areas/academic/studentinformation/student-information-11.png" />
+                    <span>Historial Acad&eacute;mico</span>
+                </a>
+            </div>
+            @if (!User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE) && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT))
+            {
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-student-documents" class="student-option-block student-documents">
+                        <img src="~/images/areas/academic/studentinformation/student-information-12.png" />
+                        <span>Constancias de Estudios</span>
+                    </a>
+                </div>
+            }
+
+            @*<div class="col-md-3">
+                <a asp-action="StudyRecord" asp-controller="StudentInformation" asp-area="Academic" asp-route-id="@Model.Id" class="student-option-block" target="_blank" download>
+                <img src="~/images/areas/academic/studentinformation/student-information-12.png" />
+                <span>Constancia de Estudios</span>
+                </a>
+                </div>*@
+
+
+            @if (!User.IsInRole(ConstantHelpers.ROLES.INSTITUTIONAL_WELFARE))
+            {
+                @if (!User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY) && !User.IsInRole(ConstantHelpers.ROLES.DEAN) && !User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE) && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT))
+                {
+                    <div class="col-md-3">
+                        <a href="javascript:void(0)" class="student-option-block procedure-request">
+                            <img src="~/images/areas/academic/studentinformation/student-information-7.png" />
+                            <span>Solicitud de Tr&aacute;mites</span>
+                        </a>
+                    </div>
+                }
+
+                if (!User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE))
+                {
+                    <div class="col-md-3">
+                        <a href="javascript:void(0)" class="student-option-block observations">
+                            <img src="~/images/areas/academic/studentinformation/student-information-4.png" />
+                            <span>Observaciones</span>
+                        </a>
+                    </div>
+                }
+
+                @*<div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block sections">
+                    <img src="~/images/areas/academic/studentinformation/student-information-6.png" />
+                    <span>Cambio de Secci&oacute;n</span>
+                    </a>
+                    </div>*@
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block student-record">
+                        <img src="/images/areas/academic/studentinformation/student-information-3.png">
+                        <span>Record</span>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block student-situation">
+                        <img src="/images/areas/academic/studentinformation/student-information-3.png">
+                        <span>Situación</span>
+                    </a>
+                </div>
+            }
+
+            @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.Akdemic)
+            {
+                <div class="col-md-3">
+                    <a href="/academico/alumnos/informacion/@Model.Id/estadisticas" class="student-option-block student-statistics">
+                        <img src="/images/areas/academic/studentinformation/student-information-3.png">
+                        <span>Estadísticas</span>
+                    </a>
+                </div>
+            }
+
+            @if (!User.IsInRole(ConstantHelpers.ROLES.INSTITUTIONAL_WELFARE)
+           && !User.IsInRole(ConstantHelpers.ROLES.DEAN)
+           && !User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR)
+           && !User.IsInRole(ConstantHelpers.ROLES.SOCIAL_SERVICE)
+           && !User.IsInRole(ConstantHelpers.ROLES.OTI_SUPPORT))
+            {
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block payments-made" data-toggle="modal" data-target="#payment-made-modal">
+                        <img src="~/images/areas/academic/studentinformation/AK_verdeudas.png" />
+                        <span>Ver Deudas</span>
+                    </a>
+                </div>
+            }
+
+            @if (
+           ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.Akdemic ||
+           ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNCP ||
+           ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNJBG
+           )
+            {
+                <div class="col-md-3">
+                    <a href="javascript:void(0)" class="student-option-block student-portfolio">
+                        <img src="~/images/areas/academic/studentinformation/AK_portafoliodeestudiante.png" />
+                        <span>Portafolio</span>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div id="payment-made-modal" class="modal fade" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Listado de Deudas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="m-portlet__body">
+                <table class="table table-striped table-bordered" id="payment-table"></table>
+            </div>
+        </div>
+    </div>
+</div>

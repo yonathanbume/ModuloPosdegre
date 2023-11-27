@@ -1,0 +1,65 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.DependencyViewModels
+@model DependencyViewModel
+@{
+    ViewBag.Title = "Gestión de Dependencias";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Dependencias
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30" id="dependency-header-form">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-md-4">
+                                <label name="UserId">Director</label>
+                                <select name="UserId" class="form-control m-input m-select2 user-select2" required></select>
+                                <div class="d-md-none m--margin-bottom-10"></div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button class="btn btn-primary m-btn m-btn--icon" onclick="dependency.modal.load.create(this, event)">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nueva Dependencia</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table id="dependency-datatable-get" class="table table-striped"></table>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("Index/_DependencyModalCreate")
+@await Html.PartialAsync("Index/_DependencyModalDetail")
+@await Html.PartialAsync("Index/_DependencyModalUpdate")
+
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/modules/select.js"></script>
+    <script src="~/js/areas/admin/dependency/index.js"></script>
+}

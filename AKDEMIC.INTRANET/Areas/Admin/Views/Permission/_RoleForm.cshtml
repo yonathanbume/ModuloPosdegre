@@ -1,0 +1,32 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.PermissionViewModels.RolePermissionViewModel
+
+<form>
+    <div class="modal-body">
+        <input id="roleid" value="" hidden />
+        <div class="row" id="LName">
+            <div class="form-group m-form__group col-lg-12">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" id="rDescription" class="form-control m-input" required>
+                <span asp-validation-for="Name" class="form-control-feedback"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-12" style="margin: 0px;">
+                <label asp-for="Permissions"></label><br />
+            </div>
+            <div class="form-group col-lg-12" style="display:flex;">
+                <select id="Permissions" asp-items="Model.Permissions" style="margin-right: 10px;" class="form-control"></select>
+                <button class="btn btn-danger btn-sm m-btn--icon" id="add-permission" type="button"><span><i class="la la-plus"></i></span></button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div id="role-permissions" style="width: 100%;"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+        <button type="button" class="btn btn-primary btn-submit add"> Guardar </button>
+    </div>
+</form>
+

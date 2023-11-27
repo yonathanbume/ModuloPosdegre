@@ -1,0 +1,354 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@using AKDEMIC.CORE.Extensions;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+    Model.Course.Section.Students = Model.Course.Section.Students.Where(x => x.Status != ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN).ToList();
+
+    var colspan = 6 + Model.Course.PartialAveragesCount;
+
+    var enrolled = Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName)).Count();
+    var approved = Model.Term.Status == ConstantHelpers.TERM_STATES.ACTIVE ? Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && x.Approved).Count() : Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && x.Status == ConstantHelpers.STUDENT_SECTION_STATES.APPROVED).Count();
+    var disapproved = Model.Term.Status == ConstantHelpers.TERM_STATES.ACTIVE ? Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && !x.Approved).Count() : Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && (x.Status == ConstantHelpers.STUDENT_SECTION_STATES.DISAPPROVED || x.Status == ConstantHelpers.STUDENT_SECTION_STATES.DPI)).Count();
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-emblem {
+            float: right;
+            padding-left: 80px;
+        }
+
+            .header-emblem img {
+                max-height: 100px !important;
+            }
+
+        .header-univ-logo {
+            float: left;
+            padding-right: 80px;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+        .header {
+            font-weight: 600;
+            /*color: #0f128b;*/
+            text-align: center;
+        }
+
+            .header .university-title {
+                padding-top: 15px !important;
+                font-size: 23px !important;
+                margin: 2px !important;
+            }
+
+            .header .header-title {
+                font-size: 20px !important;
+                margin: 2px !important;
+            }
+
+            .header .subheader-title {
+                font-size: 18px !important;
+                margin: 2px !important;
+            }
+
+        .container-details {
+            width: 100% !important;
+            font-weight: normal;
+            text-align: left;
+            font-size: 13px !important;
+        }
+
+            .container-details .table-general-detail {
+                width: 75%;
+                float: left;
+            }
+
+                .container-details .table-general-detail td {
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+
+            .container-details .table-course-detail {
+                width: 25%;
+                font-size: 12px !important;
+                float: right;
+            }
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            font-size: 14px !important;
+            background-color: lightgray;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 20px !important;
+            border-bottom: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-bottom: 1px solid transparent;
+        }
+
+        .location {
+            text-align: right;
+            /*color: red;*/
+            height: 50px !important;
+            border: 0px !important;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 12px !important;
+            height: 30px !important;
+            width: 5%;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 13px !important;
+                border: 1px solid black;
+                padding: 3px !important;
+            }
+
+        .red {
+            color: red !important;
+        }
+
+        .blue {
+            color: blue !important;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="@colspan">
+                    <div class="header-emblem">
+                        <img src="@Model.ImgNationalEmblem" />
+                    </div>
+                    <div class="header-univ-logo">
+                        <img src="@Model.Img" />
+                    </div>
+                    <div class="header">
+                        <p class="university-title">@GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                        <p class="header-title">@Model.Header</p>
+                        <p class="subheader-title">@Model.SubHeader</p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="@colspan">
+                    <div class="container-details">
+                        <table class="table-general-detail">
+                            <tbody>
+                                <tr class="report-name">
+                                    <td colspan="2">REGISTRO DE EVALUACI&Oacute;N</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold" width="30%">FACULTAD:</td>
+                                    <td>@Model.Course.Career.Faculty</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">ESCUELA PROFESIONAL:</td>
+                                    <td>@Model.Course.Career.Name</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">COMPONENTE CURRICULAR:</td>
+                                    <td>[@Model.Course.Code] @Model.Course.Name</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">DOCENTE:</td>
+                                    <td>@Model.Course.Section.Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">CR&Eacute;DITOS:</td>
+                                    <td>@Model.Course.Credits</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">MODALIDAD:</td>
+                                    <td>@(AKDEMIC.CORE.Helpers.ConstantHelpers.Intranet.EvaluationReportType.NAMES.ContainsKey(Model.BasicInformation.Type) ? AKDEMIC.CORE.Helpers.ConstantHelpers.Intranet.EvaluationReportType.NAMES[Model.BasicInformation.Type].ToUpper() : "-")</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">SEMESTRE ACAD&Eacute;MICO:</td>
+                                    <td>
+                                        @Model.Term.Name
+                                        &emsp;
+                                        &emsp;
+                                        <span class="bold">CICLO: </span>@(ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS.ContainsKey(Model.Course.AcademicYear) ? ConstantHelpers.ACADEMIC_YEAR.ROMAN_NUMERALS[Model.Course.AcademicYear] : "-")
+                                        &emsp;
+                                        &emsp;
+                                        <span class="bold">SECCIÓN: </span>@Model.Course.Section.Code
+                                        &emsp;
+                                        &emsp;
+                                        <span class="bold">PLAN: </span>@Model.Course.Curriculum
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table-course-detail">
+                            <tbody>
+                                <tr>
+                                    <td class="act-number">@Model.BasicInformation.Code</td>
+                                    <td class="act-number">&emsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>HORAS TEÓRICAS:</td>
+                                    <td>@Model.Course.TheoreticalHours</td>
+                                </tr>
+                                <tr>
+                                    <td>HORAS PRÁCTICAS:</td>
+                                    <td>@Model.Course.PracticalHours</td>
+                                </tr>
+                                <tr>
+                                    <td>TOTAL DE HORAS:</td>
+                                    <td>@Model.Course.EffectiveHours</td>
+                                </tr>
+                                <tr>
+                                    <td>FECHA:</td>
+                                    <td>@(Model.BasicInformation.DateByConfiguration.HasValue ? Model.BasicInformation.DateByConfiguration.ToLocalDateFormat() : "-")</td>
+                                </tr>
+                                <tr>
+                                    <td>HORA:</td>
+                                    <td>@(Model.BasicInformation.DateByConfiguration is null ? "-" : Model.BasicInformation.DateByConfiguration.ToDefaultTimeZone()?.ToString("hh:mm:ss tt").ToUpper())</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">F.I.: @DateTime.UtcNow.ToDefaultTimeZone().ToString("dd/MM/yyyy hh:mm:ss tt").ToUpper()</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="@colspan">&emsp;</th>
+            </tr>
+            <tr class="bordered-header">
+                <th class="bordered-header">Nº</th>
+                <th class="bordered-header">C&Oacute;DIGO</th>
+                <th class="bordered-header">APELLIDOS Y NOMBRES</th>
+                <th class="bordered-header">% <br /> ASISTENCIA</th>
+
+                @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNAB)
+                {
+                    foreach (var item in Model.Course.Evaluations)
+                    {
+                        <th class="bordered-header">@item.Name</th>
+                    }
+                }
+                else
+                {
+                    @for (int i = 1; i <= Model.Course.PartialAveragesCount; i++)
+                    {
+                        <th class="bordered-header">EP.@(i.ToString("00"))</th>
+                    }
+                }
+
+                <th class="bordered-header">PROMEDIO <br /> FINAL</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (int i = 0; i < Model.Course.Section.Students.Count(); i++)
+            {
+                <tr class="bordered-detail">
+                        <td class="bordered-detail center">@(i+1)</td>
+                        <td class="bordered-detail center">@Model.Course.Section.Students[i].UserName</td>
+                        <td class="bordered-detail">@Model.Course.Section.Students[i].FullName</td>
+                        <td class="bordered-detail center">@Math.Round(Model.Course.Section.Students[i].AttendancePercentage,0,MidpointRounding.AwayFromZero)%</td>
+
+                        @for (int v = 0; v < Model.Course.Section.Students[i].Averages.Count(); v++)
+                        {
+                            @if (!Model.Course.Section.Students[i].Averages[v].Average.HasValue)
+                            {
+                                <th class="bordered-detail center">-</th>
+                            }
+                            else
+                            {
+                                <td class="bordered-detail center">@Model.Course.Section.Students[i].Averages[v].Average.Value.ToString("00.00")</td>
+                            }
+                        }
+
+                        <td class="bordered-detail center bold @(Model.Course.Section.Students[i].Approved ? "blue" : "red")">@Model.Course.Section.Students[i].FinalGrade.ToString("00")</td>
+
+                    </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.CafobeRequestViewModels
+@model StimulusScholarshipOrOutstandingSportsmanViewModel
+
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Ficha de matrícula </label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="EnrollmentFormFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione ficha de matrícula</label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Solicitud al director de la BDU </label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="DirectorRequestFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione la solicitud al director de la BDU </label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Recibo de pago documentario</label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="DocumentaryProcedureVoucherFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione recibo de pago documentario</label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Boleta de notas del semestre anterior</label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="LastTermHistoriesFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione boleta de notas del semestre anterior</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Copia de DNI</label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="DniFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione copia de DNI</label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Invitación al evento</label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="EventInvitationFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione invitación al evento</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Seguro de salud </label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="StudentHealthInsuranceFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione seguro de salud</label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label class="required-form-label">Trayectoria de participación</label>
+        <div class="custom-file m-input-icon m-input-icon--right">
+            <input asp-for="StudentSportParticipationFile" type="file" class="custom-file-input" placeholder="Documento" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <label class="custom-file-label">Seleccione trayectoria de participación</label>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary btn-submit add"> Guardar </button>
+</div>

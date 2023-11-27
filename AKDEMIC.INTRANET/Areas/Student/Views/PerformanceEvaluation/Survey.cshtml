@@ -1,0 +1,242 @@
+﻿@model AKDEMIC.INTRANET.Areas.Student.Models.PerformanceEvaluationVIewModels.PerformanceEvaluationTemplateViewModel
+@{
+    @if ((bool)ViewBag.FromAccount)
+    {
+        Layout = "~/Views/Shared/Templates/Inscription/_Layout.cshtml";
+    }
+
+    ViewData["Title"] = "Encuesta de evaluación de desempeño del docente";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Evaluación de desempeño del docente", Area = "Student", Controller = "PerformanceEvaluation", Action = "Index" },
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+};
+}
+<div class="@((bool)ViewBag.FromAccount? "mx-auto m--margin-top-30" : "")" style="@((bool)ViewBag.FromAccount? "width: 75%;" : "") ">
+
+    <div class="m-content">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">@ViewData["Title"]</h3>
+                    </div>
+                </div>
+            </div>
+            <form id="survey" asp-controller="PerformanceEvaluation" asp-action="SendEvaluation">
+                <div class="m-portlet__body">
+                    <div class="m-form--label-align-right">
+                        <div class="row align-items-center">
+                            <div class="col-xl-12 order-2 order-xl-1">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-alert m-alert--icon alert alert-info m--hide" role="alert" id="datatable_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-info-circle"></i>
+                        </div>
+                        <div class="m-alert__text" id="datatable_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <input type="hidden" value="@ViewBag.Id" id="id" />
+                        <input type="hidden" asp-for="SectionId" />
+                        <div class="form-group m-form__group col-lg-6">
+                            <b>Profesor(a): </b>&ensp;<label class="teacher-name"></label>
+                        </div>
+                        <div class="form-group m-form__group col-lg-6">
+                            <b>Curso/Secci&oacute;n: </b>&ensp;<label class="course-secion">@Model.Course / @Model.Section</label>
+                        </div>
+                        <div class="form-group m-form__group col-lg-4">
+                            <b>Departamento Acad&eacute;mico: </b>&ensp;<label class="teacher-career"></label>
+                        </div>
+                        <div class="form-group m-form__group col-lg-4">
+                            <b>Sexo: </b>&ensp;<label class="teacher-sex"></label>
+                        </div>
+                        <div class="form-group m-form__group col-lg-4">
+                            <b>Fecha: </b>&ensp;<label class="teacher-date"></label>
+                        </div>
+                    </div>
+                    <div class="alert m-alert--default" role="alert">
+                        <strong>
+                            Objetivo :
+                        </strong>
+                        @(string.IsNullOrEmpty(Model.Target) ? "-" : Model.Target)
+                    </div>
+                    <div class="alert m-alert--default" role="alert">
+                        <strong>
+                            Instrucciones :
+                        </strong>
+                        @(string.IsNullOrEmpty(Model.Instructions) ? "-" : Model.Instructions)
+                    </div>
+                    <div class="m-stack m-stack--ver m-stack--desktop">
+                        <div class="col-lg-12 m--align-center" style="background-color: #e0e0e0;padding: 16px;font-weight: bold;">
+                            ESCALA VALORATIVA
+                        </div>
+                    </div>
+                    <div class="m-stack m-stack--ver m-stack--desktop m-stack--demo">
+                        @if (Model.Scales != null && Model.Scales.Any())
+                        {
+                            @foreach (var item in Model.Scales)
+                            {
+                                <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                    <div class="row">
+                                        <span class="w-100 text-center">
+                                            @item.Description
+                                        </span>
+                                    </div>
+                                    <strong>@item.Value</strong>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            @for (byte i = Model.Max; i > 0; i--)
+                            {
+                                <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                    <div class="row">
+                                        <span class="w-100 text-center">
+                                            @ConstantHelpers.PERFORMANCE_EVALUATION.RATING_SCALE.GET_NAME(Model.Max, i)
+                                        </span>
+                                    </div>
+                                    <strong>@i</strong>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="m-form__section m-form__section--first m--margin-15">
+                        <div class="form-group m-form__group row margin">
+                            <div class="col-lg-5 m--align-center" style="background-color: #e0e0e0;padding: 16px;font-weight: bold;">
+                                CRITERIOS DE EVALUACIÓN
+                            </div>
+                            <div class="col-lg-7 m--align-center" style="background-color: #e0e0e0;padding: 16px;font-weight: bold;">
+                                ESCALA VALORATIVA
+                            </div>
+                        </div>
+                        <input type="hidden" name="ToId" value="@Model.ToId" />
+                        <input type="hidden" name="FromId" value="@Model.FromId" />
+                        <input type="hidden" name="TemplateId" value="@Model.TemplateId" />
+
+                        @if (Model.Criterions != null && Model.Criterions.Any())
+                        {
+                            var counter = 0;
+                            @foreach (var criterion in Model.Criterions.OrderBy(x => x.CreatedAt).ToList())
+                            {
+                                <div class="form-group m-form__group row margin">
+                                    <div class="col-lg-12 m--align-left" style="background-color: #e0e0e0;padding: 16px;font-weight: bold;">
+                                        @criterion.Name.ToUpper()
+                                    </div>
+                                </div>
+
+                                var questions = Model.Questions.Where(x => x.CriterionId == criterion.Id).OrderBy(x => x.CreatedAt).ToList();
+
+                                @for (int i = 0; i < questions.Count; i++)
+                                {
+                                    <input type="hidden" name="Questions[@counter].QuestionId" value="@questions[i].QuestionId" />
+
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-5 col-form-label">
+                                            <b>@(counter +1 ). </b>
+                                            @questions[i].Description
+                                        </label>
+                                        <div class="col-lg-7">
+                                            <div class="row">
+                                                @for (byte j = Model.Max; j > 0; j--)
+                                                {
+                                                    <div class="col">
+                                                        <label class="m-option">
+                                                            <span class="m-option__control">
+                                                                <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                                    <input type="radio" name="Questions[@counter].Value" value="@j">
+                                                                    <span></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="m-option__label">
+                                                                <span class="m-option__head">
+                                                                    <span class="m-option__title">@j</span>
+                                                                </span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    counter++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Model.Questions = Model.Questions.OrderBy(x => x.CreatedAt).ToList();
+
+                            @for (byte i = 0; i < Model.Questions.Count; i++)
+                            {
+                                <input type="hidden" name="Questions[@i].QuestionId" value="@Model.Questions[i].QuestionId" />
+                                <div class="form-group m-form__group row">
+                                    <label class="col-lg-5 col-form-label">
+                                        <b>@(i + 1). </b>
+                                        @Model.Questions[i].Description
+                                    </label>
+                                    <div class="col-lg-7">
+                                        <div class="row">
+                                            @for (byte j = Model.Max; j > 0; j--)
+                                            {
+                                                <div class="col">
+                                                    <label class="m-option">
+                                                        <span class="m-option__control">
+                                                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                                <input type="radio" name="Questions[@i].Value" value="@j">
+                                                                <span></span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="m-option__label">
+                                                            <span class="m-option__head">
+                                                                <span class="m-option__title">@j</span>
+                                                            </span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="m-form__section m-form__section--first m--margin-15">
+                        <div class="form-group m-form__group row margin">
+                            <div class="col-lg-12 m--align-center" style="background-color: #e0e0e0;padding: 16px;font-weight: bold;">
+                                COMENTARIOS
+                            </div>
+                        </div>
+                        <textarea class="m-input form-control" asp-for="Commentary" placeholder="Comentarios o sugerencias sobre el docente." rows="4" maxlength="500" required></textarea>
+                    </div>
+                </div>
+                <div class="m-portlet__foot">
+                    <div class="m-form__actions">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-primary">
+                                    Enviar
+                                </button>
+                                <button type="reset" class="btn btn-secondary btn-back">
+                                    Volver
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>var FromAccount = @ViewBag.FromAccount.ToString().ToLower()</script>
+<script src="~/js/areas/student/performance-evaluation/survey.js" asp-append-version="true"></script>
+}

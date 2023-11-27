@@ -1,0 +1,95 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.TutoringAnnouncementViewModels.TutoringAnnouncementViewModel
+
+<input asp-for="Id" hidden />
+
+<div class="form-group m-form__group row">    
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="File" class="form-control-label"></label>
+        <div class="custom-file">
+            <input asp-for="File" type="file" class="custom-file-input" placeholder="Archivo" accept="image/png, image/jpg, image/jpeg, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            <label class="custom-file-label" for="File">Seleccione archivo</label>
+        </div>
+        <label>Tama&ntilde;o máximo del archivo: 20MB  </label>
+    </div>
+    
+</div>
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="TutoringAnnouncementRoleIds" class="required-form-label form-control-label"></label>
+        <select asp-for="TutoringAnnouncementRoleIds" multiple class="form-control m-input m-select2 select2-roles" required></select>
+        <span asp-validation-for="TutoringAnnouncementRoleIds" class="text-danger"></span>
+        <div class="m-checkbox-list m--pull-right">
+            <label class="m-checkbox m-checkbox--success">
+                <input type="checkbox" asp-for="AllRoles"> Todos
+                <span></span>
+            </label>
+        </div>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="TutoringAnnouncementCareerIds" class="required-form-label form-control-label"></label>
+        <select asp-for="TutoringAnnouncementCareerIds" multiple class="form-control m-input m-select2 select2-careers" required></select>
+        <span asp-validation-for="TutoringAnnouncementCareerIds" class="text-danger"></span>
+        <div class="m-checkbox-list m--pull-right">
+            <label class="m-checkbox m-checkbox--success">
+                <input type="checkbox" asp-for="AllCareers" /> Todas
+                <span></span>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="Title" class="required-form-label form-control-label"></label>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="Title" class="form-control m-input" autocomplete="off" required />
+            <span class="m-input-icon__icon m-input-icon__icon--right">
+                <span>
+                    <i class="la la-info-circle"></i>
+                </span>
+            </span>
+        </div>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="Message" class="required-form-label form-control-label"></label>
+        <textarea asp-for="Message" class="form-control m-input" maxlength="1000" required>
+        </textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group m-form__group row">
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="DisplayTime" class="form-control-label"></label>
+        <span><i class="la la-info-circle" data-toggle="m-tooltip" data-placement="right" rel="m-tooltip" data-trigger="hover" data-original-title="Por defecto, se publicará al instante." title="Por defecto, se publicará al instante."></i></span>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="DisplayTime" class="form-control m-input input-datepicker" readonly />
+            <span class="m-input-icon__icon m-input-icon__icon--right">
+                <span>
+                    <i class="la la-clock-o"></i>
+                </span>
+            </span>
+        </div>
+        <span asp-validation-for="DisplayTime" class="text-danger"></span>
+    </div>
+    <div class="m-form__group-sub col-lg-6">
+        <label asp-for="EndTime" class="form-control-label"></label>
+        <span><i class="la la-info-circle" data-toggle="m-tooltip" data-placement="right" rel="m-tooltip" data-trigger="hover" data-original-title="Por defecto, se publicará al instante." title="Por defecto, se publicará al instante."></i></span>
+        <div class="m-input-icon m-input-icon--right">
+            <input asp-for="EndTime" class="form-control m-input input-datepicker" readonly />
+            <span class="m-input-icon__icon m-input-icon__icon--right">
+                <span>
+                    <i class="la la-clock-o"></i>
+                </span>
+            </span>
+        </div>
+        <span asp-validation-for="EndTime" class="text-danger"></span>
+    </div>
+</div>
+

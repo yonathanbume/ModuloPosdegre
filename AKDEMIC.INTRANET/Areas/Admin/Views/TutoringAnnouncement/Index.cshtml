@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Gestión de Comunicados";
+    ViewBag.SubTitle = "Listado de Comunicados";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Comunicados" }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Estado</label>
+                                <select id="status-filter" class="m-input m-select2 select2-status">
+                                    <option>Todos</option>
+                                    <option value="@true">Publicados</option>
+                                    <option value="@false">No Publicados</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button data-toggle="modal" data-target="#add-modal" class="btn btn-sm btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo Comunicado</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered announcements-datatable"></table>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_TutoringAnnouncementCreateModal")
+@await Html.PartialAsync("_TutoringAnnouncementEditModal")
+
+@section Scripts {
+    <script src="~/js/areas/admin/tutoring-announcement/index.js"></script>
+}
+

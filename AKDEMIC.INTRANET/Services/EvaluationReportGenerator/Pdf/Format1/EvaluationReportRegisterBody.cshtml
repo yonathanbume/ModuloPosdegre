@@ -1,0 +1,80 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using AKDEMIC.CORE.Extensions
+@using AKDEMIC.CORE.Helpers
+@using Microsoft.AspNetCore.Hosting;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+    Model.Course.Section.Students = Model.Course.Section.Students.Where(x => x.Status != ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN).ToList();
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/format1/evaluation_report_register_body.css"))" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table>
+        <thead class="headerformat" style="height:100px;">
+            <tr>
+                <th colspan="3" style="border:0px;"></th>
+                <th colspan="@(Model.Course.PartialAveragesCount)" class="bold center header2">PROMEDIOS PARCIALES</th>
+                <th colspan="2" style="border:0px;"></th>
+            </tr>
+            <tr>
+                <th colspan="1" class="bold center">N°</th>
+                <th colspan="2" class="bold center">APELLIDOS Y NOMBRES</th>
+                @for (int i = 1; i <= Model.Course.PartialAveragesCount; i++)
+                {
+                    <th class="bold center" style="max-width:50px !important; font-size:10px;">@AKDEMIC.INTRANET.Helpers.ConstantHelpers.SEQUENCEORDER.NAMES[i] PROMEDIO PARCIAL</th>
+                }
+                <th class="bold center">PROMEDIO FINAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Course.Section.Students.Count(); i++)
+            {
+                <tr>
+                    <th class="thd" style="text-align: center;">@(i + 1)</th>
+                    <th class="thd" style="border-right:0px !important;">@Model.Course.Section.Students[i].UserName - @Model.Course.Section.Students[i].FullName</th>
+                    <th class="thd" style="width:100px; border-left:0px !important;">@(Model.Course.Section.Students[i].TryText) @(Model.Course.Section.Students[i].HasSusti ? "(s)" : "")</th>
+
+                    @for (int v = 0; v < Model.Course.Section.Students[i].Averages.Count(); v++)
+                    {
+                        @if (!Model.Course.Section.Students[i].Averages[v].Average.HasValue)
+                        {
+                            <th class="thd" style="font-weight:bold; text-align:center !important;">-</th>
+                        }
+                        else if (Model.Course.Section.Students[i].Averages[v].Approved)
+                        {
+                            <th class="red thd" style="text-align:center !important;">@($"{Model.Course.Section.Students[i].Averages[v].Average:00}")</th>
+                        }
+                        else
+                        {
+                            <th class="red thd" style="text-align:center !important;">@($"{Model.Course.Section.Students[i].Averages[v].Average:00}")</th>
+                        }
+                    }
+
+                    @if (Model.Course.Section.Students[i].Approved)
+                    {
+                        <th class="thd" style="font-weight:bold; text-align:center !important;">@($"{Model.Course.Section.Students[i].FinalGrade:00}")</th>
+                    }
+                    else
+                    {
+                        <th class="red thd" style="text-align: center !important;">@Model.Course.Section.Students[i].FinalGrade</th>
+                    }
+                </tr>
+            }
+
+            @if (!Model.Course.Section.Students.Any())
+            {
+                <tr>
+                    <th class="center" colspan="12">No hay estudiantes en la sección</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Gestión de aprobación para la emisión de grados y títulos
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button type="button" class="m-portlet__nav-link btn btn-success m-btn m-btn--pill m-btn--air btn-approved">
+                            Aprobar
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="m-portlet__body">
+        <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+            <div class="row align-items-center">
+                <div class="col-xl-12 order-2 order-xl-1">
+                    <div class="row">
+                        <div class="form-group m-form__group col-xl-4">
+                            <label>Escuela Profesional</label>
+                            <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                                <select id="careerId" class="form-control m-input"></select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group col-xl-4">
+                            <label> </label>
+                            <div class="m-input m-input-icon m-input-icon--left">
+                                <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por DNI o nombre..." id="search">
+                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                    <span><i class="la la-search"></i></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group col-xl-4">
+                            <label> </label>
+                            <div class="m-input m-input-icon m-input-icon--left">
+                                <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por número de libro..." id="searchBookNumber">
+                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                    <span><i class="la la-search"></i></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xl-12 order-2 order-xl-1">
+                    <div class="row">
+                        <div class="form-group m-form__group col-xl-5">
+                            <label> </label>
+                            <label for="dateStartFilter">Fecha inicio (*):</label>
+                            <input id="dateStartFilter" class="form-control m-input">
+                        </div>
+                        <div class="form-group m-form__group col-xl-5">
+                            <label> </label>
+                            <label for="dateEndFilter">Fecha fin (*):</label>
+                            <input id="dateEndFilter" class="form-control m-input">
+                        </div>
+                        <div class="form-group m-form__group col-xl-2" style="margin-top: 25px;">
+                            <label> </label>
+                            <button type="button" id="btn-search-dates" class="m-btn btn btn-primary"><i class="la la-search"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <table class="table table-striped table-bordered" id="tbl-datatable-registry-patterns"> </table>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/registry_pattern_review/index.js"></script>
+}
+

@@ -1,0 +1,307 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.SectionViewModels.SectionProgressReportPDF
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>REGISTRO DE AVANCE DE CURSOS</title>
+    <style>
+
+        * {
+            font-family: Verdana;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-emblem {
+            float: left;
+            padding-left: 80px;
+        }
+
+            .header-emblem img {
+                max-height: 100px !important;
+            }
+
+        .header-univ-logo {
+            float: right;
+            padding-right: 80px;
+        }
+
+            .header-univ-logo img {
+                max-height: 100px !important;
+            }
+
+        .header {
+            font-weight: 600;
+            /*color: #0f128b;*/
+            text-align: center;
+        }
+
+            .header .university-title {
+                padding-top: 15px !important;
+                font-size: 23px !important;
+                margin: 2px !important;
+            }
+
+            .header .header-title {
+                font-size: 20px !important;
+                margin: 2px !important;
+            }
+
+            .header .subheader-title {
+                font-size: 18px !important;
+                margin: 2px !important;
+            }
+
+        .container-details {
+            width: 100% !important;
+            font-weight: normal;
+            text-align: left;
+            font-size: 13px !important;
+        }
+
+            .container-details .table-general-detail {
+                width: 60%;
+                float: left;
+            }
+
+                .container-details .table-general-detail td {
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+
+            .container-details .table-course-detail {
+                width: 40%;
+                font-size: 12px !important;
+                float: right;
+            }
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            font-size: 14px !important;
+            background-color: lightgray;
+            border: 1px solid black;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 30px !important;
+            border-bottom: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-bottom: 1px solid transparent;
+        }
+
+        .location {
+            text-align: right;
+            /*color: red;*/
+            height: 50px !important;
+            border: 0px !important;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 12px !important;
+            height: 30px !important;
+            width: 5%;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 13px !important;
+                border: 1px solid black;
+                padding: 3px !important;
+            }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="8">
+                    @*                            <div class="header-emblem">
+                        <img src="@Model.Image" />
+                        </div>
+                        <div class="header-univ-logo">
+                        <img src="@Model.Image" />
+                        </div>*@
+                    <div class="header">
+                        <p class="university-title">@GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                        <p class="header-title">REGISTRO DE AVANCE DE CURSOS</p>
+                        @*<p class="subheader-title">ASDASDASDASDASD</p>*@
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8">
+                    <div class="container-details">
+                        <table class="table-general-detail">
+                            <tbody>
+                                <tr>
+                                    <td class="act-number">&emsp;</td>
+                                    <td class="act-number">&emsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">PERIODO:</td>
+                                    <td>@Model.Term</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold" width="30%">ESCUELA PROF.:</td>
+                                    <td>@Model.Career</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">CURSO:</td>
+                                    <td>@Model.Course</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">SECCIÓN:</td>
+                                    <td>@Model.Section</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">DOCENTE:</td>
+                                    <td>@Model.Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">DPTO. ACADÉMICO:</td>
+                                    <td>@Model.AcademicDepartment</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <table class="table-course-detail">
+                            <tbody>
+                                <tr>
+                                    <td class="act-number">&emsp;</td>
+                                    <td class="act-number">&emsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold" width="50%">PLAN ESTUDIO:</td>
+                                    <td>@Model.Curriculum</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">CICLO:</td>
+                                    <td>@Model.AcademicYear</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">Nº MATRI.:</td>
+                                    <td>@Model.Enrolled</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">HT:</td>
+                                    <td>@Model.HT</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">HP:</td>
+                                    <td>@Model.HP</td>
+                                </tr>
+                      @*          @if(ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNJBG)
+                                {
+                                    <tr>
+                                        <td class="bold">AVANCE ACADÉMICO:</td>
+                                        <td>@Model.Progress%</td>
+                                    </tr>
+                                }*@
+                            </tbody>
+                        </table>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8">&emsp;</th>
+            </tr>
+            <tr class="bordered-header">
+                <th class="bordered-header" rowspan="2">#</th>
+                <th class="bordered-header" rowspan="2">FECHA</th>
+                <th class="bordered-header" rowspan="2">TEMA TRATADO</th>
+                <th class="bordered-header" rowspan="2" width="50px">ALUMNOS<br /> ASISTENTES</th>
+                <th class="bordered-header" colspan="2">% AVANCE</th>
+                <th class="bordered-header" rowspan="2">FIRMA</th>
+            </tr>
+            <tr>
+                <th class="bordered-header" rowspan="1" width="80px">PARCIAL</th>
+                <th class="bordered-header" rowspan="1" width="80px">ACUMULADO</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                var ac = 0;
+            }
+            @for (int i = 0; i < Model.Details.Count(); i++)
+            {
+                ac = ac + 1;
+                <tr class="bordered-detail">
+                    <td class="bordered-detail center">@(i+1)</td>
+                    <td class="bordered-detail center">@Model.Details[i].Date.ToLocalDateFormat() (@ConstantHelpers.SESSION_TYPE.VALUES[Model.Details[i].SessionType])</td>
+                    <td class="bordered-detail">@Model.Details[i].Subject</td>
+                    <td class="bordered-detail center">@Model.Details[i].Students</td>
+                    <td class="bordered-detail center">1</td>
+                    <td class="bordered-detail center bold">@ac</td>
+                    <td class="bordered-detail center bold"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

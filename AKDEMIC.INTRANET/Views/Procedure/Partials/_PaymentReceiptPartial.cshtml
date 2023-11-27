@@ -1,0 +1,42 @@
+﻿<div class="modal fade" id="modal_payment_receipt_detail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="form_payment_receipt_detail">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><strong class="m--font-primary">Datos del Recibo</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label class="required-form-label"><strong>Fecha:</strong></label>
+                            <input type="text" class="form-control input-datepicker"  name="PaymentDate" required/>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label class="required-form-label"><strong>Código de Operación:</strong></label>
+                            <input type="text" class="form-control" name="OperationCode" maxlength="50" required/>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label class="required-form-label"><strong>Monto:</strong></label>
+                            <input type="number" class="form-control" name="Total" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                        <span>
+                            <i class="la la-save"></i>
+                            <span>Guardar</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.ReportTeacherAssistanceViewModels.TeacherViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 11px;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teacherInfo {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .firstTeacherInfo {
+            width: 45%;
+            display: inline-block;
+        }
+
+        .truelabel {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .truelabel2 {
+            width: 110px;
+            display: inline-block;
+        }
+
+        .truelabel3 {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .secondTeacherInfo {
+            width: 54%;
+            display: inline-block;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+        }
+
+        .border {
+            border: 1px solid black;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+
+        table tr {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <div style="position:absolute;text-align: center;padding: 0px 20px;">
+        <img style="top: 0; left: 0; height: 60px; width: 60px" src="@Model.Image" />
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="unk-header" style="font-size:14px;">
+        <p style="margin:0px;text-transform: uppercase" class="negrita">@GeneralHelpers.GetInstitutionName()</p>
+        <p style="margin:0px;" class="negrita">
+            REPORTE DE ASISTENCIA @Model.Term
+        </p>
+        <br />
+        <p style="margin:0px;text-align:left" class="negrita">USUARIO:&emsp;@Model.UserName</p>
+        <p style="margin:0px;text-align:left" class="negrita">DOCENTE:&emsp;@Model.Name</p>
+        <p style="margin:0px;text-align:left" class="negrita">DEPARTAMENTO ACAD&Eacute;MICO:&emsp;@Model.AcademicDepartment</p>
+    </div>
+    <table>
+        <tbody style="text-align:center;">
+            <tr>
+                <th style="background-color:lightgray" class="border">CURSO</th>
+                <th style="background-color:lightgray" class="border">SECCI&Oacute;N</th>
+                <th style="background-color:lightgray" class="border">CLASES DICTADAS</th>
+                <th style="background-color:lightgray" class="border">CLASES REPROGRAMADAS</th>
+                <th style="background-color:lightgray" class="border">CLASES TOTALES</th>
+            </tr>
+            @for (int i = 0; i < Model.Sections.Count; i++)
+            {
+                <tr>
+                    <td class="border">@Model.Sections[i].Course</td>
+                    <td class="border">@Model.Sections[i].Section</td>
+                    <td class="border">@Model.Sections[i].DictatedClasses</td>
+                    <td class="border">@Model.Sections[i].RescheduledClasses</td>
+                    <td class="border">@Model.Sections[i].TotalClasses</td>
+                </tr>
+            }
+            @if (Model.Sections.Count == 0)
+            {
+                <tr>
+                    <td colspan="10" class="border">No hay informaci&oacute;n disponible</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

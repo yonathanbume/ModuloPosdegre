@@ -1,0 +1,22 @@
+﻿@if (AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value != AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.UNJBG)
+{
+    @if (User.IsInRole(AKDEMIC.CORE.Helpers.ConstantHelpers.ROLES.DEPENDENCY) || User.IsInRole(AKDEMIC.CORE.Helpers.ConstantHelpers.ROLES.SECRETARY_OF_GENERAL_SERVICES) || User.IsInRole(AKDEMIC.CORE.Helpers.ConstantHelpers.ROLES.SECRETARY_OF_PROFESSIONAL_SCHOOLS_ADMINISTRATIONS) || User.IsInRole(AKDEMIC.CORE.Helpers.ConstantHelpers.ROLES.SECRETARY_OF_VICE_PRESIDENCY_PRESIDENCY_AND_ADMINISTRATION) || User.IsInRole(AKDEMIC.CORE.Helpers.ConstantHelpers.ROLES.INFIRMARY))
+    {
+        <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1">
+            <a href="#" class="m-nav__link m-dropdown__toggle m_topbar_notification_alert_icon">
+                <span class="m-nav__link-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
+                <span class="m-nav__link-icon"><img src="~/images/siren.png" style="width:21.5px; height:21px; margin-bottom:5px;" /></span>
+            </a>
+            <div class="m-dropdown__wrapper">
+                <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                <div class="m-dropdown__inner">
+                    <div class="m-dropdown__header m--align-center" style="background-size: cover;">
+                        <span class="m-dropdown__header-subtitle"><button class="btn btn-danger sendAlert">Enviar Alerta</button></span>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+    }
+
+}

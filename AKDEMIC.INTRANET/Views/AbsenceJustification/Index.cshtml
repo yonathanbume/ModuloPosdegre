@@ -1,0 +1,166 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.AbsenceJustificationViewModels.AbsenceJustificationViewModel
+@{
+    ViewBag.Title = "Solicitud de Justificación de Inasistencias";
+    ViewBag.SubTitle = "Listado de Solicitudes";
+    ViewBag.Breadcrumbs = new[] {
+        new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<!--begin::Modal-->
+<div class="modal fade" id="add_modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-modal-label">
+                    Solicitud de Justificación de Inasistencia
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form" class="m-form m-form--state" asp-controller="AbsenceJustification" asp-action="AddAbsenceJustification" enctype="multipart/form-data" method="POST">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="add_form_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="add_form_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="WorkingDayId" class="form-control-label"></label>
+                            <select asp-for="WorkingDayId" class="form-control m-input m-select2 select2-absences" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="Justification" class="form-control-label"></label>
+                            <textarea asp-for="Justification" class="form-control m-input" required maxlength="1000"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label asp-for="File" class="form-control-label"></label>
+                            <div class="custom-file">
+                                <input asp-for="File" class="form-control m-input custom-file-input" placeholder="Archivo de apoyo" accept="image/*,application/pdf" type="file" />
+                                <label class="custom-file-label selected" for="File">Selecciona un Archivo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnCreate" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+<!--begin::Modal-->
+<div class="modal fade" id="detail_modal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="detail-modal-label">
+                    Solicitud de Justificación de Inasistencia
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="detail-form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label asp-for="WorkingDayId" class="form-control-label"></label>
+                            <input id="DetailDate" class="form-control" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="form-control-label">Fecha de Solicitud</label>
+                            <input id="DetailRegisterDate" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="form-control-label">Estado</label>
+                            <input id="DetailStatus" class="form-control" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Justification" class="form-control-label"></label>
+                            <textarea id="DetailJustification" class="form-control" disabled></textarea>
+                        </div>
+                    </div>
+                    <div id="fileDiv" class="row">
+                        <div class="form-group col-lg-12">
+                            <label class="form-control-label col-form-label">Archivo de apoyo</label>
+                            (<a id="fileUrl" href="#"><span><i class="la la-download"></i><span>Descargar</span></span></a>)
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button id="btn-add" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nueva Solicitud</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable" id="ajax_data"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/views/absencejustification/index.js"></script>
+}

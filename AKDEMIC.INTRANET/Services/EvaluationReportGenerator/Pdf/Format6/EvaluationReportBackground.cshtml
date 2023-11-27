@@ -1,0 +1,291 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@using AKDEMIC.CORE.Extensions;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>ACTA OFICIAL DE NOTAS</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-univ-logo {
+            float: left;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+
+        .header {
+            font-weight: 600;
+        }
+
+            .header .university-title {
+                font-size: 11px !important;
+            }
+
+            .header .resolution-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .office-title {
+                font-size: 11px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                font-size: 25px !important;
+            }
+
+
+        .table-general-detail {
+            width: 100%;
+            text-align: left;
+            font-weight: normal;
+            font-size: 14px !important;
+        }
+
+            .table-general-detail td {
+                padding: 2px !important;
+                padding-top: 6px !important;
+                padding-bottom: 6px !important;
+                margin: 0px !important;
+            }
+
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            font-size: 14px !important;
+            font-weight: normal;
+            border: 1px solid;
+            background-color: lightgray;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 20px !important;
+            border: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 11px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+
+        html, body {
+            height: 100%;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="1">
+                    <div class="header-univ-logo">
+                        <img src="@Model.Img" />
+                    </div>
+                </th>
+                <th colspan="3" class="left">
+                    <div class="header">
+                        <p class="university-title">@GeneralHelpers.GetInstitutionName().ToUpper()</p>
+                        <p class="resolution-title">RESOLUCION Nª 033-2018-SUNEDU </p>
+                    </div>
+                </th>
+                <th colspan="3" class="right">
+                    <div class="header">
+                        <p class="office-title">Oficina de Servicios Académicos</p>
+                        <p class="date-title">@DateTime.UtcNow.ToLocalDateTimeFormat()</p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7">
+                    <div class="header ">
+                        <p class="header-title">
+                            ACTA OFICIAL DE NOTAS @Model.Term.Name
+                        </p>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7">
+                    <table class="table-general-detail">
+                        <tbody>
+                            <tr>
+                                <td width="18%">Facultad</td>
+                                <td>:</td>
+                                <td>@Model.Course.Career.Faculty</td>
+
+                                <td>Modalidad</td>
+                                <td>:</td>
+                                <td>@(AKDEMIC.CORE.Helpers.ConstantHelpers.Intranet.EvaluationReportType.NAMES.ContainsKey(Model.BasicInformation.Type) ? AKDEMIC.CORE.Helpers.ConstantHelpers.Intranet.EvaluationReportType.NAMES[Model.BasicInformation.Type].ToUpper() : "-")</td>
+                            </tr>
+                            <tr>
+                                <td>Escuela Profesional</td>
+                                <td>:</td>
+                                <td>@Model.Course.Career.Name</td>
+
+                                <td>Sede</td>
+                                <td>:</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Curso</td>
+                                <td>:</td>
+                                <td colspan="4">@Model.Course.Code - @Model.Course.Name</td>
+                            </tr>
+                            <tr>
+                                <td>Ciclo Curso</td>
+                                <td>:</td>
+                                <td>@Model.Course.AcademicYear</td>
+
+                                <td>Cr&eacute;ditos</td>
+                                <td>:</td>
+                                <td>@Model.Course.Credits</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+    <table width="100%" class="footer">
+        <tr>
+            <td class="center" width="10%">&emsp;</td>
+            <td class="center" style="font-size:9px !important;" width="20%">@Model.Course.Section.Teacher</td>
+            <td class="center" width="10%">&emsp;</td>
+            <td class="center" width="20%">&emsp;</td>
+            <td class="center" width="10%">&emsp;</td>
+            <td class="center" width="20%">&emsp;</td>
+            <td class="center" width="10%"></td>
+        </tr>
+        <tr>
+            <td class="no-signature">&emsp;</td>
+            <td class="center signature">Nombre del Docente</td>
+            <td class="no-signature">&emsp;</td>
+            <td class="center signature">Firma del Docente</td>
+            <td class="no-signature">&emsp;</td>
+            <td class="center signature">Jefe Dpto. Acad&eacute;mico</td>
+            <td class="no-signature">&emsp;</td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,501 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.SurveyViewModels.SurveyViewModel
+@{
+    ViewData["Title"] = "Gestión de encuestas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Gestión de encuestas", Controller = "SurveyManagement", Action = "Index", Area = "Admin" },
+new BreadcrumbViewData { Name = "Editar" }
+};
+    ViewData["BackUrl"] = Url.Action("Index", "SurveyManagement", new { area = "Admin" });
+    var sended = Convert.ToBoolean(ViewBag.Sended);
+    var requiredEnabled = Convert.ToBoolean(ViewBag.RequiredEnabled);
+    var surveyId = ViewBag.SurveyId;
+}
+
+<input value="@sended" hidden id="Sended" />
+<input value="@surveyId" hidden id="SurveyId" />
+<div class="m-content">
+    <div class="m-portlet">
+        @if (sended)
+        {
+            <div class="alert m-alert m-alert--default" role="alert">
+                <label>Los detalles de la encuesta y las preguntas no pueden ser editadas si ya fue enviada.</label>
+            </div>
+        }
+        <form id="edit-survey-form" asp-action="EditSurvey" asp-controller="SurveyManagement" method="post">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Informaci&oacute;n general
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <ul class="m-portlet__nav">
+                        <li class="m-portlet__nav-item">
+                            @if (!sended)
+                            {
+                                <button id="btn-edit-Survey" type="submit" class="btn btn-primary btn-sm m-btn m-btn--icon btn-edit save" title="Guardar cabecera">
+                                    <span>
+                                        <i class="la la-edit"></i>
+                                        <span>Guardar cabecera</span>
+                                    </span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button id="btn-edit-date-survey" type="submit" class="btn btn-primary btn-sm m-btn m-btn--icon btn-edit save" title="Editar Fechas">
+                                    <span>
+                                        <i class="la la-edit"></i>
+                                        <span>Cambiar Fechas</span>
+                                    </span>
+                                </button>
+                            }
+                        </li>
+                        <li class="m-portlet__nav-item">
+                            @if (!sended)
+                            {
+                                <button type="button" class="btn btn-primary btn-sm m-btn m-btn--icon btn-send" id="send-survey" title="Enviar">
+                                    <span>
+                                        <i class="la la-edit"></i>
+                                        <span>Enviar</span>
+                                    </span>
+                                </button>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class=" row">
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control m-input" required>
+                        <span asp-validation-for="Name" class="form-control-feedback"></span>
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="PublicationDate"></label>
+                        <div class="input-group">
+                            <input asp-for="PublicationDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="PublicationDate" class="form-control-feedback"></span>
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="FinishDate"></label>
+                        <div class="input-group">
+                            <input asp-for="FinishDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="FinishDate" class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="Code"></label>
+                        <input asp-for="Code" class="form-control m-input" disabled>
+                        <span asp-validation-for="Code" class="form-control-feedback"></span>
+                    </div>
+                    <div class="form-group m-form__group col-lg-8">
+                        <label asp-for="Description"></label>
+                        <input asp-for="Description" class="form-control m-input" required>
+                        <span asp-validation-for="Description" class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    @if (requiredEnabled)
+                    {
+                        <div class="form-group m-form__group col-lg-6">
+                            <label style="display:table-cell; padding-top:20px;">Es Obligatoria</label>
+                            <div class="col-lg-6">
+                                <span class="m-switch">
+                                    <label>
+                                        <input type="checkbox" asp-for="IsRequired">
+                                        <span></span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group m-form__group col-lg-6">
+                        <label style="display:table-cell; padding-top:20px;">Es Anonima</label>
+                        <div class="col-lg-6">
+                            <span class="m-switch">
+                                <label>
+                                    <input type="checkbox" asp-for="IsAnonymous">
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="manage_section" class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Gestión de Secciones
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        @if (!sended)
+                        {
+                            <button id="m-btn-add" class="btn btn-primary btn-sm m-btn m-btn--icon btn-add">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Nueva Secci&oacute;n</span>
+                                </span>
+                            </button>
+                        }
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body" id="section_container">
+
+        </div>
+    </div>
+</div>
+
+
+<!--Begin Modal Add SECTION-->
+<div class="modal fade" id="add_section_modal" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Nueva Secci&oacute;n
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-section-form" asp-controller="SurveyManagement" asp-action="AddSection" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="add_sectionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="add_sectionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input asp-for="Id" type="hidden" />
+                        <div class="form-group m-form__group col-lg-12">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="form-control m-input" placeholder="Titulo de seccion" required>
+                        </div>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label style="display:table-cell; padding-top:20px;">Es Escala de Likert</label>
+                            <div class="col-lg-6">
+                                <span class="m-switch">
+                                    <label>
+                                        <input type="checkbox" name="IsLikert" value="true">
+                                        <span></span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnCreate" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+<!--Begin Modal EDIT SECCION-->
+<div class="modal fade" id="edit_section_modal" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Editar Secci&oacute;n
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-section-form" asp-controller="Survey" asp-action="EditSection" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="edit_sectionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="edit_sectionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input id="edit_Id" type="hidden" />
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Titulo</label>
+                            <input id="edit_Title" class="form-control m-input" placeholder="Titulo de Seccion" required>
+                        </div>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label style="display:table-cell; padding-top:20px;">Es Escala de Likert</label>
+                            <div class="col-lg-6">
+                                <span class="m-switch">
+                                    <label>
+                                        <input type="checkbox" name="IsLikert" value="true">
+                                        <span></span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+<!--Begin Modal Pregunta-->
+<div class="modal fade" id="add_question_modal" tabindex="-10" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Nueva Pregunta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-question-form" asp-controller="SurveyManagement" asp-action="AddQuestion" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="add_questionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="add_questionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    @await Html.PartialAsync("_QuestionForm")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+<!--Begin Modal Pregunta-->
+<div class="modal fade" id="edit_question_modal" tabindex="-10" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Edita la Pregunta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-question-form" asp-controller="SurveyManagement" asp-action="AddQuestion" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="edit_questionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="edit_questionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    @await Html.PartialForAsync("_QuestionForm", "Edit")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+<!--Begin AddModal Likert Pregunta-->
+<div class="modal fade" id="add_likert_question_modal" tabindex="-10" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Nueva Pregunta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-likert-question-form" asp-controller="SurveyManagement" asp-action="AddLikertQuestion" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="add_likertquestionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="add_likertquestionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <input name="SurveyItemId" hidden />
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Descripción</label>
+                            <input name="Description" class="form-control m-input" required>
+                        </div>
+                    </div>
+                    <br>
+                    <h5>Respuestas:</h5>
+                    <br>
+                    <div class="row">
+                        <div style="width: 100%;">
+                            @foreach (var item in ConstantHelpers.SURVEY_LIKERT.RATING_SCALE.LIKERT.OrderByDescending(x => x.Key))
+                            {
+                                <div class="form-group col-lg-12">
+                                    <input class="form-control m-input" value="@item.Value" style="margin-right: 10px;" disabled>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnAddLikert" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Begin AddModal Likert Pregunta-->
+
+<!--Begin EditModal Likert Pregunta-->
+<div class="modal fade" id="edit_likert_question_modal" tabindex="-10" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Editar Pregunta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-likert-question-form" asp-controller="SurveyManagement" asp-action="EditLikertQuestion" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="edit_likertquestionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="edit_likertquestionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <input name="QuestionId" hidden/>
+                    <input name="SurveyItemId" hidden />
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Descripción</label>
+                            <input name="Description" class="form-control m-input" required>
+                        </div>
+                    </div>
+                    <br>
+                    <h5>Respuestas:</h5>
+                    <br>
+                    <div class="row">
+                        <div style="width: 100%;">
+                            @foreach (var item in ConstantHelpers.SURVEY_LIKERT.RATING_SCALE.LIKERT.OrderByDescending(x => x.Key))
+                            {
+                                <div class="form-group col-lg-12">
+                                    <input class="form-control m-input" value="@item.Value" style="margin-right: 10px;" disabled>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnEditLikert" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Begin Modal Likert Pregunta-->
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/surveymanagement/edit.js" asp-append-version="true"></script>
+}
+@section Styles{
+    <link href="~/css/areas/admin/survey/edit.css" />
+}

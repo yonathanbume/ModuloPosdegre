@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Borrar notas";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label text-right">Usuario del alumno:</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" placeholder="Usuario" id="username"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label text-right">Identificador de la Sección:</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" placeholder="Identificador de la sección" id="sectionId"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-lg-3 col-lg-6">
+                        <button id="btn-view-grades" class="btn btn-primary m-btn m-btn--wide" title="Validar">
+                            Validar Notas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_grades">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form id="main_form">
+                <div class="modal-header">
+                    <h5 class="modal-title">Notas del alumno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="container_table"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Borrar Notas</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/grade/deletegrades_bystudent.js" asp-append-version="true"></script>
+}
+

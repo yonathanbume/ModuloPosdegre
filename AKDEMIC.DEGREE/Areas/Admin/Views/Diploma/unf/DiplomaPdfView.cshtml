@@ -1,0 +1,273 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+
+@{
+    Layout = null;
+}
+<div class="tiranti-font" style="font-size:25px; page-break-inside:avoid;">
+    El Presidente de la Comisión Organizada de la Universidad.
+    <br>
+    por cuanto don(ña):  <b class="adobe-arabic-bold-italic-font" style="font-style:normal; font-size:45px;">@(Model.StudentName.ToUpper())  @Model.StudentPaternalSurName.ToUpper() @Model.StudentMaternalSurName.ToUpper() </b>
+    <br>
+    ha cumplido los requisitos exigidos por la Facultad de @Model.Faculty
+    <br>
+    Escuela Profesional de @Model.Career para obtener el Grado Académico de:
+    <br>
+    <div style="text-align: center;">
+        <b class="adobe-arabic-bold-italic-font" style="font-style:normal; font-size:45px; "> @Model.AcademicDegreeDenomination.ToUpper()</b>
+    </div>
+    habiéndose aprobado su otorgamiento en Sesión Extraordinaria de Comisión Organizadora del @Model.UniversitaryDate.
+    <br>
+    Por tanto:
+    <br>
+    Se le expide el presente Diploma para que se le reconozca como tal y se le conceda los privilegios y beneficios que las leyes de la República le otorgan.
+    <br>
+    <br>
+    <div style="text-align:right;">Dado y firmado en la ciudad de Sullana, el @Model.CurrentDay de @Model.CurrentMonth de @Model.CurrentYear</div>
+    <div class="espacio-firma"></div>
+    <div style="width:100%">
+        <div style="width:33.3%;display:inline-block;float:left">
+            <div class="text-custom-container" style="float:right;margin-right:150px;border-top: 1px solid;width:250px">
+                <div class="adobe-arabic-bold-italic-font" style="font-style:normal;">@(!String.IsNullOrEmpty(Model.Rector)? Model.Rector : " ")</div>
+                <label style="display:block">
+                    Rector
+                </label>
+            </div>
+        </div>
+        <div style="width:33.3%;display:inline-block;float:right">
+            <div class="text-custom-container" style="float:left;margin-left:150px;border-top: 1px solid;width:250px">
+                <div class="adobe-arabic-bold-italic-font" style="font-style:normal;"> @(!String.IsNullOrEmpty(Model.Dean)? Model.Dean : " ")</div>
+                <label style="display:block">
+                    Decano
+                </label>
+            </div>
+        </div>
+        <div style="width:33.3%;display:inline-block;float:right">
+            <div class="text-custom-container" style="margin:auto;border-top: 1px solid;width:250px">
+                <div class="adobe-arabic-bold-italic-font" style="font-style:normal;">@(!String.IsNullOrEmpty(Model.GeneralSecretary)? Model.GeneralSecretary : " ")</div>
+                <label style="display:block">
+                    Secretario General
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div style="page-break-inside:avoid;">
+    <div style="text-align:right;">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%;font-size:12px;border:none;border-collapse: collapse;background-color:white;">
+
+            <tr style="background-color:white;font-family:Arial, Helvetica, sans-serif;">
+                <td style="width:50%;border:none;font-family:Arial, Helvetica, sans-serif;">
+                    <div style="height:100px;text-align:center;font-size:15px;">
+                        <b>LICENCIAMIENTO INSTITUCIONAL</b>
+                        <br />
+                        <b>Resolución del Consejo Directivo</b>
+                        <br />
+                        <b>N° 045-2019-SUNEDU/CD</b>
+                    </div>
+                </td>
+                <td style="width:50%;border:none;font-family:Arial, Helvetica, sans-serif;">
+                    <div style="height:100px;text-align:center;font-size:15px;">
+
+                        Universidad Nacional de Frontera
+                        <br />
+                        <br />
+                        <div>
+                            El Secretario General que suscribe certifica:
+                            <br />
+                            que el DIPLOMA del anverso es auténtico y corresponde
+                            <br />
+                            a don(ña): @(Model.StudentName.ToUpper())  @Model.StudentPaternalSurName.ToUpper() @Model.StudentMaternalSurName.ToUpper()
+                            <br />
+                            <br />
+                            Sullana, @Model.CurrentDay de @Model.CurrentMonth de @Model.CurrentYear
+                        </div>
+                        <br />
+                        <div style="text-align:center;padding:40px 35px;width:50%;margin-left:100px;">
+                            <div style="border-top: 1px solid black;height: 2px; padding:10px;">
+                                Secretario General
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>          
+       
+        </table>
+    </div>
+    <div style="text-align:left;margin-top:200px;">
+        <table style="width:100%;font-size:13px;border:none;border-collapse: collapse;background-color:white;font-family:Arial, Helvetica, sans-serif;">
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Cód. Univ.</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none; " align="left">
+                    @Model.UniversityCode
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>DNI N°</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.DocumentNumber
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Grado/Titulo</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.GradeModalityGain
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Modalidad</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none; " align="left">
+                    @Model.StudentModality
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Resolución N°</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.ResolutionNumber
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Fecha de Res.</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.ResoultionRectorDate
+                </td>
+            </tr>
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Diploma N°</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.DocumentNumber
+                </td>
+            </tr>
+
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Tipo de Diploma</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.EmittedDiplomaType
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Libro</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.Book
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Folio</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.Foil
+                </td>
+            </tr>
+
+            <tr style="background-color:white;">
+                <td style="width:15%;border:none;">
+                </td>
+                <td style="width:10%;border:none;">
+                    <b>Registro N°</b>
+                </td>
+                <td style="width:2%;border:none;">
+                    :
+                </td>
+                <td style="width:73%;border:none;" align="left">
+                    @Model.RegisterNumber
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+
+
+</div>

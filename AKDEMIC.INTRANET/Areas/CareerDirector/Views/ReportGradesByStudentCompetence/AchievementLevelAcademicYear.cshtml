@@ -1,0 +1,210 @@
+﻿@{
+    ViewData["Title"] = "Nivel de logro por competencias y ciclo académico";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Reportes de alumnos por competencia", Area = "CareerDirector", Action = "Index", Controller = "ReportGradesByStudentCompetence" },
+        new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">@ViewData["Title"]</h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="col-xl-12 order-2 order-xl-1">
+                <div class="row">
+                    <div class="form-group m-form__group col-xl-3">
+                        <label>Periodo Académico</label>
+                        <select class="form-control" id="termId">
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group col-xl-3">
+                        <label>Facultad</label>
+                        <select class="form-control" id="facultyId">
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group col-xl-3">
+                        <label>Escuela Profesional</label>
+                        <select class="form-control" id="careerId">
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group col-xl-3">
+                        <label>Plan de estudio</label>
+                        <select class="form-control" id="curriculumId">
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group col-xl-3">
+                        <label>Ciclo académico</label>
+                        <select class="form-control" id="academicyear-select">
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group col-xl-3">
+                        <label style="display:block">&emsp;</label>
+                        <button class="btn btn-primary btn-find btn-block">Mostrar reporte</button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row" style="text-align:center;    margin-left: 20%;  margin-right: 20%;">
+                <table class="table table-striped table-bordered" id="tbl-data-text">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;background-color:gray;color:white">
+                                <b>NIVEL</b>
+                            </th>
+                            <th style="text-align:center;background-color:gray;color:white">
+                                <b>Puntaje</b>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center;">
+                                <b>Deficiente</b>, no logra la competencia
+                            </td>
+                            <td style="text-align:center;">
+                                0-10
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">
+                                <b>Regular</b>, logró la competencia en proceso
+                            </td>
+                            <td style="text-align:center;">
+                                11-13
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">
+                                <b>Bueno</b>, logró la competencia en forma aceptable
+                            </td>
+                            <td style="text-align:center;">
+                                14-16
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">
+                                <b>Excelente</b>, logró eficazmente la competencia
+                            </td>
+                            <td style="text-align:center;">
+                                17-20
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-12">
+                    <div id="container"></div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-12">
+                    <div id="container-2"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="rendering">
+        <div class="m-portlet m--hide portlet-details">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 id="txt-detail" class="m-portlet__head-text">Listado detallado</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped table-bordered" id="tbl-data">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;">
+                                        Código
+                                    </th>
+                                    <th style="text-align:center;">
+                                        Estudiante
+                                    </th>
+                                    <th style="text-align:center;">
+                                        Nota Promedio
+                                    </th>
+                                    <th style="text-align:center;">
+                                        Opciones
+                                    </th>
+                                </tr>
+
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="courses-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title-studentname">
+                    Estudiante :
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="rendering-modal">
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-striped table-bordered" id="tbl-data-2">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">
+                                                Curso
+                                            </th>
+                                            <th style="text-align:center;">
+                                                Créditos
+                                            </th>
+                                            <th style="text-align:center;">
+                                                Nota Promedio
+                                            </th>
+                                        </tr>
+
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align:right;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/lib/highcharts/highcharts.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+    <script src="~/js/areas/careerdirector/reportgradebystudentcompetence/achievementlevelacademicyear.js"></script>
+}
+

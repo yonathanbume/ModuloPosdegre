@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Solicitudes de Sustitutorio";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Solicitudes de Sustituorio", Area = "Teacher", Controller = "SubstituteExamRequest", Action = "Index" }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Periodo</label>
+                                <select class="select2-terms m-select2"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Estado</label>
+                                <select class="select2-status m-select2">
+                                    <option>Todos</option>
+                                    <option value="0">Registrado</option>
+                                    <option value="1">Evaluado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="table-container">
+                <table class="table table-hover table-striped table-bordered" id="exams-datatable"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="request-modal-create" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Asignar Nota</h5>
+            </div>
+            <form id="request-modal-create-form" method="post" asp-action="AssignScore">
+                <input type="hidden" id="cId" name="Id" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label style="font-weight:500">Estudiante</label>
+                        <p id="StudentName"></p>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label style="font-weight:500">Curso</label>
+                        <p id="CourseName"></p>
+                    </div>
+
+                    <div class="form-group m-form__group ">
+                        <label class="form-control-label">Nota</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input id="cScore" name="Score" class="form-control" type="text" placeholder="Ingresar nota..." required step="1" min="0" max="20" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-save" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="request_detail" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles de la Evaluaci&oacute;n</h5>
+            </div>
+            <form id="form_details">
+                <div class="modal-body">
+
+                    <div class="form-group m-form__group ">
+                        <label class="form-control-label">Estudiante</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input name="Student" class="form-control" type="text" readonly/>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group ">
+                        <label class="form-control-label">Nota Anterior</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input name="LastGraded" class="form-control" type="text" readonly/>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group ">
+                        <label class="form-control-label">Nota Final</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input name="FinalGrade" class="form-control" type="text" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/teacher/substitute-exam-request/index.js" asp-append-version="true"></script>
+}

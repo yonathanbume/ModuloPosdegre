@@ -1,0 +1,53 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.ProcedureViewModels.ProcedureViewModel
+
+@if (Model.RecordHistory.Type == ConstantHelpers.RECORDS.CERTIFICATEOFSTUDIESPARTIAL)
+{
+    <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="RecordHistory.JsonAcademicYears" class="required-form-label"><strong>Ciclos de Estudio</strong></label>
+            <select class="form-control m-input m-bootstrap-select m_selectpicker" multiple asp-for="RecordHistory.JsonAcademicYears" required></select>
+        </div>
+    </div>
+
+    if (Model.ConceptAmount.HasValue)
+    {
+        <strong class="m--font-primary d-none certificate_studies_partial_total_amount">MONTO TOTAL : S/ 0.00 </strong>
+    }
+}
+else if (Model.RecordHistory.Type == ConstantHelpers.RECORDS.STUDYRECORD || Model.RecordHistory.Type == ConstantHelpers.RECORDS.REGULARSTUDIES)
+{
+    <div class="form-group m-form__group row">
+
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="RecordHistory.TermId" class="required-form-label"><strong>Periodo de la constancia:</strong></label>
+            <select class="form-control m-select2" asp-for="RecordHistory.TermId" required></select>
+        </div>
+    </div>
+}
+else if (Model.RecordHistory.Type == ConstantHelpers.RECORDS.REPORT_CARD)
+{
+    <div class="form-group m-form__group row">
+
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="RecordHistory.TermId" class="required-form-label"><strong>Periodo de la constancia:</strong></label>
+            <select class="form-control m-select2" asp-for="RecordHistory.TermId" id="RecordHistory_TermId_Report_Card" required></select>
+        </div>
+    </div>
+}
+else if (
+    Model.RecordHistory.Type == ConstantHelpers.RECORDS.UPPERTHIRD ||
+    Model.RecordHistory.Type == ConstantHelpers.RECORDS.UPPERFIFTH ||
+    Model.RecordHistory.Type == ConstantHelpers.RECORDS.TENTH_HIGHER ||
+    Model.RecordHistory.Type == ConstantHelpers.RECORDS.UPPER_MIDDLE ||
+
+    Model.RecordHistory.Type == ConstantHelpers.RECORDS.ENROLLMENT_REPORT
+)
+{
+    <div class="form-group m-form__group row">
+
+        <div class="m-form__group-sub col-lg-12">
+            <label asp-for="RecordHistory.TermId" class="required-form-label"><strong>Periodo de la constancia:</strong></label>
+            <select class="form-control m-select2" asp-for="RecordHistory.TermId" required></select>
+        </div>
+    </div>
+}

@@ -1,0 +1,146 @@
+﻿@{
+    ViewData["Title"] = "Evaluaciones Especiales";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+    };
+}
+@section Styles {
+<style>
+    a {
+        text-decoration: none !important;
+    }
+
+        a:hover .m-portlet {
+            box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.7);
+        }
+
+        a i {
+            font-size: 120px;
+        }
+</style>
+}
+
+<div class="m-content">
+    <h4 class="text-center" style="font-weight:bold !important;">@ViewData["Title"].ToString().ToUpper()</h4>
+    <br />
+    <div class="row">
+
+        @if (
+        User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) ||
+        User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE) ||
+        User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY) ||
+        User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN)
+        )
+        {
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="SubstituteExam" asp-area="Admin">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-book" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Gestión de Examen Sustitutorio</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+        @if (
+        User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) ||
+        User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE)
+        )
+        {
+                <div class="col-md-3">
+            <a asp-action="Index" asp-controller="GradeRecovery" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Gestión de Examen de Recuperación de Nota</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        }
+
+           @if (
+        User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) ||
+        User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR)
+        )
+        {
+            
+        <div class="col-md-3">
+            <a asp-action="Index" asp-controller="ExtraordinaryEvaluation" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Gestión de Evaluación Extraordinaria</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        }
+    
+
+            @if (
+        User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) ||
+        User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN)
+        )
+        {
+               <div class="col-md-3">
+            <a asp-action="Index" asp-controller="DeferredExam" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Gestión de Examen Aplazado</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        }
+
+                @if (
+        User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) ||
+        User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN)
+        )
+        {
+               <div class="col-md-3">
+                <a asp-action="Index" asp-controller="CorrectionExam" asp-area="Admin">
+                <div class="m-portlet m-portlet--rounded text-center">
+                    <div class="m-portlet__body">
+                        <div class="text-primary">
+                            <i class="la la la-book" style="font-size: 120px;"></i>
+                        </div>
+                        <h4>Gestión de Examen de Subsanación Especial</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        }
+     
+    </div>
+</div>
+
+
+@section Scripts {
+<script>
+    $('a').hover(
+        function () {
+            $(this).children(":first").children(":first").addClass('bg-primary text-white');
+            $(this).children(":first").children(":first").children(":first").addClass('text-white');
+            $(this).children(":first").children(":first").children(":first").removeClass('text-primary');
+        },
+        function () {
+            $(this).children(":first").children(":first").removeClass('bg-primary text-white');
+            $(this).children(":first").children(":first").children(":first").removeClass('text-white');
+            $(this).children(":first").children(":first").children(":first").addClass('text-primary');
+        }
+    )
+</script>
+}

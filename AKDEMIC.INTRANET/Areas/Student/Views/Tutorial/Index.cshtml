@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Tutorías Programadas";
+    ViewBag.SubTitle = "Listado de Tutorías Programadas";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+};
+}
+
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" />
+}
+
+<!--begin::Modal-->
+<div class="modal fade" id="detail_modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-modal-label">
+                    Detalle de Tutor&iacute;a
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="detail-form">
+                    <input id="id" hidden />
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Secci&oacute;n</label>
+                            <input id="section" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-6">
+                            <label>Fecha</label>
+                            <input id="date" class="form-control m-input" disabled />
+                        </div>                        
+                        <div class="form-group m-form__group col-lg-6">
+                            <label>Aula</label>
+                            <input id="classroom" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-6">
+                            <label>Inicio</label>
+                            <input id="start" class="form-control m-input" disabled />
+                        </div>                        
+                        <div class="form-group m-form__group col-lg-6">
+                            <label>Fin</label>
+                            <input id="end" class="form-control m-input" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Profesor</label>
+                            <input id="teacher" class="form-control m-input" disabled/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+                <div class="modal-footer">
+                    <button id="btnInscription" class="btn btn-primary m-btn m-btn--icon">
+                        <span><i class="la la-calendar-check-o"></i><span>Inscribirse a Tutor&iacute;a</span></span>
+                    </button>
+                    <button id="btnCancelInscription" class="btn btn-danger m-btn m-btn--icon"><span><i class="la la-calendar-times-o"></i><span>Cancelar Inscripción</span></span></button>
+                </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <div class="row pull-right">
+                    <label class="col-form-label">Solo Inscritos</label>
+                    <div class="m--margin-left-10 m--margin-right-20">
+                        <span class="m-switch m-switch--outline m-switch--icon m-switch--primary">
+                            <label>
+                                <input type="checkbox" id="onlyRegistered"/>
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-calendar__container"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/areas/student/tutorial/index.js"></script>
+}

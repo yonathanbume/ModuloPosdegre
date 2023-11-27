@@ -1,0 +1,370 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.InstitutionalWelfareViewModels
+@model PsychologicalRecordViewModel
+@{
+    ViewData["Title"] = "Bienestar Institucional";
+    ViewBag.SubTitle = "Ficha Psicológica del estudiante";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Bienestar institucional" , Url = Url.Action("Index","InstitutionalWelfare") },
+new BreadcrumbViewData { Name = "Ficha Psicológica"}
+
+};  
+    ViewData["BackUrl"] = Url.Action("Index", "InstitutionalWelfare", new { area = "Admin" });
+}
+
+<input id="DoctorView" type="hidden" name="DoctorView" value="@Model.DoctorView" />
+<input id="CurrentPsychologicalDiagnostic" type="hidden" name="CurrentPsychologicalDiagnostic" value="@Model.currenthistoricaldiagnostic" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Ficha Psicológica
+                    </h3>   
+                </div>
+            </div>
+            @*<div class="m-portlet__head-tools">
+                <a asp-area="Welfare" asp-controller="PsychologyTestExam" asp-action="Index" asp-route-Id="@Model.Id" class="btn btn-primary m-btn m-btn--air m-btn--icon btn-addsubject">
+                    <span>
+                        <span>Test Psicológica</span>
+                    </span>
+                </a>
+            </div>*@
+        </div>
+        <div class="m-portlet__body">
+
+            <form id="medical-form">
+                <input id="Id" name="Id" type="hidden" value="@Model.Id" />
+                <h3 class="m-form__heading-title">1. Datos Generales</h3>
+
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <label for="fullname">Apellidos y Nombres:</label>
+                                <input id="Fullname" name="Fullname" type="text" class="form-control m-input" autocomplete="off" value="@Model.FullName" disabled>
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="Age">Edad:</label>
+                                <input id="Age" name="Age" type="text" class="form-control m-input" autocomplete="off" value="@Model.Age" disabled>
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="Sex"> Sexo:</label>
+                                <input id="Sex" name="Sex" type="text" class="form-control m-input" autocomplete="off" value="@Model.Sex" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="BirthDay">Fecha de Nacimiento:</label>
+                                <input id="BirthDay" name="BirthDay" type="text" class="form-control m-input" autocomplete="off" value="@Model.Birthday" disabled>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="DNI:">DNI:</label>
+                                <input id="DNI" name="DNI" type="text" class="form-control m-input" autocomplete="off" value="@Model.DNI" disabled>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="UserName"> Código:</label>
+                                <input id="UserName" name="UserName" type="text" class="form-control m-input" autocomplete="off" value="@Model.UserName" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="ComeFrom">Lugar de Nacimiento:</label>
+                                <input id="ComeFrom" name="ComeFrom" type="text" class="form-control m-input" autocomplete="off" value="@Model.ComeFrom" disabled>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="CurrentAddress:">Domicilio Actual:</label>
+                                <input id="CurrentAddress" name="CurrentAddress" type="text" class="form-control m-input" autocomplete="off" value="@Model.CurrentAddress" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="FacultyName">Escuela Profesional:</label>
+                                <input id="FacultyName" name="FacultyName" type="text" class="form-control m-input" value="@Model.FacultyName" autocomplete="off" disabled>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="Cycle:">Ciclo:</label>
+                                <input id="Cycle" name="Cycle" type="text" class="form-control m-input" value="@Model.Cycle" autocomplete="off" disabled>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="Phone"> Celular:</label>
+                                <input id="Phone" name="Phone" type="text" class="form-control m-input" value="@Model.Phone" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="padding:15px; display:inline-block;" class="m-form__heading-title">2. Motivo de Consulta</h3>
+                @*<button type="button" style="margin-top: -5px;margin-left: -10px;" class="btn btn-primary btn-1"><i class="la la-plus"></i></button>*@
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+
+                        <div class="m-datatable_consult_reason"></div>
+
+                    </div>
+                </div>
+
+
+
+                <h3 style="padding:15px; display:inline-block;" class="m-form__heading-title">3. Antecedentes Personales</h3>
+                @*<button style="margin-top: -5px;margin-left: -10px;" class="btn btn-primary btn-2"><i class="la la-plus"></i></button>*@
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="m-datatable_personal_history"></div>
+                    </div>
+                </div>
+
+                <h3 style="padding:15px; display:inline-block;" class="m-form__heading-title">4. Historia Familiar</h3>
+                @*<button style="margin-top: -5px;margin-left: -10px;" class="btn btn-primary btn-3"><i class="la la-plus"></i></button>*@
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="m-datatable_family_history"></div>
+                    </div>
+                </div>
+
+                <h3 style="padding:15px;display:inline-block;" class="m-form__heading-title">5. Observación de la conducta</h3>
+                @*<button style="margin-top: -5px;margin-left: -10px;" class="btn btn-primary btn-4"><i class="la la-plus"></i></button>*@
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="m-datatable_observations"></div>
+                    </div>
+                </div>
+
+
+                <h3 style="padding:15px;display:inline-block;" class="m-form__heading-title">6. Impresión Diagnóstica</h3>
+                @*<button style="margin-top: -5px;margin-left: -10px;" class="btn btn-primary btn-5"><i class="la la-plus"></i></button>*@
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="m-datatable_diagnostic_impressions"></div>
+                    </div>
+                </div>
+
+
+                <h3 style="padding:15px;display:inline-block;" class="m-form__heading-title">7. Historial de diagnósticos psicológicos</h3>
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="m-datatable_historical_diagnostics"></div>
+                    </div>
+                </div>
+
+
+                @*<div class="form-group m-form__group">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12" style="text-align:right">
+                        <button type="button" class="btn btn-primary" id="btn-save-all"> Guardar </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+                <div class="form-group m-form__group">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12" style="text-align:left">
+                                <h3 style="display:inline-block;" class="m-form__heading-title">8. Seguimiento del estudiante</h3>
+                                <label style="display: block;" for="select-historical-diagnostics">Seleccionar diagnóstico psicológico</label>
+                                <select class="m-select2" id="select-historical-diagnostics" disabled></select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal_consult_reason" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Motivo de Consulta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_consult_reason" method="post">
+
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Motivo de Consulta*</label>
+                                <textarea style="margin-top: 0px;  margin-bottom: 0px; height: 187px;  resize: none;" type="text" name="Description" class="form-control m-input" required></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_personal_history" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Antecedentes Personales</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_personal_history" method="post">
+
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Antecedente Personal*</label>
+                                <textarea style="margin-top: 0px;  margin-bottom: 0px; height: 187px;  resize: none;" type="text" name="Description" class="form-control m-input" required></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_family_history" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Historia Familiar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_family_history" method="post">
+
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Historia Familiar*</label>
+                                <textarea style="margin-top: 0px;  margin-bottom: 0px; height: 187px;  resize: none;" type="text" name="Description" class="form-control m-input" required></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_observations" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Observaciones</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_observations" method="post">
+
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Observación*</label>
+                                <textarea style="margin-top: 0px;  margin-bottom: 0px; height: 187px;  resize: none;" type="text" name="Description" class="form-control m-input" required></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_diagnostic_impressions" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Impresión Diagnóstica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_diagnostic_impressions" method="post">
+
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Impresión Diagnóstica*</label>
+                                <textarea style="margin-top: 0px;  margin-bottom: 0px; height: 187px;  resize: none;" type="text" name="Description" class="form-control m-input" required></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+
+    <script src="~/js/areas/admin/institutionalwelfare/indexpsychological.js"></script>
+
+}
+
+
+
+
+

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Solicitud de grado por requisitos";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Solicitud de grado por requisitos"}
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Solicitud de grado por requisitos
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label text-right">Tipo de grado:</label>
+                    <div class="col-lg-6">
+                        <select id="grade_select" class="m-select2">
+                            @foreach (var item in AKDEMIC.CORE.Helpers.ConstantHelpers.GRADE_INFORM.DegreeType.VALUES)
+                            {
+                                <option value="@(item.Key)"> @item.Value</option>
+                            }
+
+                        </select>
+                       
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label text-right">Estudiante:</label>
+                    <div class="col-lg-6">
+                        <select id="student_select" class="m-select2"></select>
+                        <span class="form-text text-muted">Busque al estudiante por código o nombre</span>
+                    </div>
+                </div>             
+
+                <div class="row">
+                    <div class="offset-lg-3 col-lg-6">
+                        <button id="btn-create" class="btn btn-primary m-btn m-btn--wide" title="Generar">
+                            Registrar Solicitud
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <table class="table table-striped table-bordered" id="data-table"></table>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {    
+    <script src="~/js/areas/admin/validation_degree_requirement/index.js" asp-append-version="true"></script>
+}

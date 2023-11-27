@@ -1,0 +1,27 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.ExtracurricularCourseGroupViewModels.ExtracurricularCourseGroupViewModel
+<input type="hidden" asp-for="Id">
+
+<div class="form-group m-form__group">
+    <label asp-for="ExtracurricularCourseId"></label>
+    <select asp-for="ExtracurricularCourseId" required>
+        <option></option>
+    </select>
+</div>
+
+<div class="form-group m-form__group">
+    <label asp-for="Code"></label>
+    <input asp-for="Code" class="form-control m-input" autocomplete="off" required maxlength="20" />
+</div>
+
+<div class="form-group m-form__group">
+    <label asp-for="TeacherId"></label>
+    <select asp-for="TeacherId" required>
+        <option></option>
+    </select>
+</div>
+<div class="form-group m-form__group">
+    <label asp-for="TermId"></label>
+    <select asp-for="TermId" required>
+        <option></option>
+    </select>
+</div>

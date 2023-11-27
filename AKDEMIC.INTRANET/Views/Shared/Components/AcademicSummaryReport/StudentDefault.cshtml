@@ -1,0 +1,100 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.AcademicSummaryViewModels.RecordReportViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/css/pages/pdf/evaluationreport.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <img src="@Model.ImagePath" style="max-height: 80px;" />
+            </td>
+            <td>
+                <div class="title">
+                    @GeneralHelpers.GetInstitutionName().ToUpper()<br />
+                    VICERRECTORADO ACADÉMICO<br />
+                    Oficina de Tecnologías de la Información<br />
+                    <br />
+                    RECORD ACAD&Eacute;MICO<br />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td colspan="3" height="100px">
+                <table>
+                    <tr>
+                        <td class="subtitle" width="20%">Apellidos y Nombres:</td>
+                        <td>@Model.StudentFullName </td>
+                        <td class="subtitle">Código:</td>
+                        <td>@Model.StudentCode</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitle">Escuela Profesional:</td>
+                        <td>@Model.CareerName</td>
+                        <td class="subtitle">Plan:</td>
+                        <td>@Model.StudentCurriculum</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        @foreach (var term in Model.Terms)
+        {
+            <tr>
+                <td colspan="3" height="140px" valign="top">
+                    <table class="list">
+                        <thead>
+                            <tr class="subtitle" style="border-top:1px solid white !important; border-left:1px solid white !important; border-right:1px solid white !important;">
+                                <th style="font-size:20px !important; padding:5px !important;" colspan="6">@term.TermName</th>
+                            </tr>
+                            <tr>
+                                <th style="font-size:15px !important; padding:5px !important">SIGLA</th>
+                                <th style="font-size:15px !important; padding:5px !important">TIPO</th>
+                                <th style="font-size:15px !important; padding:5px !important">NOMBRE</th>
+                                <th style="font-size:15px !important; padding:5px !important">CR&Eacute;DITOS</th>
+                                <th style="font-size:15px !important; padding:5px !important">NOTA</th>
+                                <th style="font-size:15px !important; padding:5px !important">FECHA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in term.StudentSections)
+                            {
+                                <tr>
+                                    <td>@item.CourseCode</td>
+
+                                    @if(item.Type.HasValue && AKDEMIC.CORE.Helpers.ConstantHelpers.AcademicHistory.Types.ABREVIATIONS_V2.ContainsKey(item.Type.Value))
+                                    {
+                                        <td align="center">@AKDEMIC.CORE.Helpers.ConstantHelpers.AcademicHistory.Types.ABREVIATIONS_V2[item.Type.Value]</td>
+                                    }
+                                    else
+                                    {
+                                        <td align="center">-</td>
+                                    }
+
+                                    <td>@item.CourseName</td>
+                                    <td align="center">@item.Credits.ToString("0.0")</td>
+                                    <td align="center" style="@(item.NotDisapproved ? string.Empty : "color:red;")">@item.FinalGrade</td>
+                                    <td align="center">@item.Date</td>
+
+                                </tr>
+                            }
+
+                            @if (!term.StudentSections.Any())
+                            {
+                                <tr>
+                                    <td colspan="4" style="text-align:center;">No se encontraron cursos</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

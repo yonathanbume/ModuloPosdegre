@@ -1,0 +1,56 @@
+﻿@model IList<AKDEMIC.INTRANET.ViewModels.AcademicSituationViewModels.AcademicYearViewModel>
+@{
+    int counter = 0;
+}
+
+<div class="m-portlet m-portlet--responsive-mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Ciclos Acad&eacute;micos
+                </h3>
+            </div>
+        </div>
+        @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+        {
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button type="button" id="btn-reservation" class="btn btn-sm btn-primary m-btn m-btn--icon" title="Reservas de Matrícula" data-toggle="modal" data-target="#reservation-modal">
+                            <span>
+                                <i class="la la-list"></i>
+                                <span>Reservas de Matrícula</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        }
+    </div>
+    <div class="m-portlet__body">
+        @foreach (var item in Model)
+        {
+            <div class="m-accordion m-accordion--default m-accordion--solid" id="@("m-accordion_" + counter)" role="tablist">
+                <div class="m-accordion__item">
+                    <div class="m-accordion__item-head" role="tab" data-toggle="collapse" href="@("#m-accordion_" + counter + "_body")">
+                        <span id="@("m-accordion-icon-" + counter)" class="m-accordion__item-icon pull-right" style="color:green;">
+                            <i class=""></i>
+                        </span>
+                        <span id="@("m-accordion-title-" + counter)" class="m-accordion__item-title">
+                            @string.Format("Ciclo {0}", item.Number)
+                        </span>
+                        <span class="m-accordion__item-mode"></span>
+                    </div>
+                    <div id="@("m-accordion_" + counter + "_body")" class="m-accordion__item-body collapse show" role="tabpanel" data-parent="@("#m-accordion_" + counter)">
+                        <div class="m-accordion__item-content">
+                            @await Component.InvokeAsync("AcademicSituationDetail", item)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            ++counter;
+        }
+    </div>
+</div>

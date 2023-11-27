@@ -1,0 +1,94 @@
+﻿@model List<BeginningAnnouncement>
+
+
+@if (Model.Count <= 1)
+{
+    <style>
+        #BeginningAnnouncement_modal .carousel-control-prev, .carousel-control-next {
+            display: none;
+        }
+    </style>
+}
+
+
+<!--begin::Modal-->
+<input type="hidden" id="BeginningAnnouncement" value="@((Model != null)?"true" : "false")" />
+@if (Model != null && Model.Any())
+{
+    var hascActive = false;
+
+    <div class="modal fade" id="BeginningAnnouncement_modal" role="dialog" aria-hidden="true" style="z-index: 3000;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="carouselannouncement" class="carousel slide carousel_announcement" data-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach (var item in Model)
+                            {
+                                var icon = "";
+                                switch (item.Type)
+                                {
+                                    case 1:
+                                        icon = "la-info-circle";
+                                        break;
+                                    case 2:
+                                        icon = "la-warning";
+                                        break;
+                                    default:
+                                        icon = "la-info-circle";
+                                        break;
+                                }
+
+                                <div class="carousel-item @(!hascActive?"active":"")">
+                                    <h4 class="text-center"><i class="la @icon la-3x"></i> @item.Title.ToUpper()</h4>
+                                    <p>@Html.Raw(item.Description)</p>
+                                    @if (!string.IsNullOrEmpty(item.FileUrl))
+                                    {
+                                        <div class="text-center mt-3 mb-3">
+                                            <a class="btn btn-primary btn-sm" target="_blank" href="/documentos/@item.FileUrl">
+                                                <span>
+                                                    <i class="la la-download"></i>
+                                                    Archivo Adjunto
+                                                </span>
+                                            </a>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <img src="/imagenes/@item.ImageUrl" style="width:100%" />
+                                    }
+                                    else if (!string.IsNullOrEmpty(item.YouTubeUrl))
+                                    {
+                                        <div class="row">
+                                            <iframe style="width:100%;min-height:350px;max-height:500px" src="@item.YouTubeUrl.Replace("watch?v=", "embed/")">
+                                            </iframe>
+                                        </div>
+                                    }
+                                </div>
+                                hascActive = true;
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselannouncement" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselannouncement" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+<!--end::Modal-->

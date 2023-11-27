@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Reservar Citas Médicas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+};
+}
+@section Styles {
+    <link href="~/assets/plugins/fullcalendar/fullcalendar.bundle.css" type="text/css" rel="stylesheet" />
+    @*<link href="~/css/student/classschedule/index.css" type="text/css" rel="stylesheet" />*@
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>            
+        </div>
+        <div class="m-portlet__body" style="padding-right:10px;padding-top:5px;">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Doctor </label>
+                                <select id="doctorSelect2" class="m-select2 "></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-calendar__container">
+
+
+            </div>
+            <div class="col-sm-12 col-md-10 offset-md-1"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/assets/plugins/fullcalendar/fullcalendar.bundle.js"></script>
+<script src="~/js/modules/form.js"></script>
+<script src="~/js/areas/student/medicalappointment/index.js"></script>
+    }
+
+
+

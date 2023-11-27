@@ -1,0 +1,328 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.GeneralDataViewModel
+@{
+    var disabled = !User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD);
+
+    if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN))
+    {
+        disabled = false;
+    }
+}
+
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Datos del Estudiante
+            </h3>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<form id="edit-form" class="m-form m-form--state m-form--fit" asp-action="_GeneralData" asp-controller="StudentInformation" asp-area="Academic" method="POST">
+    <div class="m-portlet__body">
+        <div class="m-form__content">
+            <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                <div class="m-alert__icon">
+                    <i class="la la-warning"></i>
+                </div>
+                <div id="alert-text" class="m-alert__text">
+                    @ViewBag.ErrorMessage
+                </div>
+                <div class="m-alert__close">
+                    <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <input hidden asp-for="Id" />
+        <input hidden value="@Model.SelectedCareer" id="CareerId" />
+        <input hidden value="@Model.FacultyId" id="FacultyIdValue" />
+        <input hidden value="@Model.DepartmentId" id="departmentId" />
+        <input hidden value="@Model.ProvinceId" id="provinceId" />
+        <input hidden value="@Model.DistrictId" id="districtId" />
+        @*<input hidden value="@Model.StudentScaleId" id="studentScaleId" />*@
+        <input hidden value="@Model.EnrollmentFeeId" id="enrollmentFeeId" />
+        <input id="StudentCareer" asp-for="SelectedCareer" hidden />
+
+        @*@if (!disabled)
+        {
+        <div class="form-group m-form__group row">
+        <div class="m-form__group-sub col-md-6">
+        <label asp-for="Picture" class="form-control-label"></label>
+        <div class="custom-file">
+        <input asp-for="Picture" class="custom-file-input" accept="image/*" lang="es" />
+        <label class="custom-file-label" for="Picture">
+        Seleccione un archivo
+        </label>
+        </div>
+        <span asp-validation-for="Picture" class="text-danger"></span>
+        </div>
+        </div>
+
+        }*@
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="Name" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Name" class="form-control m-input" placeholder="Nombres" required pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1']*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="PaternalSurname" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="PaternalSurname" class="form-control m-input" placeholder="Apellido Paterno" required pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1']*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="PaternalSurname" class="text-danger"></span>
+            </div>
+
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="MaternalSurname" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="MaternalSurname" class="form-control m-input" placeholder="Apellido Materno" pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1']*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="MaternalSurname" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="Dni" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Dni" class="form-control m-input" placeholder="DNI" type="text" pattern="^[0-9]*$" required minlength="8" maxlength="8" disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right" data-toggle="tooltip" data-placement="top" title="@Model.DocumentType">
+                        <span>
+                            <i class="la la-info-circle"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Dni" class="text-danger"></span>
+            </div>
+
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="Email" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Email" class="form-control m-input" placeholder="Correo electrónico" type="email" required disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="so socicon-mail"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="PersonalEmail" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="PersonalEmail" class="form-control m-input" placeholder="Correo alternativo" disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="so socicon-mail"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="PersonalEmail" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="Sex" class="form-control-label"></label>
+                <div class="m-radio-inline">
+                    @foreach (var g in ConstantHelpers.SEX.VALUES)
+                    {
+                        <label class="m-radio m-radio--solid m-radio--brand">
+                            @if (Model.Sex.Equals(g.Key))
+                            {
+                                <input id="sex_@g.Key" asp-for="Sex" type="radio" required value="@g.Key" checked disabled="@disabled" />
+                            }
+                            else
+                            {
+                                <input id="sex_@g.Key" asp-for="Sex" type="radio" required value="@g.Key" disabled="@disabled" />
+                            }
+                            @g.Value
+                            <span></span>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="PhoneNumber" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="PhoneNumber" class="form-control m-input" placeholder="Teléfono" minlength="7" maxlength="9" required disabled="@disabled" />@*pattern="^[1-9][0-9]{6,9}$"*@
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-phone"></i>
+                        </span>
+                    </span>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="BirthDate" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="BirthDate" class="form-control m-input" readonly placeholder="Fecha de Nacimiento" required disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-calendar"></i>
+                        </span>
+                    </span>
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="DepartmentId" class="form-control-label"></label>
+                <select asp-for="DepartmentId" id="department-select" class="form-control m-input m-select2 select2-departments">
+                    <option></option>
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="ProvinceId" class="form-control-label"></label>
+                <select asp-for="ProvinceId" id="province-select" class="form-control m-input m-select2 select2-provinces"> </select>
+                <span asp-validation-for="ProvinceId" class="text-danger"></span>
+            </div>
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="DistrictId" class="form-control-label"></label>
+                <select asp-for="DistrictId" id="district-select" class="form-control m-input m-select2 select2-districts"> </select>
+                <span asp-validation-for="DistrictId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-8">
+                <label asp-for="Address" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="Address" class="form-control m-input" placeholder="Dirección" required disabled="@disabled" />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-home"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="UserWeb" class="form-control-label"></label>
+                <div class="m-input-icon m-input-icon--right">
+                    <input asp-for="UserWeb" class="form-control m-input" disabled />
+                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                        <span>
+                            <i class="la la-user"></i>
+                        </span>
+                    </span>
+                </div>
+                <span asp-validation-for="UserWeb" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-6">
+                <label asp-for="RacialIdentity" class="form-control-label"></label>
+                <div class="m-radio-inline">
+                    <label class="m-radio m-radio--solid m-radio--brand">
+                        <input asp-for="RacialIdentity" id="RacialIdentity1" type="radio" value="@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.NATIVE" required>
+                        @(AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.VALUES[AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.NATIVE])
+                        <span></span>
+                    </label>
+
+                    <label class="m-radio m-radio--solid m-radio--brand">
+                        <input asp-for="RacialIdentity" id="RacialIdentity2" type="radio" value="@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.HALF_BLOOD" required>
+                        @(AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.VALUES[AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.HALF_BLOOD])
+                        <span></span>
+                    </label>
+
+                    <label class="m-radio m-radio--solid m-radio--brand">
+                        <input asp-for="RacialIdentity" id="RacialIdentity3" type="radio" value="@AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.OTHER" required>
+                        @(AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.VALUES[AKDEMIC.CORE.Helpers.ConstantHelpers.Student.RacialIdentity.OTHER])
+                        <span></span>
+                    </label>
+                </div>
+                <span asp-validation-for="RacialIdentity" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="FacultyId" class="form-control-label"></label>
+                <select asp-for="FacultyId" class="form-control m-input m-select2 select2-faculties" disabled> </select>
+                <span asp-validation-for="FacultyId" class="text-danger"></span>
+            </div>
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="SelectedCareer" class="form-control-label"></label>
+                <select asp-for="SelectedCareer" class="form-control m-input m-select2 select2-careers" disabled> </select>
+                <span asp-validation-for="SelectedCareer" class="text-danger"></span>
+            </div>
+
+            <div class="m-form__group-sub col-md-4">
+                <label asp-for="AcademicProgramName" class="form-control-label"></label>
+                <input asp-for="AcademicProgramName" class="form-control m-input" placeholder="Programa Academico" disabled />
+            </div>
+        </div>
+
+        @if (Model.EnableFees)
+        {
+            <div class="form-group m-form__group row">
+@*                <div class="m-form__group-sub col-md-4">
+                    <label asp-for="StudentScaleId" class="form-control-label"></label>
+                    <select asp-for="StudentScaleId" id="scale-select" class="form-control m-input m-select2 select2-scales"></select>
+                    <span asp-validation-for="StudentScaleId" class="text-danger"></span>
+                </div>*@
+                <div class="m-form__group-sub col-md-4">
+                    <label asp-for="EnrollmentFeeId" class="form-control-label"></label>
+                    <select asp-for="EnrollmentFeeId" id="fees-select" class="form-control m-input m-select2 select2-fees"></select>
+                    <span asp-validation-for="EnrollmentFeeId" class="text-danger"></span>
+                </div>
+            </div>
+        }
+    </div>
+    @if (!disabled)
+    {
+        <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+            <div class="m-form__actions">
+                <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                    <span>
+                        <i class="la la-save"></i>
+                        &nbsp;&nbsp;
+                        <span>
+                            Guardar
+                        </span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    }
+</form>
+
+<script>
+    $('[data-toggle="tooltip"]').tooltip();
+</script>

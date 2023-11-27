@@ -1,0 +1,381 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--<TargetFramework>netcoreapp2.0</TargetFramework>-->
+    <TargetFramework>net6.0</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <UserSecretsId>aspnet-AKDEMIC.INTRANET-B646478B-6557-4470-B81B-1E593A235D84</UserSecretsId>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <AssemblyName>AKDEMIC.INTRANET</AssemblyName>
+    <RootNamespace>AKDEMIC.INTRANET</RootNamespace>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;NU1701</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\ProcedureViewModels\**" />
+    <Compile Remove="Areas\Admin\Models\UITViewModels\**" />
+    <Compile Remove="Areas\Admission\Data\**" />
+    <Compile Remove="Areas\Admission\Models\**" />
+    <Compile Remove="Areas\CareerDirector\Data\**" />
+    <Compile Remove="Areas\CareerDirector\Models\Ranking\**" />
+    <Compile Remove="Areas\CareerDirector\Models\Report\**" />
+    <Compile Remove="Areas\CareerDirector\Models\UnbeatenStudent\**" />
+    <Compile Remove="Areas\Dean\Data\**" />
+    <Compile Remove="Areas\Dean\Models\**" />
+    <Compile Remove="Areas\Dependency\Data\**" />
+    <Compile Remove="Areas\Student\Data\**" />
+    <Compile Remove="Areas\Teacher\Data\**" />
+    <Compile Remove="Areas\Treasury\**" />
+    <Compile Remove="Areas\Welfare\Data\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\ProcedureViewModels\**" />
+    <Content Remove="Areas\Admin\Models\UITViewModels\**" />
+    <Content Remove="Areas\Admission\Data\**" />
+    <Content Remove="Areas\Admission\Models\**" />
+    <Content Remove="Areas\CareerDirector\Data\**" />
+    <Content Remove="Areas\CareerDirector\Models\Ranking\**" />
+    <Content Remove="Areas\CareerDirector\Models\Report\**" />
+    <Content Remove="Areas\CareerDirector\Models\UnbeatenStudent\**" />
+    <Content Remove="Areas\Dean\Data\**" />
+    <Content Remove="Areas\Dean\Models\**" />
+    <Content Remove="Areas\Dependency\Data\**" />
+    <Content Remove="Areas\Student\Data\**" />
+    <Content Remove="Areas\Teacher\Data\**" />
+    <Content Remove="Areas\Treasury\**" />
+    <Content Remove="Areas\Welfare\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\ProcedureViewModels\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\UITViewModels\**" />
+    <EmbeddedResource Remove="Areas\Admission\Data\**" />
+    <EmbeddedResource Remove="Areas\Admission\Models\**" />
+    <EmbeddedResource Remove="Areas\CareerDirector\Data\**" />
+    <EmbeddedResource Remove="Areas\CareerDirector\Models\Ranking\**" />
+    <EmbeddedResource Remove="Areas\CareerDirector\Models\Report\**" />
+    <EmbeddedResource Remove="Areas\CareerDirector\Models\UnbeatenStudent\**" />
+    <EmbeddedResource Remove="Areas\Dean\Data\**" />
+    <EmbeddedResource Remove="Areas\Dean\Models\**" />
+    <EmbeddedResource Remove="Areas\Dependency\Data\**" />
+    <EmbeddedResource Remove="Areas\Student\Data\**" />
+    <EmbeddedResource Remove="Areas\Teacher\Data\**" />
+    <EmbeddedResource Remove="Areas\Treasury\**" />
+    <EmbeddedResource Remove="Areas\Welfare\Data\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\ProcedureViewModels\**" />
+    <None Remove="Areas\Admin\Models\UITViewModels\**" />
+    <None Remove="Areas\Admission\Data\**" />
+    <None Remove="Areas\Admission\Models\**" />
+    <None Remove="Areas\CareerDirector\Data\**" />
+    <None Remove="Areas\CareerDirector\Models\Ranking\**" />
+    <None Remove="Areas\CareerDirector\Models\Report\**" />
+    <None Remove="Areas\CareerDirector\Models\UnbeatenStudent\**" />
+    <None Remove="Areas\Dean\Data\**" />
+    <None Remove="Areas\Dean\Models\**" />
+    <None Remove="Areas\Dependency\Data\**" />
+    <None Remove="Areas\Student\Data\**" />
+    <None Remove="Areas\Teacher\Data\**" />
+    <None Remove="Areas\Treasury\**" />
+    <None Remove="Areas\Welfare\Data\**" />
+    <TypeScriptCompile Remove="node_modules\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <!--<FrameworkReference Include="Microsoft.AspNetCore.App" />-->
+    <!--<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />-->
+    <PackageReference Include="BarcodeLib" Version="2.4.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.8.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="6.0.10" />
+    <PackageReference Include="NetBarcode" Version="1.7.0" />
+    <!--<PackageReference Include="System.Data.SqlClient" Version="4.8.1" />-->
+  </ItemGroup>
+
+  <!--<ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <Folder Include="Areas\CareerDirector\Views\Report\" />
+    <Folder Include="Areas\CareerDirector\Views\Ranking\" />
+    <Folder Include="Areas\Dependency\Models\" />
+    <Folder Include="Areas\Teacher\Data\" />
+    <Folder Include="wwwroot\js\areas\admin\laboratory\" />
+    <Folder Include="wwwroot\js\areas\admin\studentgradereport\" />
+    <Folder Include="wwwroot\js\areas\careerdirector\ranking\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\ChangePassword.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\Index.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\Information.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\StudyRecord.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_AcademicHistory.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_AcademicHistoryCourses.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_AssistanceHistory.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_ChangePassword.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_CurriculumProgress.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_Enrollment.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_GeneralData.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_Observations.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_Options.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_ProcedureRequest.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_Procedures.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_ReportCard.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_Schedule.cshtml" />
+    <None Include="Areas\CareerDirector\Views\StudentInformation\_SectionChange.cshtml" />
+    <None Include="wwwroot\lib\jquery.fileDownload\jquery.fileDownload.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AKDEMIC.CORE\AKDEMIC.CORE.csproj" />
+    <ProjectReference Include="..\AKDEMIC.PDF\AKDEMIC.PDF.csproj" />
+    <ProjectReference Include="..\AKDEMIC.SERVICE\AKDEMIC.SERVICE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\AcademicAssistant\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\AcademicAssistant\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Academic\Views\StudentInformation\Pdf\AcademicPerformanceSummary.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Dependency\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Dependency\Index\_DependencyModalCreate.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Dependency\Index\_DependencyModalDetail.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Dependency\Index\_DependencyModalUpdate.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Holiday\Index\_Fields.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Ranking\StudentDetailedRankingPdf.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\ReportTeacherAssistance\Detail.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\ReportTeacherAssistance\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Section\Report2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\CareerDirector\Views\ReportCourse\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\CareerDirector\Views\ReportCourse\ReportCourseView.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\CareerDirector\Views\ReportTeacher\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\CareerDirector\Views\Report\GetReportView.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\CareerDirector\Views\Report\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Teacher\Views\ExtraordinaryEvaluation\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Teacher\Views\DirectedCourse\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Templates\Default\Partials\TopBarPartials\_NotificationPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Templates\Default\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Templates\Default\_SlimLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Templates\Error\_Message.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Templates\Inscription\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Templates\Login\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_LoginPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_ValidationScriptsPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="wwwroot\css\areas\student\academicsummary\recordreportcss.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\themes\akdemic\default.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\views\userprocedure\index.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\images\main-bg.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\classroomschedule\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\forum\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\gradecorrection\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\grade\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\payment\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\student\edit.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\student\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\surveymanagement\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\user\add.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\user\edit.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\admin\user\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\student\absences\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\student\academicsummary\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\student\classschedule\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\student\curriculumprogress\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\student\grade\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\teacher\classschedule\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\teacher\gradecorrection\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\teacher\grade\details.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\teacher\grade\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\teacher\grade\register.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\teacher\studentassistance\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\treasury\invoice\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\treasury\invoice\invoice.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\treasury\pettycash\closepettycash.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\treasury\pettycash\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\treasury\pettycash\newpettycash.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\areas\treasury\pettycash\simulator.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\lib\signal-r\app.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\lib\signal-r\signalr.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\views\shared\topbar.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\views\userprocedure\index.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="azureDependencies.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libwkhtmltox.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="libwkhtmltox.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="x64\libwkhtmltox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="x64\libwkhtmltox.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="x64\libwkhtmltox.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="x86\libwkhtmltox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="x86\libwkhtmltox.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="x86\libwkhtmltox.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/avro-avsc" /></VisualStudio></ProjectExtensions>
+
+</Project>

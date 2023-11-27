@@ -1,0 +1,44 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.AcademicSummaryViewModels.StudentTermViewModel
+
+<div class="m-datatable summary-detail-datatable mx-auto" data-pid="@Model.TermId" style="width:80%;">
+</div>
+<br/>
+<table class="table m-table mx-auto table-bordered m-table--border-metal table-metronic" style="width:80%;">
+    <thead class="text-center">
+        <tr>
+            @*<th rowspan="2">Ciclo</th>*@
+            <th colspan="2">Cr&eacute;ditos</th>
+            <th colspan="2">Ponderado</th>
+            @*<th colspan="2">M&eacute;rito</th>*@
+        </tr>
+        <tr>
+            <th>Totales</th>
+            <th>Aprobados</th>
+            <th>Actual</th>
+            <th>Acumulado</th>
+            @*<th>&Oacute;rden</th>
+            <th>Clasificaci&oacute;n</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center">
+            @*<td>@Model.AcademicSummary.StudentAcademicYear</td>*@
+            <td>@Model.AcademicSummary.TotalCredits</td>
+            <td>@Model.AcademicSummary.ApprovedCredits.ToString("0.0")</td>
+            <td>@Model.AcademicSummary.WeightedFinalGrade</td>
+            <td>@Model.AcademicSummary.CumulativeWeightedFinalGrade</td>
+            @*<td>@Model.AcademicSummary.Order</td>
+            <td>@Model.AcademicSummary.MeritOrder</td>*@
+        </tr>
+        <tr>
+            <th class="text-center">Observaciones</th>
+            <td colspan="3">@Model.AcademicSummary.Observations</td>
+        </tr>
+        <tr>
+            <th class="text-center">Estado</th>
+            <td>@Model.AcademicSummary.Status</td>
+            <th class="text-center">Condición</th>
+            <td>@Model.AcademicSummary.Condition</td>
+        </tr>
+    </tbody>
+</table>

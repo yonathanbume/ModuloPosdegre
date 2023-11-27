@@ -1,0 +1,120 @@
+﻿@font-face {
+    src: url('../../../fonts/unsm/Goudy Old Style Italic.ttf');
+    font-family: 'Goudy Old Style';
+}
+
+.main-container {
+    width: 100%;
+}
+
+.nation-name {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 22pt !important;
+    font-weight: bold;
+}
+
+.nation-name-2 {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15pt !important;
+    font-weight: bold;
+}
+
+.by-name {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20pt !important;
+}
+
+.founded {
+    text-align: center;
+    font-weight: bold;
+    font-size: 10pt !important;
+}
+
+.academic-degree {
+    text-align: center;
+    font-size: 15pt !important;
+}
+
+.university-name {
+    font-family: 'Goudy Old Style';
+    font-style: italic;
+    text-align: center;
+    font-size: 26pt !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.description {
+    font-family: 'Goudy Old Style';
+}
+
+    .description table {
+        font-size: 18pt !important;
+    }
+
+.description-student {
+    font-family: 'Goudy Old Style';
+}
+
+    .description-student table {
+        margin-top: 10px !important;
+        font-size: 18pt !important;
+    }
+
+.text-center {
+    text-align: center !important;
+}
+
+.signature_div {
+    font-weight: bold;
+}
+
+.table-signature {
+    width: 100%;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+    table tr, td {
+        vertical-align: bottom;
+    }
+
+
+.back-page {
+    border: 2px solid black;
+    margin-left:350px !important;
+    padding:5px !important;
+    width: 40%;
+    border-radius: 20px !important;
+}
+
+    .back-page .table-student-details {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    .back-page .table-book {
+        border: 1px solid;
+        padding: 20px !important;
+        padding-left: 50px !important;
+        padding-right: 50px !important;
+        width: 60%;
+    }
+
+        .back-page .table-book table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+
+.border {
+    border: 1px solid;
+}

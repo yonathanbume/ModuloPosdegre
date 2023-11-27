@@ -1,0 +1,226 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Degree.Templates.Diploma.DiplomaPdfReportTemplate
+
+@{
+    Layout = null;
+}
+
+<div class="main-container">
+    <div class="nation-name">
+        REP&Uacute;BLICA
+        <img src="@Model.NationalEmblem" />
+        DEL PER&Uacute;
+    </div>
+    <div class="by-name">
+        A NOMBRE DE LA NACI&Oacute;N
+    </div>
+    <div class="university-name">
+        El Rector de la @ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value]
+    </div>
+
+    <div class="description">
+        <table>
+            <tr>
+                <td colspan="2">Por cuanto:</td>
+            </tr>
+            <tr>
+                <td>La Facultad de : </td>
+                <td width="86%" class="font-english-towne border-dashed" style="font-size:44pt !important; text-align:center; border-bottom:2px dashed black;">@Model.Faculty</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td width="9%">con fecha</td>
+                <td width="8%" class="font-english-towne" style="font-size:34pt !important; text-align:center; border-bottom:2px dashed black;">@Model.UniveristaryDateDay</td>
+                <td>de</td>
+                <td width="24%" class="font-english-towne" style="font-size:34pt !important; text-align:center; border-bottom:2px dashed black;">@Model.UniveristaryDateMonth</td>
+                <td>del</td>
+                <td width="10%" class="font-english-towne" style="font-size:34pt !important; text-align:center; border-bottom:2px dashed black;">@Model.UniveristaryDateYear</td>
+                <td>ha otorgado</td>
+                <td class="font-tahoma" style="font-weight:bold; font-size:22pt;">
+                    @if (Model.GradeTypeDescription == ConstantHelpers.GRADE_INFORM.DegreeType.VALUES[ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR])
+                    {
+                        @Html.Raw("GRADO ACADÉMICO");
+                    }
+                    else
+                    {
+                        @Html.Raw("TÍTULO");
+                    }
+                </td>
+                <td>de</td>
+            </tr>
+            <tr>
+                <td class="font-english-towne" style="font-size:45pt; text-align:center; border-bottom:2px dashed black;" colspan="9">
+                    @{
+                        var str = Model.AcademicDegreeDenomination.Trim().ToLower();
+                        var td = str.Split(" ");
+                        var result = string.Empty;
+                        foreach (var item in td)
+                        {
+                            var name = "";
+                            var letters = item.ToCharArray();
+
+                            for (int i = 0; i < letters.Length; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    name += letters[i].ToString().ToUpper();
+                                }
+                                else
+                                {
+                                    name += letters[i];
+                                }
+                            }
+
+                            result += name;
+                            result += " ";
+                        }
+                    }
+
+                    @Html.Raw(result.Trim())
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="description-student">
+        <table>
+            <tr>
+                <td width="10%">A Don(ña):</td>
+                <td class="font-algerian" style="font-size:36pt; text-align:center; border-bottom:2px dashed black;">@Model.StudentName.ToUpper() @Model.StudentPaternalSurName.ToUpper() @Model.StudentMaternalSurName.ToUpper()</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>
+                    Por Tanto: Se confiere el presente
+                    <span style="font-family:'Tahoma'; font-size:22pt !important; font-weight:bold !important;">
+                        @if (Model.GradeTypeDescription == ConstantHelpers.GRADE_INFORM.DegreeType.VALUES[ConstantHelpers.GRADE_INFORM.DegreeType.BACHELOR])
+                        {
+                            @Html.Raw("DIPLOMA");
+                        }
+                        else
+                        {
+                            @Html.Raw("TÍTULO");
+                        }
+                    </span> para que se le reconozca como tal.
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td width="24%">Dado y firmado en @ConstantHelpers.Institution.Locations[ConstantHelpers.GENERAL.Institution.Value] a los</td>
+                <td width="10%" class="font-english-towne" style="font-size:34pt; text-align:center; border-bottom:2px dashed black;">@Model.CurrentDay</td>
+                <td style="text-align:center;">d&iacute;as del mes de</td>
+                <td width="22%" class="font-english-towne" style="font-size:34pt; text-align:center; border-bottom:2px dashed black;">@Model.CurrentMonth</td>
+                <td style="text-align:center;">del</td>
+                <td width="18%" class="font-english-towne" style="font-size:34pt; text-align:center; border-bottom:2px dashed black;">@Model.CurrentYear</td>
+                <td>&emsp;</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="width:100%" class="signature_div">
+        <table style="font-size:10pt !important; font-weight:bold;" class="table-signature">
+            <tr>
+                <td>@ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value]</td>
+                <td style="width:100px !important;">&emsp;</td>
+                <td>@ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value]</td>
+                <td style="width:100px !important;">&emsp;</td>
+                <td>
+                    @ConstantHelpers.Institution.Names[ConstantHelpers.GENERAL.Institution.Value] <br />
+                    @Model.Faculty
+                </td>
+            </tr>
+            <tr>
+                <td style="height:100px !important; border-bottom:2px solid;">&emsp;</td>
+                <td>&emsp;</td>
+                <td style="border-bottom:2px solid;">&emsp;</td>
+                <td>&emsp;</td>
+                <td style="border-bottom:2px solid;">&emsp;</td>
+            </tr>
+            <tr>
+                <td style="vertical-align:central !important;">@Model.GeneralSecretary</td>
+                <td>&emsp;</td>
+                <td style="vertical-align:central !important;">@Model.Rector</td>
+                <td>&emsp;</td>
+                <td style="vertical-align:central !important;">@Model.Dean</td>
+            </tr>
+            <tr>
+                <td>SECRETARIO GENERAL</td>
+                <td>&emsp;</td>
+                <td>RECTOR</td>
+                <td>&emsp;</td>
+                <td>DECANO</td>
+            </tr>
+            <tr>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+                <td><img src="@Model.Shield" style="width:60px !important;" /></td>
+                <td>&emsp;</td>
+                <td>&emsp;</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="back-page">
+    <table class="table-student-details">
+        <tr class="border">
+            <td class="border" colspan="2">C&oacute;digo de la Universidad</td>
+            <td class="border" colspan="2">@Model.UniversityCode</td>
+        </tr>
+        <tr class="border">
+            <td class="border">Tipo de Documentos</td>
+            <td class="border">@Model.DocumentType</td>
+            <td class="border">Nª</td>
+            <td class="border">@Model.DocumentNumber</td>
+        </tr>
+        <tr class="border">
+            <td class="border">Grado o T&iacute;tulo</td>
+            <td class="border">@Model.GradeAbrev</td>
+            <td class="border">Modalidad de Estudio</td>
+            <td class="border">@Model.StudentModality</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="4">Numero de la Resoluci&oacute;n Rectoral N° @Model.ResolutionNumber</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="2">Fecha de Resoluci&oacute;n Rectoral</td>
+            <td class="border" colspan="2">@Model.ResoultionRectorDate</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="2">Número de Diploma</td>
+            <td class="border" colspan="2">@Model.DiplomaNumber</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="2">Tipo de Emisi&oacute;n del Diploma</td>
+            <td class="border" colspan="2">@Model.EmittedDiplomaType</td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="4">
+                Registrado con Nª @Model.RegisterNumber &emsp;
+                Libro Nª @Model.Book &emsp;
+                Folio Nª @Model.Foil &emsp;
+            </td>
+        </tr>
+        <tr class="border">
+            <td class="border" colspan="4">Modalidad de obtención del Grado o T&iacute;tulo: @Model.GradeModalityGain</td>
+        </tr>
+    </table>
+
+    <table class="table-book" style="border-radius:20px !important;">
+        <tr>
+            <td style="padding:20px !important;" colspan="3">Registrado en el Libro N°. @Model.RegisterNumber  Folio N° @Model.Foil </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="font-weight:bold; padding:20px !important;">GRADO  N° @Model.DiplomaNumber</td>
+        </tr>
+        <tr>
+            <td style="height:60px !important;" colspan="3">&emsp;</td>
+        </tr>
+        <tr>
+            <td>&emsp;</td>
+            <td style="text-align:center !important; border-top:1px solid; text-align:center; height:10px !important; padding-bottom:20px !important;">@Model.StudentName @Model.StudentPaternalSurName @Model.StudentMaternalSurName</td>
+            <td>&emsp;</td>
+        </tr>
+    </table>
+</div>

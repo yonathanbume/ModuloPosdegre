@@ -1,0 +1,159 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Generals.Templates.Student.StudentConstancy;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        /*Header*/
+        .document-header {
+            border-bottom: 1px solid black
+        }
+
+            .document-header div {
+                text-align: center;
+            }
+
+        .company-name {
+            font-family: Georgia;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        .area-name {
+            font-family: Arial;
+            font-size: 16px;
+            padding: 5px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+        }
+
+        .office-name {
+            padding-top: 0px !important;
+            padding: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+            font-family: Arial;
+        }
+
+        .address-text {
+            padding: 0 0 10px 0;
+            font-size: 10px;
+        }
+
+        .header-image.left {
+            float: left;
+            max-height: 100px;
+            max-width: 100px;
+        }
+
+        .header-image.right {
+            float: right;
+            max-height: 100px;
+            max-width: 100px;
+        }
+
+        .student-image.right {
+            float: right;
+            max-height: 150px;
+            max-width: 130px;
+        }
+
+        .table-details {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .first {
+            width: 200px;
+            font-weight: bold;
+        }
+
+        .document-body {
+            padding-top: 20px;
+            font-family: Arial;
+        }
+
+        .document-title {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            text-align: justify;
+            letter-spacing: 1px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="document-header">
+        <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" />
+        <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+
+        <div class="cleared" style="padding:5px">
+            <div class="company-name" style="margin:0px; padding:5px;">
+                <b> @GeneralHelpers.GetInstitutionName().ToUpper()</b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:5px;">
+                <b>UNIDAD BIENESTAR UNIVERSITARIO</b>
+            </div>
+            <div class="company-name center" style="margin:0px; padding:5px;">
+                <b> SERVICIO SOCIAL</b>
+            </div>
+        </div>
+
+    </div>
+    <div class="document-body">
+        <p style="text-align:center">La Unidad de Bienestar Universitario otorga la presente:</p>
+
+        <h1 style="text-align:center"><b>CONSTANCIA</b></h1>
+        <br />
+        <table style="border: 1px solid black; border-collapse: collapse;margin:auto">
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">ESTUDIANTE</td>
+                <td style="border:1px solid black;padding:5px">@Model.FullName</td>
+            </tr>
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">CODIGO UNIVERSITARIO</td>
+                <td style="border:1px solid black;padding:5px">@Model.UserName</td>
+            </tr>
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">FACULTAD</td>
+                <td style="border:1px solid black;padding:5px">@Model.FacultyName</td>
+            </tr>
+            <tr style="border:1px solid black">
+                <td style="border:1px solid black;padding:5px">ESCUELA PROFESIONAL</td>
+                <td style="border:1px solid black;padding:5px">@Model.CareerName</td>
+            </tr>
+        </table>
+        <br />
+        <p style="text-align:center">Por haber culminado satisfactoriamente el registro de la FICHA SOCIOECON&Oacute;MICA a trav&eacute;s de la plataforma Virtual para el proceso de Matr&iacute;cula @Model.TermName</p>
+        <br />
+        <br />
+        <h3 style="text-align:center">GRACIAS POR SU IMPORTANTE PARTICIPACI&Oacute;N</h3>
+        <br />
+        <br />
+        <div id="qrcode" style="text-align:center ">
+            <img src="@Model.QRImage" style="max-height:150px;" />
+        </div>
+        <br />
+        <br />
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+﻿<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Editar Comunicado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" asp-controller="TutoringAnnouncement" asp-action="Edit" asp-area="Admin" class="m-form m-form--state">
+                <div class="modal-body">
+                    <div class="m-alert alert-dismissible alert alert-danger m--hide" role="alert" id="editAlert">
+                        <div class="m-alert__text" id="editAlertText">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    @await Html.PartialForAsync("_TutoringAnnouncementEntryForm", "Edit")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button id="btnCreate" type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

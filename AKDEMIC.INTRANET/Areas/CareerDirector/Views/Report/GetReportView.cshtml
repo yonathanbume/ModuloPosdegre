@@ -1,0 +1,115 @@
+﻿@model AKDEMIC.INTRANET.Areas.CareerDirector.Models.ReportViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Reporte de asistencia";
+    ViewData["SubTitle"] = "Listado de inasistencias";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de estudiantes" , Url = Url.Action("Index","Report") }, new BreadcrumbViewData{ Name = "Reporte de asistencia"}
+};
+    ViewData["BackUrl"] = Url.Action("Index", "Report", new { area = "Admin" });
+}
+<div class="m-content">
+    <input asp-for="Student.StudentId" type="hidden" />
+    <input asp-for="ActiveTerm" type="hidden" />
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información del Estudiante
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <label>Periodo:  </label>
+                <div class="dropdown bootstrap-select m--align-left">
+                    <select id="select2-terms" class="m-select2"> </select>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Estudiante: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Student.FullName</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>C&oacute;digo: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.Student.UserName</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Escuela: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Student.Career.Name</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>M&aacute;x. % de Faltas:</b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@(100 - Model.AttendanceMinPercentage) %</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table class="table table-striped table-bordered" id="datatable_absences"></table>
+            @*<div class="m-datatable-absences">
+            </div>*@
+        </div>
+    </div>
+    <div id="absences-detail-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary font-weight-bold" id="absences-detail-label">
+                        Detalle de Inasistencias
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                        <div class="row align-items-center form-group m-form__group">
+                            <div class="col-sm-auto m-form__label">Estado: </div>
+                            <div class="col-sm-3 m-form__control">
+                                <select id="assistance-filter" class="m-input m-select2">
+                                    <option value="-1">Todos</option>
+                                    @foreach (var item in ConstantHelpers.ASSISTANCE_STATES.VALUES)
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                </select>
+                                <input id="SectionId" hidden />
+                                <input id="StudentId" hidden />
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered" id="absences-detail-datatable"></table>
+                    @*<div id="absences-detail-datatable" class="m-datatable"></div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/careerdirector/report/report_details.js"></script>
+}

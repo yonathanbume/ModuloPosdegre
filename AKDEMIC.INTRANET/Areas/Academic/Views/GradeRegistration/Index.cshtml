@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Reporte de registro de notas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Recepción de Ficha" }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Cumplimiento del registro de notas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Periodo:</label>
+                                <select id="term_select" class="m-select2"></select>
+                            </div>
+
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Componentes curso:</label>
+                                <select id="component_select" class="m-select2"></select>
+                            </div>
+
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Facultad:</label>
+                                <select id="faculty_select" class="m-select2"></select>
+                            </div>
+
+                            @*<div class="form-group m-form__group col-xl-4">
+                                    <label>Carrera:</label>
+                                    <select id="career_select" class="m-select2" disabled="disabled">
+                                        <option></option>
+                                    </select>
+                                </div>*@
+
+
+
+                            @*<div class="form-group m-form__group col-xl-2">
+                                    <label>&nbsp;</label>
+                                    <div class="m-input m-input-icon m-input-icon--left">
+                                        <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="table-container">
+                <table class="table table-striped table-bordered" id="data-table"></table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/academic/graderegistration/index.js"></script>
+}

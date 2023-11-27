@@ -1,0 +1,119 @@
+﻿@using AKDEMIC.DEGREE.ViewModels.HomeViewModels
+@model CountViewModel
+@section Scripts {
+    <script src="~/js/views/home/index.js"></script>
+}
+@if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.DEGREE_ADMIN))
+{
+    <div class="m-content">
+
+        <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
+            <li class="m-widget28__nav-item nav-item">
+                <a id="goToRegistry" class="nav-link active" data-toggle="pill" href="#" style="height:80px; display: flex;  align-items: center;margin-bottom:10px;"> <span style="display: block;  margin: auto;"> <span><i class="fa flaticon-folder-2"></i></span><span>Gestión de padron de registro</span></span></a>
+            </li>
+            <li class="m-widget28__nav-item nav-item">
+                <a id="goToDiploma" class="nav-link active" data-toggle="pill" href="#" style="height:80px; display: flex;  align-items: center; margin:0px;"> <span style="display: block;  margin: auto;"> <span><i class="fa flaticon-folder-2"></i></span><span>Gestión de diplomas </span> </span></a>
+            </li>
+            <li class="m-widget28__nav-item nav-item">
+                <a id="goToReportBachelorTitle" class="nav-link active" data-toggle="pill" href="#" style="height:80px; display: flex;  align-items: center; margin:0px;"> <span style="display: block;  margin: auto;"> <span><i class="fa flaticon-folder-2"></i></span><span>Reporte de bachilleres y titulados </span> </span></a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="m-content">
+        <div><h3 class="m-portlet__head-text"> &Uacute;ltimos 3 meses</h3></div>
+        <div class="m-portlet ">
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <!--begin::New Feedbacks-->
+                        <div class="m-widget24">
+                            <div class="m-widget24__item">
+                                <h4 class="m-widget24__title">
+                                    Padrones Generados
+                                </h4><br>
+                                <span class="m-widget24__desc">
+                                    N° de padrones generados
+                                </span>
+                                <span class="m-widget24__stats m--font-info">
+                                    @Model.RegistryPatternCount
+                                </span>
+                                <div class="m--space-10"></div>
+                            </div>
+                        </div>
+                        <!--end::New Feedbacks-->
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <!--begin::New Orders-->
+                        <div class="m-widget24">
+                            <div class="m-widget24__item">
+                                <h4 class="m-widget24__title">
+                                    Diplomas Generados
+                                </h4><br>
+                                <span class="m-widget24__desc">
+                                    N° de diplomas generados
+                                </span>
+                                <span class="m-widget24__stats m--font-danger">
+                                    @Model.DiplomaCount
+                                </span>
+                                <div class="m--space-10"></div>
+                            </div>
+                        </div>
+                        <!--end::New Orders-->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="m-content">
+        <div><h3 class="m-portlet__head-text"> Grados emitidos a la fecha</h3></div>
+        <div class="m-portlet ">
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <!--begin::New Feedbacks-->
+                        <div class="m-widget24">
+                            <div class="m-widget24__item">
+                                <h4 class="m-widget24__title">
+                                    Bachilleres
+                                </h4><br>
+                                <span class="m-widget24__desc">
+                                    N° de bachilleres
+                                </span>
+                                <span class="m-widget24__stats m--font-info">
+                                    @Model.BachelorCount
+                                </span>
+                                <div class="m--space-10"></div>
+                            </div>
+                        </div>
+                        <!--end::New Feedbacks-->
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <!--begin::New Orders-->
+                        <div class="m-widget24">
+                            <div class="m-widget24__item">
+                                <h4 class="m-widget24__title">
+                                    Titulados
+                                </h4><br>
+                                <span class="m-widget24__desc">
+                                    N° de titulados
+                                </span>
+                                <span class="m-widget24__stats m--font-danger">
+                                    @Model.TitleCount
+                                </span>
+                                <div class="m--space-10"></div>
+                            </div>
+                        </div>
+                        <!--end::New Orders-->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+

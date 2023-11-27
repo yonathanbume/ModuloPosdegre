@@ -1,0 +1,228 @@
+﻿@using AKDEMIC.INTRANET.ViewModels.ProfileViewModels
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Perfil";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Home", Controller = "Home", Action = "Index" },
+new BreadcrumbViewData {Name="Perfil", Controller=null, Action=null}
+};
+}
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="m-portlet m-portlet--full-height  ">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            Tu Perfil
+                        </div>
+                        <div class="m-card-profile__pic">
+                            <div class="m-card-profile__pic-wrapper">
+                                <img src="@(string.IsNullOrEmpty(Model.UserViewModel.Picture) ? "/images/demo/user.png" : Model.UserViewModel.Picture)" alt="" />
+                            </div>
+                        </div>
+                        <div class="m-card-profile__details">
+                            <span class="m-card-profile__name">
+                                @User.GetFullName()
+                            </span>
+                            <span href="" class="m-card-profile__email ">
+                                @Model.UserViewModel.Dni
+                            </span>
+                        </div>
+                    </div>
+                    <ul class="nav nav-tabs m-nav m-nav--hover-bg m-portlet-fit--sides" role="tablist">
+                        <li class="m-nav__item">
+                            <a href="#tab_1" class="nav-link m-nav__link active" data-toggle="tab" role="tab">
+                                <i class="m-nav__link-icon flaticon-avatar"></i>
+                                <span class="m-nav__link-text">
+                                    Datos Personales
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="#tab_2" class="nav-link m-nav__link" data-toggle="tab" role="tab">
+                                <i class="m-nav__link-icon flaticon-mark"></i>
+                                <span class="m-nav__link-text">
+                                    Cambio de contraseña
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8">
+            <!---->
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <div class="m-portlet m-portlet--full-height m-portlet--tab">
+
+                        <input hidden value="@Model.UserViewModel.DepartmentId" id="departmentId" />
+                        <input hidden value="@Model.UserViewModel.ProvinceId" id="provinceId" />
+                        <input hidden value="@Model.UserViewModel.DistrictId" id="districtId" />
+                        <form class="m-form m-form--fit m-form--label-align-right" id="formPersonal-information-update" data-ajax="true" data-ajax-method="POST" action="@Url.Action("PersonalInformation","Profile")" method="post">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="col-10 ml-auto">
+                                        <h3 class="m-form__section">
+                                            Datos Personales
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Nombre Completo
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" value="@User.GetFullName()" disabled="disabled">
+                                    </div>
+                                </div>
+                                @if (User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+                                {
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">
+                                            ESCUELA PROFESIONAL
+                                        </label>
+                                        <div class="col-7">
+                                            <input class="form-control m-input" type="text" value="@Model.UserViewModel.Career" disabled="disabled">
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Correo Personal
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" name="Email" value="@((Model.UserViewModel.Email!=null)?Model.UserViewModel.Email: "")">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Tel&eacute;fono
+                                    </label>
+                                    <div class="col-7 m-form__group-sub">
+                                        <input class="form-control m-input" name="PhoneNumber" value="@((Model.UserViewModel.PhoneNumber!=null)?Model.UserViewModel.PhoneNumber: "")">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Departamento
+                                    </label>
+                                    <div class="col-7 m-form__group-sub">
+                                        <select name="DepartmentId" id="department-select" class="form-control m-input m-select2 select2-departments"> </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Provincia
+                                    </label>
+                                    <div class="col-7 m-form__group-sub">
+                                        <select name="ProvinceId" id="province-select" class="form-control m-input m-select2 select2-provinces"> </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Distrito
+                                    </label>
+                                    <div class="col-7 m-form__group-sub">
+                                        <select name="DistrictId" id="district-select" class="form-control m-input m-select2 select2-districts"> </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Direcci&oacute;n
+                                    </label>
+                                    <div class="col-7 m-form__group-sub">
+                                        <input name="Address" class="form-control m-input" value="@Model.UserViewModel.Address">
+                                    </div>
+                                </div>
+
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <div class="row">
+                                            <div class="col-2"></div>
+                                            <div class="col-10">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Guardar Cambios
+                                                </button>
+                                                &nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div class="m-portlet m-portlet--full-height m-portlet--tab">
+                        <form class="m-form m-form--fit m-form--label-align-right" id="form-password-change" data-ajax="true" data-ajax-method="POST" action="@Url.Action("ChangePassword","Profile")" method="post" autocomplete="off">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="col-10 ml-auto">
+                                        <h3 class="m-form__section">
+                                            Cambio de contraseña
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Contraseña Actual
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" id="CurrentPassword" name="CurrentPassword" type="password" autocomplete="off" required minlength="6" maxlength="50">
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" data-id="show" class="btn btn-default" id="CurrentPasswordEye"><i class="la la-eye"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Nueva Contraseña
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" name="NewPassword" type="password" autocomplete="off" required minlength="6" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Repetir Contraseña
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" name="RepeatPassword" type="password" autocomplete="off" required minlength="6" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <div class="row">
+                                            <div class="col-2"></div>
+                                            <div class="col-10">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Guardar Cambios
+                                                </button>
+                                                &nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="tab-pane" id="m_user_profile_tab_2"></div>
+                        <div class="tab-pane" id="m_user_profile_tab_3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/views/profile/Index.js" type="text/javascript" asp-append-version="true"></script>
+}

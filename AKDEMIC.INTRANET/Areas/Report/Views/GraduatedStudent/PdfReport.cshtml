@@ -1,0 +1,150 @@
+﻿@model AKDEMIC.INTRANET.Areas.Report.ViewModels.GraduatedStudentViewModels.ReportPdfViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teacherInfo {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .firstTeacherInfo {
+            width: 45%;
+            display: inline-block;
+        }
+
+        .truelabel {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .truelabel2 {
+            width: 110px;
+            display: inline-block;
+        }
+
+        .truelabel3 {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .secondTeacherInfo {
+            width: 54%;
+            display: inline-block;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+        }
+            table tr {
+                page-break-inside: avoid;
+            }
+        .border {
+            border: 1px solid black;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+
+        .report-header {
+            margin-bottom: 5px;
+            min-height: 60px;
+        }
+
+            .report-header .logo-container {
+                display: inline-block;
+                text-align: center;
+            }
+
+                .report-header .logo-container img {
+                    top: 0;
+                    left: 0;
+                    height: 60px;
+                }
+
+                .report-header .logo-container .title {
+                    font-size: 11px;
+                    font-style: italic;
+                }
+
+            .report-header .title-container {
+                font-weight: bold;
+                padding-top: 5mm;
+                font-size: 14px;
+                text-align: center;
+            }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <div class="logo-container">
+            <img src="@Model.Logo" />
+        </div>
+    </div>
+
+    <div class="unk-header" style="font-size:16px;">
+        <p style="margin:0px;" class="negrita">
+            ESTUDIANTES EGRESADOS
+        </p>
+        <br />
+        <p style="margin:0px;text-align:left" class="negrita">PERIODO:&emsp;@Model.Term</p>
+    </div>
+    <table>
+        <tbody style="text-align:center;">
+            <tr>
+                <th style="background-color:lightgray" class="border">Usuario</th>
+                <th style="background-color:lightgray" class="border">Nombre Completo</th>
+                <th style="background-color:lightgray" class="border">Escuela Profesional</th>
+                <th style="background-color:lightgray" class="border">Periodo de Admisión</th>
+                <th style="background-color:lightgray" class="border">Periodo de Egreso</th>
+                <th style="background-color:lightgray" class="border">Nota Promedio</th>
+
+            </tr>
+            @foreach (var item in Model.Students)
+            {
+                 <tr>
+                    <td style="text-align:left;" class="border">@item.UserName</td>
+                    <td style="text-align:left;" class="border">@item.FullName</td>
+                    <td style="text-align:left;" class="border">@item.Career</td>
+                    <td style="text-align:left;" class="border">@item.AdmissionTerm</td>
+                    <td style="text-align:left;" class="border">@item.GraduatedTerm</td>
+                    <td style="text-align:left;" class="border">@item.AverageGrade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

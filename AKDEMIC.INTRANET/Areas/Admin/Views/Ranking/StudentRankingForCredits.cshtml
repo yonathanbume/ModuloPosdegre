@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Ranking de estudiantes por créditos";
+    ViewBag.SubTitle = "Listado de estudiantes por escuela, sede y periodo";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.SubTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2 col-md-3">
+                                <label>Periodo acad&eacute;mico</label>
+                                <select class="form-control m-input m-select2 select2-terms"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3 col-md-4">
+                                <label>Escuela profesional</label>
+                                <select class="form-control m-input m-select2 select2-careers"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3 col-md-4">
+                                <label>Programa académico</label>
+                                <select class="form-control m-input m-select2 select2-programs"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3 col-md-4">
+                                <label>Sede</label>
+                                <select class="form-control m-input m-select2 select2-campus"> </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3 col-md-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/ranking/studentrankingforcredits.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,36 @@
+﻿
+@model Guid
+@{
+            ViewData["Title"] = "Asistencia";
+            ViewData["SubTitle"] = "Lista de asistentes";
+            ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Lista de tutorías", Url = Url.Action("Index", "TutorialAssistence", new { area = "Teacher" }) } ,
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+
+};
+        ViewData["BackUrl"] = Url.Action("Index", "TutorialAssistence", new { area = "Teacher" });
+}
+<div class="m-content">
+    <input id="Id" type="hidden" value="@Model" />
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button id="btn-save" class="btn btn-primary"><span><i class="la la-save"></i> Guardar</span></button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-datatable_student"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script src="~/js/areas/teacher/tutorial/assistance.js"></script>
+}

@@ -1,0 +1,49 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.ExtracurricularActivitiesViewModel.ExtracurricularActivityStudentViewModel;
+<input asp-for="Id" hidden />
+<div class="form-group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="ExtracurricularActivityId"></label>
+        <select asp-for="ExtracurricularActivityId" class="form-control m-select2">
+            <option></option>
+        </select>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="StudentId"></label>
+        <select asp-for="StudentId" class="form-control m-select2">
+            <option></option>
+        </select>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="Grade"></label>
+        <input class="form-control" asp-for="Grade" min="0" max="20" step="1" />
+    </div>
+</div>
+<div class="form-group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="Resolution"></label>
+        <input class="form-control" asp-for="Resolution" />
+    </div>
+</div>
+<div class="form-group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="EvaluationReportDate"></label>
+        <input class="form-control input-datepicker" asp-for="EvaluationReportDate" />
+    </div>
+</div>
+<div class="form-group row">
+    <div class="m-form__group-sub col-lg-12">
+        <label asp-for="File" class="form-control-label"></label>
+        <div></div>
+        <div class="custom-file">
+            <input asp-for="File" class="custom-file-input" lang="es" />
+            <label class="custom-file-label" for="ResolutionFile">
+                Seleccione un archivo
+            </label>
+        </div>
+        <br />
+    </div>
+</div>

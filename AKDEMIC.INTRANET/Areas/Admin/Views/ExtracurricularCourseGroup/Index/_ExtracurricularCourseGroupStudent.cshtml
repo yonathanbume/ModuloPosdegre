@@ -1,0 +1,38 @@
+﻿<div class="modal fade" id="students-modal" role="dialog">
+    <div class="modal-dialog modal-lg-x2" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="m-portlet__head-text">Estudiantes inscritos en el grupo</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+@*                <div class="row">
+                    <div class="form-group m-form__group col-xl-3">
+                        <div class="m-input m-input-icon m-input-icon--left">
+                            <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search-students">
+                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                <span><i class="la la-search"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>*@
+@*                <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="form_class_msg">
+                    <div class="m-alert__icon">
+                        <i class="la la-warning"></i>
+                    </div>
+                    <div class="m-alert__text" id="form_class_msg_txt">
+                        Oh rayos! Ocurri&oacute; un error en el servidor
+                    </div>
+                    <div class="m-alert__close">
+                        <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                    </div>
+                </div>*@
+                <input hidden id="groupId"/>
+                <table class="table table-striped table-bordered" id="students-table"></table>
+            </div>
+        </div>
+    </div>
+</div>

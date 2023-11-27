@@ -1,0 +1,67 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.GradeViewModels.RegisterGradeByUnitViewModel
+<div>
+    <table class="table table-striped m-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Código</th>
+                <th>Estudiante</th>
+
+                @foreach (var item in Model.Evaluations)
+                {
+                    <th>@item.Name</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.StudentSections.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        <input asp-for="StudentSections[i].Id" type="hidden" />
+                        <input asp-for="StudentSections[i].StudentId" type="hidden" />
+                        @(i+1)
+                    </td>
+                    <td>@Model.StudentSections[i].Code</td>
+                    <td>@Model.StudentSections[i].FullName</td>
+
+                    @for (var v = 0; v < Model.StudentSections[i].Evaluations.Count(); v++)
+                    {
+                        <td>
+                            @if (Model.StudentSections[i].Status == ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN)
+                            {
+                                @Html.Raw("RET")
+                                ;
+                            }
+                            else
+                            {
+                                @if (Model.StudentSections[i].Evaluations[v].Published)
+                                {
+                                    @Model.StudentSections[i].Evaluations[v].Grade
+                                }
+                                else
+                                {
+                                    <div class="form-group m-form__group">
+                                        @if (Model.StudentSections[i].Evaluations[v].Attended.HasValue && !Model.StudentSections[i].Evaluations[v].Attended.Value)
+                                        {
+                                            <input type="text" asp-for="StudentSections[i].Evaluations[v].Grade" value="NR" class="form-control text-right input-grade" style="text-transform:uppercase" required />
+                                        }
+                                        else
+                                        {
+                                            <input type="text" asp-for="StudentSections[i].Evaluations[v].Grade" class="form-control text-right input-grade" style="text-transform:uppercase" required />
+                                        }
+                                        
+                                    </div>
+                                }
+                            }
+
+                            <input type="hidden" asp-for="StudentSections[i].Evaluations[v].Id" class="form-control text-right" />
+
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Listado de Cursos";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = ViewBag.Title, Controller = null, Action = null }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-1 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Periodo Acad&eacute;mico</label>
+                                <select class="m-select2 select2-terms"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Escuela Profesional</label>
+                                <select class="m-select2 select2-areacareers"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Programa de Estudios</label>
+                                <select class="m-select2 select2-tprograms"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Plan de estudios</label>
+                                <select class="m-select2 select2-plans"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-2">
+                                <label>Ciclo</label>
+                                <select class="m-select2 select2-cyccles"></select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group offset-xl-2 col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <button class="btn btn-primary btn-search btn-block">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/grade/deletegrades.js" asp-append-version="true"></script>
+}
+

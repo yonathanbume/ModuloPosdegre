@@ -1,0 +1,296 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@using AKDEMIC.CORE.Extensions;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+    Model.Course.Section.Students = Model.Course.Section.Students.Where(x => x.Status != ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN).ToList();
+
+    var colspan = 6 + Model.Course.PartialAveragesCount;
+
+    var enrolled = Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName)).Count();
+    var approved = Model.Term.Status == ConstantHelpers.TERM_STATES.ACTIVE ? Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && x.Approved).Count() : Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && x.Status == ConstantHelpers.STUDENT_SECTION_STATES.APPROVED).Count();
+    var disapproved = Model.Term.Status == ConstantHelpers.TERM_STATES.ACTIVE ? Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && !x.Approved).Count() : Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName) && (x.Status == ConstantHelpers.STUDENT_SECTION_STATES.DISAPPROVED || x.Status == ConstantHelpers.STUDENT_SECTION_STATES.DPI)).Count();
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-emblem {
+            float: right;
+            padding-left: 80px;
+        }
+
+            .header-emblem img {
+                max-height: 100px !important;
+            }
+
+        .header-univ-logo {
+            float: left;
+            padding-right: 80px;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+        .header {
+            font-weight: 600;
+            /*color: #0f128b;*/
+            text-align: center;
+        }
+
+            .header .university-title {
+                padding-top: 15px !important;
+                font-size: 23px !important;
+                margin: 2px !important;
+            }
+
+            .header .header-title {
+                font-size: 20px !important;
+                margin: 2px !important;
+            }
+
+            .header .subheader-title {
+                font-size: 18px !important;
+                margin: 2px !important;
+            }
+
+        .container-details {
+            width: 100% !important;
+            font-weight: normal;
+            text-align: left;
+            font-size: 13px !important;
+        }
+
+            .container-details .table-general-detail {
+                width: 75%;
+                float: left;
+            }
+
+                .container-details .table-general-detail td {
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+
+            .container-details .table-course-detail {
+                width: 25%;
+                font-size: 12px !important;
+                float: right;
+            }
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            font-size: 14px !important;
+            background-color: lightgray;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 20px !important;
+            border-bottom: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-bottom: 1px solid transparent;
+        }
+
+        .location {
+            text-align: right;
+            /*color: red;*/
+            height: 50px !important;
+            border: 0px !important;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 12px !important;
+            height: 30px !important;
+            width: 5%;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 13px !important;
+                border: 1px solid black;
+                padding: 3px !important;
+            }
+
+        .red {
+            color: red !important;
+        }
+
+        .blue {
+            color: blue !important;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table footer">
+        <tr>
+            <td colspan="@colspan" class="location">&emsp;</td>
+        </tr>
+        <tr>
+            <td colspan="5" height="95px"></td>
+        </tr>
+        <tr>
+            <td colspan="@colspan">
+                <table width="100%">
+                    <tr>
+                        <td class="center signature">Docente Responsable</td>
+                        <td class="no-signature">&emsp;</td>
+                        <td class="no-signature">&emsp;</td>
+                        <td class="no-signature">&emsp;</td>
+                        <td class="no-signature">&emsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="@colspan">
+                @{
+                    Model.Course.Section.Students = Model.Course.Section.Students.Where(x => !string.IsNullOrEmpty(x.UserName)).ToList();
+                }
+                @if (Model.Term.Status == ConstantHelpers.TERM_STATES.ACTIVE && Model.Course.Section.Students.Any(y => !y.DPI && !y.HasAllGradesPublished))
+                {
+                    <table class="table-statistics">
+                        <tr>
+                            <td class="center bold">F&Oacute;RMULA PROMEDIO FINAL</td>
+                            <td class="center bold">DESCRIPCI&Oacute;N</td>
+                            <td class="center bold">MATRICULADOS</td>
+                            <td class="center bold">APROBADOS</td>
+                            <td class="center bold">DESAPROBADOS</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="center">@Model.Course.Formula</td>
+                            <td class="center bold">CANTIDAD</td>
+                            <td class="center">-</td>
+                            <td class="center">-</td>
+                            <td class="center">-</td>
+                        </tr>
+                        <tr>
+                            <td class="center bold">PORCENTAJE</td>
+                            <td class="center">-</td>
+                            <td class="center">-</td>
+                            <td class="center">-</td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <table class="table-statistics">
+                        <tr>
+                            <td class="center bold">F&Oacute;RMULA PROMEDIO FINAL</td>
+                            <td class="center bold">DESCRIPCI&Oacute;N</td>
+                            <td class="center bold">MATRICULADOS</td>
+                            <td class="center bold">APROBADOS</td>
+                            <td class="center bold">DESAPROBADOS</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="center">@Model.Course.Formula</td>
+                            <td class="center bold">CANTIDAD</td>
+                            <td class="center">@enrolled</td>
+                            <td class="center">@approved</td>
+                            <td class="center">@disapproved</td>
+                        </tr>
+                        <tr>
+                            <td class="center bold">PORCENTAJE</td>
+                            <td class="center">100.00%</td>
+                            <td class="center">@(enrolled == 0 ? "0.00" : Math.Round((approved * 100M / enrolled), 2, MidpointRounding.AwayFromZero).ToString("0.00"))%</td>
+                            <td class="center">@(enrolled == 0 ? "0.00" : Math.Round((disapproved * 100M / enrolled), 2, MidpointRounding.AwayFromZero).ToString("0.00"))%</td>
+                        </tr>
+                    </table>
+                }
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="@colspan" class="td-qr">
+                <img src="@Model.FinalQR" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="@colspan">Usuario : @Model.UserLoggedIn</td>
+        </tr>
+    </table>
+</body>
+</html>

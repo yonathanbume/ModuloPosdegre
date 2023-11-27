@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Secciones";
+    ViewData["SubTitle"] = "Listado de Secciones";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Periodo Acad&eacute;mico</label>
+                                <select id="select_term" class="m-select2 select2-term">
+                                    @*<option value="0" selected>Todas</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Curso</label>
+                                <select id="select_career" class="m-select2">
+                                    @*<option value="0" selected>Todas</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="m-datatable" id="sections-datatable"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="sections-modal-edit" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Profesor</h5>
+            </div>
+            <form id="sections-modal-edit-form" action="@Url.Action("UpdateSection", "Section", new { area = "Admin" })" method="post">
+                <input type="hidden" name="Id" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+
+                        <label for="Teacher">Profesor</label> 
+                        <select name="TeacherId" class="form-control m-select2" id="Teacher-select2"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-add" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/areas/admin/section/index.js"></script>
+<script src="~/js/modules/form.js"></script>
+    }   

@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Detalle";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Reporte de Encuestas" },
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString() }
+    };
+}
+<div class="m-content">
+    <div class="row">
+        <input type="hidden" value="@ViewBag.Id" id="Id"/>
+        <div class="col-xl-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption" style="width:100%">
+                        <div class="m-portlet__head-title" style="width:100%;display: block;">
+                            <h3 class="m-portlet__head-text" style="display:initial;"><i class="m-menu__link-icon flaticon-statistics">&ensp;</i>Lista de estudiantes</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered" id="data-table"></table>
+                </div>
+            </div>
+        </div>
+        <div id="questions" style="width:100%;"></div>
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/css/areas/careerdirector/reportsurvey/charts.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/js/lib/highcharts/highcharts.js"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+    <script src="~/js/areas/careerdirector/reportSurvey/detail.js"></script>
+}

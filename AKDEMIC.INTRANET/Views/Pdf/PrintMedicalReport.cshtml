@@ -1,0 +1,1305 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.MedicalRecordViewModels.MedicalRecordViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="~/css/areas/student/studentinformation/printsocioeconomicrecord.css" rel="stylesheet" />
+</head>
+<body>
+    <div style="page-break-after:always">
+        <div class="document-header">
+            <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" />
+            <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+
+            <div class="cleared" style="padding:5px">
+                <div class="company-name" style="margin:0px; padding:5px;">
+                    <b> @GeneralHelpers.GetInstitutionName().ToUpper()</b>
+                </div>
+                <div class="company-name center" style="margin:0px; padding:5px;">
+                    <b>SERVICIO MEDICO PRIMARIO</b>
+                </div>
+                <div class="company-name center" style="margin:0px; padding:5px;">
+                    <b>&nbsp; </b>
+                </div>
+            </div>
+        </div>
+        <div class="document-body">
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td colspan="6" align="center" bgcolor="#BFBFBF" style="border: 1px solid black">
+                        <b>FICHA MÉDICA</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                <tr>
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black">
+                        Escuela Profesional
+                    </td>
+
+                    <td align="center" style="border: 1px solid black">
+                        @Model.Career
+                    </td>
+
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black">
+                        DNI
+                    </td>
+
+                    <td align="center" style="border: 1px solid black">
+                        @Model.Dni
+                    </td>
+
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black">
+                        Código de matrícula
+                    </td>
+
+                    <td align="center" style="border: 1px solid black">
+                        @Model.UserName
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td colspan="8" align="center" bgcolor="#BFBFBF" style="border: 1px solid black">
+                        <b>DATOS GENERALES</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                <tr>
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="10%">
+                        Apellidos y nombres
+                    </td>
+
+                    <td align="center" style="border: 1px solid black" width="30%">
+                        @Model.FullName
+                    </td>
+
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="10%">
+                        Edad
+                    </td>
+
+                    <td align="center" style="border: 1px solid black" width="5%">
+                        @Model.Age
+                    </td>
+
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="10%">
+                        Sexo
+                    </td>
+
+                    <td align="center" style="border: 1px solid black" width="10%">
+                        @Model.Sex
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="10%">
+                        Celular
+                    </td>
+
+                    <td align="center" style="border: 1px solid black" width="15%">
+                        @Model.Phone
+                    </td>
+                </tr>
+            </table>
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        Alergia a medicamentos
+                    </td>
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_BOOLEAN.TYPE_1.VALUES)
+                    {
+                        if (Model.HasDrugAllergy == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; background-color:navajowhite" width="5%">
+                                <b>@type.Value</b>
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black" width="5%">
+                                @type.Value
+                            </td>
+                        }
+
+                    }
+                    <td width="5%"></td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="30%">
+                        <b>Si es Sí especifique a qué</b>
+                    </td>
+                    <td align="center" style="border: 1px solid black" width="30%">
+                        @Model.DrugAllergyDescription
+                    </td>
+                </tr>
+
+            </table>
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        ¿Conoces tu tipo de Sangre?
+                    </td>
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_BOOLEAN.TYPE_1.VALUES)
+                    {
+                        if (Model.BloodTypeKnowledge == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; background-color:navajowhite" width="5%">
+                                <b>@type.Value</b>
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black" width="5%">
+                                @type.Value
+                            </td>
+                        }
+
+                    }
+                    <td width="5%"></td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="40%">
+                        <b>¿Cuál es su grupo sanguineo?</b>
+                    </td>
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.BLOOD_TYPE.TYPE_1.VALUES)
+                    {
+                        if (Model.BloodType == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; background-color:navajowhite" width="5%">
+                                <b>@type.Value</b>
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black" width="5%">
+                                @type.Value
+                            </td>
+                        }
+
+                    }
+                </tr>
+
+            </table>
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td width="40%"></td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="20%">
+                        <b>Factor Rh</b>
+                    </td>
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_2.VALUES)
+                    {
+                        if (Model.RhFactor == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; background-color:navajowhite" width="20%">
+                                <b>@type.Value</b>
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black" width="20%">
+                                @type.Value
+                            </td>
+                        }
+
+                    }
+                </tr>
+
+            </table>
+            <br />
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td colspan="4" align="center" bgcolor="#BFBFBF" style="border: 1px solid black">
+                        <b>ANTECEDENTES PERSONALES</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Hábitos nocivos ¿Fuma?
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Smoke == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Hábitos nocivos ¿Toma licor?
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Liqueur == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Transfuciones Sanguíneas
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.BloodTransfusions == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Enfermedades infecto-contagiosas
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.InfectiousDiseases == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Vacunas completas
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.CompleteVaccinations == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Enfermedades crónicas
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.ChronicDiseases == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Discapacidad
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Disability == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Accidentes
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Accidents == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Intoxicaciones
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Intoxications == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Cirugia/hospitalización
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.SurgeryOrHospitalization == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Toma medicamentos
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.TakeMedication == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="25%">
+                        <div style="display:block;">
+                            Problemas psicológicos
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.PsychologicalProblems == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;border:1px solid black;">
+                <tr>
+                    <td align="center">
+                        ¿Usted padece de alguna enfermedad, estado problema de salud que no figura aquí, y que deberiamos conocer?
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">@(!String.IsNullOrEmpty(Model.OtherDiseaseDescription) ? Model.OtherDiseaseDescription: "---------")</td>
+                </tr>
+            </table>
+            <br />
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td colspan="3" align="center" bgcolor="#BFBFBF" style="border: 1px solid black">
+                        <b>ANTECEDENTES FAMILIARES</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Diabetes
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Diabetes == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Obesidad
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Obesity == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Cardiovascular
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Cardiovascular == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Alergia
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Allergy == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Infecciones
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Infections == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Cáncer
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.Cancer == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Problemas psicológicos
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.HomePsychologicalProblems == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Alcohol, drogas y otros
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.AlcoholOrDrugs == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                    <td align="center" bgcolor="#BFBFBF" style="border: 1px solid black" width="33.3%">
+                        <div style="display:block;">
+                            Violencia intrafamiliar
+                        </div>
+                        @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.CONDITION_INT.TYPE_1.VALUES)
+                        {
+                            if (Model.DomesticViolence == type.Key)
+                            {
+                                <div style="width:33.3%;height:10%;border:1px solid black;background-color:navajowhite;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width: 33.3%; height: 10%; border: 1px solid black;background-color:white;display:inline-block;">
+                                    @type.Value
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+
+            </table>
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;border:1px solid black;">
+                <tr>
+                    <td align="center">
+                        ¿Alguno de tus familiares padece de alguna enfermedad, estado o problema de salud que no figura aquí y que deberiamos conocer?
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">@(!String.IsNullOrEmpty(Model.HomeOtherDiseaseDescription) ? Model.HomeOtherDiseaseDescription : "---------")</td>
+                </tr>
+            </table>
+            <br />
+            <table style="border-collapse: collapse; width: 100%; font-family: Arial;">
+                <tr>
+                    <td align="center" style="border: 1px solid black;" width="65%">
+                        DECLARACIÓN<br />
+                        Declaro bajo juramento que la información que proporciono es verdadera, esta información es confidencial:
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style="text-align:center;padding:40px 35px;">
+                            <div style="border-top: 1px solid black;height: 2px; padding:10px;">
+                                Firma
+                            </div>
+                        </div>
+                    </td>
+                    <td align="center" width="5%">
+                    </td>
+                    <td align="center" style="border: 1px solid black;" width="30%">
+                        <div style="text-align:center;">
+                            <img src="@Model.ImageQR">
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <div>
+        <b>Apellidos y Nombres: @Model.FullName.ToUpper()</b>
+        <br />
+        <br />
+        <table style="border-collapse: collapse; width: 100%; font-family: Arial; border:1px solid black;">
+            <thead>
+                <tr>
+                    <th colspan="6"><b>Escala de Autoevaluación para la Depresión de Zung (SDS)</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>N°</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>INTERROGANTES</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Nunca o muy pocas veces</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>De vez en cuando</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Con bastante frecuencia</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Siempre o casi siempre</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>1</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Me siento decaido y triste</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.SadEmotionalLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>2</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Por las mañanas es cuando me siento mejor</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.FeelMorningLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>3</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Siento ganas de llorar o irrumpo en llanto</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.CryEmotionalLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>4</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Tengo problemas para dormir por la noche</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.NightDreamProblemLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>5</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Como la misma cantidad siempre</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.SameEmotionLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>6</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Todavía disfruto el sexo</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.SexEnjoyLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>7</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>He notado que he perdido peso</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.WeightKnowledgeLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>8</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Tengo problemas de estreñimiento</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.ConstipationProblemLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>9</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Mi corazón late más rápido de lo normal</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.HeartProblemLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>10</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Me canso sin razón alguna</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.TirednessLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>11</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Mi mente esta tan clara como siempre</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.ClearMindLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>12</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Hago las cosas con la misma facilidad de antes</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.RythmChangeLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>13</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Me siento agitado y no puedo estar quieto</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.AgitatedLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>14</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Tengo esperanza en el futuro</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.HopefulLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>15</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Estoy más irritable de lo normal</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.IrritationLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>16</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Me es fácil tomar decisiones</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.VelocityDecisionLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>17</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Siento que soy útil y me necesitan</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.UsefulLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>18</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Me satisface mi vida actual</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.SatisfactionLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>19</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Creo que los demás estarían mejor si yo muriera</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.SuicideLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td align="center" style="border: 1px solid black;">
+                        <b>20</b>
+                    </td>
+
+                    <td align="center" style="border: 1px solid black;">
+                        <b>Todavía disfruto de las cosas que disfrutaba antes</b>
+                    </td>
+
+                    @foreach (var type in AKDEMIC.INTRANET.Helpers.ConstantHelpers.EVALUATION.SDS.VALUES)
+                    {
+                        if (Model.EnjoymentLevel == type.Key)
+                        {
+                            <td align="center" style="border: 1px solid black; font-size:20px; color:red">
+                                ✖
+                            </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="border: 1px solid black;">
+                            </td>
+                        }
+                    }
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <table style="border-collapse: collapse; width: 100%; font-family: Arial; border:1px solid black;">
+            <tr>
+                <td align="center" style="border: 1px solid black;" width="50%"><b>Puntaje de Autoevaluación para la Depresión de Zung (SDS)</b></td>
+                <td align="center" style="border: 1px solid black;" width="50%">&nbsp</td>
+            </tr>
+        </table>
+    </div>
+    <div style="page-break-inside:avoid">
+        <div class="document-header">
+            <img class="header-image left" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" />
+            <img class="header-image right" src="@Environment.CurrentDirectory/wwwroot/images/themes/@GeneralHelpers.GetTheme()/logo-report.png" />
+
+            <div class="cleared" style="padding:5px">
+                <div class="company-name" style="margin:0px; padding:5px;">
+                    <b> @GeneralHelpers.GetInstitutionName().ToUpper()</b>
+                </div>
+                <div class="company-name center" style="margin:0px; padding:5px;">
+                    <b>SERVICIO MEDICO PRIMARIO</b>
+                </div>
+                <div class="company-name center" style="margin:0px; padding:5px;">
+                    <b>&nbsp; </b>
+                </div>
+            </div>
+        </div>
+
+        <div class="area-name center" style="text-align:center;margin-bottom:55px;margin-top:55px;">
+            CONSTANCIA DE SALUD
+        </div>
+        <div style="margin-bottom:10px;margin-top:10px;line-height:25px">
+            El Servicio Médico Primario, de la <b> @GeneralHelpers.GetInstitutionName().ToUpper()</b> hace constar haber atendido y examinado a:
+        </div>
+
+        <div class="area-name center" style="text-align:center;margin-bottom:45px;margin-top:45px;">
+            @Model.FullName.ToUpper()
+        </div>
+
+        <div style="margin-bottom:40px">
+            De la escuela Profesional de: <b> @Model.Career.ToUpper() </b> 
+        </div>
+        <div style="text-align:justify; line-height:25px;text-rendering:geometricPrecision;">
+            Quien cuenta con Historia Clínica según el Art. 25° del REGLAMENTO DE MATRÍCULA DEL SISTEMA CURRICULAR FLEXIBLE POR COMPETENCIAS,
+            aprobado por R.R. N° 1001-2016-R-UNA.
+            <p>
+                C.U.
+            </p>
+        </div>    
+    </div>
+</body>
+</html>

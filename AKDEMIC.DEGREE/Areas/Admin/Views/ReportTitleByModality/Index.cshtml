@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Reporte de estudiantes titulados según modalidad de solicitud";
+    //ViewBag.SubTitle = "Listado de trámites";
+}
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Reporte de estudiantes titulados según modalidad de solicitud
+                    </h3>
+                </div>
+            </div>
+        </div>
+        @*@if (ViewBag.CareerId != Guid.Empty)
+            {
+                <input type="hidden" id="CareerIdSe" name="CareerIdSe" value="@ViewBag.CareerId" />
+            }*@
+        <div class="m-portlet__body" style="text-align:center">
+            <div class="col-xl-12 order-2 order-xl-1">
+                <div class="row">
+                    <div class="form-group m-form__group col-xl-5">
+                        <label> </label>
+                        <label for="dateStartFilter">Fecha inicio (*):</label>
+                        <input id="dateStartFilter" class="form-control m-input" autocomplete="off">
+                    </div>
+                    <div class="form-group m-form__group col-xl-5">
+                        <label> </label>
+                        <label for="dateEndFilter">Fecha fin (*):</label>
+                        <input id="dateEndFilter" class="form-control m-input" autocomplete="off">
+                    </div>
+                    <div class="form-group m-form__group col-xl-2" style="margin-top: 25px;">
+                        <label> </label>
+                        <button type="button" id="btn-search-dates" class="m-btn btn btn-primary"><i class="la la-search"></i></button>
+                    </div>
+
+                </div>
+            </div>
+            <div id="chart_div_report_title_modality" style="margin-top:20px;">
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/lib/highcharts/highcharts.js"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/reports/ReportTitleByModality.js"></script>
+    @*<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>*@
+}

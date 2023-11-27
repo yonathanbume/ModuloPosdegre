@@ -1,0 +1,186 @@
+﻿@model AKDEMIC.INTRANET.Areas.Teacher.Models.ClassScheduleViewModels.AcademicChargeViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 11px;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teacherInfo {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .firstTeacherInfo {
+            width: 45%;
+            display: inline-block;
+        }
+
+        .truelabel {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .truelabel2 {
+            width: 110px;
+            display: inline-block;
+        }
+
+        .truelabel3 {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .secondTeacherInfo {
+            width: 54%;
+            display: inline-block;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+        }
+
+        .border {
+            border: 1px solid black;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <table>
+        <tr>
+            <td style="width:15%;">
+                <table class="border">
+                    <tr class="border">
+                        <td class="border center negrita" colspan="3">FECHA DE RECEPCIÓN </td>
+                    </tr>
+                    <tr class="border">
+                        <td class="border center">DÍA</td>
+                        <td class="border center">MES</td>
+                        <td class="border center">AÑO</td>
+                    </tr>
+                    <tr class="border">
+                        <td class="border" style="height:25px"></td>
+                        <td class="border" style="height:25px"></td>
+                        <td class="border" style="height:25px"></td>
+                    </tr>
+                    <tr class="border">
+                        <td class="border" colspan="3" style="height:68px;vertical-align:top">
+                            V.B.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width:84%;">
+                <table width="100%">
+                    <tr style="height:80px">
+                        <td style="width:25%;"></td>
+                        <td class="border" style="width:25%;"></td>
+                        <td class="border" style="width:25%;"></td>
+                        <td class="border" style="width:25%;"></td>
+                    </tr>
+                    <tr style="height:60px">
+                        <td style="width:25%;"></td>
+                        <td class="border center negrita">
+                            DOCENTE <br />
+                            <span style="font-weight:normal !important;">@Model.teacherName</span>
+                        </td>
+                        <td class="border center negrita">
+                            DIRECTOR DEL DEPARTAMENTO <br />
+                            <span style="font-weight:normal !important;">@Model.AcademicDepartmentDirector</span>
+                        </td>
+                        <td class="border center negrita">
+                            DECANO DE LA FACULTAD <br />
+                            <span style="font-weight:normal !important;">@Model.DeanFaculty</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table>
+        <tr style="border:1px dotted black">
+            <td class="">
+                Nota: Incluir la información completa para el semestre académico correspondiente; en caso de incumplimiento será de exclusiva responsabilidad del docente y de los que visan el presente documento
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td class="">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td class="border negrita">OBSERVACIONES</td>
+        </tr>
+
+        @if (string.IsNullOrEmpty(Model.Observation))
+        {
+            <tr>
+                <td class="border" style="height:25px"></td>
+            </tr>
+            <tr>
+                <td class="border" style="height:25px"></td>
+            </tr>
+            <tr>
+                <td class="border" style="height:25px"></td>
+            </tr>
+            <tr>
+                <td class="border" style="height:25px"></td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td class="border" style="padding:5px !important;">@Model.Observation</td>
+            </tr>
+        }
+
+
+    </table>
+</body>
+</html>

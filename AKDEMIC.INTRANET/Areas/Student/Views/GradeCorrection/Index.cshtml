@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Solicitudes de Corrección de Notas";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = ViewData["Title"].ToString(), Controller = null, Action = null}
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Periodo Académico:</label>
+                                <select id="select_term" class="m-select2"></select>
+                            </div>
+                            @*   <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                <span><i class="la la-search"></i></span>
+                                </span>
+                                </div>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button data-toggle="modal" data-target="#request_grade_correction_modal" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo solicitud</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="request_grade_correction_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nueva solicitud
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="request_grade_correction_form" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="alert alert-primary" role="alert">
+                        <strong>Las solicitudes de corrección de nota podrán ser presentadas con un plazo máximo de @ViewBag.MaxDaysBeforeRequest días. </strong>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label>Curso</label>
+                        <select class="form-control m-select2" name="StudentSectionId" required></select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label>Evaluaciones calificadas</label>
+                        <select class="form-control m-select2" name="GradeId" required></select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label>Motivo / Raz&oacute;n</label>
+                        <textarea name="Observations" class="form-control disable-resize" required rows="5" maxlength="3000"></textarea>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label for="File">Archivo adjunto</label>
+                        <div></div>
+                        <div class="custom-file">
+                            <input class="custom-file-input" name="File" lang="es" type="file" />
+                            <label class="custom-file-label">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary btn-submit"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="request_grade_details_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Detalles de la Solicitud
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group m-form__group">
+                    <label>Curso</label>
+                    <input class="form-control" name="CourseFullName" readonly/>
+                </div>
+                  <div class="form-group m-form__group">
+                    <label>Sección</label>
+                    <input class="form-control" name="Section" readonly/>
+                </div>
+                <div class="form-group m-form__group">
+                    <label>Evaluacion</label>
+                    <input class="form-control" name="Evaluation" readonly/>
+                </div>
+                <div class="row">
+                    <div class="form-group m-form__group col-6">
+                        <label>Nota anterior</label>
+                        <input class="form-control" name="OldGrade" readonly/>
+                    </div>
+                    <div class="form-group m-form__group col-6">
+                        <label>Nueva nota</label>
+                        <input class="form-control" name="NewGrade" readonly/>
+                    </div>
+                </div>
+                <div class="form-group m-form__group">
+                    <label>Motivo / Raz&oacute;n</label>
+                    <textarea name="Observations" class="form-control disable-resize" readonly rows="5"></textarea>
+                </div>
+                <div class="form-group m-form__group">
+                    <label>Estado</label>
+                    <input class="form-control" name="Status" readonly/>
+                </div>
+                <div class="grade_correction_file_container d-none">
+                    Archivo Adjunto : <a href="#" target="_blank" class="m--font-primary m-link m--font-boldest grade_correction_file_path">Descargar</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+<script src="~/js/areas/student/grade_correction/index.js" asp-append-version="true"></script>
+}

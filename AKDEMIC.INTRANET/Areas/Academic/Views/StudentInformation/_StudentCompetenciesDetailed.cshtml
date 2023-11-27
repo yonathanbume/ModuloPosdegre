@@ -1,0 +1,186 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.StudentStatisticsViewModel
+
+<div class="row">
+    <div class="col-3">
+        <div class="m-portlet m-portlet--rounded">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Informaci&oacute;n del Estudiante
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div>
+                    <div class="row d-flex justify-content-center mb-3">
+                        <img src="@(!string.IsNullOrEmpty(Model.Picture) ? "/images/demo/user.png" : $"/imagenes/{Model.Picture}")" class="m--img-rounded m--img-centered" alt="" id="student-picture" />
+                    </div>
+                    <div>
+                        <div class="general_competencies_card">
+                            <div class="row">
+                                <div class="col-12 text-center m--font-boldest" style="border-top:1px solid; padding:10px !important; font-size:18px !important;">
+                                    COMPETENCIAS GENERALES
+                                </div>
+                            </div>
+                            <div class="row text-center" style="font-size:15px !important;">
+                                @foreach (var item in Model.Competencies.Where(x => x.Type == ConstantHelpers.COMPETENCIE.GENERAL))
+                                {
+                                    <div class="col-6">
+                                        @item.Average - @item.Competencie
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="specific_competencies_card d-none">
+                            <div class="row">
+                                <div class="col-12 text-center m--font-boldest" style="border-top:1px solid; padding:10px !important; font-size:18px !important;">
+                                    COMPETENCIAS ESPECÍFICAS
+                                </div>
+                            </div>
+                            <div class="row text-center" style="font-size:15px !important;">
+                                @foreach (var item in Model.Competencies.Where(x => x.Type == ConstantHelpers.COMPETENCIE.SPECIFIC))
+                                {
+                                    <div class="col-6">
+                                        @item.Average - @item.Competencie
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center">
+                            <div class="m-radio-inline">
+                                <label class="m-radio m-radio--solid m-radio--brand">
+                                    <input type="radio" name="competencies_card_group" checked="" value="1">
+                                    <span></span>
+                                </label>
+                                <label class="m-radio m-radio--solid m-radio--brand">
+                                    <input type="radio" name="competencies_card_group" value="2">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="m-portlet m-portlet--tabs">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-tools">
+                    <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#student_informacion_general_competencies" role="tab">
+                                Competencias Generales
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#student_informacion_specific_competencies" role="tab">
+                                Competencias Espec&iacute;ficas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="student_informacion_general_competencies" role="tabpanel">
+                        <div class="row">
+                            @foreach (var competencie in Model.Competencies.Where(x => x.Type == ConstantHelpers.COMPETENCIE.GENERAL))
+                            {
+                                <div class="col-4">
+                                    <div class="m-widget4" style="border-bottom:2px dashed; margin-bottom:15px">
+                                        <div class="m-widget4__item">
+                                            <div class="m-widget4__info">
+                                                <span class="m-widget4__title" style="font-size:14px !important; font-weight:bold !important;">
+                                                    @competencie.Competencie
+                                                </span><br>
+                                            </div>
+                                            <span class="m-widget4__ext">
+                                                <span class="m-widget4__number" style="font-size:14px !important; font-weight:bold !important;">@competencie.Average</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    @foreach (var course in competencie.Details)
+                                    {
+                                        <div class="m-widget4 student_competencies_detail">
+                                            <div class="m-widget4__item">
+                                                <div class="m-widget4__info">
+                                                    <span class="m-widget4__title">
+                                                        @course.Course
+                                                    </span><br>
+
+                                                </div>
+                                                <span class="m-widget4__ext">
+                                                    <span class="m-widget4__number @(course.Approved.HasValue && course.Approved.Value ?"":"m--font-danger")">@(course.FinalGrade.HasValue ? course.FinalGrade.ToString() : "-")</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="student_informacion_specific_competencies" role="tabpanel">
+                        <div class="row">
+                            @foreach (var competencie in Model.Competencies.Where(x => x.Type == ConstantHelpers.COMPETENCIE.SPECIFIC))
+                            {
+                                <div class="col-4">
+                                    <div class="m-widget4" style="border-bottom:2px dashed; margin-bottom:15px">
+                                        <div class="m-widget4__item">
+                                            <div class="m-widget4__info">
+                                                <span class="m-widget4__title" style="font-size:14px !important; font-weight:bold !important;">
+                                                    @competencie.Competencie
+                                                </span><br>
+                                            </div>
+                                            <span class="m-widget4__ext">
+                                                <span class="m-widget4__number" style="font-size:14px !important; font-weight:bold !important;">@competencie.Average</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    @foreach (var course in competencie.Details)
+                                    {
+                                        <div class="m-widget4 student_competencies_detail">
+                                            <div class="m-widget4__item">
+                                                <div class="m-widget4__info">
+                                                    <span class="m-widget4__title">
+                                                        @course.Course
+                                                    </span><br>
+
+                                                </div>
+                                                <span class="m-widget4__ext">
+                                                    <span class="m-widget4__number @(course.Approved.HasValue && course.Approved.Value ?"":"m--font-danger")">@(course.FinalGrade.HasValue ? course.FinalGrade.ToString() : "-")</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('input[type=radio][name=competencies_card_group]').change(function () {
+        if (this.value == '1') {
+            $(".general_competencies_card").removeClass("d-none");
+            $(".specific_competencies_card").addClass("d-none");
+        }
+        else if (this.value == '2') {
+            $(".general_competencies_card").addClass("d-none");
+            $(".specific_competencies_card").removeClass("d-none");
+        }
+    });
+</script>

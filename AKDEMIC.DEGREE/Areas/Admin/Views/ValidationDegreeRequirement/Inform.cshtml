@@ -1,0 +1,124 @@
+﻿@model AKDEMIC.DEGREE.Areas.Admin.Models.ValidationDegreeRequirementViewModels.ResultViewModel
+@{
+    ViewBag.Title = "Solicitud de grado por requisitos";
+    ViewBag.SubTitle = "Solicitud de grado";
+
+
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = "ValidationDegreeRequirement", Action = "Index" , Area ="Admin" },
+new BreadcrumbViewData { Name = "Solicitud de grado", Controller = null, Action = null },
+};
+ int i = 1;
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_2" role="tab">
+                            <i class="la la-edit"></i> Solicitud de Grado <span style="margin-left: 5px;" id="student-fullname"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+                <div id="student-info" class="row col-12">
+                    <div class="col-5">
+                        <div class="form-group m-form__group">
+                            <label class="form-control-label">Estudiante</label>
+                            <input asp-for="FullName" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group m-form__group">
+                            <label class="form-control-label">Escuela</label>
+                            <input asp-for="ProfessionalSchool" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group m-form__group">
+                            <label class="form-control-label">Creditos aprobados</label>
+                            <input asp-for="Approvedcredits" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-content">
+
+                <div class="tab-pane active" id="m_tabs_6_2" role="tabpanel">
+                    <form id="grade-report-information" method="post" enctype="multipart/form-data" role="form">
+                        <input type="hidden" name="StudentId" value="@(Model.StudentId)" />
+                        <input type="hidden" name="GradeType" value="@(Model.GradeType)" />
+                        <div class="modal-body">
+
+                            @if (Model.DegreeRequirements.Count() > 0)
+                            {
+                            <div class="form-group m-form__group">
+                                <br />
+                                <h5>Requisitos</h5>
+                                <br />
+                                <br />
+
+                                @foreach (var item in Model.DegreeRequirements.Select((value, index) => new { value, index }))
+                                {
+
+                                <div class="d_requirement" id="@(item.value.Id)">
+                                    <div class="row col-12">
+                                        <div class="col-6" style="padding:0px;">
+                                            <label>@((item.index +1).ToString() + '.' + ' ' + item.value.Name)</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" placeholder="Documento" accept="application/*" required>
+                                                <label class="custom-file-label" for="SignatureFile">Seleccione archivo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<label for="Observation">Adjuntar archivo</label>*@
+
+                                    <div class="form-group m-form__group" style="margin-top:5px;max-width: 1245px;">
+                                        <label for="Observation">Observaciones</label>
+                                        <textarea style="resize:none;height:100px;" class="form-control" maxlength="700" autocomplete="off"></textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />                     
+
+                                }
+
+
+                            </div>
+                            }
+                            else
+                            {
+                            <span>No se encontró requisitos para el tipo de informe</span>
+                            }
+
+                        </div>
+                        @if (Model.DegreeRequirements.Count() > 0)
+                        {
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"> Guardar </button>
+                        </div>
+                        }
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var isIntegrated = @(Model.Value.ToLower());
+    </script>
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/validation_degree_requirement/index.js"></script>
+}

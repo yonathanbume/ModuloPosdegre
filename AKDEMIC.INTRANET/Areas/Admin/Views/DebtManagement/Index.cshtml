@@ -1,0 +1,220 @@
+﻿@{
+    ViewData["Title"] = "Gestor de Dedudas";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Deudas" }
+};
+}
+<style>
+    table.table-striped.table-bordered {
+        margin: 0 auto;
+        width: 100%;
+        clear: both;
+        border-collapse: collapse;
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+</style>
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <label>B&uacute;squeda por c&oacute;digo de usuario</label>
+                    <div class="input-group">
+                        <input id="code_user" type="text" class="form-control" placeholder="Buscar...">
+                        <div class="input-group-append">
+                            <button id="code_search" class="btn btn-primary" type="button"><i class="la la-search"></i></button>
+
+                            <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#users_modal"><i class="la la-users"></i></button>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="m-portlet m--hide" id="info-portlet">
+                <div class="m-portlet__body m-form">
+                    <div class="form-group m-form__group m-form__group--first row">
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>Código de usuario</label>
+                            <input id="code" class="form-control" disabled />
+                        </div>
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>Nombre completo</label>
+                            <input id="fullname" class="form-control" disabled />
+                        </div>
+                        <div class="col-md-4 m-form__group-sub">
+                            <label>Documento</label>
+                            <input id="dni" class="form-control" disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de deudas del usuario
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button id="btn-new" class="btn btn-sm btn-primary m-btn m-btn--icon" data-toggle="modal" data-target="#concept_modal" style="display: none">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo concepto</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <h6 id="empty-message" class="m--align-center">Ingrese un c&oacute;digo de usuario</h6>
+
+            <form id="create-form" asp-controller="Payment" asp-action="Create" asp-area="Cashier">
+                <input id="user" name="UserName" hidden />
+                <div class="m-datatable" id="ajax_data"></div>
+
+                <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30 collapse" id="m_datatable_group_action_form">
+                    <div class="row align-items-center">
+                        <div class="offset-md-3 col-md-6"><button type="submit" class="btn btn-primary btn-block">Proceder a generar recibo</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de deudas exoneradas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table class="table table-striped table-bordered" id="exonerated-data-table"></table>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="concept_modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Registrar concepto de usuario
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="concept-form" asp-action="CreatePayment" asp-controller="DebtManagement">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="create-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="create-alert-txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <input id="user-code" name="UserCode" value="" hidden />
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="">Concepto</label>
+                        <select id="concept-select" name="ConceptId" class="form-control m-select2" placeholder="Buscar..." required></select>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-6 form-group m-form__group-sub">
+                            <label class="">Glosa <small>(opcional)</small></label>
+                            <input id="concept-comment" name="Comment" class="form-control m-input">
+                        </div>
+                        <div class="col-6 form-group m-form__group-sub">
+                            <label class="">Monto</label>
+                            <input id="concept-price" name="Price" type="number" class="form-control m-input" required min="0" step="0.01">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-6 form-group m-form__group-sub">
+                            <div class="m-checkbox-list">
+                                <label class="m-checkbox">
+                                    <input id="isEnrollment" name="IsEnrollment" class="form-control" type="checkbox" value="true" />   <label for="isEnrollment">¿Es pago de matrícula?</label>
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group m-form__group-sub">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="users_modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Búsqueda por nombre o documento
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Seleccione un usuario</label>
+                        <select type="text" class="form-control m-select2" id="user-select">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <label class="d-block">&nbsp;</label>
+                        <button class="btn btn-primary m-btn m-btn--icon" id="btn-user">
+                            <span><i class="fa fa-arrow-alt-circle-right"></i><span>Mostrar</span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/debtmanagement/index.js" asp-append-version="true"></script>
+}

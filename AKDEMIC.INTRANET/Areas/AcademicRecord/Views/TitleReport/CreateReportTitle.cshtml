@@ -1,0 +1,157 @@
+﻿@model AKDEMIC.ENTITIES.Models.Configuration
+@{
+    ViewBag.Title = "Gestión de Informes de Títulos";
+    ViewBag.SubTitle = "Informes de Títulos";
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = ViewBag.Title, Controller = "TitleReport", Action = "Index" , Area ="AcademicRecord" },
+new BreadcrumbViewData { Name = "Creación del informe de título", Controller = null, Action = null },
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" role="tab">
+                            <i class="la la-user"></i> Datos de Interesado
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab">
+                            <i class="la la-edit"></i> Datos de Informe <span style="margin-left: 5px;" id="student-fullname"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_6_1" role="tabpanel">
+                    <div class="modal-body">
+                        <form id="student-information" method="post">
+                            <div class="form-group m-form__group">
+                                <div class="input-group">
+                                    <input id="username-search" type="text" class="form-control" placeholder="Buscar estudiante por código ..." required>
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-primary" type="submit"><span><i class="la la-search"></i></span></button>
+                                    </div>
+                                    <div style="margin-right: 10px;"></div>
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-secondary" id="btn-reset" type="button"><span><i class="la la-rotate-left"></i></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="div-rendering">
+                            <div class="form-group m-form__group">
+                                <label for="Code">C&oacute;digo</label>
+                                <input id="Code" type="text" class="form-control" name="Code" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="PaternalSurName">Apellido Paterno</label>
+                                <input id="PaternalSurName" type="text" class="form-control" name="PaternalSurName" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="MaternalSurName">Apellido Materno</label>
+                                <input id="MaternalSurName" type="text" class="form-control" name="MaternalSurName" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Name">Nombres</label>
+                                <input id="Name" type="text" class="form-control" name="Name" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Faculty">Facultad</label>
+                                <input id="Faculty" type="text" class="form-control" name="Faculty" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Career">Escuela Profesional</label>
+                                <input id="Career" type="text" class="form-control" name="Career" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="CurricularSystem">Sistema Curricular</label>
+                                <input id="CurricularSystem" type="text" class="form-control" name="CurricularSystem" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Curriculum">Plan de estudios</label>
+                                <input id="Curriculum" type="text" class="form-control" name="Curriculum" disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="AcademicProgram">Especialidad</label>
+                                <input id="AcademicProgram" type="text" class="form-control" name="AcademicProgram" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="m_tabs_6_2" role="tabpanel">
+                    <form id="title-report-information" method="post">
+                        <input type="hidden" name="StudentId" id="StudentId" />
+                        <div class="modal-body">
+                            <div class="form-group m-form__group">
+                                @if (bool.Parse(Model.Value))
+                                {
+                                    <label for="ProcedureId">Trámite</label>
+                                    <select id="ProcedureId" name="ProcedureId" class="form-control m-select2" required></select>
+                                }
+                                else
+                                {
+                                    <label for="ConceptId">Concepto</label>
+                                    <select id="ConceptId" name="ConceptId" class="form-control m-select2" required></select>
+                                }
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Year">A&ntilde;o</label>
+                                <input id="Year" type="number" class="form-control" autocomplete="off" name="Year" min="1" required disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Number">N&uacute;mero</label>
+                                <input type="number" class="form-control" name="Number" autocomplete="off" min="1" required  />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Date">Fecha</label>
+                                <input id="Date" type="text" class="form-control" name="Date" autocomplete="off" required disabled/>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="YearsStudied">Años Estudiados</label>
+                                <input type="number" class="form-control" name="YearsStudied" autocomplete="off" required />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="SemesterStudied">Semestres Estudiados</label>
+                                <input type="number" class="form-control" name="SemesterStudied" autocomplete="off" required />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="AdmissionYear">Año de Ingreso</label>
+                                <input id="AdmissionYear" type="number" class="form-control" name="AdmissionYear" autocomplete="off" required disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="GraduationYear">Año de Egreso</label>
+                                <input id="GraduationYear" type="number" class="form-control" name="GraduationYear" autocomplete="off" required disabled />
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="PromotionGrade">Nota de Promoción</label>
+                                <input type="number" class="form-control" name="PromotionGrade" autocomplete="off" min="1" required disabled/>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label for="Observation">Observaciones</label>
+                                <textarea style="resize:none;height:150px;" class="form-control" name="Observation" autocomplete="off">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"> Guardar </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var isIntegrated = @(Model.Value.ToLower());
+    </script>
+    <script src="~/js/areas/academicrecord/titlereport/create.js"></script>
+}

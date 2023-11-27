@@ -1,0 +1,56 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.GradeReportByCompetences.Final
+@{
+    Layout = null;
+}
+@*<div class="dt-buttons btn-group">*@
+@*<button class="btn btn-secondary buttons-excel buttons-html5 btn-excel" tabindex="0" aria-controls="tbl-data" type="button" autocomplete="off"><span>Excel</span></button>*@
+@*<button id="btn-pdf" class="btn btn-primary buttons-pdf buttons-html5 btn-pdf btn" tabindex="0" aria-controls="tbl-data" type="button"><span>PDF</span></button> </div>
+    <br />*@
+<table class="table table-striped table-bordered" id="datatable-a">
+    <thead>
+        <tr>
+            <th style="text-align:center; background: lightgray;" align="center"><b>Código</b></th>
+            <th style="text-align:center; background: lightgray;" align="center"><b>Estudiante</b></th>
+            @foreach (var i in Model.ListCompetencies.OrderBy(x => x.Name).ToList())
+            {
+                <th style="text-align:center; background: lightgray; padding:0px;" align="center"><b>@i.Name</b></th>
+            }
+        </tr>
+
+    </thead>
+    <tbody>
+        @if (Model.List.GroupBy(x => new { x.StudentId, x.StudentFullName, x.UserName }).ToList().Count() > 0)
+        {
+            @foreach (var e in Model.List.GroupBy(x => new { x.StudentId, x.StudentFullName, x.UserName }).ToList())
+            {
+                <tr style="text-align:center;">
+                    <td style="text-align: left;">@e.Key.UserName</td>
+                    <td style="text-align: left;">@e.Key.StudentFullName</td>
+                    @foreach (var j in Model.ListCompetencies.OrderBy(x => x.Name).ToList())
+                    {
+                        //.Where(y => y.CompetenceId == j.Id && y.StudentId == e.StudentId)
+                        var modelD = Model.List.Where(x => x.CompetenceId == j.Id && x.StudentId == e.Key.StudentId).FirstOrDefault();
+                        if (modelD != null)
+                        {
+                            <td style="text-align: center;"><a href="javascript:void(0);" data-studentid="@modelD.StudentId" data-competenceid="@modelD.CompetenceId" class="details" style="color: cornflowerblue;text-decoration: underline;">@modelD.Average</a></td>
+                        }
+                        else
+                        {
+                            <td style="text-align: center;">-</td>
+                        }
+                    }
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr style="text-align:center;">
+                <td colspan="@(Model.ListCompetencies.OrderBy(x => x.Name).ToList().Count()+2)" style="text-align: center;">No se encontraron resultados</td>
+            </tr>
+        }
+
+
+
+    </tbody>
+</table>

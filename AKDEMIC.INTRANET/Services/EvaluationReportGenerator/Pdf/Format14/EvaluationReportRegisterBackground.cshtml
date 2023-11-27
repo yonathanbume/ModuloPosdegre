@@ -1,0 +1,249 @@
+﻿@model AKDEMIC.REPOSITORY.Repositories.Intranet.Templates.EvaluationReport.EvaluationReportInformationTemplate
+@using Microsoft.AspNetCore.Hosting;
+@using AKDEMIC.CORE.Helpers
+@using AKDEMIC.CORE.Extensions;
+@inject IWebHostEnvironment _webHostEnvironment
+@{
+    Layout = null;
+
+    var enrolled = Model.Course.Section.Students.Count();
+    var approved = Model.Course.Section.Students.Where(x => x.Status == ConstantHelpers.STUDENT_SECTION_STATES.APPROVED).Count();
+    var disapproved = Model.Course.Section.Students.Where(x => (x.Status == ConstantHelpers.STUDENT_SECTION_STATES.DISAPPROVED || x.Status == ConstantHelpers.STUDENT_SECTION_STATES.DPI)).Count();
+    var withdrawn = Model.Course.Section.Students.Where(x => x.Status == ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN).Count();
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Acta de notas</title>
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/evaluation_report/evaluation_report_fonts.css"))" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        .header-emblem {
+            float: right;
+            padding-left: 80px;
+        }
+
+            .header-emblem img {
+                visibility: hidden;
+                max-height: 100px !important;
+            }
+
+        .header-univ-logo {
+            float: left;
+            padding-right: 80px;
+        }
+
+            .header-univ-logo img {
+                height: 100px !important;
+            }
+
+        .header {
+            font-weight: 600;
+            /*color: #0f128b;*/
+            text-align: center;
+        }
+
+            .header .txp {
+                font-size: 12px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-title {
+                padding-top: 15px !important;
+                font-size: 23px !important;
+                margin: 2px !important;
+            }
+
+            .header .header-title {
+                font-size: 24px !important;
+                padding-top: 8px !important;
+                margin: 2px !important;
+            }
+
+            .header .subheader-title {
+                font-size: 18px !important;
+                margin: 2px !important;
+            }
+
+        .container-details {
+            width: 100% !important;
+            font-weight: normal;
+            text-align: left;
+            font-size: 13px !important;
+        }
+
+            .container-details .table-general-detail {
+                width: 100%;
+            }
+
+                .container-details .table-general-detail td {
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 2px !important;
+            font-size: 14px !important;
+            border: 1px solid;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            border: 1px solid black;
+            padding: 3px;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-bottom: 1px solid transparent;
+        }
+
+        .location {
+            text-align: right;
+            /*color: red;*/
+            height: 50px !important;
+            border: 0px !important;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 12px !important;
+            height: 30px !important;
+            width: 30%;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 13px !important;
+                border: 1px solid black;
+                padding: 3px !important;
+            }
+
+        .red {
+            color: red !important;
+        }
+
+        .blue {
+            color: blue !important;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .rotate {
+            -moz-transform: rotate(-90.0deg);
+            -o-transform: rotate(-90.0deg);
+            -webkit-transform: rotate(-90.0deg);
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+            -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+            vertical-align: top;
+            padding-top:-50px !important;
+        }
+    </style>
+</head>
+<body>
+    <table class="main-table footer">
+        <tr>
+            <td>
+                <table class="table-statistics">
+                    <tr>
+                        <td class="bold" width="15%">DOCENTE:</td>
+                        <td colspan="2">@Model.Course.Section.Teacher</td>
+                        <td rowspan="4" width="10px" @*class="rotate"*@>
+                            &emsp;
+                        </td>
+                        <td rowspan="4" width="180px"></td>
+                    </tr>
+                    <tr>
+                        <td class="bold">ELABORADO POR:</td>
+                        <td>@Model.UserLoggedIn</td>
+                        <td rowspan="2" class="center" style="vertical-align:bottom; font-size:8px !important;">@Model.BasicInformation.CreatedAt.ToLocalDateFormat()</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">REFERENCIA</td>
+                        <td>
+                            EC = Promedio Evidencia de Conocimiento <br />
+                            ED = Promedio Evidencia de Desempeño <br />
+                            EP = Promedio Evidencia de Producto
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><span class="bold">FECHA DE IMPRESIÓN: </span> @DateTime.UtcNow.ToLocalDateFormat() a las @DateTime.UtcNow.ToLocalTimeFormat()</td>
+                        <td>&emsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

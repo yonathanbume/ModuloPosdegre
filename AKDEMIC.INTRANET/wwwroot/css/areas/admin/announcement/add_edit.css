@@ -1,0 +1,14 @@
+﻿form[id*="form"] > div.m-portlet__body > div.m-card-profile > div.m-card-user {
+    width: 100%;
+}
+form[id*="form"] > div.m-portlet__body > div.m-card-profile > div.m-card-user > div {
+    text-align: center;
+}
+form[id*="form"] > div.m-portlet__body > div.m-card-profile > div.m-card-user > div > img {
+    max-width: 1000px;
+    height: 500px;
+}
+form[id*="form"] > div.m-portlet__body > div > div > div > textarea {
+    height: 200px;
+    resize: none;
+}

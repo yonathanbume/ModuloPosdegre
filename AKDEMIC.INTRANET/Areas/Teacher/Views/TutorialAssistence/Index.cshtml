@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Tutorias";
+    ViewData["SubTitle"] = "Lista de tutorias ";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Lista de tutor&iacute;as
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Fecha de inicio</label>
+                                <input type="text" class="form-control m-input" id="m_datepicker_init">
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Fecha de fin</label>
+                                <input type="text" class="form-control m-input" id="m_datepicker_end">
+                            </div>
+
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <button class=" btn btn-primary" id="btn-search"><span>Buscar</span> </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="m-portlet m-portlet--bordered m-portlet--unair">
+                <div class="m-portlet__body">
+                    <div class="m-datatable_tutorial_done"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>    
+    <script src="~/js/areas/teacher/tutorial/assistance.js"></script>
+}
+

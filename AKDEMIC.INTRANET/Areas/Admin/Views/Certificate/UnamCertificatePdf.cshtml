@@ -1,0 +1,164 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.CertificateViewModels.UnamCertificateViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/pages/pdf/unamcertificatepdf.css" />
+    <script>
+        function subst() {
+            document.getElementById("FakeHeaders").innerHTML = "Equis de";
+            var vars = {};
+            var x = document.location.search.substring(1).split('&');
+            for (var i in x) {
+                var z = x[i].split('=', 2);
+                vars[z[0]] = unescape(z[1]);
+            }
+            var x = ['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+            for (var i in x) {
+                var y = document.getElementsByClassName(x[i]);
+                for (var j = 0; j < y.length; ++j) y[j].textContent = vars[x[i]];
+
+                if (vars['page'] !== 1) { // If page is not 1, set FakeHeaders display to none as don't want to show
+                // the header first page of PDF
+                    document.getElementById("FakeHeaders").style.display = 'none';
+                }
+            }
+
+            // HERE IS THE TRICK TO PLACE WATERMARK
+            // HERE BODY ELEMENT IS DIFFERENT FOR EVERY PAGE OF PDF
+            if (!document.body.classList.contains('imgActive')) { // CHECK IS IMAGE ALREADY ADDED
+                document.body.classList.add('imgActive');
+                var body = document.getElementsByTagName("body")[0];
+                var img = document.createElement("img");
+
+                img.src = '@(string.IsNullOrEmpty(Model.ImagePathLogo) ? "/images/unam/shield.png" : Model.ImagePathLogo)';
+                img.style.opacity = 0.5;
+                img.style.height = "60%"
+                img.style.marginTop = "20%";
+                img.style.marginBottom = "20%";
+                img.style.marginLeft = "10%";
+                img.style.marginRight = "10%";
+                // IF NOT ADDED AN IMAGE THEN ADD IT , TO DISPLAY IT AS WATERMARL
+                body.appendChild(img);
+            }
+        }
+        // END
+    </script>
+    @*<style>
+        body:after {
+            content: url("@(string.IsNullOrEmpty(Model.ImagePathLogo) ? "/images/unam/shield.png" : Model.ImagePathLogo)");
+            opacity: 0.5;
+        }
+    </style>*@
+</head>
+<body onload="subst();">
+    @*<img src="@(string.IsNullOrEmpty(Model.ImagePathLogo) ? "/images/unam/shield.png" : Model.ImagePathLogo)"/>*@
+    <!-- Log and Title -->
+    <div class="row" id="FakeHeaders">
+    </div>
+    <div class="main-header">
+        <p class="institution-title">
+            @GeneralHelpers.GetInstitutionName()
+        </p>
+        <div class="title-logo-container">
+            <div class="title-container">
+                <p class="area-title">
+                    VICEPRESIDENCIA ACAD&Eacute;MICA <br />
+                    OFICINA DE ACTIVIDADES Y SERVICIOS ACAD&Eacute;MICOS
+                </p>
+                <p class="title">
+                    CERTIFICADO DE ESTUDIOS
+                </p>
+            </div>
+            <p class="code">N° @Model.Header.Number</p>
+            <div class="logo-container">
+                <img src="@Model.Header.UrlToPicture" alt="picture" />
+            </div>
+        </div>
+    </div>
+    <div class="report">
+        <table class="main-table">
+            <tr>
+                <td colspan="5" class="label">LA OFICINA DE ACTIVIDADES Y SERVICIOS ACAD&Eacute;MICOS DE LA UNIVERSIDAD NACIONAL DE MOQUEGUA CERTIFICA:</td>
+            </tr>
+            <tr>
+                <td class="fit sm-text">Que don(&ntilde;a):</td>
+                <td colspan="2" class="bold label underline">@Model.Header.StudentName</td>
+                <td class="fit sm-text small-padding align-right">C&oacute;digo:</td>
+                <td class="bold label underline">@Model.Header.Code</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="sm-text">Ha cursado las asignaturas que abajo se indican en la escuela profesional de:</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="bold label underline">@Model.Header.CareerName</td>
+                <td colspan="2" class="fit sm-text align-right">Sede/Lugar:</td>
+                <td class="bold label underline">@Model.Header.CampusName</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="sm-text">Habiendo obtenido las calificaciones siguientes:</td>
+            </tr>
+        </table>
+        <table class="main-table" style="margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th class="bold label normal-padding highlight">Asignatura</th>
+                    <th class="fit bold label normal-padding highlight center">Creditos</th>
+                    <th colspan="2" class="fit bold label normal-padding highlight center">Calificativos</th>
+                    <th class="fit bold label normal-padding highlight center">Semestre</th>
+                </tr>
+            </thead>
+            @foreach (var ac in Model.AcademicYears)
+            {
+                <tbody class="rows-group">
+                    <tr>
+                        <td colspan="5" class="bold label small-padding">CICLO&emsp;@ac.AcademicYearNumber.ToString("D2")</td>
+                    </tr>
+
+                    @foreach (var c in ac.Courses)
+                    {
+                        if (!c.IsElective || c.Approved)
+                        {
+                            <tr>
+                                <td class="small-padding">@c.CourseName @(c.IsElective ? "(EL)" : string.Empty)</td>
+                                <td class="small-padding center fit">@c.CourseCredits</td>
+                                @if (c.Validated)
+                                {
+                                    <td colspan="2" class="small-padding center fit">CONVALIDADO</td>
+                                    <td class="small-padding center fit">-</td>
+                                }
+                                else if (!c.Approved)
+                                {
+                                    <td colspan="2" class="small-padding center fit">-</td>
+                                    <td class="small-padding center fit">-</td>
+                                }
+                                else
+                                {
+                                    <td class="small-padding center fit">( @c.CourseFinalGrade )</td>
+                                    <td class="small-padding align-left fit">@c.CourseFinalGradeText</td>
+                                    <td class="small-padding center fit">@c.TermName</td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            }
+            <tfoot class="rows-group">
+                <tr>
+                    <td colspan="3" class="fit normal-padding label align-left">TOTAL DE CREDITOS: @Model.TotalCredits</td>
+                    <td colspan="2" class="fit normal-padding label align-right">PROMEDIO PONDERADO: @Model.CurrentWeightedGrade.ToString("0.0000")</td>
+                </tr>
+            </tfoot>
+        </table>
+        <p>
+            Asi consta en las actas de evaluaci&oacute;n que obran en la Oficina de Actividades y Servicios Acad&eacute;micos
+        </p>
+        <p class="align-right">
+            Moquegua, @Model.Today.Day de @ConstantHelpers.MONTHS.VALUES[Model.Today.Month].ToLower() de @Model.Today.Year
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.GradeViewModels
+@model EnrolledCourseViewModel
+
+<table class="table m-table table-hover mx-auto table-metronic table-bordered m-table--border-metal" style="width: 80%;">
+    <thead>
+        <tr>
+            <th>Curso: </th>
+            <td colspan="5" style="text-align: center;">
+                <a>
+                    @Model.StudentSection.Section.CourseTerm.Course.FullName
+                </a>
+                @if (Model.Syllabus.Enabled)
+                {
+                    <button title="Descargar sílabo" data-studentSectionId="@Model.StudentSection.Id" data-syllabusTeacherId="@Model.Syllabus.SyllabusTeacherId" class="btn_download_syllabus pull-right btn btn-primary btn-sm m-btn  m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-download"></i>
+                            <span>Sílabo</span>
+                        </span>
+                    </button>
+                }
+
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 20%;">Secci&oacute;n: </th>
+            <td style="width: 25%;">@Model.StudentSection.Section.Code</td>
+            <th style="width: 15%;">Vez: </th>
+            <td style="width: 15%;">@Model.StudentSection.Try</td>
+            <th style="width: 15%;">Cr&eacute;ditos: </th>
+            <td style="width: 10%;">@Model.StudentSection.Section.CourseTerm.Credits.ToString("0.0")</td>
+        </tr>
+        <tr>
+            <th>F&oacute;rmula: </th>
+            <td colspan="5">@Model.StudentSection.Formula</td>
+        </tr>
+        <tr>
+            <th colspan="2">Promedio de Unidad</th>
+            <th colspan="2" style="text-align: center;">Porcentaje</th>
+            <th colspan="2" style="text-align: center;">Nota</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.EvaluationByUnits)
+        {
+            @await Html.PartialAsync("_GradeList", Model.StudentSection)
+        }
+        else
+        {
+            @await Html.PartialAsync("_GradeListByEvaluation", Model.StudentSection)
+        }
+    </tbody>
+    <tfoot>
+        @if (Model.StudentSection.Status == ConstantHelpers.STUDENT_SECTION_STATES.WITHDRAWN)
+        {
+            <tr>
+                <th colspan="4">Nota Oficial: </th>
+                <th colspan="2" style="text-align:center;color:blue"><b>Retirado</b></th>
+            </tr>
+            <tr>
+                <th>Observaciones: </th>
+                <th colspan="5">@(string.IsNullOrEmpty(Model.StudentSection.Observations) ? "-" : Model.StudentSection.Observations)</th>
+            </tr>
+        }
+        else
+        {
+            @if (Model.EvaluationByUnits)
+            {
+                @if (Model.StudentSection.Section.CourseUnits.Any(y => y.Evaluations.Any(z => z.Grade.HasGrade)))
+                {
+                    <tr>
+                        @if (Model.StudentSection.Section.CourseUnits.All(y => y.Evaluations.All(y => y.Grade.HasGrade)))
+                        {
+                            <th colspan="4">Nota Oficial: </th>
+                            <th colspan="2" style="text-align:center; @(Model.StudentSection.Approved ? "":"color: red;")">
+                                <b>
+                                    @if (Model.StudentSection.SubstituteExamFinalGrade.HasValue)
+                                    {
+                                        @($"{Model.StudentSection.SubstituteExamFinalGrade} (Susti.)")
+                                    }
+                                    else
+                                    {
+                                        @Model.StudentSection.FinalGrade
+                                    }
+                                    <i class="la la-info-circle" rel="m-tooltip" title="La nota final es redondeada" data-placement="right" data-trigger="hover" data-original-title="La nota final es redondeada"></i>
+                                </b>
+                            </th>
+                        }
+                        else
+                        {
+                            <th colspan="4">Nota No Oficial (avance al @Model.StudentSection.PercentageProgress %): </th>
+                            <th colspan="2" style="text-align:center;"><b>@Model.StudentSection.FinalGrade</b></th>
+                        }
+                    </tr>
+                    <tr>
+                        <th>Observaciones: </th>
+                        <th colspan="5">@(string.IsNullOrEmpty(Model.StudentSection.Observations) ? "-" : Model.StudentSection.Observations)</th>
+                    </tr>
+                }
+            }
+            else
+            {
+                if (Model.StudentSection.Section.Evaluations.All(y => y.Grade.HasGrade))
+                {
+                    <tr>
+                        @if (Model.StudentSection.Section.Evaluations.All(y => y.Grade.HasGrade))
+                        {
+                            <th colspan="4">Nota Oficial: </th>
+                            <th colspan="2" style="text-align:center; @(Model.StudentSection.Approved ? "":"color: red;")">
+                                <b>
+                                    @if (Model.StudentSection.SubstituteExamFinalGrade.HasValue)
+                                    {
+                                        @($"{Model.StudentSection.SubstituteExamFinalGrade} (Susti.)")
+                                    }
+                                    else
+                                    {
+                                        @Model.StudentSection.FinalGrade
+                                    }
+                                    <i class="la la-info-circle" rel="m-tooltip" title="La nota final es redondeada" data-placement="right" data-trigger="hover" data-original-title="La nota final es redondeada"></i>
+                                </b>
+                            </th>
+                        }
+                        else
+                        {
+                            <th colspan="4">Nota No Oficial (avance al @Model.StudentSection.Section.Evaluations.Where(y => y.Grade.HasGrade).Sum(y => y.Percentage) %): </th>
+                            <th colspan="2" style="text-align:center;"><b>@Model.StudentSection.FinalGrade</b></th>
+                        }
+                    </tr>
+                    <tr>
+                        <th>Observaciones: </th>
+                        <th colspan="5">@(string.IsNullOrEmpty(Model.StudentSection.Observations) ? "-" : Model.StudentSection.Observations)</th>
+                    </tr>
+                }
+            }
+        }
+    </tfoot>
+</table>

@@ -1,0 +1,1110 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.ConfigurationVIewModels.ConfigurationViewModel
+@{
+    ViewData["Title"] = "Configuración del sistema";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+};
+}
+
+
+@section Styles {
+    <style>
+        .note-editable {
+            padding: 20px !important;
+        }
+    </style>
+
+}
+    <div class="m-content">
+        <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="m-alert__icon">
+                <i class="flaticon-exclamation-1"></i>
+                <span></span>
+            </div>
+            <div class="m-alert__text">
+                <strong>Advertencia</strong> Las variables de configuración mostradas son utilizadas en las distintas funcionalidades.
+                <br />Los cambios realizados se aplicar&aacute;n de manera instantanea en el sistema.
+            </div>
+            <div class="m-alert__close">
+            </div>
+        </div>
+        <form id="configForm" class="m-form" asp-action="UpdateConfigurations" asp-controller="Configuration" asp-area="Admin">
+            <div class="m-portlet">
+                <div class="m-portlet m-portlet--tabs">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_1" role="tab">
+                                        <i class="la la-cog"></i> Información del sistema
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_2" role="tab">
+                                        <i class="la la-bank"></i> Configuraci&oacute;n de Pago
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_3" role="tab">
+                                        <i class="la la-bank"></i> Configuraci&oacute;n de Documentos
+                                    </a>
+                                </li>
+                                @*<li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_4" role="tab">
+                            <i class="la la-cog"></i> Configuraci&oacute;n Servidor SMTP
+                            </a>
+                            </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="m_tabs_1" role="tabpanel">
+                                <div class="form-group m-form__group row">
+                                    <div class="m-form__group-sub col-lg-3">
+                                        <label asp-for="MinAverageForSubstituteExam"></label>
+                                        <input asp-for="MinAverageForSubstituteExam" class="form-control" type="number" min="1" step="1" placeholder="Minimo" required />
+                                    </div>
+
+                                    <div class="m-form__group-sub col-lg-3">
+                                        <label asp-for="SubstitutoryExamEvaluationType"></label>
+                                        <select asp-for="SubstitutoryExamEvaluationType" asp-items="Model.EvaluationTypes" class="form-control m-select2 select2-substitutoryExamEvaluationType">
+                                        </select>
+                                    </div>
+
+                                    <div class="m-form__group-sub col-lg-3">
+                                        <label asp-for="MinGradeRecovery"></label>
+                                        <input asp-for="MinGradeRecovery" class="form-control" type="number" min="0" step="1" placeholder="Minimo" required />
+                                    </div>
+
+                                    <div class="m-form__group-sub col-lg-3">
+                                        <label asp-for="EvaluationTypeGradeRecovery"></label>
+                                        <input type="hidden" value="@Model.EvaluationTypeGradeRecovery" id="EvaluationTypeGradeRecovery_Value" />
+                                        <select asp-for="EvaluationTypeGradeRecovery" class="form-control m-select2 select2-evaluation-types">
+                                            <option value="@Guid.Empty">Todas</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="m-form__group-sub col-lg-3">
+                                        <div class="form-group m-form__group">
+                                            <label asp-for="ExoneratedCourseEnrollmentGrade"></label>
+                                            <input asp-for="ExoneratedCourseEnrollmentGrade" class="form-control" type="number" min="0" step="0.1" placeholder="Promedio ponderado mínimo" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="m-form__group-sub col-lg-3">
+                                        <div class="form-group m-form__group">
+                                            <label asp-for="MinAvgDeferredExam"></label>
+                                            <input asp-for="MinAvgDeferredExam" class="form-control" type="number" min="0" step="1" placeholder="Promedio final mínimo" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="m-form__group-sub col-lg-3">
+                                        <label asp-for="GradeRecoveryModality"></label>
+                                        <input type="hidden" value="@Model.GradeRecoveryModality" id="GradeRecoveryModality_Value" />
+                                        <select asp-for="GradeRecoveryModality" class="form-control m-select2 select2-grade-recovery-modality">
+                                            @foreach (var item in ConstantHelpers.GRADE_RECOVERY_EXAM_MODALITY.VALUES)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+
+                                    </select>
+                                </div>
+
+                                <div class="m-form__group-sub col-lg-3">
+                                    <label asp-for="PasswordExpirationDays"></label>
+                                    <input asp-for="PasswordExpirationDays" class="form-control" type="number" min="0" step="1" placeholder="Días experiación" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-3 col-form-label" asp-for="EnableSurveyRequiredFeature"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="EnableSurveyRequiredFeature" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                                <label class="col-3 col-form-label" asp-for="IntegratedSystem"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="IntegratedSystem" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="MedicalRecord"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="MedicalRecord" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <label class="col-3 col-form-label" asp-for="RequireEnrollmentForReservation"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="RequireEnrollmentForReservation" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="CareerDirectorGradeCorrection"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="CareerDirectorGradeCorrection" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <label class="col-3 col-form-label" asp-for="AcademicDepartmentGradeCorrection"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="AcademicDepartmentGradeCorrection" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="EnableStudentGradeCorrectionRequest"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="EnableStudentGradeCorrectionRequest" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <label class="col-3 col-form-label" asp-for="GradesCanOnlyPublishedByPrincipalTeacher"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="GradesCanOnlyPublishedByPrincipalTeacher" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="GradeRecoveryEnabledToApproved"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="GradeRecoveryEnabledToApproved" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label student_grade_correction_request_container @(!Model.EnableStudentGradeCorrectionRequest ? "d-none" : "")" asp-for="StudentGradeCorrectionRequestMaxDays"></label>
+                                <div class="col-3 student_grade_correction_request_container @(!Model.EnableStudentGradeCorrectionRequest ? "d-none" : "")">
+                                    <input asp-for="StudentGradeCorrectionRequestMaxDays" class="form-control" type="number" min="0" step="0.1" placeholder="Promedio ponderado mínimo" />
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="EnabledSpecialAbsencePercentage"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="EnabledSpecialAbsencePercentage" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label enabled_special_absence_percentage_container @(!Model.EnabledSpecialAbsencePercentage ? "d-none" : "")" asp-for="SpecialAbsencePercentage"></label>
+                                <div class="col-3 enabled_special_absence_percentage_container @(!Model.EnabledSpecialAbsencePercentage ? "d-none" : "")">
+                                    <input asp-for="SpecialAbsencePercentage" class="form-control" type="number" min="0" step="0.1" max="100" placeholder="Porcentaje de Inasistencia Especial" />
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label enabled_special_absence_percentage_container @(!Model.EnabledSpecialAbsencePercentage ? "d-none" : "")" asp-for="SpecialAbsencePercentageDescription"></label>
+                                <div class="col-3 enabled_special_absence_percentage_container @(!Model.EnabledSpecialAbsencePercentage ? "d-none" : "")">
+                                    <input asp-for="SpecialAbsencePercentageDescription" class="form-control" type="text" placeholder="Descripción de Inasistencia Especial" />
+                                </div>
+                            </div>
+
+                            @*                            <div class="form-group m-form__group">
+                            <label asp-for="MeritOrderModality"></label>
+                            <div class="row">
+                            <div class="col-lg-6">
+                            <label class="m-option">
+                            <span class="m-option__control">
+                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                            @if (!Model.MeritOrderModality)
+                            {
+                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType1" value="false" checked="" />
+                            }
+                            else
+                            {
+                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType1" value="false" />
+                            }
+                            <span></span>
+                            </span>
+                            </span>
+                            <span class="m-option__label">
+                            <span class="m-option__head">
+                            <span class="m-option__title">
+                            Calcular orden de m&eacute;rito general por escuela profesional
+                            </span>
+                            <span class="m-option__focus">
+
+                            </span>
+                            </span>
+                            <span class="m-option__body">
+                            El orden de m&eacute;rito ser&aacute; &uacute;nico por escuela profesional sin diferenciar por ciclo del estudiante
+                            </span>
+                            </span>
+                            </label>
+                            </div>
+                            <div class="col-lg-6">
+                            <label class="m-option">
+                            <span class="m-option__control">
+                            <span class="m-radio m-radio--brand m-radio--check-bold">
+                            @if (Model.MeritOrderModality)
+                            {
+                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType2" value="true" checked="" />
+                            }
+                            else
+                            {
+                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType2" value="true" />
+                            }
+                            <span></span>
+                            </span>
+                            </span>
+                            <span class="m-option__label">
+                            <span class="m-option__head">
+                            <span class="m-option__title">
+                            Calcular orden de m&eacute;rito por ciclo y escuela profesional
+                            </span>
+                            <span class="m-option__focus">
+
+                            </span>
+                            </span>
+                            <span class="m-option__body">
+                            El orden de m&eacute;rito ser&aacute; por cada ciclo de la escuela profesional
+                            </span>
+                            </span>
+                            </label>
+                            </div>
+                            </div>
+                            </div>*@
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="StudentInformationVisibility"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="StudentInformationVisibility" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <label class="col-3 col-form-label" asp-for="InstitutionalWelfareSurveyVisibility"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="InstitutionalWelfareSurveyVisibility" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group m-form__group row">
+                                <div class="col-md-12 m-form__group-sub">
+                                    <label asp-for="IntranetLoginBackgroundImage"></label>
+                                    <div class="custom-file">
+                                        <input asp-for="IntranetLoginBackgroundImage" class="custom-file-input" accept="image/*" lang="es" type="file" autocomplete="off">
+                                        <label class="custom-file-label" for="DocumentLogoPath">
+                                            Seleccione un archivo
+                                        </label>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(Model.IntranetLoginBackgroundImagePath))
+                                    {
+                                        <span class="m-form__help">Descargue la imagen actual <a asp-action="DownloadFile" asp-controller="Home" asp-area="" asp-route-path="@Model.IntranetLoginBackgroundImagePath" target="_blank">aqu&iacute;</a></span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="m-form__section">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">Orden de Mérito:</h3>
+                                </div>
+
+                                <div class="form-group m-form__group">
+                                    <label asp-for="MeritOrderModality"></label>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label class="m-option">
+                                                <span class="m-option__control">
+                                                    <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                        @if (!Model.MeritOrderModality)
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType1" value="false" checked="" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType1" value="false" />
+                                                        }
+                                                        <span></span>
+                                                    </span>
+                                                </span>
+                                                <span class="m-option__label">
+                                                    <span class="m-option__head">
+                                                        <span class="m-option__title">
+                                                            Calcular orden de m&eacute;rito general por escuela profesional
+                                                        </span>
+                                                        <span class="m-option__focus">
+
+                                                        </span>
+                                                    </span>
+                                                    <span class="m-option__body">
+                                                        El orden de m&eacute;rito ser&aacute; &uacute;nico por escuela profesional sin diferenciar por ciclo del estudiante
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label class="m-option">
+                                                <span class="m-option__control">
+                                                    <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                        @if (Model.MeritOrderModality)
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType2" value="true" checked="" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderModality" id="AdmissionEnrollmentType2" value="true" />
+                                                        }
+                                                        <span></span>
+                                                    </span>
+                                                </span>
+                                                <span class="m-option__label">
+                                                    <span class="m-option__head">
+                                                        <span class="m-option__title">
+                                                            Calcular orden de m&eacute;rito por ciclo y escuela profesional
+                                                        </span>
+                                                        <span class="m-option__focus">
+
+                                                        </span>
+                                                    </span>
+                                                    <span class="m-option__body">
+                                                        El orden de m&eacute;rito ser&aacute; por cada ciclo de la escuela profesional
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group ">
+                                    <label asp-for="MeritOrderGradeType"></label>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label class="m-option">
+                                                <span class="m-option__control">
+                                                    <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                        @if (Model.MeritOrderGradeType == 1)
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderGradeType" id="GradeType1" value="1" checked="" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderGradeType" id="GradeType1" value="1" />
+                                                        }
+                                                        <span></span>
+                                                    </span>
+                                                </span>
+                                                <span class="m-option__label">
+                                                    <span class="m-option__head">
+                                                        <span class="m-option__title">
+                                                            Orden de m&eacute;rito por Promedio Ponderado Semestral
+                                                        </span>
+                                                        <span class="m-option__focus">
+
+                                                        </span>
+                                                    </span>
+                                                    <span class="m-option__body">
+                                                        El orden de m&eacute;rito ser&aacute; c&aacute;lculado en base al Promedio Ponderado Semestral (PPS)
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label class="m-option">
+                                                <span class="m-option__control">
+                                                    <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                        @if (Model.MeritOrderGradeType == 2)
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderGradeType" id="GradeType2" value="2" checked="" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" asp-for="MeritOrderGradeType" id="GradeType2" value="2" />
+                                                        }
+                                                        <span></span>
+                                                    </span>
+                                                </span>
+                                                <span class="m-option__label">
+                                                    <span class="m-option__head">
+                                                        <span class="m-option__title">
+                                                            Orden de m&eacute;rito por Promedio Ponderado Acumulado
+                                                        </span>
+                                                        <span class="m-option__focus">
+
+                                                        </span>
+                                                    </span>
+                                                    <span class="m-option__body">
+                                                        El orden de m&eacute;rito ser&aacute; c&aacute;lculado en base al Promedio Ponderado Acumulado (PPA)
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h5 class="m--font-boldest mt-2">Evaluaciones especiales</h5>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="EnabledExtraordinaryEvaluation"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="EnabledExtraordinaryEvaluation" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <label class="col-3 col-form-label" asp-for="EnabledGradeRecovery"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="EnabledGradeRecovery" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" asp-for="EnabledSubstituteExam"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="EnabledSubstituteExam" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+
+                                <label class="col-3 col-form-label" asp-for="EnabledDeferredExam"></label>
+                                <div class="col-3">
+                                    <span class="m-switch m-switch--icon">
+                                        <label>
+                                            <input asp-for="EnabledDeferredExam" type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-form__group form-group row">
+                                <div class="col-md-12 m-form__group-sub">
+                                    <input type="hidden" value="@Model.ExtraordinaryEvaluationTypesEnabled" id="ExtraordinaryEvaluationTypesEnabled_Values" />
+                                    <label asp-for="ExtraordinaryEvaluationTypesEnabled"></label>
+                                    <select class="form-control m-select2" asp-for="ExtraordinaryEvaluationTypesEnabled" multiple>
+                                        @foreach (var item in ConstantHelpers.Intranet.ExtraordinaryEvaluation.TYPES)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="tab-pane" id="m_tabs_2" role="tabpanel">
+
+
+
+                            @if (Model.ShowExemptionConfiguration)
+                            {
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <div class="m-checkbox-list">
+                                            <label class="m-checkbox">
+                                                <input asp-for="ExemptFirstPlacesFromPayments" class="form-control" type="checkbox" value="true" />   <label asp-for="ExemptFirstPlacesFromPayments"></label>
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="FirstPlacesQuantity"></label>
+                                        <input asp-for="FirstPlacesQuantity" class="form-control" type="number" min="0" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group">
+                                    <label asp-for="PaymentExemptionType"></label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="m-option">
+                                                <span class="m-option__control">
+                                                    <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                        @if (Model.PaymentExemptionType == 1)
+                                                        {
+                                                            <input type="radio" asp-for="PaymentExemptionType" id="EnrollmentPaymentMethod1" value="1" checked="" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" asp-for="PaymentExemptionType" id="EnrollmentPaymentMethod1" value="1" />
+                                                        }
+                                                        <span></span>
+                                                    </span>
+                                                </span>
+                                                <span class="m-option__label">
+                                                    <span class="m-option__head">
+                                                        <span class="m-option__title">
+                                                            Primeros puestos de la escuela profesional
+                                                        </span>
+                                                        <span class="m-option__focus">
+
+                                                        </span>
+                                                    </span>
+                                                    <span class="m-option__body">
+                                                        Los primeros puestos se obtendran a nivel de toda la escuela profesional
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="m-option">
+                                                <span class="m-option__control">
+                                                    <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                        @if (Model.PaymentExemptionType == 2)
+                                                        {
+                                                            <input type="radio" asp-for="PaymentExemptionType" id="EnrollmentPaymentMethod2" value="2" checked="" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" asp-for="PaymentExemptionType" id="EnrollmentPaymentMethod2" value="2" />
+                                                        }
+                                                        <span></span>
+                                                    </span>
+                                                </span>
+                                                <span class="m-option__label">
+                                                    <span class="m-option__head">
+                                                        <span class="m-option__title">
+                                                            Por escuela profesional y ciclo acad&eacute;mico
+                                                        </span>
+                                                        <span class="m-option__focus">
+
+                                                        </span>
+                                                    </span>
+                                                    <span class="m-option__body">
+                                                        La exoneraci&oacute;n se aplicara a los primeros puestos de cada ciclo en las Escuelas
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="m-option">
+                                                <span class="m-option__control">
+                                                    <span class="m-radio m-radio--brand m-radio--check-bold">
+                                                        @if (Model.PaymentExemptionType == 3)
+                                                        {
+                                                            <input type="radio" asp-for="PaymentExemptionType" value="3" checked="" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" asp-for="PaymentExemptionType" value="3" />
+                                                        }
+                                                        <span></span>
+                                                    </span>
+                                                </span>
+                                                <span class="m-option__label">
+                                                    <span class="m-option__head">
+                                                        <span class="m-option__title">
+                                                            A nivel de facultad
+                                                        </span>
+                                                        <span class="m-option__focus">
+
+                                                        </span>
+                                                    </span>
+                                                    <span class="m-option__body">
+                                                        La exoneraci&oacute;n ser&aacute; aplicada a los primeros puestos de toda la Facultad
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group m-form__group">
+                                        <label asp-for="EnableStudentPaymentFeature" style="display:table-cell; padding-top:20px;"></label>
+                                        <div class="col-lg-6">
+                                            <span class="m-switch">
+                                                <label>
+                                                    <input type="checkbox" asp-for="EnableStudentPaymentFeature">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group m-form__group col-lg-6">
+                                    <label asp-for="CourseWithdrawalConcept"></label>
+                                    <input type="hidden" id="CourseWithdrawalConceptId" value="@Model.CourseWithdrawalConcept" />
+                                    <select asp-for="CourseWithdrawalConcept" class="form-control m-select2 select2-concepts"></select>
+                                    <label asp-for="CourseWithdrawalAuto" style="display:table-cell; padding-top:20px;"></label>
+                                    <span class="m-switch">
+                                        <label>
+                                            <input type="checkbox" asp-for="CourseWithdrawalAuto">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                                <div class="form-group m-form__group col-lg-6">
+                                    <label asp-for="CycleWithdrawalConcept"></label>
+                                    <input type="hidden" id="CycleWithdrawalConceptId" value="@Model.CycleWithdrawalConcept" />
+                                    <select asp-for="CycleWithdrawalConcept" class="form-control m-select2 select2-concepts"></select>
+                                    <label asp-for="CycleWithdrawalAuto" style="display:table-cell; padding-top:20px;"></label>
+                                    <span class="m-switch">
+                                        <label>
+                                            <input type="checkbox" asp-for="CycleWithdrawalAuto">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                                <div class="form-group m-form__group col-lg-6">
+                                    <label asp-for="SubstitutoryExamConcept"></label>
+                                    <input type="hidden" id="SubstitutoryExamConceptId" value="@Model.SubstitutoryExamConcept" />
+                                    <select asp-for="SubstitutoryExamConcept" class="form-control m-select2 select2-concepts"></select>
+                                    <label asp-for="SubstitutoryExamAuto" style="display:table-cell; padding-top:20px;"></label>
+                                    <div class="col-lg-6">
+                                        <span class="m-switch">
+                                            <label>
+                                                <input type="checkbox" asp-for="SubstitutoryExamAuto">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                @* Records *@
+
+                                <div class="form-group m-form__group col-lg-6">
+                                    <label asp-for="RectificationCharge" style="display:table-cell; padding-top:20px;"></label>
+                                    <span class="m-switch">
+                                        <label>
+                                            <input type="checkbox" asp-for="RectificationCharge">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                                <div class="form-group m-form__group col-lg-6">
+                                    <label asp-for="RecordRectificationCharge"></label>
+                                    <input type="hidden" id="RecordRectificationChargeId" value="@Model.RecordRectificationCharge" />
+                                    <select asp-for="RecordRectificationCharge" class="form-control m-select2 select2-concepts"></select>
+                                </div>
+
+                                @* <div class="form-group m-form__group col-lg-6">
+                                <label asp-for="RecordAutomaticProcedure" style="display:table-cell; padding-top:20px;"></label>
+                                <span class="m-switch">
+                                <label>
+                                <input type="checkbox" asp-for="RecordAutomaticProcedure">
+                                <span></span>
+                                </label>
+                                </span>
+                                </div>*@
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="m_tabs_3" role="tabpanel">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-4">
+                                    <label asp-for="DocumentMainCampus"></label>
+                                    <input asp-for="DocumentMainCampus" class="form-control" placeholder="Sede Principal" required />
+                                </div>
+                                <div class="m-form__group-sub col-lg-4">
+                                    <label asp-for="DocumentMainOffice"></label>
+                                    <input asp-for="DocumentMainOffice" class="form-control" placeholder="Encabezado de Oficina" required />
+                                </div>
+                                <div class="m-form__group-sub col-lg-4">
+                                    <label asp-for="EvaluationReportWithRegister"></label>
+                                    <div class="col-lg-12">
+                                        <span class="m-switch">
+                                            <label>
+                                                <input type="checkbox" asp-for="EvaluationReportWithRegister">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-4">
+                                    <label asp-for="DocumentOffice"></label>
+                                    <input asp-for="DocumentOffice" class="form-control" placeholder="Oficina" required />
+                                </div>
+                                <div class="m-form__group-sub col-lg-4">
+                                    <label asp-for="DocumentSender"></label>
+                                    <input asp-for="DocumentSender" class="form-control" placeholder="Subscribe" required />
+                                </div>
+                                <div class="m-form__group-sub col-lg-4">
+                                    <label asp-for="DocumentSenderCoordinator"></label>
+                                    <input asp-for="DocumentSenderCoordinator" class="form-control" placeholder="Subscribe" required />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label asp-for="DocumentAcademicCharge"></label>
+                                    <input asp-for="DocumentAcademicCharge" class="form-control" placeholder="Carga Académica" required />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label asp-for="DocumentTechnologyOffice"></label>
+                                    <input asp-for="DocumentTechnologyOffice" class="form-control" placeholder="Oficina de Tecnología" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-md-6">
+                                    <label asp-for="EnrollmentReportHeaderText"></label>
+                                    <input asp-for="EnrollmentReportHeaderText" class="form-control" placeholder="Encabezado de la Ficha" required />
+                                </div>
+                                <div class="m-form__group-sub col-md-6">
+                                    <label asp-for="EnrollmentReportSubheaderText"></label>
+                                    <input asp-for="EnrollmentReportSubheaderText" class="form-control" placeholder="Subencabezado de la Ficha" required />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-md-12">
+                                    <label asp-for="EnrollmentReportFooterText"></label>
+                                    <textarea asp-for="EnrollmentReportFooterText" class="form-control" placeholder="Texto informativo..." style="height: 100px; resize: none;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-md-12">
+                                    <label asp-for="EnrollmentProformaTitleText"></label>
+                                    <input asp-for="EnrollmentProformaTitleText" class="form-control" placeholder="Encabezado de la Proforma" required />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-md-12">
+                                    <label asp-for="EnrollmentProformaFooterText"></label>
+                                    <textarea asp-for="EnrollmentProformaFooterText" class="form-control" placeholder="Texto informativo..." style="height: 100px; resize: none;"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="m-form__section m-form__section--last">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">Encabezado de documentos:</h3>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="DocumentLogoFile"></label>
+                                        <div class="custom-file">
+                                            <input asp-for="DocumentLogoFile" class="custom-file-input" accept="image/*" lang="es" type="file" autocomplete="off">
+                                            <label class="custom-file-label" for="DocumentLogoPath">
+                                                Seleccione un archivo
+                                            </label>
+                                        </div>
+                                        @if (!string.IsNullOrEmpty(Model.DocumentLogoPath))
+                                        {
+                                            <span class="m-form__help">Descargue el logo actual <a asp-action="DownloadFile" asp-controller="Home" asp-area="" asp-route-path="@Model.DocumentLogoPath">aqu&iacute;</a></span>
+                                        }
+                                    </div>
+
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="DocumentSuperiorText"></label>
+                                        <input asp-for="DocumentSuperiorText" class="form-control" placeholder="Texto superior del documento" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="DocumentHeaderText"></label>
+                                        <input asp-for="DocumentHeaderText" class="form-control" placeholder="Encabezado del documento" />
+
+                                    </div>
+
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="DocumentSubheaderText"></label>
+                                        <input asp-for="DocumentSubheaderText" class="form-control" placeholder="Subencabezado del documento" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="AcademicRecordSigning"></label>
+                                        <input asp-for="AcademicRecordSigning" class="form-control" placeholder="Firma de Registro Académico" />
+
+                                    </div>
+
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="BossPositionRecordSigning"></label>
+                                        <input asp-for="BossPositionRecordSigning" class="form-control" placeholder="Cargo Jefe Firma" />
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="m-form__section m-form__section--last">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">Gestión de Actas:</h3>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="EvaluationReportHeader"></label>
+                                        <input asp-for="EvaluationReportHeader" class="form-control" placeholder="Encabezado del acta" />
+
+                                    </div>
+
+                                    <div class="col-md-6 m-form__group-sub">
+                                        <label asp-for="EvaluationReportSubHeader"></label>
+                                        <input asp-for="EvaluationReportSubHeader" class="form-control" placeholder="Subencabezado del acta" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-md-3 m-form__group-sub">
+                                        <label asp-for="EvaluationReportActFormat"></label>
+                                        <select class="form-control m-select2" asp-for="EvaluationReportActFormat">
+                                            @foreach (var item in ConstantHelpers.Intranet.EVALUATION_REPORT_FORMAT.ACT_FORMAT.VALUES)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 m-form__group-sub">
+                                        <label asp-for="EvaluationReportRegisterFormat"></label>
+                                        <select class="form-control m-select2" asp-for="EvaluationReportRegisterFormat">
+                                            @foreach (var item in ConstantHelpers.Intranet.EVALUATION_REPORT_FORMAT.REGISTER_FORMAT.VALUES)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 m-form__group-sub">
+                                        <label asp-for="EnabledPartialEvaluationReportRegister"></label>
+                                        <div class="col-lg-4">
+                                            <span class="m-switch">
+                                                <label>
+                                                    <input type="checkbox" asp-for="EnabledPartialEvaluationReportRegister">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 m-form__group-sub">
+                                        <label asp-for="EnabledAuxiliaryEvaluationReport"></label>
+                                        <div class="col-lg-4">
+                                            <span class="m-switch">
+                                                <label>
+                                                    <input type="checkbox" asp-for="EnabledAuxiliaryEvaluationReport">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-md-3 m-form__group-sub">
+                                        <label asp-for="EvaluationReportFormatDate"></label>
+                                        <select class="form-control m-select2" asp-for="EvaluationReportFormatDate">
+                                            @foreach (var item in ConstantHelpers.Intranet.EvaluationReportConfigurationFormatDate.NAMES)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="m-form__section m-form__section--last">
+                                <div class="m-form__heading">
+                                    <h3 class="m-form__heading-title">Gestión de Formatos:</h3>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-md-3 m-form__group-sub">
+                                        <label asp-for="FormatCertificateOfStudies"></label>
+                                        <select class="form-control m-select2" asp-for="FormatCertificateOfStudies">
+                                            <option value="0">Formato por Defecto</option>
+                                            <option value="1">Formato 1</option>
+                                            <option value="2">Formato 2</option>
+                                            <option value="3">Formato 3</option>
+                                            <option value="4">Formato 4</option>
+                                            <option value="5">Formato 5</option>
+                                            <option value="6">Formato 6</option>
+                                            <option value="7">Formato 7</option>
+                                            <option value="8">Formato 8</option>
+                                            <option value="9">Formato 9</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 m-form__group-sub">
+                                        <label asp-for="FormatFirstEnrollment"></label>
+                                        <select class="form-control m-select2" asp-for="FormatFirstEnrollment">
+                                            <option value="0">Formato por Defecto</option>
+                                            <option value="1">Formato 1</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-2 m-form__group-sub">
+                                        <label asp-for="EnabledImageWatermarkRecord"></label>
+                                        <div class="col-lg-4">
+                                            <span class="m-switch">
+                                                <label>
+                                                    <input type="checkbox" asp-for="EnabledImageWatermarkRecord">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 m-form__group-sub">
+                                        <div class="col-md-12 m-form__group-sub">
+                                            <label asp-for="ImageWatermarkRecord"></label>
+                                            <div class="custom-file">
+                                                @if (Model.EnabledImageWatermarkRecord)
+                                                {
+                                                    <input asp-for="ImageWatermarkRecord" class="custom-file-input" accept="image/*" lang="es" type="file" autocomplete="off">
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="ImageWatermarkRecord" disabled class="custom-file-input" accept="image/*" lang="es" type="file" autocomplete="off">
+                                                }
+
+                                                <label class="custom-file-label image_watermark_record_label" for="DocumentLogoPath">
+                                                    Seleccione un archivo
+                                                </label>
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(Model.ImageWatermarkRecordUrl))
+                                            {
+                                                <span class="m-form__help">Descargue la imagen actual <a asp-action="DownloadFile" asp-controller="Home" asp-area="" asp-route-path="@Model.ImageWatermarkRecordUrl" target="_blank">aqu&iacute;</a></span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-md-4 m-form__group-sub">
+
+                                        <label asp-for="CertificateSignatureImage"></label>
+                                        <div class="custom-file">
+
+                                            <input asp-for="CertificateSignatureImage" class="custom-file-input" accept="image/*" lang="es" type="file" autocomplete="off">
+
+                                            <label class="custom-file-label" for="DocumentLogoPath">
+                                                Seleccione un archivo
+                                            </label>
+                                        </div>
+                                        @if (!string.IsNullOrEmpty(Model.CertificateSignatureImageUrl))
+                                        {
+                                            <span class="m-form__help">Descargue la imagen actual <a asp-action="DownloadFile" asp-controller="Home" asp-area="" asp-route-path="@Model.CertificateSignatureImageUrl" target="_blank">aqu&iacute;</a></span>
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @*<div class="tab-pane" id="m_tabs_4" role="tabpanel">
+                        <div class="row">
+                        <div class="form-group m-form__group col-6">
+                        <label asp-for="HostSMTP"></label>
+                        <input asp-for="HostSMTP" class="form-control" required placeholder="Host SMTP" />
+                        </div>
+                        <div class="form-group m-form__group col-6">
+                        <label asp-for="PortSMTP"></label>
+                        <input asp-for="PortSMTP" class="form-control" placeholder="Puerto SMTP" required />
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="form-group m-form__group col-6">
+                        <label asp-for="SenderEmail"></label>
+                        <input asp-for="SenderEmail" class="form-control" placeholder="Correo" required />
+                        </div>
+                        <div class="form-group m-form__group col-6">
+                        <label asp-for="SenderEmailPassword"></label>
+                        <input asp-for="SenderEmailPassword" class="form-control" placeholder="Contraseña" required />
+                        </div>
+                        </div>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="m-portlet__foot">
+                    <div class="col-12 m--align-right">
+                        <button type="button" class="btn btn-primary m-btn m-btn--icon btn-submit">
+                            <span>
+                                <i class="la la-save"></i>
+                                <span>Guardar cambios</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/configuration/index.js" asp-append-version="true"></script>
+}

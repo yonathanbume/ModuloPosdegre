@@ -1,0 +1,32 @@
+﻿@model AKDEMIC.INTRANET.Areas.Admin.Models.SurveyViewModels.QuestionViewModel
+
+<input id="questionId" value="" hidden />
+<input asp-for="SurveyItemId" hidden />
+<div class="row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="Type"></label>
+        <select asp-for="Type" class="form-control m-select2 select2-questionType" required></select>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group m-form__group col-lg-12">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control m-input" required>
+        <span asp-validation-for="Description" class="form-control-feedback"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group m-form__group col-lg-12 question-text" style="display:block;" id="question-text">
+        <label for="Name">Respuesta</label>
+        <textarea class="form-control" disabled="disabled" style="height: 37.19px; resize: none;"></textarea>
+    </div>
+    <div class="form-group col-lg-12 question-multiple" style="display:none;" id="question-multiple">
+        <button class="btn btn-primary btn-sm m-btn--icon add-answer" id="add-answer" type="button">
+            <span>
+                <i class="la la-plus"></i>
+                <span>Añadir respuesta</span>
+            </span>
+        </button>
+    </div>
+    <div id="question-answers" class="formanswers" style="width: 100%;display:none;"></div>
+</div>

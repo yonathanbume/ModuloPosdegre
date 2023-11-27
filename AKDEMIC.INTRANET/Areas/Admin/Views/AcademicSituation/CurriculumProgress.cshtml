@@ -1,0 +1,19 @@
+﻿@model Guid
+@{
+    ViewData["Title"] = "Progreso Curricular";
+    ViewBag.BackUrl = Url.Action("Index", "AcademicSituation");
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Situación Académica", Area = "Admin", Controller = "AcademicSituation", Action = "Index"},
+        new BreadcrumbViewData { Name = (string)ViewData["Title"], Controller = null, Action = null}
+    };
+}
+
+<div class="m-content">
+    <vc:student-situation student-id="Model"></vc:student-situation>
+    <vc:academic-situation student-id="Model"></vc:academic-situation>
+    <vc:academic-situation-elective></vc:academic-situation-elective>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/admin/academicsituation/curriculumprogress.js"></script>
+}

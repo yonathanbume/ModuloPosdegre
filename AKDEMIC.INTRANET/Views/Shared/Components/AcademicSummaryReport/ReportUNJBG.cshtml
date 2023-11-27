@@ -1,0 +1,124 @@
+﻿@model AKDEMIC.INTRANET.ViewModels.AcademicSummaryViewModels.RecordReportViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/css/pages/pdf/unjbg/academicsummaryreportpdf.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <img src="@Model.ImagePath" style="max-height: 80px;" />
+            </td>
+            <td>
+                <div class="title"><span class="bold">@GeneralHelpers.GetInstitutionName().ToUpper()</span><br /><span class="subtitle">@Model.HeaderText</span></div>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td colspan="2">
+                <div class="title_2"><span class="bold">RECORD ACAD&Eacute;MICO</span><br /><span class="subtitle">FACULTAD DE @Model.FacultyName.ToUpper()</span></div>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td colspan="2" height="140px">
+                <table>
+                    <tr>
+                        <td class="details">CAR. PROF. : </td>
+                        <td>@Model.CareerName</td>
+                    </tr>
+                    <tr>
+                        <td class="details">C&Oacute;DIGO :</td>
+                        <td>@Model.StudentCode</td>
+                        <td class="details">APELLDIOS Y NOMBRES :</td>
+                        <td>@Model.StudentFullName</td>
+                    </tr>
+                    <tr>
+                        <td class="details">R&Eacute;GIMEN :</td>
+                        <td>@Model.Regime</td>
+                        <td class="details">CURR&Iacute;CULA :</td>
+                        <td>@Model.CurriculumCode</td>
+                    </tr>
+                    <tr>
+                        <td class="details">SEDE :</td>
+                        <td>TACNA</td>
+                        <td class="details">MODALIDAD DE ESTUDIO</td>
+                        <td>@Model.Modality</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="140px" valign="top">
+                <table class="list">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>C&Oacute;DIGO</th>
+                            <th>&emsp;</th>
+                            <th>PERIODO ACAD&Eacute;MICO</th>
+                            <th>NOTA</th>
+                            <th>FECHA</th>
+                            <th>CRE</th>
+                            <th>TIPO ACTA</th>
+                            <th>MAT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var quantity = 1; var averageTotal = 0M; var totalCredits = 0.0M;}
+                        @foreach (var academicYear in Model.AcademicYears)
+                        {
+                            if (academicYear.Courses.Any(x => x.AcademicHistories.Any()))
+                            {
+                                var averageByAcademicYear = 0M;
+                                var totalCreditsByAcademicYear = 0.0M;
+                                <tr>
+                                    <td colspan="1"></td>
+                                    <td colspan="8" style="padding-top:10px !important; padding-bottom:5px !important;"><strong>Semestre :</strong> @academicYear.AcademicYearName</td>
+                                </tr>
+                                @foreach (var item in academicYear.Courses)
+                                {
+                                    var attempts = 1;
+                                    foreach (var history in item.AcademicHistories)
+                                    {
+                                        <tr>
+                                            <td align="center">@quantity</td>
+                                            <td align="center">@item.CourseCode</td>
+                                            <td align="left">@item.CourseName</td>
+                                            <td align="center">@history.TermName</td>
+                                            <td align="center">@(history.IsValidated ? "CV" : history.Withdraw ? "RET" : history.FinalGrade.ToString())</td>
+                                            <td align="center">@(history.FinalGradeDateTime.HasValue ? history.FinalGradeDateTime.ToLocalDateFormat() : "-")</td>
+                                            <td align="center">@item.Credits.ToString("0.0")</td>
+                                            <td align="center">Final</td>
+                                            <td align="center">@attempts</td>
+                                        </tr>
+                                        attempts++;
+                                        quantity++;
+                                        if (!history.IsValidated && !history.Withdraw)
+                                        {
+                                            totalCreditsByAcademicYear += item.Credits;
+                                            averageByAcademicYear += (history.FinalGrade * item.Credits);
+                                        }
+                                    }
+                                }
+                                totalCredits += totalCreditsByAcademicYear;
+                                averageTotal += averageByAcademicYear;
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="7" style="padding-bottom:10px !important; padding-top:8px !important"><strong>Promedio Ponderado : @((averageTotal / totalCredits).ToString("0.000")) &emsp; @averageTotal/@totalCredits.ToString("0.0") &emsp; Promedio Semestre : @((averageByAcademicYear / totalCreditsByAcademicYear).ToString("0.0")) &emsp; @averageByAcademicYear/@totalCreditsByAcademicYear.ToString("0.0")</strong></td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

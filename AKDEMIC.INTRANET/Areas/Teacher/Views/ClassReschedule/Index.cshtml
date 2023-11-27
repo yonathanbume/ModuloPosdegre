@@ -1,0 +1,87 @@
+﻿@using AKDEMIC.INTRANET.Areas.Teacher.Models.ClassRescheduleViewModels
+@model ClassRescheduleViewModel
+@{
+    ViewBag.Title = "Reprogramación de Clases";
+    ViewBag.Breadcrumbs = new[] {
+    new BreadcrumbViewData { Name = "Reprogramación" }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Reprogramaciones solicitadas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30" id="class-reschedule-header-form">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-md-4">
+                                <label name="Status">Estado</label>
+                                <select name="Status" class="form-control m-input status-select2" required></select>
+                                <div class="d-md-none m--margin-bottom-10"></div>
+                            </div>
+                            <div class="form-group m-form__group col-md-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button id="btn-add" class="btn btn-primary m-btn m-btn--icon" onclick="classReschedule.modal.load.request(this, event)">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nueva Solicitud</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="class-reschedule-datatable-get" class="m-datatable"></div>
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Clases que necesitan reprogramaci&oacute;n
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <table id="need_reschedule" class="table table-striped"></table>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("Index/_ClassRescheduleDetail")
+@await Html.PartialAsync("Index/_ClassRescheduleRequest")
+@await Html.PartialAsync("Index/_ClassNeedReschedule")
+
+
+@section Scripts {
+    <script>
+        var classRescheduleStatusIndices = JSON.parse('@Json.Serialize(Model.ClassRescheduleStatusIndices)');
+        var classRescheduleStatusValues = JSON.parse('@Json.Serialize(Model.ClassRescheduleStatusValues)');
+    </script>
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/modules/select.js"></script>
+    <script src="~/js/areas/teacher/classreschedule/index.js" asp-append-version="true"></script>
+    <script src="~/js/areas/teacher/classreschedule/needreschedule.js" asp-append-version="true"></script>
+}

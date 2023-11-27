@@ -1,0 +1,94 @@
+﻿@model bool
+@inject AKDEMIC.SERVICE.Services.Generals.Interfaces.IConfigurationService _configurationService
+@inject AKDEMIC.SERVICE.Services.Server.Interfaces.IGeneralLinkService _generalLinkService;
+
+@{
+    var isDevelopment = Model;
+    var enabledCustomCampusSystem = Convert.ToBoolean(await _configurationService.GetValueByKey(ConstantHelpers.Configuration.Server.ENABLE_CUSTOM_SYSTEMS));
+}
+
+<li class="m-nav__item m-topbar__campus m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click" aria-expanded="true">
+    <a href="#" class="m-nav__link m-dropdown__toggle">
+        <span class="m-nav__link-badge m-badge m-badge--dot m-badge--info m--hide"></span>
+        <span class="m-nav__link-icon"><img class="campus-icon" src="~/images/login/campus/campus.svg" width="31" /></span>
+    </a>
+    <div class="m-dropdown__wrapper" style="z-index: 101;">
+        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 29.5px;"></span>
+        <div class="m-dropdown__inner">
+            <div class="m-dropdown__header m--align-center">
+                <span class="m-dropdown__header-title">Campus Virtual</span>
+            </div>
+            <div class="m-dropdown__body">
+                <div class="m-dropdown__content">
+                    <div class="data" data="false" data-height="380" data-mobile-height="200">
+                        <div class="m-nav-grid m-nav-grid__campus m-nav-grid--skin-light">
+                            @if (enabledCustomCampusSystem)
+                            {
+                                var systems = await _generalLinkService.GetAll(ConstantHelpers.CAMPUS_GENERAL_LINK.TYPE.SYSTEM, User);
+                                var skip = 0;
+                                var tpmSystems = systems.Take(3).ToList();
+
+                                while (tpmSystems.Any())
+                                {
+                                    <div class="m-nav-grid__row">
+
+                                        @foreach (var item in tpmSystems)
+                                        {
+                                            <div class="m-nav-grid__item">
+                                                <a href="@item.Link" target="_blank" class="text-center campus-item">
+                                                    <img class="img-responsive" src="/imagenes/@item.ImageUrl" alt="@item.Description">
+                                                </a>
+                                            </div>
+                                        }
+
+                                        @{
+                                            skip = skip + 3;
+                                            tpmSystems = systems.Skip(skip).Take(3).ToList();
+                                        }
+                                    </div>
+                                }
+
+                            }
+                            else
+                            {
+                                <div class="m-nav-grid__row">
+                                    <div class="m-nav-grid__item">
+                                        <a href="@GeneralHelpers.GetApplicationRoute(ConstantHelpers.Solution.Intranet, isDevelopment)" target="_blank" class="text-center campus-item">
+                                            <img class="img-responsive" src="~/images/login/campus/akdemic/intranet.svg">
+                                        </a>
+                                    </div>
+
+                                    <div class="m-nav-grid__item">
+                                        <a href="@GeneralHelpers.GetApplicationRoute(ConstantHelpers.Solution.Enrollment, isDevelopment)" target="_blank" class="text-center campus-item">
+                                            <img class="img-responsive" src="~/images/login/campus/akdemic/matricula.svg">
+                                        </a>
+                                    </div>
+
+                                    @if (!User.IsInRole(ConstantHelpers.ROLES.STUDENTS))
+                                    {
+                                        <div class="m-nav-grid__item">
+                                            <a href="@GeneralHelpers.GetApplicationRoute(ConstantHelpers.Solution.TeachingManagement, isDevelopment)" class="text-center campus-item">
+                                                <img class="img-responsive" src="~/images/login/campus/akdemic/gestiondocente.svg">
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <div class="m-nav-grid m-nav-grid__help m-nav-grid--skin-light">
+                            <div class="m-nav-grid__row">
+                                <a href="@GeneralHelpers.GetApplicationRoute(ConstantHelpers.Solution.Server, isDevelopment)" class="m-nav-grid__item">
+                                    <span class="m-nav-grid__text">Portal</span>
+                                </a>
+                                <a href="#" class="m-nav-grid__item">
+                                    <span class="m-nav-grid__text">Ayuda</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

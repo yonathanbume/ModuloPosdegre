@@ -1,0 +1,99 @@
+﻿@using AKDEMIC.INTRANET.Areas.Student.Models.GradeViewModels
+@model AKDEMIC.INTRANET.Areas.Student.Models.GradeViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Calificaciones";
+    ViewData["SubTitle"] = "Listado de Calificaciones";
+    ViewData["SubTitle1"] = "Información del Estudiante";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"], Controller = null, Action = null}
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle1"]
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <label>Periodo: &emsp;</label>
+                <select id="select-term" asp-for="ActiveTerm" asp-items="@(new SelectList(Model.Terms, "Id", "Name"))" class="selectpicker"></select>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Estudiante: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Student.FullName</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>C&oacute;digo: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>@Model.Student.UserName</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Escuela: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Student.Career.Name</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Nivel: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label id="lblAcademicYear">-</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>N° de Cursos: </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label id="lblSectionCount">-</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Total de Cr&eacute;ditos: </b></label>
+                </div>
+                <div class="col-sm-3">
+                    <label id="lblCreditSum">-</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["SubTitle"]
+                    </h3>
+                </div>
+            </div>            
+            <div class="m-portlet__head-tools">
+                @if (Model.HasStudentInformation)
+                {
+                    <button id="btnStudentInformationConstancy" class="btn btn-primary btn-sm" style="margin-right:5px">Ficha Socioeconomica</button>
+                }
+                <button class="btn btn-primary btn-sm download-report">Descargar Ficha</button>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div id="enrolled-courses-container">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery.fileDownload/jquery.fileDownload.min.js" asp-append-version="true"></script>
+    <script src="~/js/areas/student/grade/index.js" asp-append-version="true"></script>
+}

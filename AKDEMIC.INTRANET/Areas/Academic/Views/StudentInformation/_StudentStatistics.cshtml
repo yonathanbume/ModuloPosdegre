@@ -1,0 +1,104 @@
+﻿@model AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.StudentStatisticsViewModel
+@{
+    ViewData["Title"] = "Situación Académica";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Estudiantes", Controller = "StudentInformation", Action = "Index", Area = "Academic" },
+new BreadcrumbViewData { Name = "Información", Url = $"/academico/alumnos/informacion/{Model.StudentId}"},
+new BreadcrumbViewData {  Name = "Estadísticas" }
+};
+}
+
+@section Styles {
+    <link href="~/css/areas/academic/studentinformation/information.css" rel="stylesheet" type="text/css" />
+    <style>
+        .m-widget4 .m-widget4__item {
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+
+            .m-widget4 .m-widget4__item .m-widget4__info .m-widget4__title {
+                font-size: 12px !important;
+                font-weight: normal !important;
+            }
+
+            .m-widget4 .m-widget4__item .m-widget4__ext .m-widget4__number {
+                font-size: 12px !important;
+                font-weight: normal !important;
+            }
+
+        .highcharts-background {
+            height: 100px !important;
+        }
+
+        #student_competencies_chart .highcharts-axis-title {
+            font-size: 20px !important;
+            font-weight: bold !important;
+        }
+    </style>
+}
+
+<input type="hidden" asp-for="StudentId" />
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <a href="/academico/alumnos/informacion/@Model.StudentId" class="btn btn-secondary m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-angle-left"></i>
+                            <span>Atr&aacute;s</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item" style="width:400px">
+                        <select type="text" class="form-control m-select2" id="search">
+                            <option></option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="student_statistics_competencies_detailed">
+        <div class="m-portlet m-portlet--rounded">
+            <div class="m-portlet__body">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="student_competencies_chart">
+        <div class="m-portlet m-portlet--rounded">
+            <div class="m-portlet__body">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="average_term_portlet">
+        <div class="m-portlet m-portlet--rounded">
+            <div class="m-portlet__body">
+                <div id="average_term"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/lib/highcharts/highcharts.js" asp-append-version="true"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js" asp-append-version="true"></script>
+    <script src="~/js/lib/highcharts/solid-gauge.js" asp-append-version="true"></script>
+    <script src="~/js/lib/highcharts/exporting.js" asp-append-version="true"></script>
+    <script src="~/js/lib/highcharts/export-data.js" asp-append-version="true"></script>
+    <script src="~/js/lib/highcharts/accesibility.js" asp-append-version="true"></script>
+
+    <script src="~/js/areas/academic/studentinformation/search.js" asp-append-version="true"></script>
+    <script src="~/js/areas/academic/studentinformation/statistics.js" asp-append-version="true"></script>
+}
+

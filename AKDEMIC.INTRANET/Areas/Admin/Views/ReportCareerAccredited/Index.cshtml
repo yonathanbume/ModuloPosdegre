@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Comunidad",  Action = "Community" , Controller = "IntranetReport", Area = "Report" },
+new BreadcrumbViewData { Name = "Escuelas Acreditadas" }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <a asp-controller="IntranetReport" asp-area="Report" asp-action="Community" class="btn btn-primary m-btn m-btn--icon m-btn--icon-only"><i class="la la-arrow-left"></i></a>
+                        &nbsp;
+                        Escuelas Acreditadas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Escuela Profesional</label>
+                                <select id="careers" class="m-select2">
+                                    <option value="0" selected>Todas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div id="chart-report-container">
+                <div id="chart-report" class="chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles{
+    <link href="~/css/report/charts.css" rel="stylesheet" />
+}
+
+
+@section Scripts {
+    <script src="~/js/helpers.js"></script>
+
+    <script src="~/js/lib/highcharts/highcharts.js"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+
+    <script src="~/js/areas/admin/reportcareeraccredited/index.js"></script>
+}
+
+
+

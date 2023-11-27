@@ -1,0 +1,272 @@
+﻿@model bool
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Diplomas
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button type="button" class="m-portlet__nav-link btn btn-success m-btn m-btn--pill m-btn--air btn-excel" data-toggle="modal" data-target="#modal-upload-excel">
+                            Actualiza Estados
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Facultad</label>
+                                <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                                    <select id="facultyId" class="form-control m-input"></select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Escuela Profesional</label>
+                                <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                                    <select id="careerId" class="form-control m-input"></select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>Programa académico</label>
+                                <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                                    <select id="program_academicId" class="form-control m-input"></select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-1" style="margin-top: 25px;">
+                                <label> </label>
+                                <button type="button" id="btn-search-filters" class="m-btn btn btn-primary"><i class="la la-search"></i></button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="col-lg-12 row">
+                                <div class="form-group m-form__group col-xl-4">
+                                    <label> </label>
+                                    <div class="m-input m-input-icon m-input-icon--left">
+                                        <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por nombre , DNI o código..." id="searchValue">
+                                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group col-xl-4">
+                                    <label> </label>
+                                    <div class="m-input m-input-icon m-input-icon--left">
+                                        <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar por número de libro..." id="searchBookNumber">
+                                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group col-xl-4">
+                                    <label class="form-control-label">Estado:</label>
+                                    <select id="diplomaStatus" name="diplomaStatus" class="form-control">
+                                        <option value="-1">Todos</option>
+                                        @foreach (var item in ConstantHelpers.REGISTRY_PATTERN.DIPLOMA_DELIVERY.VALUES)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="col-lg-6">
+                            </div>
+                            <div class="col-lg-6 m--align-right">
+                                <button id="btnUploadTemplate" type="button" class="btn btn-primary m-btn m-btn--air m-btn--icon">
+                                    Formato de Subida
+                                </button>
+                                <button id="btnDownloadExcel" type="button" class="btn btn-primary m-btn m-btn--air m-btn--icon">
+                                    Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="tbl-datatable-registry-patterns">
+
+                <thead>
+                    <tr>
+                        <th>@(Model ? "Trámite" : "Concepto")</th>
+
+                        <th>Tipo</th>
+
+                        <th>Usuario</th>
+
+                        <th>Estudiante</th>
+
+                        <th>DNI</th>
+
+                        <th>Escuela Profesional</th>
+
+                        <th>Estado</th>
+
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="modal-status" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Cambiar estado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="change-status-form">
+                <input type="hidden" name="registryPatternId" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label>Estado:</label>
+                            <select name="deliveryDiploma" class="form-control m-input">
+                                @foreach (var item in ConstantHelpers.REGISTRY_PATTERN.DIPLOMA_DELIVERY.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button id="btn-submit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modal-info" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Información adicional
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="more-info-form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Estudiante:</label>
+                            <input name="fullname" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Código:</label>
+                            <input name="code" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Teléfono:</label>
+                            <input name="phone" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Correo 1:</label>
+                            <input name="email1" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-md-12">
+                            <label class="form-control-label">Correo 2:</label>
+                            <input name="email2" type="text" class="form-control m-input" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal-upload-excel" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Cambiar estados de los diplomas
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="upload-excel-form" asp-area="Admin" asp-controller="DiplomaDelivery" asp-action="UpdateRegistryPatternExcel" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label>Archivo Template</label>
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required>
+                            <label class="custom-file-label" for="customFile" id="fileLabel">Buscar archivo...</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button id="btn-upload-excel" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Subir</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/admin/diploma_delivery/index.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,108 @@
+﻿@model List<AKDEMIC.INTRANET.Areas.Academic.ViewModels.StudentInformation.CourseViewModel>
+@{
+    int counter = 0;
+}
+
+<div class="m-accordion m-accordion--bordered" id="courses-container">
+    @foreach (var item in Model)
+    {
+        <div class="course-container m--margin-bottom-50 table-responsive" data-index="@counter">
+
+            <table class="table m-table table-hover mx-auto table-metronic table-bordered m-table--border-metal">
+                <thead>
+                    <tr>
+                        <th>Curso: </th>
+                        <td colspan="5" style="text-align: center;">
+                            @item.Course
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;">Secci&oacute;n: </th>
+                        <td style="width: 25%;">@item.Section</td>
+                        <th style="width: 15%;">Vez: </th>
+                        <td style="width: 15%;">@item.Try</td>
+                        <th style="width: 15%;">Cr&eacute;ditos: </th>
+                        <td style="width: 10%;">@item.Credits</td>
+                    </tr>
+                    <tr>
+                        <th>F&oacute;rmula: </th>
+                        <td colspan="5">@item.Formula</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Evaluaci&oacute;n</th>
+                        <th colspan="2" style="text-align: center;">Porcentaje</th>
+                        <th colspan="2" style="text-align: center;">Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var evaluation in item.Evaluations)
+                    {
+                        <tr class="grades">
+                            <td colspan="2">@evaluation.Name</td>
+                            <td colspan="2" style="text-align:center;" data-value="@(evaluation.Percentage)">@(evaluation.Percentage + " %")</td>
+                            @if (evaluation.Attended)
+                            {
+                                @if (evaluation.Approved)
+                                {
+                                    <td class="grade-value" colspan="2" style="text-align: center;">@evaluation.Grade</td>
+                                }
+                                else
+                                {
+                                    <td class="grade-value" colspan="2" style="color: red; text-align: center;">@evaluation.Grade <i class="la la-info-circle" rel="m-tooltip" title="Desaprobado" data-placement="right" data-trigger="hover" data-original-title="Desaprobado"></i></td>
+                                }
+                            }
+                            else
+                            {
+                                @if (!evaluation.Taked)
+                                {
+                                    <td class="grade-value" colspan="2" style="text-align: center;"> @evaluation.Grade <i class="la la-info-circle" rel="m-tooltip" title="Aún no calificado" data-placement="right" data-trigger="hover" data-original-title="Aún no calificado"></i></td>
+                                }
+                                else
+                                {
+                                    <td class="grade-value" colspan="2" style="color: red; text-align: center;">NR <i class="la la-info-circle" rel="m-tooltip" title="No rendido" data-placement="right" data-trigger="hover" data-original-title="No rendido"></i></td>
+                                }
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    @if (item.PercentageProgress > 0)
+                    {
+                        <tr>
+                            @if (item.PercentageProgress < 100)
+                            {
+                                <th colspan="4">Nota No Oficial (avance al @item.PercentageProgress %): </th>
+                                <th colspan="2" style="text-align:center;"><b>@item.CurrentFinalGrade</b></th>
+                            }
+                            else
+                            {
+                                <th colspan="4">Nota Oficial: </th>
+                                <th colspan="2" style="text-align:center; ">
+                                    @*@(item.CurrentFinalGrade ? "":"color: red;")*@
+                                <b>
+                                    @item.FinalGrade
+                                    <i class="la la-info-circle" rel="m-tooltip" title="La nota final es redondeada" data-placement="right" data-trigger="hover" data-original-title="La nota final es redondeada"></i>
+                                </b>
+                            </th>
+                        }
+                        </tr>
+                        <tr>
+                            <th>Observaciones: </th>
+                            <th colspan="5">@(string.IsNullOrEmpty(item.Observations) ? "-" : item.Observations)</th>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <th style="text-align:center;" colspan="6">No existen notas</th>
+                        </tr>
+                    }
+                </tfoot>
+            </table>
+        </div>
+
+        counter++;
+    }
+</div>
+

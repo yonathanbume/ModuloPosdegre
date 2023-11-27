@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Reporte Por Usuario Asignado";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = "Reporte de Estudiantes",  Action = "Student" , Controller = "IntranetReport", Area = "Report" },
+new BreadcrumbViewData { Name = (string)ViewBag.Title }
+};
+}
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <a asp-controller="IntranetReport" asp-area="Report" asp-action="Student" class="btn btn-primary m-btn m-btn--icon m-btn--icon-only"><i class="la la-arrow-left"></i></a>
+                    &nbsp;
+                    <h3 class="m-portlet__head-text">
+                        Reporte por Usuario Asignado
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div id="container_chart">
+                    <div id="chart" class="chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/css/chart.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/lib/highcharts/highcharts-drilldown.js"></script>
+    <script src="~/js/lib/highcharts/highcharts-more.js"></script>
+    <script src="~/js/lib/highcharts/exporting.js"></script>
+    <script src="~/js/lib/highcharts/export-data.js"></script>
+    <script src="~/js/lib/highcharts/drilldown.js"></script>
+    <script src="~/js/areas/academicrecord/reportrequest/reportbyacademicrecord.js"></script>
+}

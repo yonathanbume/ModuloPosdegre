@@ -1,0 +1,811 @@
+﻿@model Guid
+
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                Solicitud de tr&aacute;mites
+            </h3>
+        </div>
+    </div>
+    <div class="m-portlet__head-tools">
+        <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+                <a href="javascript:void(0)" class="m-portlet__nav-link m-portlet__nav-link--icon index-return"><i class="la la-close"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="m-portlet__body m-portlet__body-options">
+    @*<input id="Id" value="@Model" hidden/>*@
+    <div class="row nav" role="tablist">
+        @*<div class="col-md-3">
+        <a href="javascript:void(0)" class="student-option-block user-procedures" data-toggle="modal" data-target="#request-evaluation-modal">
+        <img src="~/images/areas/academic/studentinformation/student-information-3.png" />
+        <span>Evaluaci&oacute;n Extraordinaria</span>
+        </a>
+        </div>*@
+
+        @*<div class="col-md-3">
+        <a href="javascript:void(0)" class="student-option-block reservation-request">
+        <img src="~/images/areas/academic/studentinformation/student-information-8.png" />
+        <span>Reserva de Matr&iacute;cula</span>
+        </a>
+        </div>*@
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block reservation-request" data-toggle="modal" data-target="#request-reservation-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_reservadematricula.png" />
+                <span>Reserva de Matr&iacute;cula</span>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block extemporaneous-enrollment" data-toggle="modal" data-target="#extemporaneous-enrollment-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_matriculaextemporanea.png" />
+                <span>Matr&iacute;cula Extempor&aacute;nea</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block transfer-request" data-toggle="modal" data-target="#request-transfer-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_trasladodeescuela.png" />
+                <span>Traslado de Escuela</span>
+            </a>
+        </div>
+
+        @*<div class="col-md-3">
+        <a href="javascript:void(0)" class="student-option-block directedcourse-request" data-toggle="modal" data-target="#request-directedcourse-modal">
+        <img src="~/images/areas/academic/studentinformation/student-information-3.png" />
+        <span>Curso Dirigido</span>
+        </a>
+        </div>*@
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block coursewithdrawal-request" data-toggle="modal" data-target="#request-coursewithdrawal-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_retirodeasignatura.png" />
+                <span>Retiro de asignatura</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block academicyearwithdrawal-request">
+                <img src="~/images/areas/academic/studentinformation/AK_retirodeciclo.png" />
+                <span>Retiro de Ciclo</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block expelled-request">
+                <img src="~/images/areas/academic/studentinformation/AK_expulsarestudiante.png" />
+                <span>Expulsar Estudiante</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block program-request" data-toggle="modal" data-target="#request-program-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_cambiodeespecialidad.png" />
+                <span>Cambio Especialidad</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block amnesty-request" data-toggle="modal" data-target="#request-amnesty-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_amnistia.png" />
+                <span>Amnist&iacute;a</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block cancellation-request">
+                <img src="~/images/areas/academic/studentinformation/AK_anularingreso.png" />
+                <span>Anular Ingreso</span>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block resign-request">
+                <img src="~/images/areas/academic/studentinformation/AK_renunciarcomoestudiante.png" />
+                <span>Renunciar como Estudiante</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block reentry-request">
+                <img src="~/images/areas/academic/studentinformation/AK_reingresarestudiante.png" />
+                <span>Reingresar Estudiante</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block change-curriculum" data-toggle="modal" data-target="#change-curriculum-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_cambiodeplan.png" />
+                <span>Cambio de Plan</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block course-certificate" data-toggle="modal" data-target="#request-coursecertificate-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_certificadodecurso.png" />
+                <span>Certificado de Curso</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block change-campus" data-toggle="modal" data-target="#request-change-campus-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_cambiodesede.png" />
+                <span>Cambio de Sede</span>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="javascript:void(0)" class="student-option-block change-benefit" data-toggle="modal" data-target="#change-benefit-modal">
+                <img src="~/images/areas/academic/studentinformation/AK_portafoliodeestudiante.png" />
+                <span>Beneficio del Estudiante</span>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<div id="request-evaluation-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Evaluaci&oacute;n Extraordinaria
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="evaluation-request-form" asp-action="EvaluationRequest" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="evaluation-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="evaluation_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Curso</label>
+                        <select id="evaluationCourseSelect" name="CourseId" class="form-control m-select2" required></select>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el Profesor Presidente</label>
+                        <select id="evaluationTeacherSelect" name="TeacherId" class="form-control m-select2" required></select>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el Comit&eacute;</label>
+                        <select id="evaluationTeachersCommiteeSelect" name="TeachersCommitee" class="form-control m-select2" required multiple></select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Resolución</label>
+                        <input type="text" name="Resolution" class="form-control m-input" placeholder="Ingrese Resolución...">
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" name="File" id="eva-reso-file" class="custom-file-input directedcourse-file" lang="es" />
+                            <label class="custom-file-label" for="reso-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="request-reservation-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Reserva de Matr&iacute;cula
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="reservation-request-form" asp-action="ReservationRequest" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="reservation-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="reservation_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">N&uacute;mero de recibo</label>
+                        <input name="Receipt" class="form-control m-input" placeholder="Ingrese un nro de recibo" required>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Resoluci&oacute;n</label>
+                        <div class="custom-file">
+                            <input type="file" name="File" id="reservation-file" class="custom-file-input reservation-file" lang="es" />
+                            <label class="custom-file-label" for="reservation-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Observación</label>
+                        <textarea name="Observation" class="form-control m-input" placeholder="Ingrese una observación"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="extemporaneous-enrollment-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Matr&iacute;cula Extempor&aacute;nea
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="extemporaneous-enrollment-form" asp-action="ExtemporaneousEnrollment" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="extemporaneous-enrollment-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="extemporaneous_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Recibo de pago</label>
+                        <input name="Receipt" class="form-control m-input" placeholder="Ingrese un nro de recibo" required>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" name="file" id="extemp-file" class="custom-file-input extemporaneous-file" lang="es" />
+                            <label class="custom-file-label" for="extemp-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="request-transfer-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Traslado de Escuela
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="transfer-request-form" asp-action="TransferRequest" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="transfer-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="transfer_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione la escuela</label>
+                        <select id="careerSelect" name="CareerId" class="form-control m-select2">
+                            <option value="0" selected disabled>Seleccione una Escuela Profesional</option>
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Seleccione un plan de estudio</label>
+                        <select id="curriculumSelect" name="CurriculumId" class="form-control m-select2">
+                            <option value="0" selected disabled>Seleccione un plan de estudio</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="request-program-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Cambio de especialidad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="program-request-form" asp-action="ChangeAcademicProgramRequest" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="program-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="program_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione una especialidad</label>
+                        <select id="academicProgramSelect" name="AcademicProgramId" class="form-control m-select2"></select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="request-directedcourse-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Curso Dirigido
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="directedcourse-request-form" asp-action="DirectedCourseRequest" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="directedcourse-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="directedcourse_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el curso</label>
+                        <select id="directedCourseSelect" name="CourseId" class="form-control m-select2"></select>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el Profesor</label>
+                        <select id="directedCourseTeacherSelect" name="TeacherId" class="form-control m-select2"></select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Resolución</label>
+                        <input type="text" name="resolution" class="form-control m-input" placeholder="Ingrese Resolución...">
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" name="file" id="reso-file" class="custom-file-input directedcourse-file" lang="es" />
+                            <label class="custom-file-label" for="reso-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="request-coursewithdrawal-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Retiro de asignatura
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="coursewithdrawal-request-form" asp-action="CourseWithdrawal" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="coursewithdrawal-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="coursewithdrawal_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el curso</label>
+                        <select id="enrolledCoursesSelect" name="CourseId" class="form-control m-select2"></select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="payment-made-modal" class="modal fade" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Listado de Deudas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="m-portlet__body">
+                <table class="table table-striped table-bordered" id="payment-table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="request-amnesty-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Solicitud de Amnist&iacute;a
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="amnesty-request-form" class="m-form" asp-action="AmnestyRequest" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        <div class="m-alert__text">El estudiante será cambiado al último plan de su escuela. En caso de ya estar en el &uacute;ltimo, sus notas ser&aacute;n eliminadas.</div>
+                    </div>
+
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="amnesty-request-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="amnesty-request-alert-txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Observaciones</label>
+                        <textarea name="Observation" class="form-control" required style="resize: none;"></textarea>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--last">
+                        <label class="">Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" name="file" id="extemp-file" class="custom-file-input extemporaneous-file" lang="es" />
+                            <label class="custom-file-label" for="extemp-file">
+                                Seleccione un archivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="request-coursecertificate-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Validación de Certificados
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="coursecertificate-request-form" asp-action="CourseCertificateRequest" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="coursecertificate-modal-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="coursecertificate_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el certificado</label>
+                        <select id="courseCertificateSelect" name="CertificateId" class="form-control m-select2"></select>
+                    </div>
+
+                    @*<div class="form-group m-form__group">
+                    <label class="required-form-label">Resolución</label>
+                    <input type="text" name="resolution" class="form-control m-input" placeholder="Ingrese Resolución...">
+                    </div>
+
+                    <div class="form-group m-form__group">
+                    <label class="required-form-label">Archivo</label>
+                    <div class="custom-file">
+                    <input type="file" name="file" id="reso-file" class="custom-file-input directedcourse-file" lang="es" />
+                    <label class="custom-file-label" for="reso-file">
+                    Seleccione un archivo
+                    </label>
+                    </div>
+                    </div>*@
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="change-curriculum-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Cambio de Plan de Estudio
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="change-curriculum-form" asp-action="ChangeCurriculum" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="change-curriculum-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="change_curriculum_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione el plan de estudio</label>
+                        <select name="CurriculumId" required class="form-control m-select2">
+                            <option value="0" selected disabled>Seleccione un plan de estudio</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first d-none div-academic-program-container">
+                        <label class="required-form-label">Seleccione el programa académico</label>
+                        <select name="AcademicProgramId" class="form-control m-select2">
+                            <option value="0" selected disabled>Seleccione un programa académico</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Motivo</label>
+                        <textarea class="form-control" name="Reason"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="request-change-campus-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Cambio de Sede
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="request-change-campus-form" asp-action="ChangeCampus" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="change-campus-form-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="change_campus_msg_txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione la nueva sede</label>
+                        <select name="CampusId" required class="form-control m-select2"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="change-benefit-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Beneficio del Estudiante
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="change-benefit-form" asp-action="ChangeStudentBenefit" asp-area="Academic" asp-controller="StudentInformation" asp-route-id="@Model">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="change-benefit-alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="change-benefit-alert-txt">
+                            Por favor, corrija los errores pertinentes
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Seleccione un beneficio</label>
+                        <select id="benefitSelect" name="Benefit" class="form-control m-select2">
+@*                            @foreach (var item in ConstantHelpers.Student.Benefit.VALUES)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }*@
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

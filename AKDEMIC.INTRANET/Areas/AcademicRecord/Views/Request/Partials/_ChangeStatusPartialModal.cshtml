@@ -1,0 +1,40 @@
+﻿<div id="change_status_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-modal-title">
+                    Cambiar Estado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="change_status_form">
+                <div class="modal-body">
+                    <input type="hidden" name="RecordHistoryId" />
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Estado</label>
+                        <select class="m-select2" name="Status" required>
+                            @foreach (var item in ConstantHelpers.RECORD_HISTORY_STATUS.VALUES_NOT_INTEGRATED)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--first">
+                        <label class="required-form-label">Observacion</label>
+                        <textarea name="Observation" class="form-control" maxlength="200" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Reporte de estudiantes";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Listado de estudiantes" }
+};
+}
+<div class="m-content">    
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Lista de estudiante
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item"style="width:auto; height:61.83px; font-size:medium;">
+                        Filtros avanzados
+                    </li>
+                    <li class="m-portlet__nav-item" style="width:67px; height:40px;">
+                        <span class="m-switch m-switch--success" style="padding-top:13px;">
+                            <label>
+                                <input type="checkbox" id="advanced_filters">
+                                <span></span>
+                            </label>
+                        </span>
+
+                    </li>
+                  
+                </ul>
+            </div>
+        </div>
+
+        <div class="m-portlet__body">
+
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Escuela Profesional :</label>
+                    <select id="select2Careers" class="form-control m-input m-select2"></select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Departamento :</label>
+                    <select id="select2Departments" class="form-control m-input m-select2"></select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Provincia :</label>
+                    <select id="select2Provinces" class="form-control m-input m-select2"></select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Distrito :</label>
+                    <select id="select2Districts" class="form-control m-input m-select2"> </select>
+                </div>
+            </div>
+
+            <div class="row m--margin-bottom-20" id="advancedfilters_content">
+                <div class="col-lg-2 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Sexo :</label>
+                    <select id="selectSex" class="form-control m-input m-select2" style="visibility:hidden;">
+                        @foreach (var item in AKDEMIC.CORE.Helpers.ConstantHelpers.SEX.VALUES)
+                        {
+                            <option value="@((int) item.Key)">@(item.Value)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-2 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Tipo de colegio :</label>
+                    <select id="selectSchoolType" class="form-control m-input" style="visibility:hidden;">
+                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_TYPE_SCHOOL.TYPE_SCHOOL)
+                        {
+                            <option value="@((int) item.Key)">@(item.Value)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-2 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Preparación universitaria :</label>
+                    <select id="selectUniversityPreparation" class="form-control m-input" style="visibility:hidden;">
+                        @foreach (var item in AKDEMIC.INTRANET.Helpers.ConstantHelpers.STUDENT_INFORMATION.PERSONAL_INFORMATION.PERSONAL_INFORMATION_UNIVERSITY_PREPARATION.UNIVERSITY_PREPARATION)
+                        {
+                            <option value="@((int) item.Key)">@(item.Value)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-2 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Modalidad de Ingreso :</label>
+                    <select id="select2AdmissionType" class="form-control m-input m-select2" style="visibility:hidden;"> </select>
+                </div>
+                <div class="col-lg-4 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Edad:</label>
+                    <div class="input-daterange input-group">
+                        <input type="number" class="form-control m-input" id="startAge" placeholder="Desde" style="visibility:hidden;">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                        </div>
+                        <input type="number" class="form-control m-input" id="endAge" placeholder="Hasta" style="visibility:hidden;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+
+            <div class="row">
+                <div class="col-lg-12" style="text-align:right; margin-bottom:15px;">
+                    <button class="btn btn-primary m-btn m-btn--icon" id="search">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Buscar</span>
+                        </span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Limpiar</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered" id="ajax_data"></table>
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/report_student_personal_information/index.js"></script>
+}
+

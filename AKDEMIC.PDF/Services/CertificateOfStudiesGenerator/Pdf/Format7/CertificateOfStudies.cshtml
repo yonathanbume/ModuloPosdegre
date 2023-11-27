@@ -1,0 +1,368 @@
+﻿@using AKDEMIC.CORE.Extensions;
+@using Microsoft.AspNetCore.Hosting;
+@inject IWebHostEnvironment _webHostEnvironment
+
+@model AKDEMIC.PDF.Services.CertificateOfStudiesGenerator.Models.CertificateOfStudiesModel
+@{
+    Layout = null;
+    var counter = 1;
+    var rowspan = 1;
+    var maxTableHigth_1 = 2044;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificado de Estudios</title>
+
+    <link href="@(System.IO.Path.Combine(_webHostEnvironment.WebRootPath, @"css/views/certificate_studies/report_fonts.css"))" rel="stylesheet" type="text/css" />
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        body {
+            font-family: "DejaVu Sans Condensed";
+        }
+
+        .main-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .footer-table {
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table > tbody > tr {
+            page-break-inside: avoid !important;
+        }
+
+        tbody {
+            font-size: 12px !important;
+        }
+
+        .header {
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+            .header .university-title {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+            }
+
+            .header .university-title2 {
+                font-size: 25px !important;
+                margin: 0px !important;
+                padding-top: 5px !important;
+                padding: 0px !important;
+                font-weight: normal !important;
+            }
+
+            .header .resolution-title {
+                font-size: 15px !important;
+                font-weight: normal !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 5px !important;
+            }
+
+            .header .office-title {
+                font-size: 11px !important;
+            }
+
+            .header .date-title {
+                font-size: 11px !important;
+                font-weight: normal !important;
+            }
+
+            .header .header-title {
+                font-size: 18px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+
+        .table-general-detail {
+            width: 100%;
+            text-align: left;
+            font-weight: normal;
+        }
+
+            .table-general-detail td {
+                padding: 0px !important;
+                padding-top: 3px !important;
+                padding-bottom: 0px !important;
+                margin: 0px !important;
+            }
+
+
+        .report-name {
+            font-size: 19px !important;
+            /*color: red;*/
+            font-weight: bold;
+            height: 50px !important;
+        }
+
+        .act-number {
+            font-weight: bold;
+            font-size: 14px !important;
+        }
+
+        .bordered-header {
+            padding: 4px !important;
+            font-size: 15px !important;
+            font-weight: bold;
+            border: 1px solid;
+        }
+
+        .bordered-detail {
+            font-size: 12px !important;
+            height: 20px !important;
+            border: 1px solid black;
+        }
+
+        .bordered-detail-empty {
+            height: 20px !important;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            background-color: white;
+        }
+
+        .borderder-detail-empty-header {
+            border-top: 2px solid white;
+        }
+
+        .border-none {
+            border: 0px !important;
+            background-color: white;
+        }
+
+        .no-signature {
+            width: 5%;
+            border: 4px solid white;
+        }
+
+        .signature {
+            /*color: red;*/
+            font-size: 11px !important;
+            height: 30px !important;
+            border-top: 1px solid black;
+        }
+
+        .td-qr {
+            text-align: center;
+            height: 70px !important;
+        }
+
+            .td-qr img {
+                max-height: 40px;
+                width: 250px;
+            }
+
+        .table-statistics {
+            margin-top: 10px !important;
+            width: 100% !important;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+            .table-statistics td {
+                font-size: 14px !important;
+                border: 1px solid black;
+                padding: 6px !important;
+            }
+
+            .table-statistics .header-stat {
+                background-color: lightgray;
+            }
+
+        .rotate {
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            width: 1.5em;
+        }
+
+            .rotate div {
+                -moz-transform: rotate(-90.0deg);
+                -o-transform: rotate(-90.0deg);
+                -webkit-transform: rotate(-90.0deg);
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+                -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+                margin-left: -15em;
+                margin-right: -15em;
+            }
+    </style>
+</head>
+<body>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th colspan="3">
+                    <table class="table-general-detail">
+                        <tr>
+                            <td width="5%">
+                                <img class="image-escudo" src="@Environment.CurrentDirectory/wwwroot/images/escudo.png" width="60" />
+                            </td>
+                            <td width="80%" style="font-size:32px !important; font-weight:bold !important; text-align:center !important;">
+                                @AKDEMIC.CORE.Helpers.ConstantHelpers.Institution.Names[AKDEMIC.CORE.Helpers.ConstantHelpers.GENERAL.Institution.Value].ToUpper()
+                            </td>
+                            <td width="15%" rowspan="4">
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <div style="width:180px; height:200px !important; border:1px solid;"></div>
+                                            Código : @Model.Student.UserName
+                                        </td>
+                                        <td>&emsp;</td>
+                                        <td class="rotate">
+                                            <div id="th_rowspan_content">
+                                                @Model.UserProcedureCode
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="font-weight:bold !important; font-size:16px !important; text-align:center !important;">
+                                DIRECCIÓN DE SERVICIOS ACADÉMICOS Y REGISTRO CENTRAL
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="font-weight:bold !important; font-size:30px !important; text-align:center !important; padding-top:5px !important; padding-bottom:5px !important;">
+                                CERTIFICADO DE ESTUDIOS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="font-weight:bold !important; font-size:16px !important; text-align:center !important; padding-bottom:5px !important;">
+                                DEPURADO
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="3">
+                                <strong>Don(ña):</strong>&emsp;<span style="font-weight:normal !important;">@Model.Student.FullName</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="3">
+                                <strong>Ha realizado estudios en:</strong>&emsp;<span style="font-weight:normal !important;">@Model.Student.Career</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="3">
+                                <strong>FACULTAD DE @Model.Student.Faculty.ToUpper()</strong>
+                            </th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr class="bordered-header">
+                <th class="bordered-header" style="border-right:0px !important;">ASIGNATURA</th>
+                <th class="bordered-header" style="border-left:0px !important; border-right:0px !important;" colspan="3">EVALUACIÓN</th>
+                <th class="bordered-header" style="border-left:0px !important;">CRÉDITOS</th>
+            </tr>
+        </thead>
+        <tbody style="border:1px solid !important;">
+            @foreach (var ayc in Model.AcademicYearCourses)
+            {
+                <tr>
+                    <td colspan="5" style="text-decoration:underline;">@(ayc.AcademicYear == 1 ? "PRIMER" : AKDEMIC.CORE.Helpers.ConstantHelpers.ACADEMIC_YEAR.TEXT[ayc.AcademicYear].ToUpper()) AÑO </td>
+                </tr>
+                @foreach (var item in ayc.Courses)
+                {
+                    <tr>
+                        <td style="padding-left:5px !important;">@item.Name</td>
+                        <td>@item.Grade</td>
+                        <td>(@item.GradeText)</td>
+                        <td>@(item.DateByConfiguration.HasValue ? $"{string.Join("", AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[item.DateByConfiguration.Value.Month].ToUpper().Skip(3).ToList())}-{item.DateByConfiguration.Value.Day}" : "")</td>
+                        <td>@item.Credits</td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot style="font-size:12px !important; border:1px solid !important;">
+            <tr>
+                <td colspan="1">
+                    Elaborado por @Model.User
+                </td>
+                <td colspan="4" style="text-align:right !important;">
+                    @AKDEMIC.CORE.Helpers.GeneralHelpers.GetInstitutionLocation(), @DateTime.UtcNow.ToDefaultTimeZone().Day de @AKDEMIC.CORE.Helpers.ConstantHelpers.MONTHS.VALUES[DateTime.UtcNow.ToDefaultTimeZone().Month] del @DateTime.UtcNow.ToDefaultTimeZone().Year
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" height="60px">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <table width="100%">
+                        <tr>
+                            <td width="10%">&emsp;</td>
+                            <td width="35%" style="border-top:1px solid black; text-align:center !important;">
+                                Director Dirección de Servicios Académicos y Registro Central
+                            </td>
+                            <td width="10%"></td>
+                            <td width="35%" style="border-top:1px solid black; text-align:center !important;">
+                                Vicerrectora Académica
+                            </td>
+                            <td width="10%">&emsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" height="60px">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <table width="100%">
+                        <tr>
+                            <td width="35%">&emsp;</td>
+                            <td width="30%" style="border-top:1px solid black; text-align:center !important;">
+                                Secretario General
+                            </td>
+                            <td width="35%">&emsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
+
+
+
+
+
+
+
+

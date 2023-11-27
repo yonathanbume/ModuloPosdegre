@@ -1,0 +1,124 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.Report_eventViewModels
+@model ReportEventViewModel
+@{
+    ViewData["Title"] = "Reporte de eventos";
+    ViewData["SubTitle"] = "Reporte del evento";
+    ViewData["Breadcrumbs"] = new[] {
+        new BreadcrumbViewData { Name = "Lista de eventos"  , Area="Admin",Controller="ReportEvent", Action="Index"},
+new BreadcrumbViewData { Name = ViewData["SubTitle"].ToString() }
+
+};
+    ViewData["BackUrl"] = Url.Action("Index", "ReportEvent", new { area = "Admin" });
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--responsive-mobile">
+        <input asp-for="Id" type="hidden" />
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información del evento
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Nombre : </b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Name</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Descripci&oacute;n: </b></label>
+                </div>
+                <div class="col-sm-2">
+                    <label>@Model.Description</label>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-2">
+                    <label><b>Lugar :</b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.Place</label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Costo General:</b></label>
+                </div>
+                <div class="col-sm-2">
+                    <label>@Model.GeneralCost</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label><b>Periodo de inscripci&oacute;n:</b></label>
+                </div>
+                <div class="col-sm-5">
+                    <label>@Model.StartEndDate</label>
+                </div>
+
+                <div class="col-sm-2">
+                    <label><b>Fecha del Evento : </b></label>
+                </div>
+                <div class="col-sm-2">
+                    <label>@Model.EventDate</label>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height ">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Reporte de asistencia
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div id="chart_div_report_assitence"></div>
+                    <div id="chart_div_report_assitence_no_data" style="text-align:center;width:100%">No hay datos disponibles</div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height ">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Reporte de costo
+                            </h3>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="m-portlet__body">
+                    <div id="chart_div_cost"></div>
+                    <div id="chart_div_cost_no_data" style="text-align:center;width:100%">No hay datos disponibles</div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/report_event/detail.js"></script>>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+}

@@ -1,0 +1,80 @@
+﻿@model AKDEMIC.INTRANET.Areas.CareerDirector.Models.StudentInformation.StudyRecordViewModel
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Certificado de Estudios</title>
+</head>
+
+<body style="font-size: 18px;">
+    <div class="A4">
+        <table>
+            <tr>
+                <td width="60x" style="padding-right: 10px">
+                    <img class="logo-university" src="@Model.PathLogo" style="width: 100%">
+                </td>
+                <td>
+                    <label style=" font-size: 20px;
+            font-weight: 700;
+            text-align: center;">@Model.University.ToUpper()</label>
+        </td>
+    </tr>
+</table>
+
+<br />
+<br />
+<br />
+
+<div style="padding: 0 70px;">
+
+    <h1 style="text-align: center">Constancia de Estudio</h1>
+
+    <div class="head-content">
+        <label class="university-information">
+            La FACULTAD DE @Model.Faculty.ToUpper() DE LA @Model.University, deja expresa:
+        </label>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <h2 style="text-align: center">CONSTANCIA:</h2>
+
+    <br />
+
+    <p style="text-align: justify">
+        &emsp;&emsp;&emsp;&emsp;Que, el(la) estudiante(a) <b>@Model.Student.ToUpper()</b>  de la Facultad de
+        @Model.Faculty, con código universitario <b>Nº @Model.Code</b> se encuentra matriculado(a) en
+        el @*@Model.AcademicYear Ciclo del *@Semestre Académico @Model.Term según obran en los archivos de
+        la Facultad.
+    </p>
+
+    <br />
+
+    <p style="text-align: justify">
+        Se expide la presente constancia, a solicitud del interesado, para los fines que
+        estime conveniente.
+    </p>
+
+    <br />
+
+    <p style="text-align: right">
+        @Model.Location, @Model.Date
+    </p>
+</div>
+
+</div>
+<div class="document-footer" style="position: absolute;bottom: -530px;right:0"><div class="pull-right">C&Oacute;DIGO:@Model.PageCode</div></div>
+</body>
+
+</html>

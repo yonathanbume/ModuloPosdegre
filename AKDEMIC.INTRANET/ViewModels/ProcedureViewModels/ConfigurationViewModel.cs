@@ -1,0 +1,14 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+namespace AKDEMIC.INTRANET.ViewModels.ProcedureViewModels
+{
+    public class ConfigurationViewmodel
+    {
+        public bool EnableTupa { get; set; }
+        public bool TupaReadOnly { get; set; }
+        public byte? PaymentType { get; set; }
+        public byte? PreviousPaymentType { get; set; }
+    }
+}

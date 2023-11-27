@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Asistente Académico";
+    ViewBag.SubTitle = "Asistente Académico";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewBag.Title }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Asistente Académico
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Facultad</label>
+                                <select class="form-control m-input m-select2 select2-faculties">
+                                    <option value="0">Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>Escuela</label>
+                                <select class="form-control m-input m-select2 select2-careers">
+                                    <option value="0">Todas</option>
+                                </select>
+                            </div>
+                            @*<div class="form-group m-form__group col-xl-3">
+                                <label>Curso</label>
+                                <select class="form-control m-input m-select2 select2-courses">
+                                    <option value="0">Todas</option>
+                                </select>
+                            </div>*@
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        @*<a asp-action="Add" class="btn btn-primary m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-plus"></i>
+                            <span>Nuevo Alumno</span>
+                        </span>
+                    </a>*@
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="m-datatable"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/academicAssistant/academicAssistant/index.js"></script>
+}

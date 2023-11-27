@@ -1,0 +1,793 @@
+﻿@inject AKDEMIC.SERVICE.Services.Generals.Interfaces.IConfigurationService _configurationService
+
+@{
+    ViewData["Title"] = "Reportes de Estudiantes";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewData["Title"] }
+    };
+
+    var evaluations_by_unit = Boolean.Parse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Helpers.ConstantHelpers.Configuration.TeacherManagement.EVALUATIONS_BY_UNIT));
+}
+
+@section Styles {
+    <style>
+        a {
+            text-decoration: none !important;
+        }
+
+            a:hover .m-portlet {
+                box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.7);
+            }
+
+            a i {
+                font-size: 120px;
+            }
+    </style>
+}
+
+<div class="m-content">
+    <h4 class="text-center">@ViewData["Title"].ToString().ToUpper()</h4>
+    <br />
+    <div class="row">
+
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) ||
+        User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) ||
+        User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) ||
+        User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF) ||
+        User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+        {
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD))
+            {
+
+                <div class="col-md-3">
+                    <a asp-action="GraduatedStudents" asp-controller="IntranetReport" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estudiantes Egresados y por Egresar</h4>
+                                <span>Reportes de estudiantes egresados y por egresar</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ConditionedStudent" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estudiantes desaprobados por Nro de intento</h4>
+                                <span>Relaci&oacute;n de estudiantes condicionados por 2da, 3ra matr&iacute;cula seg&uacute;n escuela profesional</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN))
+            {
+
+                @if (evaluations_by_unit)
+                {
+                    <div class="col-md-3">
+                        <a asp-action="Index" asp-controller="StudentAveragePerUnit" asp-area="Report">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Reporte de promedios por unidad</h4>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+           
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="AdmittedReport" asp-area="AcademicRecord">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Ingresantes por escuela y modalidad</h4>
+                                <span>N&uacute;mero de ingresantes por escuela profesional y modalidad de ingreso</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ResignationStudent" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Reporte de Estudiantes con Renuncia</h4>
+                                <span>Relaci&oacute;n de estudiantes que han hecho una renuncia a su escuela profesional</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="WithdrawnStudent" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Reporte de Estudiantes con Retiro de Ciclo</h4>
+                                <span>Relaci&oacute;n de estudiantes con retiro de ciclo agrupados por periodo acad&eacute;mico.</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                @if (ConstantHelpers.GENERAL.Institution.Value != ConstantHelpers.Institution.UNJBG)
+                {
+                    <div class="col-md-3">
+                        <a asp-action="EnabledSections" asp-controller="ReportSubstituteExam" asp-area="Admin">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Secciones habilitadas para sustitutorio</h4>
+                                    <span>N&uacute;mero de estudiantes desaprobados por curso y secci&oacute;n</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="StudentAverageFinalGrade" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Promedio ponderado y aritm&eacute;tico</h4>
+                                <span>Relaci&oacute;n de estudiantes con promedio ponderados y aritm&eacute;tico por escuela profesional y ciclo</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="CourseGradeStatistic" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Rendimiento Académico</h4>
+                                <span>Rendimiento Académico por escuela profesional y plan de estudios</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="StudentAttendance" asp-controller="IntranetReport" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Reporte de Asistencia de Estudiantes</h4>
+                                <span>Reportes de Asistencia de Estudiantes</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="TutoredStudentProgress" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Tutorados</h4>
+                                <span>Relaci&oacute;n de tutorados por escuela profesional y tutor</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="AccessSystemReport" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Registro de acceso al sistema</h4>
+                                <span>Relaci&oacute;n de registro de acceso al sistema por tipo de usuario y fechas</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD_STAFF))
+            {
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ReportGraduate" asp-area="AcademicRecord">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Reporte de Grados</h4>
+                                <span>@*Relaci&oacute;n de estudiantes con promedio ponderados y aritm&eacute;tico por carrera profesional y ciclos*@</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @if (User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_RECORD))
+                {
+                    <div class="col-md-3">
+                        <a asp-action="ReportByTypeAndStatus" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Reporte de Solicitudes por Tipo y Estado</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a asp-action="ReportFinishedPending" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Reporte de Solicitudes por Mes</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <a asp-action="ReportByCareer" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Reporte de Solicitudes por escuela</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a asp-action="ReportByAcademicRecord" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Reporte por Usuario Asignado</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a asp-action="ReportObserved" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Reporte de Trámites Observados</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.GENERAL_ACADEMIC_DIRECTORATE))
+            {
+
+                @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN))
+                {
+                    <div class="col-md-3">
+                        <a asp-action="Index" asp-controller="SyllabusDownloadReport" asp-area="Report">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Descarga de Sílabos</h4>
+                                    <span>Relación de estudiantes que han descargado el sílabo de sus cursos matriculados.</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ReportApproved" asp-area="Admin">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estudiantes aprobados y desaprobados por escuela profesional</h4>
+                                <span>Relaci&oacute;n de estudiantes aprobados y desaprobados por escuela profesional </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ReportApprovedCourse" asp-area="Admin">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estudiantes aprobados y desaprobados por curso</h4>
+                                <span>Relaci&oacute;n de estudiantes aprobados y desaprobados por escuela profesional y cursos</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ReportDisapprovedStudent" asp-area="Admin">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estudiantes con promedio desaprobado</h4>
+                                <span>Relaci&oacute;n de estudiantes con promedio desaprobados seg&uacute;n periodo y escuela profesional </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ReportStudentsByTerm" asp-area="Admin">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Ciclos matriculados por estudiantes</h4>
+                                <span>Relaci&oacute;n de estudiantes matriculados por escuela profesional y ciclo</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            }
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN))
+            {
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="DisapprovedStudent" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estudiantes en cursos desaprobados</h4>
+                                <span>Reporte de estudiantes matriculados en cursos desaprobados</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="DisapprovedCourseByStudent" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Cursos desaprobados por estudiante</h4>
+                                <span>Reporte de la cantidad de cursos desaprobados por cada estudiante</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            }
+
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.INTRANET_ADMIN))
+            {
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ExoneratedPayment" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Pagos Exonerados</h4>
+                                <span>Reporte de pagos exonerados a estudiantes</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="EnrolledStudentPaymentStatus" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estado de Pago</h4>
+                                <span>Listado de estudiantes matriculados y el estado actual de sus deudas</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="DisapprovedStudentByUnit" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Desaprobados por Unidad</h4>
+                                <span>Listado de estudiantes y cursos desaprobados por unidad en el periodo actual</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+
+        @if (
+        User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) ||
+        User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY) ||
+        User.IsInRole(ConstantHelpers.ROLES.DEAN) ||
+        User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY) ||
+        User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR) ||
+        User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR) ||
+        User.IsInRole(ConstantHelpers.ROLES.VICERRECTOR))
+        {
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_DEPARTMENT_DIRECTOR))
+            {
+                @if (evaluations_by_unit)
+                {
+                    <div class="col-md-3">
+                        <a asp-action="Index" asp-controller="StudentAveragePerUnit" asp-area="Report">
+                            <div class="m-portlet m-portlet--rounded text-center">
+                                <div class="m-portlet__body">
+                                    <div class="text-primary">
+                                        <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                    </div>
+                                    <h4>Reporte de promedios por unidad</h4>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.DEAN) || User.IsInRole(ConstantHelpers.ROLES.DEAN_SECRETARY))
+            {
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="ReportStudentsByTerm" asp-area="Admin">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Ciclos matriculados por estudiantes</h4>
+                                <span>Relaci&oacute;n de estudiantes matriculados por escuela profesional y ciclo</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+
+            <div class="col-md-3">
+                <a asp-action="StudentAttendance" asp-controller="IntranetReport" asp-area="Report">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte de Asistencia de Estudiantes</h4>
+                            <span>Reportes de Asistencia de Estudiantes</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_SECRETARY) || User.IsInRole(ConstantHelpers.ROLES.VICERRECTOR))
+            {
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="CourseGradeStatistic" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Estad&iacute;stica de notas</h4>
+                                <span>Estad&iacute;stica de notas por escuela profesional y plan de estudios</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-action="Index" asp-controller="StudentAverageFinalGrade" asp-area="Report">
+                        <div class="m-portlet m-portlet--rounded text-center">
+                            <div class="m-portlet__body">
+                                <div class="text-primary">
+                                    <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                                </div>
+                                <h4>Promedio ponderado y aritm&eacute;tico</h4>
+                                <span>Relaci&oacute;n de estudiantes con promedio ponderados y aritm&eacute;tico por escuela profesional y ciclo</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="ReportApproved" asp-area="CareerDirector">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estudiantes aprobados y desaprobados por escuela profesional</h4>
+                            <span>Relaci&oacute;n de estudiantes aprobados y desaprobados por escuela profesional </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="ReportApprovedCourse" asp-area="Admin">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estudiantes aprobados y desaprobados por curso</h4>
+                            <span>Relaci&oacute;n de estudiantes aprobados y desaprobados por escuela profesional y cursos</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES))
+        {
+            <div class="col-md-3">
+                <a asp-action="StudentAttendance" asp-controller="IntranetReport" asp-area="Report">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte de Asistencia de Estudiantes</h4>
+                            <span>Reportes de Asistencia de Estudiantes</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="ReportStudentsByTerm" asp-area="Admin">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Ciclos matriculados por estudiantes</h4>
+                            <span>Relaci&oacute;n de estudiantes matriculados por escuela profesional y ciclo</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="ReportGraduate" asp-area="AcademicRecord">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte de Grados</h4>
+                            <span>@*Relaci&oacute;n de estudiantes con promedio ponderados y aritm&eacute;tico por carrera profesional y ciclos*@</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="AdmittedReport" asp-area="AcademicRecord">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Ingresantes por escuela y modalidad</h4>
+                            <span>N&uacute;mero de ingresantes por escuela profesional y modalidad de ingreso</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="ReportByTypeAndStatus" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte de Solicitudes por Tipo y Estado</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="ReportFinishedPending" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte de Solicitudes por Mes</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-md-3">
+                <a asp-action="ReportByCareer" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte de Solicitudes por escuela</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="ReportByAcademicRecord" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte por Usuario Asignado</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="ReportObserved" asp-controller="ReportRequest" asp-area="AcademicRecord">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Reporte de Trámites Observados</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="ReportApproved" asp-area="Admin">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estudiantes aprobados y desaprobados por escuela profesional</h4>
+                            <span>Relaci&oacute;n de estudiantes aprobados y desaprobados por escuela profesional </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="ReportApprovedCourse" asp-area="Admin">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estudiantes aprobados y desaprobados por curso</h4>
+                            <span>Relaci&oacute;n de estudiantes aprobados y desaprobados por escuela profesional y cursos</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="ReportDisapprovedStudent" asp-area="Admin">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estudiantes con promedio desaprobados</h4>
+                            <span>Relaci&oacute;n de estudiantes con promedio desaprobados seg&uacute;n periodo y escuela profesional </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+
+        @if (User.IsInRole(ConstantHelpers.ROLES.INSTITUTIONAL_WELFARE))
+        {
+            <div class="col-md-3">
+                <a asp-action="Index" asp-controller="EnrolledStudentPaymentStatus" asp-area="Report">
+                    <div class="m-portlet m-portlet--rounded text-center">
+                        <div class="m-portlet__body">
+                            <div class="text-primary">
+                                <i class="la la-bar-chart" style="font-size: 120px;"></i>
+                            </div>
+                            <h4>Estado de Pago</h4>
+                            <span>Listado de estudiantes matriculados y el estado actual de sus deudas</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('a').hover(
+            function () {
+                $(this).children(":first").children(":first").addClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-primary');
+            },
+            function () {
+                $(this).children(":first").children(":first").removeClass('bg-primary text-white');
+                $(this).children(":first").children(":first").children(":first").removeClass('text-white');
+                $(this).children(":first").children(":first").children(":first").addClass('text-primary');
+            }
+        )
+    </script>
+}

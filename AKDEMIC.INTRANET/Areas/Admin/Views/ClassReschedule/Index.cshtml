@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["Title"] = "Reprogramación de Clases";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Reprogramación" }
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Listado de Reprogramaciones solicitadas
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-lg-3">
+                                <label>Fecha de Inicio</label>
+                                <div class="input-group">
+                                    <input id="startSearchDate" placeholder="Fecha de Inicio" class="form-control datepicker-input" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-lg-3">
+                                <label>Fecha de Fin</label>
+                                <div class="input-group">
+                                    <input id="endSearchDate" placeholder="Fecha de Fin" class="form-control datepicker-input" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-lg-3">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="info_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Detalles
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group m-form__group col-lg-12">
+                        <label>Docente</label>
+                        <div class="input-group">
+                            <input id="teacher" placeholder="Docente" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group m-form__group col-lg-12">
+                        <label>Curso</label>
+                        <div class="input-group">
+                            <input id="course" placeholder="Curso" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label>Secci&oacute;n</label>
+                        <div class="input-group">
+                            <input id="section" placeholder="Curso" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label>¿Es permanente?</label>
+                        <div class="input-group">
+                            <input id="isPermanent" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="hidden" id="Id" />
+                    <div class="form-group m-form__group col-lg-6">
+                        <label>Fecha de Inicio actual</label>
+                        <div class="input-group">
+                            <input id="startDateActual" placeholder="Fecha de Inicio actual" class="form-control datepicker-input" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label>Fecha de Fin actual</label>
+                        <div class="input-group">
+                            <input id="endDateActual" placeholder="Fecha de Fin actual" class="form-control datepicker-input" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label>Fecha de Inicio propuesta</label>
+                        <div class="input-group">
+                            <input id="startDate" placeholder="Fecha de Inicio propuesta" class="form-control datepicker-input" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label>Fecha de Fin propuesta</label>
+                        <div class="input-group">
+                            <input id="endDate" placeholder="Fecha de Fin propuesta" class="form-control datepicker-input" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label>¿Es permanente?</label>
+                        <div class="input-group">
+                            <input id="isPermanent" class="form-control" />
+                        </div>
+                    </div>
+                </div>*@
+
+                @*<div class="form-group m-form__group row">
+            <div class="m-form__group-sub col-md-12 col-lg-12 col-xs-12">
+                <input type="type" name="" value="" />
+            </div>
+        </div>*@
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-md-12 col-lg-12 col-xs-12 text-center">
+                        <button class="btn btn-success text-center btn-aceptar" type="button">
+                            <span><i class="la la-check"></i>Aceptar</span>
+                        </button>
+                        <button class="btn btn-danger text-center btn-denegar" type="button">
+                            <span><i class="la la-times"></i>Denegar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/modules/select.js"></script>
+    <script src="~/js/areas/admin/classreschedule/index.js" asp-append-version="true"></script>
+}

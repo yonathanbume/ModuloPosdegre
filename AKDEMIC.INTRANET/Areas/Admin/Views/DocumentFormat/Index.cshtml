@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Constancias";
+    ViewData["Breadcrumbs"] = new[] {
+    new BreadcrumbViewData { Name = (string)ViewBag.Title }
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+
+                <div class="row">
+                    <div class="col-xl-9 order-1 order-xl-2">
+                    </div>
+                    <div class="col-xl-3 order-2 order-xl-2  m--align-right">
+                        <button type="button" class="btn btn-primary m-btn m-btn--icon" id="btn_add_document_format">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Crear Constancia</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    @*         <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                        <div class="form-group m-form__group col-xl-4">
+                        <div class="m-input m-input-icon m-input-icon--left">
+                        <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search" autocomplete="off">
+                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                        <span><i class="la la-search"></i></span>
+                        </span>
+                        </div>
+                        </div>
+                        </div>
+                        </div>*@
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped table-bordered" id="document_format_datatable"></table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="document_format_modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar plantilla</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="document_format_form">
+                <div class="modal-body tab-content m-portlet__body">
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Constancia</label>
+                            <select name="Id" class="form-control m-select2" required>
+                                @foreach(var item in AKDEMIC.CORE.Helpers.ConstantHelpers.RECORDS.CONSTANCIES_VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    @*
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Tipo</label>
+                            <select name="Type" class="form-control m-select2" required></select>
+                        </div>
+                    </div>*@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/areas/admin/document_format/index.js" asp-append-version="true"></script>
+}

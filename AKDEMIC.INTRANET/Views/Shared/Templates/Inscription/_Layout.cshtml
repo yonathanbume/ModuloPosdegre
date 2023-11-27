@@ -1,0 +1,93 @@
+﻿@{
+    var institutionName = GeneralHelpers.GetInstitutionAbbreviation();
+    var projectName = AKDEMIC.INTRANET.Helpers.ConstantHelpers.Project.NAME;
+}
+
+<!DOCTYPE html>
+<html>
+<!-- begin::Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>@projectName | @institutionName</title>
+    <meta name="description" content="@projectName - @institutionName">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="~/images/themes/@GeneralHelpers.GetTheme()/favicon.ico" />
+    <!--begin::Web font -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <!--end::Web font -->
+    <!--begin::Base Styles -->
+    <environment include="Development">
+        <link href="~/assets/css/vendors.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="~/css/custom.css" rel="stylesheet" type="text/css" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/bundle.min.css" rel="stylesheet" type="text/css" />
+    </environment>
+    <link href="~/css/themes/@GeneralHelpers.GetTheme()/default.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+    <!--end::Base Styles -->
+</head>
+<!-- end::Head -->
+<!-- end::Body -->
+<body class="m-page--fluid m--skin- m-page--loading-enabled m-page--loading m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <!-- begin::Page loader -->
+    <div class="m-page-loader m-page-loader--base">
+        <div class="m-spinner m-spinner--brand"></div>
+    </div>
+    <!-- end::Page Loader -->
+    <!-- begin:: Page -->
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--tablet-and-mobile m-grid--hor-tablet-and-mobile" style="background-image: url(/images/login-bg.png); background-size:cover">
+            <div class="m-grid__item m-grid__item--order-tablet-and-mobile-2 custom">
+                <div class="m-stack m-stack--hor m-stack--desktop">
+                    <div class="m-stack__item m-stack__item--fluid">
+                        @*<div class="mx-auto m--margin-top-20 m--margin-left-40">
+                                <img alt="" src="~/images/akdemic/logo-alt.png" style="width: 150px" />
+                            </div>*@
+
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Page -->
+    <!--begin::Base Scripts -->
+    <environment>
+        <script src="~/assets/js/vendors.bundle.js" type="text/javascript"></script>
+        <script src="~/assets/js/scripts.bundle.js" type="text/javascript"></script>
+        <script src="~/assets/plugins/datatables/datatables.bundle.js" type="text/javascript"></script>
+        <script src="~/js/custom.mdatatable.js" type="text/javascript"></script>
+        <script src="~/js/custom.mportlet.js" type="text/javascript"></script>
+        <script src="~/js/custom.js" type="text/javascript"></script>
+    </environment>
+    <environment>
+        <script src="~/js/bundle.min.js" type="text/javascript"></script>
+    </environment>
+    <script>
+        _app.constants.url.root = '@Url.Content("~")';
+    </script>
+    <script src="~/js/lib/donetyping/jquery.donetyping.js"></script>
+    <script src="~/js/helpers.js"></script>
+    <!--end::Base Scripts -->
+    <!--begin::Page Snippets -->
+    @RenderSection("Scripts", required: false)
+    <!--end::Page Snippets -->
+    <!-- begin::Page Loader -->
+    <script>
+        $(window).on('load', function () { $('body').removeClass('m-page--loading'); });
+    </script>
+    <!-- end::Page Loader -->
+</body>
+<!-- end::Body -->
+</html>
+

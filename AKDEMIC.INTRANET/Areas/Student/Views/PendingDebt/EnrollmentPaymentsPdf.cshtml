@@ -1,0 +1,128 @@
+﻿@model AKDEMIC.INTRANET.Areas.Student.Models.PendingDebtsViewModels.ReportPdfViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 14px;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+        }
+
+            table tr {
+                page-break-inside: avoid;
+            }
+
+        .border {
+            border: 1px solid black;
+            padding: 3px;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div style="position:relative; height: 60px; padding-bottom: 30px;">
+        <img style="top: 0; left: 0; height: 60px;width:60px; position: absolute" src="@Model.Image" />
+        <div style="text-align: center;">
+
+            <h2 style="margin:0px;text-transform: uppercase; font-weight: 500;">@GeneralHelpers.GetInstitutionName()</h2>
+
+            <h2 style="margin:0px; font-weight: 500;"> ESCALA DE MATR&Iacute;CULA </h2>
+        </div>
+
+    </div>
+
+    <table>
+        <tr>
+            <td width="200px"><b>Apellidos y Nombres :</b></td>
+            <td>@Model.UserName - @Model.FullName</td>
+        </tr>
+
+        <tr>
+            <td><b>Escuela Profesional :</b></td>
+            <td>@Model.Career</td>
+        </tr>
+
+        <tr>
+            <td><b>Semestre Acad. :</b></td>
+            <td>@Model.Term</td>
+        </tr>
+    </table>
+    <br />
+    <div class="table-container">
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="background-color:lightgray" class="border">NRO</th>
+                    <th style="background-color:lightgray" class="border">COD.</th>
+                    <th style="background-color:lightgray" class="border">CONCEPTOS</th>
+                    <th style="background-color:lightgray" class="border">MONTO (S/.)</th>
+                </tr>
+            </thead>
+            <tbody style="text-align:center;">
+                @for (int i = 0; i < Model.Payments.Count(); i++)
+                {
+                    <tr>
+                        <td class="border">@(i + 1)</td>
+                        <td class="border">@Model.Payments[i].Code</td>
+                        <td class="border" style="text-align:left">@Model.Payments[i].Description</td>
+                        <td class="border" style="text-align: right;">@Model.Payments[i].Amount.ToString("F2")</td>
+                    </tr>
+                }
+
+                @if (Model.Payments.Count == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="border">No se encontraron deudas pendientes.</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr style="background-color:lightgray;">
+                    <td colspan="3" class="border" style="text-align: center;">TOTAL A PAGAR : </td>
+                    <td class="border" style="text-align: right;">S/. @Model.Payments.Sum(x => x.Amount).ToString("F2")</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    @if (ConstantHelpers.GENERAL.Institution.Value == ConstantHelpers.Institution.UNAMAD)
+    {
+        <div>
+            <ul>
+                <li>Entidad Bancaria: <span style="font-weight: bold"> BANCO DE LA NACI&Oacute;N</span></li>
+                <li>N° Transacci&oacute;n: <span style="font-weight: bold"> 3910 </span></li>
+            </ul>
+        </div>
+    }
+
+</body>
+</html>

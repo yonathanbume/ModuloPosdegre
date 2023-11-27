@@ -1,0 +1,52 @@
+﻿@{ 
+    Layout = "~/Views/Shared/Templates/Default/_Layout2.cshtml";
+
+}
+
+
+<div class="col-md-12" style="margin-top: 35px;">
+    <div class="">        
+        <!--begin::Form-->
+        <form id="form" method="post">
+            <div class="m-portlet__body">               
+                <div class="row col-12">
+                    <div class="col-6">
+                        <div class="form-group m-form__group">
+                            <label for="userName">Introduce tu código de estudiante</label>
+                            <div class="input-group">
+                                <input type="text" name="userName" class="form-control m-input" placeholder="Código de estudiante">
+                                <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-group"></i></span></div>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="col-6" style=" margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary"><i class="la la-search"></i></button>
+                    </div>
+                </div>
+                        
+            </div>
+       
+        </form>
+        <!--end::Form-->
+    </div>
+</div>
+
+<div class="col-md-12" id="rendering" style="display:none;">
+    <div class="m-portlet__body">
+        <div class="row col-12">
+            <div class="col-6">
+                <div class="form-group m-form__group">
+                    <label for="userName">Estado:</label> <div style="display:inline-block" id="message">
+                    </div>                 
+                </div>
+            </div>         
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/views/home/diplomatracking.js"></script>
+    
+}

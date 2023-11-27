@@ -1,0 +1,144 @@
+﻿@using AKDEMIC.INTRANET.Areas.Admin.Models.SurveyViewModels
+
+@model List<SurveyItemQuestionViewModel>
+@{
+    var count = 1;
+}
+
+@foreach (var item in Model)
+{
+
+
+    <div class="m-portlet m-portlet--primary m-portlet--head-solid-bg m-portlet--bordered m-portlet--head-sm m-year-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon">
+                        <i class="flaticon-folder"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Seccion: @item.Title
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        @if (!item.Sended)
+                        {
+                            <button data-id="@item.Id" class="btn btn-info btn-sm m-btn m-btn--icon btn-edit-section">
+                                <span>
+                                    <i class="la la-edit"></i>
+                                    <span>Editar Seccion</span>
+                                </span>
+                            </button>
+                        }
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        @if (!item.Sended)
+                        {
+                            <button data-id="@item.Id" class="btn btn-success btn-sm m-btn m-btn--icon btn-add-question">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Nueva Pregunta</span>
+                                </span>
+                            </button>
+                        }
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        @if (!item.Sended)
+                        {
+                            <a href="javascript:;" data-id="@item.Id" class="m-portlet__nav-link btn btn-danger m-btn m-btn--icon m-btn--icon-only delete-item">
+                                <i class="la la-trash"></i>
+                            </a>
+                        }
+                    </li>
+                </ul>
+            </div>
+        </div>
+        @if (item.IsLikert) 
+        { 
+            <div class="m-stack m-stack--ver m-stack--desktop">
+                <div class="col-lg-12 m--align-center" style="background-color: #e0e0e0;padding: 16px;font-weight: bold;">
+                    ESCALA VALORATIVA
+                </div>
+            </div>
+            <div class="m-stack m-stack--ver m-stack--desktop m-stack--demo">
+                @foreach (var likerScale in ConstantHelpers.SURVEY_LIKERT.RATING_SCALE.LIKERT.OrderByDescending(x => x.Key))
+                {
+                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                        <div class="row">
+                            <span class="w-100 text-center">
+                                @likerScale.Value
+                            </span>
+                        </div>
+                    </div>
+                }                
+            </div>
+        }
+        <div class="m-portlet__body">
+            <div class="row">
+                @foreach (var question in item.Questions)
+                {
+
+                    <div class="col-md-@(item.IsLikert ? 12:6)">
+                        <div class="form-group m-form__group m--margin-bottom-25">
+                            <label>@count .-  @question.Description </label>
+                            <div style="float: right">
+                                @if (!item.Sended)
+                                {
+                                    <a style="color:#1b76d6;cursor: pointer;" class="edit" data-id="@question.Id"><i class="la la-edit"></i></a>
+                                    <a style="color:#EC6248;cursor: pointer;" class="delete" data-id="@question.Id"><i class="la la-trash"></i></a>
+                                }
+                            </div>
+                            @if (question.Type == ConstantHelpers.SURVEY.TEXT_QUESTION)
+                            {
+                                <input class="form-control m-input col-md-12" value="" disabled="disabled">
+                            }
+                            else if (question.Type == ConstantHelpers.SURVEY.LIKERT_QUESTION)
+                            {
+                                <div class="row">
+                                    @foreach (var likerScale in ConstantHelpers.SURVEY_LIKERT.RATING_SCALE.LIKERT.OrderByDescending(x => x.Key))
+                                    {
+                                        <div class="col">
+                                            <span class="m-radio">
+                                                <input type="radio" disabled="disabled"> @likerScale.Value
+                                                <span></span>
+                                            </span>
+                                        </div>
+                                    }                                    
+                                </div>                               
+                            }
+                            else
+                            {
+                                <div class="m-radio-inline">
+                                    @foreach (var answers in question.Answers)
+                                    {
+                                        @if (question.Type == ConstantHelpers.SURVEY.MULTIPLE_SELECTION_QUESTION)
+                                        {
+                                            <label class="m-checkbox">
+                                                <input type="checkbox" disabled="disabled"> @answers.Description
+                                                <span></span>
+                                            </label>
+                                        }
+                                        @if (question.Type == ConstantHelpers.SURVEY.UNIQUE_SELECTION_QUESTION)
+                                        {
+                                            <label class="m-radio">
+                                                <input type="radio" disabled="disabled"> @answers.Description
+                                                <span></span>
+                                            </label>
+                                        }
+                                    }
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    count = count + 1;
+                }
+            </div>
+        </div>
+    </div>
+    count = 1;
+}
+

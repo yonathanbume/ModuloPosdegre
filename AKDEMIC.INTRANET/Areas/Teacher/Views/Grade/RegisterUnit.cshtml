@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Registro de Notas en Bloque";
+    ViewData["Breadcrumbs"] = new[] {
+            new BreadcrumbViewData { Name = "Registro de Notas", Controller = "Grade", Action = "Index", Area = "Teacher" },
+            new BreadcrumbViewData { Name = "Detalle", Url = Url.Action("Details", "Grade", new { sectionid = ViewBag.SectionId }) },
+            new BreadcrumbViewData { Name = "Registro" }
+    };
+    ViewData["BackUrl"] = Url.Action("Details", "Grade", new { sectionid = ViewBag.Section });
+}
+
+@section Styles {
+    <style>
+        .form-control[disabled] {
+            border-color: #e0e0e0;
+        }
+    </style>
+}
+<div class="m-content">
+    <div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation m--font-brand"></i>
+        </div>
+        <div class="m-alert__text">
+            A continuaci&oacute;n, se lista a todos los estudiantes de la secci&oacute;n para el registro de notas, deberá indicar la nota obtenida en un rango de 0 a 20.
+            Las notas registradas en el sistema no podr&aacute;n ser modificadas sin una previa solicitud de cambio de nota.
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    @*<span class="m-portlet__head-icon">
+                            <i class="flaticon-multimedia"></i>
+                        </span>*@
+                    <h3 class="m-portlet__head-text">
+                        Listado de Estudiantes <br />
+                        @ViewBag.CourseUnitName
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form method="post" id="form-validation" class="m-form m-form--state paddingless-group">
+
+            <input type="hidden" id="SectionId" name="SectionId" value="@ViewBag.SectionId"/>
+            <input type="hidden" id="CourseUnitId" name="CourseUnitId" value="@ViewBag.CourseUnitId"/>
+
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="m-form__label"> Curso: &emsp;<span class="m--font-boldest">@ViewBag.Course</span></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="m-form__label"> Secci&oacute;n: &emsp;<span class="m--font-boldest">@ViewBag.SectionName</span></div>
+                    </div>
+                </div>
+                
+                <br />
+                <div id="container_datatable"></div>
+
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 m--align-right">
+                        <button type="button" class="btn btn-brand" id="publish-btn">Publicar notas</button>
+                        <button type="button" class="btn btn-primary" id="save-btn">Guardar notas</button>
+                        <span class="m--margin-left-10"><a asp-controller="Grade" asp-action="Details" asp-route-sectionid="@ViewBag.SectionId" class="m-link m--font-bold">Cancelar</a></span>
+                    </div>
+                </div>
+            </div>
+        </form>       
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/teacher/grade/register_unit.js" asp-append-version="true"></script>
+}
