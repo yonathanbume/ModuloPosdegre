@@ -2552,6 +2552,7 @@ namespace AKDEMIC.CORE.Helpers
             public const string CAFOBE = "Cafobe";
             //POSDEGREE
             public const string ADMIN_POSDEGREE = "Administrador Posgrado";
+            public const string STUDENT_POSDEGREE = "Alumno Posgrado";
             //Bolsa
             public const string CENTRAL_ARCHIVE = "Archivo Central";
             //ECONOMIC MANAGEMENT

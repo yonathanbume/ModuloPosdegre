@@ -20,99 +20,15 @@
             <a asp-controller="Master" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
                 <i class="m-menu__link-icon flaticon-folder-2"></i>
                 <span class="m-menu__link-text">
-                    Maestrias
+                    Registro de Maestrias
                 </span>
             </a>
         </li>
-
-        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ProjectDirector" asp-action="Index">
-            <a asp-controller="Student" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-user"></i>
-                <span class="m-menu__link-text">
-                    Alumnos
-                </span>
-            </a>
-        </li>
-        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ProjectDirector" asp-action="Index">
-            <a asp-controller="User" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-user"></i>
-                <span class="m-menu__link-text">
-                    Usuarios
-                </span>
-            </a>
-        </li>
-
-        @if (MethodTypeRegistryPatternCreation)
-        {
-            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="DegreeRequirement" asp-action="Index">
-                <a asp-controller="DegreeRequirement" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                    <i class="m-menu__link-icon flaticon-folder-2"></i>
-                    <span class="m-menu__link-text">
-                        Comprobante de pagos
-                    </span>
-                </a>
-            </li>
-
-            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ValidationDegreeRequirement" asp-action="Index">
-                <a asp-controller="ValidationDegreeRequirement" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                    <i class="m-menu__link-icon flaticon-folder-2"></i>
-                    <span class="m-menu__link-text">
-                        Conceptos de Pagos 
-                    </span>
-                </a>
-            </li>
-        }
-
-
-        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="RegistryPattern" asp-action="Index">
-            <a asp-controller="RegistryPattern" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-folder-2"></i>
-                <span class="m-menu__link-text">
-                    Motivos de pagos 
-                </span>
-            </a>
-        </li>
-        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GenerateRelationDegree" asp-action="Index">
-            <a asp-controller="GenerateRelationDegree" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-folder-3"></i>
-                <span class="m-menu__link-text">
-                    Registrar  Pagos
-                </span>
-            </a>
-        </li>
-        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="RegistryPatternReview" asp-action="Index">
-            <a asp-controller="RegistryPatternReview" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-folder-3"></i>
-                <span class="m-menu__link-text">
-                    Pagos recientes
-                </span>
-            </a>
-        </li>
-        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="GenerationFormatRegisterDegree" asp-action="Index">
-            <a asp-controller="GenerationFormatRegisterDegree" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-folder-3"></i>
-                <span class="m-menu__link-text">
-                    Registro de verificacion
-                </span>
-            </a>
-        </li>
-        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Diploma" asp-action="Index">
-            <a asp-controller="Diploma" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                <i class="m-menu__link-icon flaticon-folder-2"></i>
-                <span class="m-menu__link-text">
-                    Historial
-                </span>
-            </a>
-        </li>
-
-    }
-    @if (User.IsInRole(ConstantHelpers.ROLES.CAREER_DIRECTOR) || User.IsInRole(ConstantHelpers.ROLES.ACADEMIC_COORDINATOR) || User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN) || User.IsInRole(ConstantHelpers.ROLES.DEGREE_ADMIN) || User.IsInRole(ConstantHelpers.ROLES.REPORT_QUERIES))
-    {
         <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
             <a href="#" class="m-menu__link m-menu__toggle">
-                <i class="m-menu__link-icon flaticon-list-3"></i>
+                <i class="m-menu__link-icon flaticon-users"></i>
                 <span class="m-menu__link-text">
-                    Reportes
+                    Gestion de Usuarios
                 </span>
                 <i class="m-menu__ver-arrow la la-angle-right"></i>
             </a>
@@ -122,15 +38,15 @@
                     <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
                         <span class="m-menu__link">
                             <span class="m-menu__link-text">
-                                Reportes
+                                Gestion de Usuarios
                             </span>
                         </span>
                     </li>
                     <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelor" asp-action="Index">
-                        <a asp-controller="ReportBachelor" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                            <i class="m-menu__link-icon flaticon-share"></i>
+                        <a asp-controller="User" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-user-add"></i>
                             <span class="m-menu__link-text">
-                                Lista de pagos en Excel
+                                Registro de Estudiantes 
                             </span>
                         </a>
                     </li>
@@ -138,7 +54,193 @@
                         <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
                             <i class="m-menu__link-icon flaticon-share"></i>
                             <span class="m-menu__link-text">
-                                Lista de estudiantes por Maestria
+                                Listado de estudiantes 
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-analytics"></i>
+                <span class="m-menu__link-text">
+                    Gestión de Pagos
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Gestión de Pagos
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelor" asp-action="Index">
+                        <a asp-controller="ReportBachelor" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Registro de Pagos
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index">
+                        <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Control de Pagos
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-folder-1"></i>
+                <span class="m-menu__link-text">
+                    Gestión de Notas
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Gestión de Notas
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelor" asp-action="Index">
+                        <a asp-controller="ReportBachelor" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Registro de Notas
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index">
+                        <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Control de Notas
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index">
+                        <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Listado de Notas
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-interface-3"></i>
+                <span class="m-menu__link-text">
+                    Gestión de Matricula 
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Gestión de Matricula
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelor" asp-action="Index">
+                        <a asp-controller="ReportBachelor" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Registro de Matricula
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index">
+                        <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Historial de Matricula
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index">
+                        <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Listado de Matricula
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+    }
+    
+    <!--Opciones para Estudiante de Posgrado-->
+    @if (User.IsInRole(ConstantHelpers.ROLES.STUDENT_POSDEGREE) || User.IsInRole(ConstantHelpers.ROLES.ADMIN_POSDEGREE) || User.IsInRole(ConstantHelpers.ROLES.SUPERADMIN))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Diploma" asp-action="Index">
+            <a asp-controller="Diploma" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-2"></i>
+                <span class="m-menu__link-text">
+                    Historial de notas
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="Diploma" asp-action="Index">
+            <a asp-controller="Diploma" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-file-1"></i>
+                <span class="m-menu__link-text">
+                    Matrícula   
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-3"></i>
+                <span class="m-menu__link-text">
+                    Reportes de Estudiante
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Reportes de Estudiante
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelor" asp-action="Index">
+                        <a asp-controller="ReportBachelor" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Lista de estudiantes
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index">
+                        <a asp-controller="ReportBachelorsWithOutTUPA" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-icon flaticon-share"></i>
+                            <span class="m-menu__link-text">
+                                Reporte de pagos
                             </span>
                         </a>
                     </li>
@@ -147,23 +249,12 @@
                         <a asp-controller="ReportTitleByModality" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
                             <i class="m-menu__link-icon flaticon-share"></i>
                             <span class="m-menu__link-text">
-                                Reporte de pagos por fecha
+                                Reporte de adeudo
                             </span>
                         </a>
                     </li>
-
-                    <li class="m-menu__item" aria-haspopup="true" is-active-route asp-controller="AccessSystemReport" asp-action="Index">
-                        <a asp-area="Admin" asp-controller="AccessSystemReport" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
-                            <i class="m-menu__link-icon flaticon-share"></i>
-                            <span class="m-menu__link-text">
-                                Reporte de historial de pagos por Alumnos
-                            </span>
-                        </a>
-                    </li>
-
                 </ul>
             </div>
         </li>
-
     }
 </ul>
