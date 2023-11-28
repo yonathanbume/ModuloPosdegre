@@ -39,7 +39,7 @@ namespace AKDEMIC.POSDEGREE.Controllers {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }*/
    
-    [Authorize(Roles = ConstantHelpers.ROLES.SUPERADMIN + "," + ConstantHelpers.ROLES.ADMIN_POSDEGREE)]
+    [Authorize(Roles = ConstantHelpers.ROLES.SUPERADMIN + "," + ConstantHelpers.ROLES.ADMIN_POSDEGREE + "," + ConstantHelpers.ROLES.STUDENT_POSDEGREE)]
 
     public class HomeController : BaseController
         {
