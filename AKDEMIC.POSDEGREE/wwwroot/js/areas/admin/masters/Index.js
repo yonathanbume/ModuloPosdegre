@@ -12,10 +12,13 @@
                     }
                 },
                 columns: [
-                    { data: "nombre", title: "Nombre" },
-                    { data: "duracion", title: "Duracion" },
-                    { data: "creditos", title: "Creditos" },
-                    { data: "descripcion", title: "Descripcion" },
+                    {dta:"",title:"Nro"},
+                    {data: "",title:"Sede"},
+                    { data: "", title: "Curricula" },
+                    { data: "nombre", title: "Programa De Estudio" },
+                    { data: "duracion", title: "Modalidad Estudio" },
+                    { data: "creditos", title: "Vigente" },
+                    { data: "descripcion", title: "Estado" },
                     {
                         data: null,
                         title: "Opciones",

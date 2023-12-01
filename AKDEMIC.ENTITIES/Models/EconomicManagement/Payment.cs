@@ -10,6 +10,7 @@ using AKDEMIC.ENTITIES.Models.DocumentaryProcedure;
 using AKDEMIC.ENTITIES.Models.Enrollment;
 using AKDEMIC.ENTITIES.Models.Generals;
 using AKDEMIC.ENTITIES.Models.Intranet;
+using AKDEMIC.ENTITIES.Models.PosDegree;
 
 namespace AKDEMIC.ENTITIES.Models.EconomicManagement
 {
@@ -68,5 +69,6 @@ namespace AKDEMIC.ENTITIES.Models.EconomicManagement
         public ICollection<UserProcedure> UserProcedures { get; set; }
         public ICollection<UserExternalProcedure> UserExternalProcedures { get; set; }
         public ICollection<Income> Incomes { get; set; }
+        public ICollection<PosdegreeDetailsPayment> PosdegreeDetailsPayment { get; set;}
     }
 }

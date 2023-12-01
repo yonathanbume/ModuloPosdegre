@@ -16,17 +16,19 @@
             object: null,
             options: {
                 ajax: {
-                    url: "/admin/Student/getalluser",
+                    url: "/admin/Student/getallstudent",
                     type: "GET",
                     data: function (data) {
                         data.search = $("#search").val();
                     }
                 },
                 columns: [
-                    { data: "nombre", title: "Nombre" },
-                    { data: "duracion", title: "Duracion" },
-                    { data: "creditos", title: "Creditos" },
-                    { data: "descripcion", title: "Descripcion" },
+                    { data: "dni", title: "Dni" },
+                    { data: "name", title: "Nombre" },
+                    { data: "paternalSurname", title: "Apellido Paterno" },
+                    { data: "maternalSurname", title: "Apellido Materno" },
+                    { data: "email", title: "Email" },
+                    { data: "phoneNumber", title: "Telefono" },
                     {
                         data: null,
                         title: "Opciones",
@@ -64,7 +66,7 @@
                             preConfirm: () => {
                                 return new Promise(() => {
                                     $.ajax({
-                                        url:  `/admin/master/eliminar/${id}`,
+                                        url:  `/admin/Student/eliminar/${id}`,
                                         type: "POST",
                                         data: {
                                             id: id
@@ -171,7 +173,7 @@
                 show: function () {
                     $("#add_projectDirector").on("click", function () {
                         modal.projectDirector.object.find(".modal-title").text("registrar un estudiante");
-                        $("#add-student").attr("action", "Master/Agregar");
+                        $("#add-student").attr("action", "Student/registrar");
                         $("#add-student").attr("data-message", "Registro agregado con éxito");
                         modal.projectDirector.object.modal("show");
                     })
@@ -183,28 +185,35 @@
             edit: {
                 show: function (data) {
                     modal.projectDirector.object.find(".modal-title").text("Editar una studiante");
-                    $("#add-master").attr("action", "/admin/master/editar");
-                    $("#add-master").attr("data-message", "Registro actualizado con éxito");
+                    $("#add-student").attr("action", "/admin/Student/editar");
+                    $("#add-student").attr("data-message", "Registro actualizado con éxito");
                     modal.projectDirector.object.find("[name='Id']").val(data.id);
-                    modal.projectDirector.object.find("[name='Nombre']").val(data.nombre);
-                    modal.projectDirector.object.find("[name='Duracion']").val(data.duracion);
-                    modal.projectDirector.object.find("[name='Creditos']").val(data.creditos);
-                    modal.projectDirector.object.find("[name='Descripcion']").val(data.descripcion);
+                    modal.projectDirector.object.find("[name='Codigo']").val(data.codigo);
+                    modal.projectDirector.object.find("[name='Dni']").val(data.dni);
+                    modal.projectDirector.object.find("[name='Nombre']").val(data.name);
+                    modal.projectDirector.object.find("[name='ApellidoP']").val(data.paternalSurname);
+                    modal.projectDirector.object.find("[name='ApellidoM']").val(data.maternalSurname);
+                    modal.projectDirector.object.find("[name='telefono']").val(data.phoneNumber);
+                    modal.projectDirector.object.find("[name='email']").val(data.email);
+                    modal.projectDirector.object.find("[name='direccion']").val(data.address);
+                    modal.projectDirector.object.find("[name='File']").val(data.File);
                     modal.projectDirector.object.modal("show");
                 }
             },AddStudent: {
                 show: function (data) {
                     modal.projectDirector.object.find(".modal-title").text("Regitrar un estudiante posgrado");
-                    $("#add-student").attr("action", "/admin/Student/regitrar");
+                    $("#add-student").attr("action", "/admin/Student/registrar");
                     $("#add-student").attr("data-message", "Registro actualizado con éxito");
-                    modal.projectDirector.object.find("[name='Dni']").val(data.dni);
+                    modal.projectDirector.object.find("[name='Id']").val(data.id);
+                    modal.projectDirector.object.find("[name='Codigo']").val(data.Codigo);
+                   modal.projectDirector.object.find("[name='Dni']").val(data.dni);
                     modal.projectDirector.object.find("[name='Nombre']").val(data.name);
                     modal.projectDirector.object.find("[name='ApellidoP']").val(data.paternalSurname);
                     modal.projectDirector.object.find("[name='ApellidoM']").val(data.maternalSurname);
                     modal.projectDirector.object.find("[name='telefono']").val(data.phoneNumber);
                     modal.projectDirector.object.find("[name='email']").val(data.personalEmail);
                     modal.projectDirector.object.find("[name='direccion']").val(data.address);
-
+                    modal.projectDirector.object.find("[name='File']").val(data.File);
                     modal.projectDirector.object.modal("show");
                 }
             },

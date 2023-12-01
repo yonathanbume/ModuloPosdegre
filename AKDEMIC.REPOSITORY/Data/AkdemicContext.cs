@@ -227,7 +227,8 @@ namespace AKDEMIC.REPOSITORY.Data
         #endregion
         #region POSDEGREE
         public DbSet<Master> Masters { get; set; }
-
+        public DbSet<PosdegreeDetailsPayment> PosdegreeDetailsPayments { get; set; }
+        public DbSet<PosdegreeStudent> PosdegreeStudents { get; set; }
         #endregion
 
 
@@ -1611,11 +1612,9 @@ namespace AKDEMIC.REPOSITORY.Data
 
             #endregion
             #region POSDEGREE
-            modelBuilder.Entity<Master>(x => 
-            {
-                x.HasIndex(p => p.id).IsUnique();
-                x.ToDatabaseTable(databaseType, "Masters", "PosDegree");
-             });
+            modelBuilder.Entity<Master>(x =>  { x.ToDatabaseTable(databaseType, "Masters", "PosDegree"); });
+            modelBuilder.Entity<PosdegreeStudent>(x =>{ x.ToDatabaseTable(databaseType, "PosdegreeStudent", "PosDegree"); });
+            modelBuilder.Entity<PosdegreeDetailsPayment>(x =>{ x.ToDatabaseTable(databaseType, "PosdegreeDetailsPayments", "PosDegree"); });
             #endregion
 
             #region DOCUMENTARY PROCEDURE

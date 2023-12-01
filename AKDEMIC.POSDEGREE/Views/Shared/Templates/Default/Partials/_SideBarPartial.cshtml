@@ -20,11 +20,18 @@
             <a asp-controller="Master" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
                 <i class="m-menu__link-icon flaticon-folder-2"></i>
                 <span class="m-menu__link-text">
-                    Maestrias
+                    Informacion Academica
                 </span>
             </a>
         </li>
-
+            <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ForeignUniversityOrigin" asp-action="Index">
+            <a asp-controller="Master" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-folder-2"></i>
+                <span class="m-menu__link-text">
+                    Informacion Economica
+                </span>
+            </a>
+        </li>
         <li class="m-menu__item " aria-haspopup="true" is-active-route asp-controller="ProjectDirector" asp-action="Index">
             <a asp-controller="Student" asp-action="Index" asp-route-area="Admin" class="m-menu__link ">
                 <i class="m-menu__link-icon flaticon-user"></i>

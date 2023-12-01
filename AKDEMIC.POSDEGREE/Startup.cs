@@ -58,6 +58,7 @@ using AKDEMIC.REPOSITORY.Repositories.PosDegree.Interfaces;
 using AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios;
 using AKDEMIC.SERVICE.Services.PosDegree.Implementations;
 using AKDEMIC.ENTITIES.Models.PosDegree;
+using AKDEMIC.SERVICE.Services.PosDegree.Interfaces;
 
 namespace AKDEMIC.POSDEGREE
 {
@@ -279,6 +280,11 @@ namespace AKDEMIC.POSDEGREE
             //Posdegree
             services.AddScoped(typeof(IMasterRepository), typeof(MasterRepository));
             services.AddTransient<IMasterService, MasterService>();
+
+            services.AddScoped(typeof(IPosdegreeStudentRepository), typeof(PosdegreeStudentRepository));
+            services.AddTransient<IPosdegreeStudentService, PosdegreeStudentService>();
+
+           
 
             #endregion
 
