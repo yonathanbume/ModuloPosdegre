@@ -32,9 +32,9 @@ namespace AKDEMIC.CORE.Services
         private readonly string AccessKey = "1JMHFANSFPEMK07J6AIY";
         private readonly string SecretAccessKey = "hi9AwQjlRcaUT4u0ktlWyD4KOCZfoUHp82qH4Wzk";
 
-        public CloudStorageService(IOptions<CloudStorageCredentials> settings)
+         public CloudStorageService(IOptions<CloudStorageCredentials> settings)
         {
-            _settings = settings.Value;
+           _settings = settings.Value;
 
             /*var accountUri = new Uri($"https://{_settings.StorageName}.blob.core.windows.net");
             var options = new BlobClientOptions()
@@ -47,13 +47,16 @@ namespace AKDEMIC.CORE.Services
             //{
             var storageAccount = new CloudStorageAccount(
             new StorageCredentials(
-                _settings.StorageName,
-                _settings.AccessKey), true);
-
+                 _settings.StorageName,
+                 _settings.AccessKey), true);
             _blobClient = storageAccount.CreateCloudBlobClient();
             //}
         }
-
+        public CloudStorageService()
+        {
+            var storageAccount = new CloudStorageAccount(new StorageCredentials("storageBachiller", AccessKey), true);
+            _blobClient = storageAccount.CreateCloudBlobClient();
+        }
         private async Task<string> Upload(Stream stream, string cloudStorageContainer, string fileName, string systemFolder = null, bool isUserImage = false)
         {
             if (ConstantHelpers.GENERAL.FileStorage.STORAGE_MODE == ConstantHelpers.FileStorage.Mode.HUAWEI_STORAGE_MODE
@@ -62,7 +65,6 @@ namespace AKDEMIC.CORE.Services
                 var config = new ObsConfig();
                 config.Endpoint = EndPoint;
                 var client = new ObsClient(AccessKey, SecretAccessKey, config);
-
                 try
                 {
                     var createResponse = client.CreateBucket(new CreateBucketRequest

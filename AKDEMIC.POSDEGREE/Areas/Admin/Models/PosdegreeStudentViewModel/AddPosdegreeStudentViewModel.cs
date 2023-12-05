@@ -13,7 +13,8 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Models.PosdegreeStudentViewModel
         public string? email { get; set; }
         public string? telefono { get; set; }
         public string? direccion { get; set; }
-        public string? File { get; set; }
+
+        public IFormFile File { get; set; }
         public ICollection<PosdegreeDetailsPayment> posdegreeDetailsPayments { get; set; }
 
     }

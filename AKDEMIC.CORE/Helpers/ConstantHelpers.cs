@@ -3105,6 +3105,25 @@ namespace AKDEMIC.CORE.Helpers
                 {
                     public const string REQUIREMENT = "Req";
                     public const string ANEXANNEXED = "Anx";
+             
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     public const string FINALY = "FNL";
                 }
             }

@@ -133,6 +133,7 @@
                     submitHandler: function (formElement, e) {
                         e.preventDefault();
                         var formData = new FormData(formElement);
+
                         modal.projectDirector.object.find(":input").attr("disabled", true);
 
                         var message = $("#add-student").data("message");
@@ -200,10 +201,12 @@
                     modal.projectDirector.object.modal("show");
                 }
             },AddStudent: {
-                show: function (data) {
+                show: function (data)
+                {
                     modal.projectDirector.object.find(".modal-title").text("Regitrar un estudiante posgrado");
                     $("#add-student").attr("action", "/admin/Student/registrar");
                     $("#add-student").attr("data-message", "Registro actualizado con éxito");
+                    
                     modal.projectDirector.object.find("[name='Id']").val(data.id);
                     modal.projectDirector.object.find("[name='Codigo']").val(data.Codigo);
                    modal.projectDirector.object.find("[name='Dni']").val(data.dni);

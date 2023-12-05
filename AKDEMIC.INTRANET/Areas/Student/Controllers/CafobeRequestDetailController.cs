@@ -116,7 +116,7 @@ namespace AKDEMIC.INTRANET.Areas.Student.Controllers
                     }
 
                     else
-                        return BadRequest($"El contenido del archivo '{model.FileDetailFile.FileName}' es inválido, por favor adjunte un archuivo pdf o word");
+                        return BadRequest($"El contenido del archivo '{model.FileDetailFile.FileName}' es inválido, por favor adjunte un archuivo pdf o word"); 
 
                 }
 

@@ -170,6 +170,7 @@ namespace AKDEMIC.CORE.Configurations
                 public const string RESOLUTIVE_ACTS = "resolutiveacts";
                 public const string SISCO = "sisco";
                 public const string DEGREE = "degree";
+                public const string POSDEGREE = "posdegree";
                 public const string ECONOMICMANAGEMENT = "economicmanagement";
                 public const string COMPUTERMANAGEMENT = "computermanagement";
             }

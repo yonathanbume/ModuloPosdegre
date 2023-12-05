@@ -1,5 +1,7 @@
-﻿using AKDEMIC.CORE.Services;
+﻿using AKDEMIC.CORE.Helpers;
+using AKDEMIC.CORE.Services;
 using AKDEMIC.ENTITIES.Models.PosDegree;
+using AKDEMIC.ENTITIES.Models.ResolutiveActs;
 using AKDEMIC.POSDEGREE.Areas.Admin.Models.MasterViewModel;
 using AKDEMIC.POSDEGREE.Areas.Admin.Models.PosdegreeStudentViewModel;
 using AKDEMIC.POSDEGREE.Controllers;
@@ -76,6 +78,11 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
         [HttpPost("registrar")]
         public async Task<IActionResult> AddPost(AddPosdegreeStudentViewModel model)
         {
+            var storageService=new CloudStorageService();
+            var uploadFilePath = await storageService.UploadFile(model.File.OpenReadStream()
+                , ConstantHelpers.CONTAINER_NAMES.INTERNAL_PROCEDURE_DOCUMENT,
+                Path.GetExtension(model.File.FileName), CORE.Helpers.ConstantHelpers.FileStorage.SystemFolder.POSDEGREE);
+
             var entity = new PosdegreeStudent
             {
                 Id = model.Id,
@@ -87,7 +94,7 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
                 Email = model.email,
                 PhoneNumber = model.telefono,
                 Address = model.direccion,
-                File = model.File
+                File = uploadFilePath  //anilizar core y directorio espec´fico
             };
         
             await _posdegreeStudentService.Insert(entity);
