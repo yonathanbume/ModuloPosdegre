@@ -375,8 +375,14 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
                     x.Nombre,
                     x.Duracion,
                     x.Creditos,
-                    x.Descripcion
-
+                    x.Descripcion,
+                    x.Nro,
+                    x.Campus,
+                    x.MallaCuricular,
+                    x.StudyProgram,
+                    x.StudyMode,
+                    x.current,
+                    x.state
                 }).ToListAsync();
             var recordTotal = data.Count();
             return new DataTablesStructs.ReturnedData<object>

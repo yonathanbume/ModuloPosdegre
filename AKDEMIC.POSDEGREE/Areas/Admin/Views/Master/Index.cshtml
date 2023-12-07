@@ -1,7 +1,7 @@
 ﻿@using AKDEMIC.POSDEGREE.ViewModels;
 
 @{
-    ViewData["Title"] = "Maestrias";
+    ViewData["Title"] = "Matricula";
     Layout = "~/Views/Shared/Templates/Default/_Layout.cshtml";
     ViewData["Breadcrumbs"] = new[] {
 new BreadcrumbViewData { Name = (string)ViewData["Title"]}
@@ -15,7 +15,7 @@ new BreadcrumbViewData { Name = (string)ViewData["Title"]}
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text">MAESTRIAS</h3>
+                    <h3 class="m-portlet__head-text">Maestria</h3>
                 </div>
             </div>
             <div class="m-portlet_header-tools">
@@ -74,32 +74,32 @@ new BreadcrumbViewData { Name = (string)ViewData["Title"]}
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="form-group m-form__group col- col-lg-12">
-
                             <input type="hidden" name="Id" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group m-form__group col- col-lg-12">
-                            <label id="nombre">Nombre</label>
-                            <input type="text" name="Nombre" class="form-control" maxlength="200" required />
+                            <label id="sede">Sede</label>
+                            <input type="text" name="sede" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+                      <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="curricula">Curricula</label>
+                            <input type="text" name="curricula" class="form-control" maxlength="200" required />
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group m-form__group col- col-lg-12">
-                            <label id="duracion">Duracion</label>
-                            <input type="number" name="Duracion" class="form-control" maxlength="200" required />
+                            <label id="studyProgram">Programa de estudio</label>
+                            <input type="text" name="studyProgram" class="form-control" maxlength="200" required />
                         </div>
                     </div>
+                  
                     <div class="form-group row">
                         <div class="form-group m-form__group col- col-lg-12">
-                            <label id="creditos">Creditos</label>
-                            <input type="number" name="Creditos" class="form-control" maxlength="200" required />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="form-group m-form__group col- col-lg-12">
-                            <label id="descripcion">Descripcion</label>
-                            <input type="text" name="Descripcion" class="form-control" maxlength="200" />
+                            <label id="studyMode">Modo estudio</label>
+                            <input type="text" name="studyMode" class="form-control" maxlength="200" required />
                         </div>
                     </div>
 

@@ -55,6 +55,12 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
                 Duracion = model.Duracion,
                 Creditos = model.Creditos,
                 Descripcion = model.Descripcion,
+                Campus = model.Sede,
+                MallaCuricular = model.Curricula,
+                StudyProgram= model.StudyProgram,
+                StudyMode=model.StudyMode,
+                current =model.current,
+                state=model.state
             };
             await _masterService.Insert(entity);
             return RedirectToAction("Index");
