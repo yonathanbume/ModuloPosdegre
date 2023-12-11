@@ -45,7 +45,11 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
 			var result = await _masterService.GetMasterDataTable(parameters,search);
 			return Ok(result);
 		}
-       
+        [HttpGet("matricula")]
+        public async Task<IActionResult> Matricula()
+        {
+            return View();
+        }
         [HttpPost("Agregar")]
         public async Task<IActionResult> AddPost(AddMasterViewModel model)
         {

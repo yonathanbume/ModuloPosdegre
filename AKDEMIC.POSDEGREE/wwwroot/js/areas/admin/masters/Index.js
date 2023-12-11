@@ -27,6 +27,7 @@
                             var tpm = "";
                             tpm += `<button title="Editar" data-object="${data.proto().encode()}" type="button" class="btn-edit btn btn-primary m-btn m-btn--icon btn-sm m-btn--icon-only"><i class="la la-edit"></i></button> `;
                             tpm += `<button title="Eliminar" data-id="${data.id}" type="button" class="btn-delete btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only"><i class="la la-trash"></i></button>`;
+                            tpm += `<button title="Configuration" data-id="${data.id}" type="button" class="btn-configuration btn btn-succes m-btn m-btn--icon btn-sm m-btn--icon-only"><i class="fas fa-cog"></i></button>`;
                             return tpm;
                         }
                     }
@@ -85,9 +86,31 @@
                         });
                     })
                 },
+                onConfiguration: function () {
+                    $("#datatable_data").on("click", ".btn-configuration", function () {
+                        var id = $(this).data("id");
+                        $.ajax({
+                            url: '/admin/master/matricula',
+                            type: 'GET',
+                            success: function (data) {
+                                window.location.href = "https://localhost:7273/admin/master/matricula";
+                            },
+                            error: function (error) {
+                                swal({
+                                    type: "error",
+                                    title: "Error",
+                                    confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
+                                    confirmButtonText: "Entendido",
+                                    text: e.status === 502 ? "No hay respuesta del servidor" : e.responseText
+                                });
+                            }
+                        });
+                    })
+                },
                 init: function () {
                     this.onEdit();
                     this.onDelete();
+                    this.onConfiguration();
                 }
             },
             reload: function () {
