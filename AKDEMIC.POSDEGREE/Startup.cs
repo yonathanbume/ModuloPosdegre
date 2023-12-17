@@ -220,7 +220,7 @@ namespace AKDEMIC.POSDEGREE
             services.AddTransient<IGradeReportService, GradeReportService>();
 
             // Enrollment
-            services.AddScoped(typeof(ICourseRepository), typeof(CourseRepository));
+            services.AddScoped(typeof(REPOSITORY.Repositories.Enrollment.Interfaces.ICourseRepository), typeof(REPOSITORY.Repositories.Enrollment.Implementations.CourseRepository));
             services.AddTransient<ICourseService, CourseService>();
             services.AddScoped(typeof(IEvaluationRepository), typeof(EvaluationRepository));
             services.AddTransient<IEvaluationService, EvaluationService>();

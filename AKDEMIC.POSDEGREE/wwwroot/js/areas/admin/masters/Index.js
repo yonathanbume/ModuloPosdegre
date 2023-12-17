@@ -41,7 +41,7 @@
                     })
                 },
                 onDelete: function () {
-                    $("#datatable_data").on("click", ".btn-delete", function () {
+                    $("#datatable_data").on("click",".btn-delete", function () {
                         var id = $(this).data("id");
 
                         swal({
@@ -57,7 +57,7 @@
                             preConfirm: () => {
                                 return new Promise(() => {
                                     $.ajax({
-                                        url:  `/admin/master/eliminar/${id}`,
+                                        url: `/admin/master/eliminar/${id}`,
                                         type: "POST",
                                         data: {
                                             id: id
@@ -90,10 +90,21 @@
                     $("#datatable_data").on("click", ".btn-configuration", function () {
                         var id = $(this).data("id");
                         $.ajax({
-                            url: '/admin/master/matricula',
-                            type: 'GET',
+                            url: `/admin/master/matricula/${id}`,
+                            type: 'Post',
                             success: function (data) {
-                                window.location.href = "https://localhost:7273/admin/master/matricula";
+                                // Primera solicitud AJAX exitosa
+                                var dato = data.campus;
+                                $("#idSede").html(dato);
+                                $.ajax({
+                                    url: "/admin/master/matricula",
+                                    type: 'Get',
+                                    success: function (data) {
+                                        // Segunda solicitud AJAX exitosa
+                                        
+                                        window.location.href = "https://localhost:7273/admin/master/matricula";
+                                    }
+                                });
                             },
                             error: function (error) {
                                 swal({
