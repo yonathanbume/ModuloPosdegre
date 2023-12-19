@@ -1,0 +1,126 @@
+﻿@using AKDEMIC.POSDEGREE.ViewModels;
+
+@{
+    ViewData["Title"] = "Cursos";
+    Layout = "~/Views/Shared/Templates/Default/_Layout.cshtml";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewData["Title"]}
+
+};
+
+}
+<div class="m-content">
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">Lista de Cursos</h3>
+                </div>
+            </div>
+            <div class="m-portlet_header-tools">
+                <a class="btn btn-primary btn-action btn-sm mt-3" href="Master/agregar"
+                   data-toggle="modal" data-target="#AddMaster" id="add_projectDirector">
+                    <span>
+                        <i class="fa fa-plus"></i>
+                        Agregar
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-xl-4"></div>
+                            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                <button type="button" class="m-portlet__nav-link btn btn-success m-btn m-btn--pill m-btn--air btn-excel">
+                                    Exportar registros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="datatable_data"></table>
+        </div>
+    </div>
+
+</div>
+
+<div id="AddMaster" class="modal fade" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agrega  maestrias
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-master" method="post">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <input type="hidden" name="Id" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="sede">Sede</label>
+                            <input type="text" name="sede" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="curricula">Curricula</label>
+                            <input type="text" name="curricula" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="studyProgram">Programa de estudio</label>
+                            <input type="text" name="studyProgram" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="studyMode">Modo estudio</label>
+                            <input type="text" name="studyMode" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-action ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/Asignatura/Index.js" asp-append-version="true"></script>
+
+}
