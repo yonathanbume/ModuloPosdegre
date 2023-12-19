@@ -10,6 +10,8 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
     {
         public Guid id { get; set; }
         public int Creditos { get; set; }
-        public int Nota { get; set; }  
+        public int Nota { get; set; }
+        public Guid PosdegreeTeacherId { get; set; }
+        public PosdegreeTeacher PosdegreeTeacher { get; set; }
     }
 }

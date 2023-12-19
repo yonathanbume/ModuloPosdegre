@@ -16,6 +16,6 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
         public int CreditMax { get;set; }
         public int NotaMin { get; set; }
         public int NotaMax { get; set; }
-
+        public ICollection<Semestre> semestre{ get; set; }
     }
 }

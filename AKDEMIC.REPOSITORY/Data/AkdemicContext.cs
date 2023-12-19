@@ -60,6 +60,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using AKDEMIC.ENTITIES.Models.PosDegree;
+using OpenXmlPowerTools;
 
 namespace AKDEMIC.REPOSITORY.Data
 {
@@ -229,6 +230,16 @@ namespace AKDEMIC.REPOSITORY.Data
         public DbSet<Master> Masters { get; set; }
         public DbSet<PosdegreeDetailsPayment> PosdegreeDetailsPayments { get; set; }
         public DbSet<PosdegreeStudent> PosdegreeStudents { get; set; }
+        public DbSet<Asignatura> Asignaturas { get; set; }
+        public DbSet<DetailEnrollmentMaster> DetailEnrollmentMasters { get; set; }
+        public DbSet<Enrollment> Enrollment { get; set; }
+        public DbSet<PosdegreeTeacher> PosdegreeTeachers { get; set; }
+        public DbSet<RegistroNotas> RegistroNotas { get; set; }
+        public DbSet<Semestre> Semestres { get; set; }
+        public DbSet<TypeEnrollment> TypeEnrollments { get; set; }
+
+
+
         #endregion
 
 
@@ -1615,6 +1626,14 @@ namespace AKDEMIC.REPOSITORY.Data
             modelBuilder.Entity<Master>(x =>  { x.ToDatabaseTable(databaseType, "Masters", "PosDegree"); });
             modelBuilder.Entity<PosdegreeStudent>(x =>{ x.ToDatabaseTable(databaseType, "PosdegreeStudent", "PosDegree"); });
             modelBuilder.Entity<PosdegreeDetailsPayment>(x =>{ x.ToDatabaseTable(databaseType, "PosdegreeDetailsPayments", "PosDegree"); });
+            modelBuilder.Entity<Semestre>(x => {x.ToDatabaseTable(databaseType, "Semestre", "PosDegree"); });
+            modelBuilder.Entity<Asignatura>(x => { x.ToDatabaseTable(databaseType, "Asignatura", "PosDegree"); });
+            modelBuilder.Entity<DetailEnrollmentMaster>(x => { x.ToDatabaseTable(databaseType, "DetailEnrollmentMaster", "PosDegree"); });
+            modelBuilder.Entity<Enrollment>(x => { x.ToDatabaseTable(databaseType, "Enrollment", "PosDegree"); });
+            modelBuilder.Entity<PosdegreeTeacher>(x => { x.ToDatabaseTable(databaseType, "PosdegreeTeacher", "PosDegree"); });
+            modelBuilder.Entity<RegistroNotas>(x => { x.ToDatabaseTable(databaseType, "RegistroNotas", "PosDegree"); });
+            modelBuilder.Entity<TypeEnrollment>(x => { x.ToDatabaseTable(databaseType, "TypeEnrollment", "PosDegree"); });
+
             #endregion
 
             #region DOCUMENTARY PROCEDURE
