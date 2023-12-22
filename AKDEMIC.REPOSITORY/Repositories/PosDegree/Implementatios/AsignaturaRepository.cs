@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
 {
-    public class AsignaturaRepository : Repository<Master>, IAsignaturaRepository
+    public class AsignaturaRepository : Repository<Asignatura>, IAsignaturaRepository
     {
         public AsignaturaRepository(AkdemicContext context) : base(context)
         {

@@ -284,7 +284,8 @@ namespace AKDEMIC.POSDEGREE
             services.AddScoped(typeof(IPosdegreeStudentRepository), typeof(PosdegreeStudentRepository));
             services.AddTransient<IPosdegreeStudentService, PosdegreeStudentService>();
 
-           
+            services.AddScoped(typeof(ITeacherPRepository), typeof(AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios.TeacherRepository));
+            services.AddTransient<ITeacherPService, AKDEMIC.SERVICE.Services.PosDegree.Implementations.TeacherService>();
 
             #endregion
 
