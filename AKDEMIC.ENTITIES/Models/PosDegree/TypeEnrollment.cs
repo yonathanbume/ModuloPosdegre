@@ -12,6 +12,6 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
         public string Name { get; set; }
         public string Description { get; set; }
         public float Costo { get; set; }
-        public ICollection<TypeEnrollment> TypeEnrollments { get; set; }
+        public ICollection<Enrollment> enrollments { get; set; }
     }
 }

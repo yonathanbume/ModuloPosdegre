@@ -18,7 +18,5 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string File { get; set; }
-        public ICollection<PosdegreeDetailsPayment> posdegreeDetailsPayments { get; set; }
-        public ICollection<Enrollment> Enrollments { get; set; }
     }
 }

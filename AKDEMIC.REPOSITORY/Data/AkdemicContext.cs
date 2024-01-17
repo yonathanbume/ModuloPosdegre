@@ -231,8 +231,8 @@ namespace AKDEMIC.REPOSITORY.Data
         public DbSet<PosdegreeDetailsPayment> PosdegreeDetailsPayments { get; set; }
         public DbSet<PosdegreeStudent> PosdegreeStudents { get; set; }
         public DbSet<Asignatura> Asignaturas { get; set; }
-        public DbSet<DetailEnrollmentMaster> DetailEnrollmentMasters { get; set; }
-        public DbSet<Enrollment> Enrollment { get; set; }
+        public DbSet<TeachingLoad> TeachingLoads { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<PosdegreeTeacher> PosdegreeTeachers { get; set; }
         public DbSet<RegistroNotas> RegistroNotas { get; set; }
         public DbSet<Semestre> Semestres { get; set; }
@@ -1628,7 +1628,7 @@ namespace AKDEMIC.REPOSITORY.Data
             modelBuilder.Entity<PosdegreeDetailsPayment>(x =>{ x.ToDatabaseTable(databaseType, "PosdegreeDetailsPayments", "PosDegree"); });
             modelBuilder.Entity<Semestre>(x => {x.ToDatabaseTable(databaseType, "Semestre", "PosDegree"); });
             modelBuilder.Entity<Asignatura>(x => { x.ToDatabaseTable(databaseType, "Asignatura", "PosDegree"); });
-            modelBuilder.Entity<DetailEnrollmentMaster>(x => { x.ToDatabaseTable(databaseType, "DetailEnrollmentMaster", "PosDegree"); });
+            modelBuilder.Entity<TeachingLoad>(x => { x.ToDatabaseTable(databaseType, "TeachingLoad", "PosDegree"); });
             modelBuilder.Entity<Enrollment>(x => { x.ToDatabaseTable(databaseType, "Enrollment", "PosDegree"); });
             modelBuilder.Entity<PosdegreeTeacher>(x => { x.ToDatabaseTable(databaseType, "PosdegreeTeacher", "PosDegree"); });
             modelBuilder.Entity<RegistroNotas>(x => { x.ToDatabaseTable(databaseType, "RegistroNotas", "PosDegree"); });

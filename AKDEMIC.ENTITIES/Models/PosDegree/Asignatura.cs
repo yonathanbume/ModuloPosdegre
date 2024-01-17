@@ -16,8 +16,8 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
         public byte TeoricasHours { get; set; } = 0;
         public byte TotalHours { get; set; } = 0;
         public string Requisito { get; set; }
-        public Guid RegistroNotasId { get; set; }
-        public RegistroNotas RegistroNotas { get; set; }
-        public ICollection<Enrollment> Enrollments { get; set; }
+        public ICollection<TeachingLoad> teachingLoads { get; set; }
+
+
     }
 }

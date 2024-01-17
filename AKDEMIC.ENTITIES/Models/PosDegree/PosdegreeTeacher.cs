@@ -16,6 +16,5 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
        public string PhoneNumber { get; set; }
        public string Departament { get; set; }
        public string Especiality { get; set; }
-       public ICollection<RegistroNotas> RegistroNotas { get; set; }
     }
 }

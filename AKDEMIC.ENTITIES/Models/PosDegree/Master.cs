@@ -21,7 +21,8 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
         public int Duracion { get; set; } // Duración en años
         public int Creditos { get; set; }
         public string Descripcion { get; set; }
-        public ICollection<DetailEnrollmentMaster> DetailEnrollmentMasters { get; set; }
+        public ICollection<TeachingLoad> teachingLoads { get; set; }
+
     }
 
 
