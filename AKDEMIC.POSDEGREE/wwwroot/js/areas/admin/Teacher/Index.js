@@ -87,42 +87,9 @@
                         });
                     })
                 },
-                onConfiguration: function () {
-                    $("#datatable_data").on("click", ".btn-configuration", function () {
-                        var id = $(this).data("id");
-                        $.ajax({
-                            url: `/admin/master/matricula/${id}`,
-                            type: 'Post',
-                            success: function (data) {
-                                // Primera solicitud AJAX exitosa
-                                var dato = data.campus;
-                                $("#idSede").html(dato);
-                                $.ajax({
-                                    url: "/admin/master/matricula",
-                                    type: 'Get',
-                                    success: function (data) {
-                                        // Segunda solicitud AJAX exitosa
-
-                                        window.location.href = "https://localhost:7273/admin/master/matricula";
-                                    }
-                                });
-                            },
-                            error: function (error) {
-                                swal({
-                                    type: "error",
-                                    title: "Error",
-                                    confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
-                                    confirmButtonText: "Entendido",
-                                    text: e.status === 502 ? "No hay respuesta del servidor" : e.responseText
-                                });
-                            }
-                        });
-                    })
-                },
                 init: function () {
                     this.onEdit();
                     this.onDelete();
-                    this.onConfiguration();
                 }
             },
             reload: function () {
@@ -196,7 +163,7 @@
             add: {
                 show: function () {
                     $("#add_projectDirector").on("click", function () {
-                        modal.projectDirector.object.find(".modal-title").text("Agregar Maestria");
+                        modal.projectDirector.object.find(".modal-title").text("Agregar Docente");
                         $("#add-teacher").attr("action", "Teacher/Agregar");
                         $("#add-teacher").attr("data-message", "Registro agregado con éxito");
                         modal.projectDirector.object.modal("show");
@@ -208,63 +175,31 @@
             },
             edit: {
                 show: function (data) {
-                    modal.projectDirector.object.find(".modal-title").text("Editar una maestria");
-                    $("#add-master").attr("action", "/admin/master/editar");
-                    $("#add-master").attr("data-message", "Registro actualizado con éxito");
+                    modal.projectDirector.object.find(".modal-title").text("Editar una Docente");
+                    $("#add-teacher").attr("action", "/admin/Teacher/editar");
+                    $("#add-teacher").attr("data-message", "Registro actualizado con éxito");
                     modal.projectDirector.object.find("[name='Id']").val(data.id);
-                    modal.projectDirector.object.find("[name='sede']").val(data.campus);
-                    modal.projectDirector.object.find("[name='curricula']").val(data.mallaCuricular);
-                    modal.projectDirector.object.find("[name='studyProgram']").val(data.studyProgram);
-                    modal.projectDirector.object.find("[name='studyMode']").val(data.studyMode);
+                    modal.projectDirector.object.find("[name='nombre']").val(data.name);
+                    modal.projectDirector.object.find("[name='aPaterno']").val(data.paternalSurName);
+                    modal.projectDirector.object.find("[name='aMaterno']").val(data.maternalsurname);
+                    modal.projectDirector.object.find("[name='email']").val(data.email);
+                    modal.projectDirector.object.find("[name='telefono']").val(data.phoneNumber);
+                    modal.projectDirector.object.find("[name='departamento']").val(data.departament);
+                    modal.projectDirector.object.find("[name='especialidad']").val(data.especiality );
+
+
 
                     modal.projectDirector.object.modal("show");
                 }
             },
-            events: {
-                onHidden: function () {
-                    modal.projectDirector.object.on('hidden.bs.modal', function (e) {
-                        modal.projectDirector.form.object.resetForm();
-                        modal.projectDirector.object.find("[name='Sex']").val(null).trigger("change");
-                        modal.projectDirector.object.find("[name='DepartmentId']").val(null).trigger("change");
-                        modal.projectDirector.object.find("[name='CivilStatus']").val(null).trigger("change");
-                    })
-                },
-                init: function () {
-                    this.onHidden();
-                }
-            },
             init: function () {
                 modal.projectDirector.add.init();
-                modal.projectDirector.events.init();
             }
         },
         init: function () {
             modal.projectDirector.init();
         }
     }
-
-    /* var select = {
-         init: function () {
-             modal.projectDirector.object.find("[name='Sex']").select2({
-                 placeholder: "Seleccionar"
-             });
- 
-             modal.projectDirector.object.find("[name='CivilStatus']").select2({
-                 placeholder: "Seleccionar"
-             });
- 
-             $.ajax({
-                 url: "/departamentos/get"
-             })
-                 .done(function (e) {
-                     modal.projectDirector.object.find("[name='DepartmentId']").select2({
-                         data: e,
-                         placeholder: "Seleccionar departamento"
-                     })
-                 })
-         }
-     }*/
-
     return {
         init: function () {
             datatable.init();
