@@ -12,5 +12,7 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Interfaces
     {
         Task<DataTablesStructs.ReturnedData<object>> GetAsignaturaDataTable(DataTablesStructs.SentParameters parameters1, string search);
         Task Insert(Asignatura entity);
+        Task DeleteAsignatura(Guid id);
+        Task<Asignatura> Get(Guid id);
     }
 }

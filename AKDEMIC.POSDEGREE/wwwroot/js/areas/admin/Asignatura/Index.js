@@ -57,7 +57,7 @@
                             preConfirm: () => {
                                 return new Promise(() => {
                                     $.ajax({
-                                        url: `/admin/Teacher/eliminar/${id}`,
+                                        url: `/admin/Asignatura/eliminar/${id}`,
                                         type: "POST",
                                         data: {
                                             id: id
@@ -86,42 +86,9 @@
                         });
                     })
                 },
-                onConfiguration: function () {
-                    $("#datatable_data").on("click", ".btn-configuration", function () {
-                        var id = $(this).data("id");
-                        $.ajax({
-                            url: `/admin/master/matricula/${id}`,
-                            type: 'Post',
-                            success: function (data) {
-                                // Primera solicitud AJAX exitosa
-                                var dato = data.campus;
-                                $("#idSede").html(dato);
-                                $.ajax({
-                                    url: "/admin/master/matricula",
-                                    type: 'Get',
-                                    success: function (data) {
-                                        // Segunda solicitud AJAX exitosa
-
-                                        window.location.href = "https://localhost:7273/admin/master/matricula";
-                                    }
-                                });
-                            },
-                            error: function (error) {
-                                swal({
-                                    type: "error",
-                                    title: "Error",
-                                    confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
-                                    confirmButtonText: "Entendido",
-                                    text: e.status === 502 ? "No hay respuesta del servidor" : e.responseText
-                                });
-                            }
-                        });
-                    })
-                },
                 init: function () {
                     this.onEdit();
                     this.onDelete();
-                    this.onConfiguration();
                 }
             },
             reload: function () {
@@ -195,7 +162,7 @@
             add: {
                 show: function () {
                     $("#add_projectDirector").on("click", function () {
-                        modal.projectDirector.object.find(".modal-title").text("Agregar Maestria");
+                        modal.projectDirector.object.find(".modal-title").text("Agregar Asignatura");
                         $("#add-asignatura").attr("action", "Asignatura/Agregar");
                         $("#add-asignatura").attr("data-message", "Registro agregado con éxito");
                         modal.projectDirector.object.modal("show");
@@ -207,34 +174,24 @@
             },
             edit: {
                 show: function (data) {
-                    modal.projectDirector.object.find(".modal-title").text("Editar una maestria");
-                    $("#add-asignatura").attr("action", "/admin/master/editar");
+                    modal.projectDirector.object.find(".modal-title").text("Editar una Asignatura");
+                    $("#add-asignatura").attr("action", "/admin/Asignatura/editar");
                     $("#add-asignatura").attr("data-message", "Registro actualizado con éxito");
                     modal.projectDirector.object.find("[name='Id']").val(data.id);
-                    modal.projectDirector.object.find("[name='sede']").val(data.campus);
-                    modal.projectDirector.object.find("[name='curricula']").val(data.mallaCuricular);
-                    modal.projectDirector.object.find("[name='studyProgram']").val(data.studyProgram);
-                    modal.projectDirector.object.find("[name='studyMode']").val(data.studyMode);
+                    modal.projectDirector.object.find("[name='codigo']").val(data.code);
+                    modal.projectDirector.object.find("[name='nameAsignatura']").val(data.nameAsignatura);
+                    modal.projectDirector.object.find("[name='credito']").val(data.credits);
+                    modal.projectDirector.object.find("[name='hteoricas']").val(data.teoricasHours);
+                    modal.projectDirector.object.find("[name='hpracticas']").val(data.practicalHours);
+                    modal.projectDirector.object.find("[name='totalhoras']").val(data.totalHours);
+                    modal.projectDirector.object.find("[name='requisito']").val(data.requisito);
 
                     modal.projectDirector.object.modal("show");
                 }
             },
-            events: {
-                onHidden: function () {
-                    modal.projectDirector.object.on('hidden.bs.modal', function (e) {
-                        modal.projectDirector.form.object.resetForm();
-                        modal.projectDirector.object.find("[name='Sex']").val(null).trigger("change");
-                        modal.projectDirector.object.find("[name='DepartmentId']").val(null).trigger("change");
-                        modal.projectDirector.object.find("[name='CivilStatus']").val(null).trigger("change");
-                    })
-                },
-                init: function () {
-                    this.onHidden();
-                }
-            },
             init: function () {
                 modal.projectDirector.add.init();
-                modal.projectDirector.events.init();
+               
             }
         },
         init: function () {

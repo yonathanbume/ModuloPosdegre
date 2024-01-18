@@ -8,6 +8,7 @@ using AKDEMIC.CORE.Services;
 using AKDEMIC.ENTITIES.Models.PosDegree;
 using AKDEMIC.POSDEGREE.Areas.Admin.Models.TeacherViewModel;
 using AKDEMIC.POSDEGREE.Areas.Admin.Models.AsignaturaViewModel;
+using AKDEMIC.REPOSITORY.Data;
 
 namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
 {
@@ -19,11 +20,12 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
     {
        public  readonly  IAsignaturaService _asignaturaService;
         private readonly IDataTablesService _dataTablesService;
-
-        public AsignaturaController(IAsignaturaService asignaturaService, IDataTablesService dataTablesService )
+        private readonly AkdemicContext _context;
+        public AsignaturaController(AkdemicContext context, IAsignaturaService asignaturaService, IDataTablesService dataTablesService )
         {
             _asignaturaService = asignaturaService;
             _dataTablesService = dataTablesService;
+            _context= context;
         }
         [HttpGet("getallasignatura")]
         public async Task<IActionResult> GetAllAsignatura(string search)
@@ -52,6 +54,28 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             await _asignaturaService.Insert(entity);
             return RedirectToAction("Index");
 
+        }
+        [HttpPost("eliminar/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _asignaturaService.DeleteAsignatura(id);
+            return RedirectToAction("Index");
+        }
+        [HttpPost("editar")]
+        public async Task<IActionResult> Edit(AddAsignaturaViewModel model)
+        {
+
+            var entity = await _asignaturaService.Get(model.Id);
+
+            entity.Code = model.codigo;
+            entity.Credits = model.credito;
+            entity.NameAsignatura = model.nameAsignatura;
+            entity.TeoricasHours = model.hteoricas;
+            entity.PracticalHours = model.hpracticas;
+            entity.TotalHours= model.totalhoras;
+            entity.Requisito = model.requisito;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using AKDEMIC.CORE.Structs;
 using AKDEMIC.ENTITIES.Models.PosDegree;
+using AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios;
 using AKDEMIC.REPOSITORY.Repositories.PosDegree.Interfaces;
 using AKDEMIC.SERVICE.Services.PosDegree.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,17 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Implementations
         public async Task Delete(Master entity)
         {
            // await _masterRepository.Delete(entity);
+        }
+
+        public  async Task DeleteAsignatura(Guid id)
+        {
+            var asignatura= await _asignaturaRepository.Get(id);
+            await _asignaturaRepository.Delete(asignatura);
+        }
+
+        public async  Task<Asignatura> Get(Guid id)
+        {
+            return await _asignaturaRepository.Get(id);
         }
 
         public Task<DataTablesStructs.ReturnedData<object>> GetAsignaturaDataTable(DataTablesStructs.SentParameters parameters1, string search)
