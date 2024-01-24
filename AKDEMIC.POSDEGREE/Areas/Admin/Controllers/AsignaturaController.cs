@@ -12,7 +12,8 @@ using AKDEMIC.REPOSITORY.Data;
 
 namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
 {
-    [Authorize]
+  
+   [Authorize]
     [Area("Admin")]
     [Route("admin/asignatura")]
     // GET: GestionController
@@ -27,7 +28,7 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             _dataTablesService = dataTablesService;
             _context= context;
         }
-        [HttpGet("getallasignatura")]
+         [HttpGet("getallasignatura")]
         public async Task<IActionResult> GetAllAsignatura(string search)
         {
             var parameters = _dataTablesService.GetSentParameters();
