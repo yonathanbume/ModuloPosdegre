@@ -35,7 +35,7 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
             }
             var recorFilter = await query.CountAsync();
               
-        var data = await query.Skip(parameters1.PagingFirstRecord)
+            var data = await query.Skip(parameters1.PagingFirstRecord)
                     .Take(parameters1.RecordsPerDraw).Select(x => new {
                         x.id,
                         x.Code,

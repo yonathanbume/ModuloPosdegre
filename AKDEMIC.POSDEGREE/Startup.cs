@@ -290,8 +290,13 @@ namespace AKDEMIC.POSDEGREE
             services.AddScoped(typeof(IAsignaturaRepository), typeof(AsignaturaRepository));
             services.AddTransient<IAsignaturaService, AsignaturaService>();
 
+<<<<<<< HEAD
             services.AddScoped(typeof(ITypeEnrollmentRepository), typeof(TypeEnrollmentRepository));
             services.AddTransient<ITypeEnrollmentService, TypeEnrollmentService>();
+=======
+            services.AddScoped(typeof(ISemestreRepository), typeof(SemestreRepository));
+            services.AddTransient<ISemestreService, SemestreService>();
+>>>>>>> feature/implementationFuncionalitySemestre
             #endregion
 
             #region Application Services
