@@ -170,9 +170,10 @@
             },
             edit: {
                 show: function (data) {
-                    modal.projectDirector.object.find(".modal-title").text("Editar una Asignatura");
+                    modal.projectDirector.object.find(".modal-title").text("Editar una Semestre");
                     $("#add-semestre").attr("action", "/admin/semestre/editar");
                     $("#add-semestre").attr("data-message", "Registro actualizado con éxito");
+                    modal.projectDirector.object.find("[name='Id']").val(data.id);
                     modal.projectDirector.object.find("[name='codigo']").val(data.name);
                     modal.projectDirector.object.find("[name='fInicio']").val(data.startDate);
                     modal.projectDirector.object.find("[name='fFinalizacion']").val(data.endDate);
