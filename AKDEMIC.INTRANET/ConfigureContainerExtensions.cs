@@ -72,6 +72,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TeacherService = AKDEMIC.SERVICE.Services.Generals.Implementations.TeacherService;
 
 namespace AKDEMIC.INTRANET
 {
@@ -93,7 +94,7 @@ namespace AKDEMIC.INTRANET
             serviceCollection.AddScoped(typeof(IRoleRepository), typeof(RoleRepository));
             serviceCollection.AddScoped(typeof(IAcademicProgramRepository), typeof(AcademicProgramRepository));
             serviceCollection.AddScoped(typeof(IStudentRepository), typeof(StudentRepository));
-            serviceCollection.AddScoped(typeof(ITeacherRepository), typeof(TeacherRepository));
+            serviceCollection.AddScoped(typeof(ITeacherRepository), typeof(REPOSITORY.Repositories.Generals.Implementations.TeacherRepository));
             serviceCollection.AddScoped(typeof(ICountryRepository), typeof(CountryRepository));
             serviceCollection.AddScoped(typeof(IDepartmentRepository), typeof(DepartmentRepository));
             serviceCollection.AddScoped(typeof(IProvinceRepository), typeof(ProvinceRepository));

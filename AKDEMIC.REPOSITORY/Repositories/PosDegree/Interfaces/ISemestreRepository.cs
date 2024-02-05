@@ -12,6 +12,6 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Interfaces
     public  interface ISemestreRepository:IRepository<Semestre>
     {
         Task<DataTablesStructs.ReturnedData<object>> GetSemestreDataTable(DataTablesStructs.SentParameters parameters1, string search);
-
+        Task<object> GetSemestreAllJson();
     }
 }

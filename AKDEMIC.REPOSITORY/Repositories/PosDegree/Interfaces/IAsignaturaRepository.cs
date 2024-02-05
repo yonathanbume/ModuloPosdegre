@@ -12,6 +12,6 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Interfaces
     public  interface IAsignaturaRepository:IRepository<Asignatura>
     {
         Task<DataTablesStructs.ReturnedData<object>> GetAsignaturaDataTable(DataTablesStructs.SentParameters parameters1, string search);
-
+        Task<object> GetAsignaturaAllJson();
     }
 }

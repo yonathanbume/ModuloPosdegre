@@ -14,5 +14,7 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Interfaces
         Task Insert(Asignatura entity);
         Task DeleteAsignatura(Guid id);
         Task<Asignatura> Get(Guid id);
+
+        Task<object> GetAsignaturaAllJson();
     }
 }

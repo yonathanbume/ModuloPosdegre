@@ -418,6 +418,21 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
             await _context.SaveChangesAsync();
         }
 
+        public async Task<object> GetMasterAllJson()
+        {
+            var maestrias = await _context.Masters
+                .OrderBy(x => x.MallaCuricular)
+                .Select(f => new
+                {
+                    id = f.id,
+                    text = f.MallaCuricular
+                }).ToListAsync();
+
+            maestrias.Insert(0, new { id = new Guid(), text = "Todas" });
+
+            return maestrias;
+        }
+
         /*    public async Task Update( Master model)
            {
                var master = new Master

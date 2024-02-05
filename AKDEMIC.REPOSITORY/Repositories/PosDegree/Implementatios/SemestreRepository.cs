@@ -20,6 +20,21 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
 
         }
 
+        public async Task<object> GetSemestreAllJson()
+        {
+            var semestre = await _context.Semestres
+                .OrderBy(x => x.Name)
+                .Select(f => new
+                {
+                    id = f.id,
+                    text = f.Name
+                }).ToListAsync();
+
+            semestre.Insert(0, new { id = new Guid(), text = "Todas" });
+
+            return semestre;
+        }
+
         public async  Task<DataTablesStructs.ReturnedData<object>> GetSemestreDataTable(DataTablesStructs.SentParameters parameters1, string search)
         {
             var query = _context.Semestres.AsNoTracking();

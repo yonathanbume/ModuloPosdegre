@@ -57,6 +57,21 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
             };
         }
 
+        public async  Task<object> GetAsignaturaAllJson()
+        {
+            var asignaturas = await _context.Asignaturas
+                .OrderBy(x => x.NameAsignatura)
+                .Select(f => new
+                {
+                    id = f.id,
+                    text = f.NameAsignatura
+                }).ToListAsync();
+
+            asignaturas.Insert(0, new { id = new Guid(), text = "Todas" });
+
+            return asignaturas;
+        }
+
         public Task<DataTablesStructs.ReturnedData<object>> GetMasterDataTable(DataTablesStructs.SentParameters parameters1, string search)
         {
             throw new NotImplementedException();

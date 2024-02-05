@@ -14,6 +14,6 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Interfaces
         Task DeleteTeacher(Guid id);
         Task<PosdegreeTeacher> Get(Guid id);
         Task<DataTablesStructs.ReturnedData<object>> GetTeacherDataTable(DataTablesStructs.SentParameters parameters1, string search);
-
+        Task<object> GetDocenteAllJson();
     }
 }

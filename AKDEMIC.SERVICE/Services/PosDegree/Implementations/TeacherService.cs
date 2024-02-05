@@ -39,6 +39,11 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Implementations
           return  await  _TeacherRepository.Get(id);
         }
 
+        public async Task<object> GetDocenteAllJson()
+        {
+            return  await _TeacherRepository.GetDocenteAllJson();
+        }
+
         public Task<DataTablesStructs.ReturnedData<object>> GetTeacherDataTable(DataTablesStructs.SentParameters parameters1, string search)
         => _TeacherRepository.GetTeacherDataTable(parameters1,search);
 
@@ -47,7 +52,5 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Implementations
             await _TeacherRepository.Insert(entity);
             
         }
-
-      
     }
 }

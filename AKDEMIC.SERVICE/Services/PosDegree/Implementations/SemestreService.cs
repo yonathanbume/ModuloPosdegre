@@ -28,6 +28,11 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Implementations
            return await _semestreRepository.Get(id);
         }
 
+        public async Task<object> GetSemestreAllJson()
+        {
+           return await _semestreRepository.GetSemestreAllJson();
+        }
+
         public Task<DataTablesStructs.ReturnedData<object>> GetSemestreDataTable(DataTablesStructs.SentParameters parameters1, string search)
         => _semestreRepository.GetSemestreDataTable(parameters1,search);
 

@@ -14,5 +14,6 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Interfaces
         Task Insert(Semestre entity);
         Task DeleteSemestre(Guid id);
         Task<Semestre> Get(Guid id);
+        Task<object> GetSemestreAllJson();
     }
 }

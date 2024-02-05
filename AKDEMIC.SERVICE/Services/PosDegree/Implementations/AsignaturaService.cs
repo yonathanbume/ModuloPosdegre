@@ -36,6 +36,11 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Implementations
             return await _asignaturaRepository.Get(id);
         }
 
+        public async Task<object> GetAsignaturaAllJson()
+        {
+            return await _asignaturaRepository.GetAsignaturaAllJson();
+        }
+
         public Task<DataTablesStructs.ReturnedData<object>> GetAsignaturaDataTable(DataTablesStructs.SentParameters parameters1, string search)
        => _asignaturaRepository.GetAsignaturaDataTable(parameters1, search);
 

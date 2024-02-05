@@ -20,6 +20,7 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Interfaces
         Task DownloadExcel(IXLWorksheet worksheet);
         Task UpdateAsync(Master entity);
         Task SaveChangesAsync();
+        Task<object> GetMasterAllJson();
 
 
     }

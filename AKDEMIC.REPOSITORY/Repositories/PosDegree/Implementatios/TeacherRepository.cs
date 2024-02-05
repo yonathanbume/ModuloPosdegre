@@ -22,7 +22,22 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
     public  class TeacherRepository:Repository<PosdegreeTeacher>,ITeacherPRepository
     {
         public TeacherRepository(AkdemicContext context):base(context) { }
-       
+
+        public async  Task<object> GetDocenteAllJson()
+        {
+            var docentes = await _context.PosdegreeTeachers
+                 .OrderBy(x => x.name)
+                 .Select(f => new
+                 {
+                     id = f.id,
+                     text = f.name
+                 }).ToListAsync();
+
+            docentes.Insert(0, new { id = new Guid(), text = "Todas" });
+
+            return docentes;
+        }
+
         public async Task<DataTablesStructs.ReturnedData<object>> GetTeacherDataTable(DataTablesStructs.SentParameters parameters1, string search)
         {
             var query = _context.PosdegreeTeachers.AsNoTracking();
