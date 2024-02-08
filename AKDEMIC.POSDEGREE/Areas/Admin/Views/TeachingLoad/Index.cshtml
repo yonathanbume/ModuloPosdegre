@@ -1,59 +1,57 @@
 ﻿@using AKDEMIC.POSDEGREE.ViewModels;
 
 @{
-    ViewData["Title"] = "matricuala";
+    ViewData["Title"] = "matricula";
     Layout = "~/Views/Shared/Templates/Default/_Layout.cshtml";
     ViewData["Breadcrumbs"] = new[] {
 new BreadcrumbViewData { Name = (string)ViewData["Title"]}
 
-};
-
+    };
 }
 <div class="m-content">
-        <div class="m-portlet__body">
-            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-                <div class="row align-items-center">
-                    <div class="col-xl-12 order-2 order-xl-1">
-                        <div class="row">
-                            <div class="form-group m-form__group col-xl-4">
-                                <label>Nro Operacion</label>
-                                <div class="m-input m-input-icon m-select2 m-input-icon--left">
-                                    <input type="number" />
-                                </div>
-                            </div>
-                            <div class="form-group m-form__group col-xl-4">
-                                <label>DNI</label>
-                                <div class="m-input m-input-icon m-select2 m-input-icon--left">
-                                    <input type="text" />
-                                </div>
-                            </div>
-                            <div class="m-portlet_header-tools">
-                                <a class="btn btn-primary btn-action btn-sm mt-3" href="semestre/Agregar"
-                                   data-toggle="modal" data-target="#AddSemestre" id="add_projectDirector">
-                                    <span>
-                                        Buscar
-                                    </span>
-                                </a>
+    <div class="m-portlet__body">
+        <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+            <div class="row align-items-center">
+                <div class="col-xl-12 order-2 order-xl-1">
+                    <div class="row">
+                        <div class="form-group m-form__group col-xl-3 m--margin-top-25">
+                            <label>Nro Operacion</label>
+                            <div class="m-input">
+                                <input type="text" class="form-control m-input" id="startNumeroOperacion" placeholder="nro operacion">
                             </div>
                         </div>
+                        <div class="form-group m-form__group col-xl-3  m--margin-top-25">
+                            <label>DNI</label>
+                            <div class="m-input">
+                                <input type="text" class="form-control m-input" id="startDateDni" placeholder="Dni">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group col-xl-3  m--margin-top-25">
+                            <label>&emsp;</label>
+                            <div class="m-input">
+                                <button type="button" id="btn-student" class="btn btn-primary"><i class="la la-search"></i></button>
+                            </div>
+                        </div>
+                       
                     </div>
-                
                 </div>
+
             </div>
         </div>
+    </div>
 </div>
-<div id="AddTeacher" class="modal fade" role="dialog">
+<div id="AddMatricula" class="modal fade" role="dialog">
     <div class="modal-dialog " role="document">
         <div class="modal-content ">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    Agrega  Docentes
+                    Datos del Alumno de Posgrado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="add-teacher" method="post">
+            <form id="add-matricula" method="post">
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="form-group m-form__group col- col-lg-12">
@@ -61,34 +59,50 @@ new BreadcrumbViewData { Name = (string)ViewData["Title"]}
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="form-group m-form__group col- col-lg-12">
-                            <label id="Nombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" maxlength="200" required />
+                        <div class="form-group m-form__group col- col-lg-6">
+                            <label id="Codigo">cod posgrado</label>
+                            <input type="text" name="Codigo" class="form-control" maxlength="200" />
+                        </div>
+                        <div class="form-group m-form__group col- col-lg-6">
+                            <label id="nombre">Nombre</label>
+                            <input type="text" name="Nombre" id="namepersonal" class="form-control" maxlength="200" required />
                         </div>
                     </div>
-                    <div class="row">
-
-                        <div class="form-group m-form__group col-xl-4">
-                            <label>Semestre</label>
-                            <div class="m-input m-input-icon m-select2 m-input-icon--left">
-                                <select id="semestreId" class="form-control m-input"></select>
-                            </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-6">
+                            <label id="apellidoP">Apellido Paterno</label>
+                            <input type="text" name="ApellidoP" class="form-control" maxlength="200" required placeholder="apellidos paterno" />
                         </div>
-                        <div class="form-group m-form__group col-xl-4">
-                            <label>Maestria</label>
-                            <div class="m-input m-input-icon m-select2 m-input-icon--left">
-                                <select id="maestriaId" class="form-control m-input"></select>
-                            </div>
+                        <div class="form-group m-form__group col- col-lg-6">
+                            <label id="apellidoM">Apellido Materno</label>
+                            <input type="text" name="ApellidoM" class="form-control" maxlength="200" required placeholder="apellido materno" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-3">
+                            <label id="telefono">Maestria</label>
+                            <input type="text" name="telefono" class="form-control" maxlength="200" />
+                        </div>
+                        <div class="form-group m-form__group col- col-lg-3">
+                            <label id="telefono">Semestre</label>
+                            <input type="text" name="telefono" class="form-control" maxlength="200" />
+                        </div>
+                        <div class="form-group m-form__group col- col-lg-3">
+                            <label id="telefono">Tipo Matricula</label>
+                            <input type="text" name="telefono" class="form-control" maxlength="200" />
+                        </div>
+                        <div class="form-group m-form__group col- col-lg-3 ">
+                            <label id="telefono">Pago Matricula</label>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                si
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div style="text-align:right;">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Cerrar
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-action ladda-button" data-style="slide-down">
-                            <span class="ladda-label">Guardar</span>
+                        <button type="submit" class="btn btn-info btn-action ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Mostrar</span>
                         </button>
                     </div>
                 </div>
@@ -96,8 +110,65 @@ new BreadcrumbViewData { Name = (string)ViewData["Title"]}
         </div>
     </div>
 </div>
+<form id="add-student" method="post">
+    <div class="modal-body">
+        <div class="form-group row">
+            <div class="form-group m-form__group col- col-lg-12">
 
-
+                <input type="hidden" name="Id" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group m-form__group col- col-lg-6">
+                <label id="Codigo">cod posgrado</label>
+                <input type="text" name="Codigo" class="form-control" maxlength="200" />
+            </div>
+            <div class="form-group m-form__group col- col-lg-6">
+                <label id="nombre">Nombre</label>
+                <input type="text" name="Nombre" id="namepersonal" class="form-control" maxlength="200" required />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group m-form__group col- col-lg-6">
+                <label id="apellidoP">Apellido Paterno</label>
+                <input type="text" name="ApellidoP" class="form-control" maxlength="200" required placeholder="apellidos paterno" />
+            </div>
+            <div class="form-group m-form__group col- col-lg-6">
+                <label id="apellidoM">Apellido Materno</label>
+                <input type="text" name="ApellidoM" class="form-control" maxlength="200" required placeholder="apellido materno" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group m-form__group col- col-lg-3">
+                <label>Maestria</label>
+                <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                    <select id="maestriaId" class="form-control m-input"></select>
+                </div>
+            </div>
+            <div class="form-group m-form__group col- col-lg-3">
+                <label>Semestre</label>
+                <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                    <select id="semestreId" class="form-control m-input"></select>
+                </div>
+            </div>
+            <div class="form-group m-form__group col- col-lg-3">
+                <label id="telefono">Tipo Matricula</label>
+                <input type="text" name="telefono" class="form-control" maxlength="200" />
+            </div>
+            <div class="form-group m-form__group col- col-lg-3 ">
+                <label id="telefono">Pago Matricula</label>
+                <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">si</button>
+                    <button type="submit" class="btn btn-info btn-action ladda-button" data-style="slide-down">
+                        <span class="ladda-label">mostrar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+</form>
 @section Scripts {
 
     <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>

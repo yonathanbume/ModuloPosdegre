@@ -51,6 +51,7 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             }
             return Ok(user);
         }
+      
         [HttpPost("editar")]
         public async Task<IActionResult> Edit(AddPosdegreeStudentViewModel model)
         {

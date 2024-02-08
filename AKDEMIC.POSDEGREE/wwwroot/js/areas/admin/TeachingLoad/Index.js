@@ -1,5 +1,20 @@
 ﻿var TeachingLoad = function () {
+    $('#btn-student').click(function () {
+        var dni = $("#startDateDni").val();
+        alert(dni);
+        $.ajax({
+            url: `/admin/TeachingLoad/getallstudent/${dni}`,
+            type: "Post",
 
+        }).done(function (data) {
+            $('#AddMatricula').modal('show');
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            // Manejar el error aquí
+            console.error("Error en la solicitud AJAX:", errorThrown);
+            // Por ejemplo, mostrar un mensaje de error al usuario
+            alert("Error al cargar estudiantes. Por favor, inténtalo de nuevo más tarde.");
+        });
+    });
     var select = {
      
         Semestre: function () {
@@ -45,6 +60,10 @@ $(function () {
 });
 
 
+$(() => {
+    TeachingLoad.load();
+
+});
 
 
 

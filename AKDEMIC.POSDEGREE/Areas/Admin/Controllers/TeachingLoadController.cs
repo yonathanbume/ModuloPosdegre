@@ -1,5 +1,6 @@
 ﻿using AKDEMIC.ENTITIES.Models.PosDegree;
 using AKDEMIC.POSDEGREE.Controllers;
+using AKDEMIC.REPOSITORY.Data;
 using AKDEMIC.SERVICE.Services.PosDegree.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,13 +17,15 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
         public readonly IMasterService _masterService;
         public readonly ISemestreService _semestreService;
         public readonly ITeacherPService _teacherPService;
+        private readonly AkdemicContext _context;
         public TeachingLoadController(IAsignaturaService asignaturaService, IMasterService masterService, ISemestreService semestreService,
-         ITeacherPService teacherPService)
+         ITeacherPService teacherPService, AkdemicContext context)
         {
             _asignaturaService = asignaturaService;
             _masterService = masterService;
             _semestreService = semestreService;
             _teacherPService = teacherPService;
+            _context = context;
         }
         public ActionResult Index()
         {
@@ -39,6 +42,7 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             return Ok(new { items = result });
 
         }
+
         [HttpGet("Docentes/get")]
         public async Task<IActionResult> GetDocente()
         {
@@ -59,6 +63,17 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             var result = await _masterService.GetMasterAllJson();
             return Ok(new { items = result });
 
+        }
+        [HttpPost("getallstudent/{dni}")]
+        public async Task<IActionResult> GetStudentDNI(string dni)
+        {
+            var student = _context.PosdegreeStudents.FirstOrDefault(u => u.Dni == dni);
+            if (student == null)
+            {
+
+                return NotFound();
+            }
+            return Ok(student);
         }
     }
 }
