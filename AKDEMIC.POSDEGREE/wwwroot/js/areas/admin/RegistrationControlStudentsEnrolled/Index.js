@@ -200,7 +200,8 @@
                     modal.projectDirector.object.find("[name='File']").val(data.File);
                     modal.projectDirector.object.modal("show");
                 }
-            },AddStudent: {
+            },
+            AddStudent: {
                 show: function (data)
                 {
                     modal.projectDirector.object.find(".modal-title").text("Regitrar un estudiante posgrado");

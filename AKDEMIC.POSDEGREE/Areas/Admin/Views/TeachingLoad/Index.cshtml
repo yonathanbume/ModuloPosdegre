@@ -80,12 +80,16 @@ new BreadcrumbViewData { Name = (string)ViewData["Title"]}
                     </div>
                     <div class="form-group row">
                         <div class="form-group m-form__group col- col-lg-3">
-                            <label id="telefono">Maestria</label>
-                            <input type="text" name="telefono" class="form-control" maxlength="200" />
+                            <label>Maestria</label>
+                            <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                                <select id="maestriaId" class="form-control m-input"></select>
+                            </div>
                         </div>
                         <div class="form-group m-form__group col- col-lg-3">
-                            <label id="telefono">Semestre</label>
-                            <input type="text" name="telefono" class="form-control" maxlength="200" />
+                            <label>Semestre</label>
+                            <div class="m-input m-input-icon m-select2 m-input-icon--left">
+                                <select id="semestreId" class="form-control m-input"></select>
+                            </div>
                         </div>
                         <div class="form-group m-form__group col- col-lg-3">
                             <label id="telefono">Tipo Matricula</label>
@@ -110,65 +114,6 @@ new BreadcrumbViewData { Name = (string)ViewData["Title"]}
         </div>
     </div>
 </div>
-<form id="add-student" method="post">
-    <div class="modal-body">
-        <div class="form-group row">
-            <div class="form-group m-form__group col- col-lg-12">
-
-                <input type="hidden" name="Id" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="form-group m-form__group col- col-lg-6">
-                <label id="Codigo">cod posgrado</label>
-                <input type="text" name="Codigo" class="form-control" maxlength="200" />
-            </div>
-            <div class="form-group m-form__group col- col-lg-6">
-                <label id="nombre">Nombre</label>
-                <input type="text" name="Nombre" id="namepersonal" class="form-control" maxlength="200" required />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="form-group m-form__group col- col-lg-6">
-                <label id="apellidoP">Apellido Paterno</label>
-                <input type="text" name="ApellidoP" class="form-control" maxlength="200" required placeholder="apellidos paterno" />
-            </div>
-            <div class="form-group m-form__group col- col-lg-6">
-                <label id="apellidoM">Apellido Materno</label>
-                <input type="text" name="ApellidoM" class="form-control" maxlength="200" required placeholder="apellido materno" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="form-group m-form__group col- col-lg-3">
-                <label>Maestria</label>
-                <div class="m-input m-input-icon m-select2 m-input-icon--left">
-                    <select id="maestriaId" class="form-control m-input"></select>
-                </div>
-            </div>
-            <div class="form-group m-form__group col- col-lg-3">
-                <label>Semestre</label>
-                <div class="m-input m-input-icon m-select2 m-input-icon--left">
-                    <select id="semestreId" class="form-control m-input"></select>
-                </div>
-            </div>
-            <div class="form-group m-form__group col- col-lg-3">
-                <label id="telefono">Tipo Matricula</label>
-                <input type="text" name="telefono" class="form-control" maxlength="200" />
-            </div>
-            <div class="form-group m-form__group col- col-lg-3 ">
-                <label id="telefono">Pago Matricula</label>
-                <div class="m-input m-input-icon m-select2 m-input-icon--left">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">si</button>
-                    <button type="submit" class="btn btn-info btn-action ladda-button" data-style="slide-down">
-                        <span class="ladda-label">mostrar</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-        </div>
-    </div>
-</form>
 @section Scripts {
 
     <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
