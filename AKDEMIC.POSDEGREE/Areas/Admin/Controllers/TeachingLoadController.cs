@@ -1,6 +1,8 @@
-﻿using AKDEMIC.ENTITIES.Models.PosDegree;
+﻿using AKDEMIC.CORE.Services;
+using AKDEMIC.ENTITIES.Models.PosDegree;
 using AKDEMIC.POSDEGREE.Controllers;
 using AKDEMIC.REPOSITORY.Data;
+using AKDEMIC.SERVICE.Services.EconomicManagement.Interfaces;
 using AKDEMIC.SERVICE.Services.PosDegree.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,15 +19,20 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
         public readonly IMasterService _masterService;
         public readonly ISemestreService _semestreService;
         public readonly ITeacherPService _teacherPService;
+        public readonly IUserCurrentAccountService _userCurrentAccountService;
         private readonly AkdemicContext _context;
+        private readonly IDataTablesService _dataTablesService;
+
         public TeachingLoadController(IAsignaturaService asignaturaService, IMasterService masterService, ISemestreService semestreService,
-         ITeacherPService teacherPService, AkdemicContext context)
+         ITeacherPService teacherPService, AkdemicContext context, IUserCurrentAccountService userCurrentAccountService, IDataTablesService dataTablesService)
         {
             _asignaturaService = asignaturaService;
             _masterService = masterService;
             _semestreService = semestreService;
             _teacherPService = teacherPService;
             _context = context;
+            _userCurrentAccountService= userCurrentAccountService;
+            _dataTablesService= dataTablesService;
         }
         public ActionResult Index()
         {
@@ -40,9 +47,7 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
         {
             var result = await _asignaturaService.GetAsignaturaAllJson();
             return Ok(new { items = result });
-
         }
-
         [HttpGet("Docentes/get")]
         public async Task<IActionResult> GetDocente()
         {
@@ -55,14 +60,19 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
         {
             var result = await _semestreService.GetSemestreAllJson();
             return Ok(new { items = result });
-
         }
         [HttpGet("Master/get")]
         public async Task<IActionResult> GetMaestria()
         {
             var result = await _masterService.GetMasterAllJson();
             return Ok(new { items = result });
-
+        }
+        [HttpGet("getalluserCurrentAccount")]
+        public async Task<IActionResult> GetAlluserCurrentAccount(string userId)
+        {
+            var parameters = _dataTablesService.GetSentParameters();
+            var result = await _userCurrentAccountService.GetUserCurrentAccounts(userId);
+            return Ok(result);
         }
         [HttpPost("getallstudent/{dni}")]
         public async Task<IActionResult> GetStudentDNI(string dni)

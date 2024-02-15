@@ -6,7 +6,8 @@
             type: "Post",
 
         }).done(function (data) {
-            modal.projectDirector.AddStudent.show(data);
+         $('#startNumeroOperacion').val(data.dni); 
+          //  modal.projectDirector.AddStudent.show(data);
         }).fail(function (jqXHR, textStatus, errorThrown) {
             // Manejar el error aquí
             console.error("Error en la solicitud AJAX:", errorThrown);

@@ -292,8 +292,13 @@ namespace AKDEMIC.POSDEGREE
 
             services.AddScoped(typeof(ITypeEnrollmentRepository), typeof(TypeEnrollmentRepository));
             services.AddTransient<ITypeEnrollmentService, TypeEnrollmentService>();
+
             services.AddScoped(typeof(ISemestreRepository), typeof(SemestreRepository));
             services.AddTransient<ISemestreService, SemestreService>();
+
+            services.AddScoped(typeof(IUserCurrentAccountRepository), typeof(UserCurrentAccountRepository));
+            services.AddTransient<IUserCurrentAccountService, UserCurrentAccountService>();
+
             #endregion
 
             #region Application Services

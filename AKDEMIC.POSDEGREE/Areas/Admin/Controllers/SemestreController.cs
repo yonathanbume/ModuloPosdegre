@@ -58,7 +58,6 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
         [HttpPost("editar")]
         public async Task<IActionResult> Edit(AddSemestreViewModel model)
         {
-
             var entity = await _semestreService.Get(model.id);
 
             entity.StartDate = model.fInicio;
@@ -67,5 +66,6 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
+     
     }
 }
