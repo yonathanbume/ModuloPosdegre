@@ -1,13 +1,52 @@
 ﻿var TeachingLoad = function () {
+    var datatable = {
+        projectDirector: {
+            object: null,
+            options: {
+                ajax: {
+                    url: "/admin/Student/getallstudent",
+                    type: "GET",
+                },
+                columns: [{ data: "", title: "Ciclo" },
+                    { data: "", title: "Código" },
+                    { data: "", title: "Curso" },
+                    { data: "", title: "Créditos" },
+                    { data: "", title: "Vez" },
+                    { data: "", title: "Tipo" },
+                    {
+                        data: null,
+                        title: "Opciones",
+                        orderable: false,
+                        render: function (data) {
+                            var tpm = "";
+                            tpm += `<input type="checkbox" title="Completar" class="btn-check btn m-btn m-btn--icon btn-sm m-btn--icon-only"><i class="la la-check"></i></input>`;
+                            return tpm;
+                        }
+                    }
+                ]
+            },
+            init: function () {
+                datatable.projectDirector.object = $("#datatable_data_Matricula").DataTable(datatable.projectDirector.options);
+            }
+        },
+        init: function () {
+          
+            datatable.projectDirector.init();
+        }
+    }
+
     $('#btn-student').click(function () {
         var dni = $("#startDateDni").val();
         $.ajax({
             url: `/admin/TeachingLoad/getallstudent/${dni}`,
             type: "Post",
-
         }).done(function (data) {
-         $('#startNumeroOperacion').val(data.dni); 
-          //  modal.projectDirector.AddStudent.show(data);
+            $('#Codigop').val(data.codigo);
+            $('#namepersonal').val(data.name);
+            $('#apellidop').val(data.paternalSurname);
+            $('#apellidom').val(data.maternalSurname);
+            $('#AddMatricula').show();
+          //  window.location.href = "https://localhost:7273/admin/master/matricula";
         }).fail(function (jqXHR, textStatus, errorThrown) {
             // Manejar el error aquí
             console.error("Error en la solicitud AJAX:", errorThrown);
@@ -15,8 +54,8 @@
             alert("Error al cargar estudiantes. Por favor, inténtalo de nuevo más tarde.");
         });
     });
+ 
     var select = {
-     
         Semestre: function () {
             return $.ajax({
                 type: 'GET',
@@ -37,6 +76,16 @@
                 });
             });
         },
+        Operacion: function () {
+            return $.ajax({
+                type: 'GET',
+                url: `/admin/TeachingLoad/Semestre/get`.proto().parseURL()
+            }).then(function (data) {
+                $("#startNumeroOperacion").select2({
+                    data: data.items
+                });
+            });
+        }
     };
     var modal = {
         projectDirector: {
@@ -60,15 +109,24 @@
     }
     return {
         load: function () {
-            Promise.all([select.Semestre(), select.Master()]).then(() => {
+         
+            $('#mostrarTable').on('click', function (event) {
+                event.preventDefault();
+                    datatable.init();            
+            });
+            Promise.all([select.Semestre(), select.Master(), select.Operacion()]).then(() => {
                
-                $("#semestreIdP").on('change', function () {
-                    var facultyId = $(this).val();
-                    select.career(facultyId);
+                $("#semestreId").on('change', function () {
+                    var semestre = $(this).val();
+                    select.career(semestre);
                 });
                 $("#maestriaId").on('change', function () {
-                    var facultyId = $(this).val();
-                    select.career(facultyId);
+                    var maestria= $(this).val();
+                    select.career(maestria);
+                });
+                $("#startNumeroOperacion").on('change', function () {
+                    var operacion = $(this).val();
+                    select.career(operacion);
                 });
                
             });
@@ -80,11 +138,6 @@ $(function () {
     TeachingLoad.load();
 });
 
-
-$(() => {
-    TeachingLoad.load();
-
-});
 
 
 

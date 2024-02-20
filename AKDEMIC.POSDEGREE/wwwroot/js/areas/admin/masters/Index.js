@@ -12,7 +12,7 @@
                     }
                 },
                 columns: [
-                    {dta:"",title:"Nro"},
+                    {data:"",title:"Nro"},
                     {data: "campus",title:"Sede"},
                     { data: "mallaCuricular", title: "Curricula" },
                     { data: "studyProgram", title: "Programa De Estudio" },
@@ -27,7 +27,6 @@
                             var tpm = "";
                             tpm += `<button title="Editar" data-object="${data.proto().encode()}" type="button" class="btn-edit btn btn-primary m-btn m-btn--icon btn-sm m-btn--icon-only"><i class="la la-edit"></i></button> `;
                             tpm += `<button title="Eliminar" data-id="${data.id}" type="button" class="btn-delete btn btn-danger m-btn m-btn--icon btn-sm m-btn--icon-only"><i class="la la-trash"></i></button>`;
-                            tpm += `<button title="Configuration" data-id="${data.id}" type="button" class="btn-configuration btn btn-succes m-btn m-btn--icon btn-sm m-btn--icon-only"><i class="fas fa-cog"></i></button>`;
                             return tpm;
                         }
                     }

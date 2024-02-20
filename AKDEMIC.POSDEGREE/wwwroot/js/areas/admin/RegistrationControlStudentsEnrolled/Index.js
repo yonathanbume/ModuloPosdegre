@@ -243,35 +243,12 @@
             modal.projectDirector.init();
         }
     }
-
-   /* var select = {
-        init: function () {
-            modal.projectDirector.object.find("[name='Sex']").select2({
-                placeholder: "Seleccionar"
-            });
-
-            modal.projectDirector.object.find("[name='CivilStatus']").select2({
-                placeholder: "Seleccionar"
-            });
-
-            $.ajax({
-                url: "/departamentos/get"
-            })
-                .done(function (e) {
-                    modal.projectDirector.object.find("[name='DepartmentId']").select2({
-                        data: e,
-                        placeholder: "Seleccionar departamento"
-                    })
-                })
-        }
-    }*/
-
     return {
         init: function () {
       
             datatable.init();
             modal.init();
-           // select.init();
+        
             events.init();
         }
     }
