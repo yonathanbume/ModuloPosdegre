@@ -13,6 +13,8 @@ using AKDEMIC.SERVICE.Services.PosDegree.Implementations;
 using AKDEMIC.SERVICE.Services.PosDegree.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
 {
@@ -56,7 +58,25 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(AddPosdegreeStudentViewModel model)
         {
             var entity = await _posdegreeStudentService.Get(model.Id);
+            // Verificar si el código ya existe en otro registro
+            var existingEntityWithSameCode = await _context.PosdegreeStudents.FirstOrDefaultAsync(e => e.Codigo == model.Codigo && e.Id != model.Id);
+            //verificar si el correo ya existe en otro registro
+            var existingEntityWinthSameCorre=await _context.PosdegreeStudents.FirstOrDefaultAsync(e=>e.Email==model.email && e.Id!=model.Id);
+            //verificar si el dni ya existe en otro registre
+            var existingEntityWinthSameDni = await _context.PosdegreeStudents.FirstOrDefaultAsync(e => e.Dni == model.Dni && e.Id != model.Id);
 
+            if (existingEntityWithSameCode != null)
+            {
+            // Manejar el caso de código repetido, como mostrar un mensaje de error
+             return BadRequest("El código ya está en uso.");
+            }
+            if (existingEntityWinthSameCorre!=null) {
+                return BadRequest("El correo ya está en uso");
+            }
+            if (existingEntityWinthSameDni != null)
+            {
+                return BadRequest("El Dni ya está en uso");
+            }
             entity.Dni = model.Dni;
             entity.Name = model.Nombre;
             entity.PaternalSurname = model.ApellidoP;
@@ -65,7 +85,6 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             entity.Codigo= model.Codigo;
             entity.Address = model.direccion;
             entity.Email = model.email;
-           
             await _context.SaveChangesAsync();
             return Ok();
         }
@@ -83,7 +102,26 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
             var uploadFilePath = await storageService.UploadFile(model.File.OpenReadStream()
                 , ConstantHelpers.CONTAINER_NAMES.INTERNAL_PROCEDURE_DOCUMENT,
                 Path.GetExtension(model.File.FileName), CORE.Helpers.ConstantHelpers.FileStorage.SystemFolder.POSDEGREE);
+            // Verificar si el código ya existe en otro registro
+            var existingEntityWithSameCode = await _context.PosdegreeStudents.FirstOrDefaultAsync(e => e.Codigo == model.Codigo && e.Id != model.Id);
+            //verificar si el correo ya existe en otro registro
+            var existingEntityWinthSameCorre = await _context.PosdegreeStudents.FirstOrDefaultAsync(e => e.Email == model.email && e.Id != model.Id);
+            //verificar si el dni ya existe en otro registre
+            var existingEntityWinthSameDni = await _context.PosdegreeStudents.FirstOrDefaultAsync(e => e.Dni == model.Dni && e.Id != model.Id);
 
+            if (existingEntityWithSameCode != null)
+            {
+                // Manejar el caso de código repetido, como mostrar un mensaje de error
+                return BadRequest("El código ya está en uso.");
+            }
+            if (existingEntityWinthSameCorre != null)
+            {
+                return BadRequest("El correo ya está en uso");
+            }
+            if (existingEntityWinthSameDni != null)
+            {
+                return BadRequest("El Dni ya está en uso");
+            }
             var entity = new PosdegreeStudent
             {
                 Id = model.Id,
@@ -98,7 +136,9 @@ namespace AKDEMIC.POSDEGREE.Areas.Admin.Controllers
                 File = uploadFilePath  //anilizar core y directorio espec´fico
             };
         
+
             await _posdegreeStudentService.Insert(entity);
+            
             return RedirectToAction("Index");
 
         }
