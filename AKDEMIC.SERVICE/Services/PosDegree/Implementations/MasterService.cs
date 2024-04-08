@@ -59,6 +59,11 @@ namespace AKDEMIC.SERVICE.Services.PosDegree.Implementations
         public async Task<Master> Get(Guid id)
         {
              return await _masterRepository.Get(id);
-        }        
+        }
+
+        public async Task<object> GetMasterAllJson()
+        {
+            return await _masterRepository.GetMasterAllJson();
+        }
     }
 }

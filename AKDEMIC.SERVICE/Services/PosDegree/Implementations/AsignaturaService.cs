@@ -1,0 +1,57 @@
+﻿using AKDEMIC.CORE.Structs;
+using AKDEMIC.ENTITIES.Models.PosDegree;
+using AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios;
+using AKDEMIC.REPOSITORY.Repositories.PosDegree.Interfaces;
+using AKDEMIC.SERVICE.Services.PosDegree.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AKDEMIC.SERVICE.Services.PosDegree.Implementations
+{
+    public  class AsignaturaService:IAsignaturaService
+    {
+        public readonly IAsignaturaRepository _asignaturaRepository;
+        public AsignaturaService(IAsignaturaRepository asignaturaRepository)
+        {
+            _asignaturaRepository = asignaturaRepository ;
+        }
+      
+        public async Task Delete(Master entity)
+        {
+           // await _masterRepository.Delete(entity);
+        }
+
+        public  async Task DeleteAsignatura(Guid id)
+        {
+            var asignatura= await _asignaturaRepository.Get(id);
+            await _asignaturaRepository.Delete(asignatura);
+        }
+
+        public async  Task<Asignatura> Get(Guid id)
+        {
+            return await _asignaturaRepository.Get(id);
+        }
+
+        public async Task<object> GetAsignaturaAllJson()
+        {
+            return await _asignaturaRepository.GetAsignaturaAllJson();
+        }
+
+        public Task<DataTablesStructs.ReturnedData<object>> GetAsignaturaDataTable(DataTablesStructs.SentParameters parameters1, string search)
+       => _asignaturaRepository.GetAsignaturaDataTable(parameters1, search);
+
+        public async  Task Insert(Asignatura entity)
+        {
+            await _asignaturaRepository.Insert(entity);
+        }
+
+        /* public Task<List<Master>> GetAllMaster()
+         {
+             //return _masterRepository.GetAll();
+         }*/
+    }
+}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.ComponentModel.DataAnnotations;
 namespace AKDEMIC.ENTITIES.Models.PosDegree
 {
     public  class PosdegreeStudent
@@ -18,7 +18,5 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string File { get; set; }
-        public ICollection<PosdegreeDetailsPayment> posdegreeDetailsPayments { get; set; }
-
     }
 }

@@ -12,13 +12,13 @@
                     }
                 },
                 columns: [
-                    {dta:"",title:"Nro"},
-                    {data: "",title:"Sede"},
-                    { data: "", title: "Curricula" },
-                    { data: "nombre", title: "Programa De Estudio" },
-                    { data: "duracion", title: "Modalidad Estudio" },
-                    { data: "creditos", title: "Vigente" },
-                    { data: "descripcion", title: "Estado" },
+                    {data:"",title:"Nro"},
+                    {data: "campus",title:"Sede"},
+                    { data: "mallaCuricular", title: "Curricula" },
+                    { data: "studyProgram", title: "Programa De Estudio" },
+                    { data: "studyMode", title: "Modalidad Estudio" },
+                    { data: "current", title: "Vigente" },
+                    { data: "state", title: "Estado" },
                     {
                         data: null,
                         title: "Opciones",
@@ -40,7 +40,7 @@
                     })
                 },
                 onDelete: function () {
-                    $("#datatable_data").on("click", ".btn-delete", function () {
+                    $("#datatable_data").on("click",".btn-delete", function () {
                         var id = $(this).data("id");
 
                         swal({
@@ -56,7 +56,7 @@
                             preConfirm: () => {
                                 return new Promise(() => {
                                     $.ajax({
-                                        url:  `/admin/master/eliminar/${id}`,
+                                        url: `/admin/master/eliminar/${id}`,
                                         type: "POST",
                                         data: {
                                             id: id
@@ -85,9 +85,42 @@
                         });
                     })
                 },
+                onConfiguration: function () {
+                    $("#datatable_data").on("click", ".btn-configuration", function () {
+                        var id = $(this).data("id");
+                        $.ajax({
+                            url: `/admin/master/matricula/${id}`,
+                            type: 'Post',
+                            success: function (data) {
+                                // Primera solicitud AJAX exitosa
+                                var dato = data.campus;
+                                $("#idSede").html(dato);
+                                $.ajax({
+                                    url: "/admin/master/matricula",
+                                    type: 'Get',
+                                    success: function (data) {
+                                        // Segunda solicitud AJAX exitosa
+                                        
+                                        window.location.href = "https://localhost:7273/admin/master/matricula";
+                                    }
+                                });
+                            },
+                            error: function (error) {
+                                swal({
+                                    type: "error",
+                                    title: "Error",
+                                    confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
+                                    confirmButtonText: "Entendido",
+                                    text: e.status === 502 ? "No hay respuesta del servidor" : e.responseText
+                                });
+                            }
+                        });
+                    })
+                },
                 init: function () {
                     this.onEdit();
                     this.onDelete();
+                    this.onConfiguration();
                 }
             },
             reload: function () {
@@ -177,10 +210,11 @@
                     $("#add-master").attr("action", "/admin/master/editar");
                     $("#add-master").attr("data-message", "Registro actualizado con éxito");
                     modal.projectDirector.object.find("[name='Id']").val(data.id);
-                    modal.projectDirector.object.find("[name='Nombre']").val(data.nombre);
-                    modal.projectDirector.object.find("[name='Duracion']").val(data.duracion);
-                    modal.projectDirector.object.find("[name='Creditos']").val(data.creditos);
-                    modal.projectDirector.object.find("[name='Descripcion']").val(data.descripcion);
+                    modal.projectDirector.object.find("[name='sede']").val(data.campus);
+                    modal.projectDirector.object.find("[name='curricula']").val(data.mallaCuricular);
+                    modal.projectDirector.object.find("[name='studyProgram']").val(data.studyProgram);
+                    modal.projectDirector.object.find("[name='studyMode']").val(data.studyMode);
+                  
                     modal.projectDirector.object.modal("show");
                 }
             },

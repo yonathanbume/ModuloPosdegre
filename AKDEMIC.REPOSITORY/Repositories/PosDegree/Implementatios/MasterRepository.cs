@@ -375,8 +375,14 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
                     x.Nombre,
                     x.Duracion,
                     x.Creditos,
-                    x.Descripcion
-
+                    x.Descripcion,
+                    x.Nro,
+                    x.Campus,
+                    x.MallaCuricular,
+                    x.StudyProgram,
+                    x.StudyMode,
+                    x.current,
+                    x.state
                 }).ToListAsync();
             var recordTotal = data.Count();
             return new DataTablesStructs.ReturnedData<object>
@@ -410,6 +416,21 @@ namespace AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<object> GetMasterAllJson()
+        {
+            var maestrias = await _context.Masters
+                .OrderBy(x => x.MallaCuricular)
+                .Select(f => new
+                {
+                    id = f.id,
+                    text = f.MallaCuricular
+                }).ToListAsync();
+
+            maestrias.Insert(0, new { id = new Guid(), text = "Todas" });
+
+            return maestrias;
         }
 
         /*    public async Task Update( Master model)

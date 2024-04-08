@@ -1,0 +1,95 @@
+﻿@using AKDEMIC.POSDEGREE.ViewModels;
+
+@{
+    ViewData["Title"] = "Tipo de Matricula";
+    Layout = "~/Views/Shared/Templates/Default/_Layout.cshtml";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = (string)ViewData["Title"]}
+
+};
+
+}
+<div class="m-content">
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">Tipo de matricula</h3>
+                </div>
+            </div>
+            <div class="m-portlet_header-tools">
+                <a class="btn btn-primary btn-action btn-sm mt-3" href="TypeEnrollment/agregar"
+                   data-toggle="modal" data-target="#AddTypeEnrollment" id="add_projectDirector">
+                    <span>
+                        <i class="fa fa-plus"></i>
+                        Agregar
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+           
+            <table class="table table-striped table-bordered" id="datatable_data"></table>
+        </div>
+    </div>
+
+</div>
+
+<div id="AddTypeEnrollment" class="modal fade" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    tipo de matricula
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-typeEnrollment" method="post">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <input type="hidden" name="Id" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="name">Nombre</label>
+                            <input type="text" name="name" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="Description">Descripcion</label>
+                            <input type="text" name="Description" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col- col-lg-12">
+                            <label id="costo">Costo</label>
+                            <input type="number" name="costo" class="form-control" maxlength="200" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-action ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/modules/form.js"></script>
+    <script src="~/js/areas/admin/TypeEnrollment/Index.js" asp-append-version="true"></script>
+
+}

@@ -18,6 +18,7 @@ namespace AKDEMIC.ENTITIES.Models.PosDegree
         Task DownloadExcel(IXLWorksheet worksheet);
         Task DeleteMaster(Guid id);
         Task <Master> Get(Guid id);
-       
+        Task<object> GetMasterAllJson();
+
     }
 }

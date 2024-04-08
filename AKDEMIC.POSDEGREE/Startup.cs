@@ -220,7 +220,7 @@ namespace AKDEMIC.POSDEGREE
             services.AddTransient<IGradeReportService, GradeReportService>();
 
             // Enrollment
-            services.AddScoped(typeof(ICourseRepository), typeof(CourseRepository));
+            services.AddScoped(typeof(REPOSITORY.Repositories.Enrollment.Interfaces.ICourseRepository), typeof(REPOSITORY.Repositories.Enrollment.Implementations.CourseRepository));
             services.AddTransient<ICourseService, CourseService>();
             services.AddScoped(typeof(IEvaluationRepository), typeof(EvaluationRepository));
             services.AddTransient<IEvaluationService, EvaluationService>();
@@ -284,7 +284,20 @@ namespace AKDEMIC.POSDEGREE
             services.AddScoped(typeof(IPosdegreeStudentRepository), typeof(PosdegreeStudentRepository));
             services.AddTransient<IPosdegreeStudentService, PosdegreeStudentService>();
 
+            services.AddScoped(typeof(ITeacherPRepository), typeof(AKDEMIC.REPOSITORY.Repositories.PosDegree.Implementatios.TeacherRepository));
+            services.AddTransient<ITeacherPService, AKDEMIC.SERVICE.Services.PosDegree.Implementations.TeacherService>();
            
+            services.AddScoped(typeof(IAsignaturaRepository), typeof(AsignaturaRepository));
+            services.AddTransient<IAsignaturaService, AsignaturaService>();
+
+            services.AddScoped(typeof(ITypeEnrollmentRepository), typeof(TypeEnrollmentRepository));
+            services.AddTransient<ITypeEnrollmentService, TypeEnrollmentService>();
+
+            services.AddScoped(typeof(ISemestreRepository), typeof(SemestreRepository));
+            services.AddTransient<ISemestreService, SemestreService>();
+
+            services.AddScoped(typeof(IUserCurrentAccountRepository), typeof(UserCurrentAccountRepository));
+            services.AddTransient<IUserCurrentAccountService, UserCurrentAccountService>();
 
             #endregion
 
